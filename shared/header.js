@@ -1,12 +1,15 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import NotificationsButton from './notificationsButton';
+import { IconButton } from 'react-native-paper';
 
 export default function Header({ navigation }) {
 
   return (
       <View style={styles.header}>
-        <NotificationsButton navigation={navigation}/>
+        <IconButton
+          icon='bell'
+          style={styles.button} 
+          onPress={() => {navigation.navigate('Notifications')}}/>
         <Text style={styles.headerText}> Find my Dog </Text>
       </View>
   );
@@ -26,5 +29,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#333',
     letterSpacing: 1,
-  }
+  },
+  button: {
+    position: 'absolute',
+    left: 5,
+    top: 24
+  },
 })
