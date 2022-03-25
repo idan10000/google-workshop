@@ -53,12 +53,14 @@ export default function NotificationsScreen(){
 }
 
 
-
-
 const styles = StyleSheet.create({
     notificationList:{
       marginTop:20,
       padding:10,
     },
+    container:{
+      backgroundColor:'white',
+      flex:1
+    }
   });
   

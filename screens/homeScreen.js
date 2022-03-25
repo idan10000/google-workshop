@@ -17,13 +17,13 @@ export default function HomeScreen() {
       <Button
         mode='outlined'
         icon='image'
-        style={styles.button}
+        style={styles.smallButton}
         onPress={() => console.log('upload from gallery')}> 
       upload from gallery
       </Button>
 
       <Button
-        style={styles.button}
+        style={styles.smallButton}
         onPress={() => console.log('upload missing ad')}> 
       upload missing ad
       </Button>
@@ -37,9 +37,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
+  },
+  smallButton: {
+    margin: 20,
+    bottom: 60
   },
   button: {
-    margin: 20
-  },
+    padding: 50,
+    bottom: 150,
+    borderRadius: 50
+  }
 });
