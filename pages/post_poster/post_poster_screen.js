@@ -17,14 +17,31 @@ const PosterPostingComponent = () => {
         {tag: "Friendly", state: false},
         {tag: "Aggressive", state: false}]
 
-    const [tags, toggleState] = React.useState(tagList);
+    const [modalTags, setModalTags] = React.useState(tagList);
+    const [selectedTags, setSelectedTags] = React.useState([]);
 
-    const chipPressHandler = (index) => {
-        toggleState(prevStates => {
+
+    const modalChipHandler = (index) => {
+        setModalTags(prevStates => {
             var temp = [...prevStates]
             temp[index].state = !temp[index].state
             return temp
         });
+    }
+
+    const modalConfirmPressHandler = () => {
+        setSelectedTags((prevSelected) =>{
+           return prevSelected.concat(modalTags.filter(modalTags => modalTags.state));
+        });
+        setModalTags((prevTags) => {
+            return prevTags.filter(prevTags => !prevTags.state)
+        });
+        hideModal();
+    }
+
+    const selectedTagPressHandler = (tag) => {
+        setModalTags(prevTags => (prevTags.concat({tag:tag, state:false})))
+        setSelectedTags(prevSelected => (prevSelected.filter((prevSelected) => prevSelected.tag !== tag)))
     }
 
     //---------------------- Image Picker ----------------------
@@ -71,11 +88,14 @@ const PosterPostingComponent = () => {
                 <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.modal}>
                     <View style={styles.chips}>
                         {
-                            tags.map((item, index) => (
-                                <Chip key={index} icon="information" selected={tags[index].state}
-                                      onPress={() => chipPressHandler(index)}>{item.tag}</Chip>
+                            modalTags.map((item, index) => (
+                                <Chip key={index} selected={modalTags[index].state}
+                                      onPress={() => modalChipHandler(index)}>{item.tag}</Chip>
                             ))
                         }
+                    </View>
+                    <View style={styles.modalButtonContainer}>
+                        <Button compact={true} style={styles.modalButton} onPress={modalConfirmPressHandler}>Confirm</Button>
                     </View>
                 </Modal>
             </Portal>
@@ -84,7 +104,16 @@ const PosterPostingComponent = () => {
 
                 {imagePicker}
 
-                <Button style={{marginTop: 30}} onPress={showModal}>
+                <View style={styles.chips}>
+                    {
+                        selectedTags.map((item, index) => (
+                            <Chip key={index} icon={"close"} selected={false}
+                                  onPress={() => selectedTagPressHandler(item.tag)}>{item.tag}</Chip>
+                        ))
+                    }
+                </View>
+
+                <Button comapct={true} style={{marginTop: 30}} onPress={showModal}>
                     Add tags
                 </Button>
 
@@ -130,7 +159,7 @@ const styles = StyleSheet.create({
     },
     pictureContainer: {
         marginTop:30,
-        flex:1,
+        flex:3,
         justifyContent: "center",
         alignContent:"center",
 
@@ -139,7 +168,15 @@ const styles = StyleSheet.create({
         resizeMode:"contain",
         flex:1
 
+    }, modalButtonContainer: {
+        justifyContent: "center",
+        alignContent:"center",
+        flexDirection:"row"
     },
+    modalButton: {
+
+    },
+
 
 });
 
