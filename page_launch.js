@@ -4,7 +4,7 @@ import { global_styles } from './styles/global_style';
 import { Avatar, Button } from 'react-native-paper';
 export default function App() {
   return (
-   <View style ={global_styles.general}>  
+   <View style ={global_styles.general}>
      <View style={global_styles.header}>
          <Text style={global_styles.header}> FinDog</Text>
       </View>
@@ -32,14 +32,14 @@ export default function App() {
     <TouchableOpacity > <Avatar.Image size={50} source={require('./assets/google.png')} style={global_styles.avatar}/></TouchableOpacity>
   </View>
   <View style={global_styles.container2}>
-  <View style={global_styles.seperator1} /> 
-  <Text style={global_styles.text}>OR</Text> 
+  <View style={global_styles.seperator1} />
+  <Text style={global_styles.text}>OR</Text>
   <View style={global_styles.seperator2} /> </View>
 
   <View style={global_styles.signupButton}>
-    <Button mode='contained' > Sign up Via Email  </Button>
-     </View> 
-    
+      <Button mode='contained' title = "Sign up Via Email">  </Button>
+     </View>
+
   <View style={global_styles.container_registered} >
      <Text> Already registerd?</Text>
      <TouchableOpacity >  <Text> click HERE</Text> </TouchableOpacity>

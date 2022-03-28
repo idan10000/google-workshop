@@ -1,115 +1,59 @@
-import React, { useState } from 'react';
-import { StyleSheet, Button, TextInput, View, Text,TouchableOpacity,Image , Pressable} from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Formik } from 'formik';
-import { AfterSignedStyle } from './styles/after_signed_style';
-import * as yup from 'yup';
-
-const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
-
-export const useTogglePasswordVisibility = () => {
-  const [passwordVisibility, setPasswordVisibility] = useState(true);
-  const [rightIcon, setRightIcon] = useState('eye');
-
-  const handlePasswordVisibility = () => {
-    if (rightIcon === 'eye') {
-      setRightIcon('eye-off');
-      setPasswordVisibility(!passwordVisibility);
-    } else if (rightIcon === 'eye-off') {
-      setRightIcon('eye');
-      setPasswordVisibility(!passwordVisibility);
-    }
-  };
-
-  return {
-    passwordVisibility,
-    rightIcon,
-    handlePasswordVisibility
-  };
-};
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, Image,TouchableOpacity } from 'react-native';
+import { global_styles } from './styles/global_style';
+import { Avatar, Button } from 'react-native-paper';
 export default function App() {
+    return (
+        <View style ={global_styles.general}>
+            <View style={global_styles.header}>
+                <Text style={global_styles.header}> FinDog</Text>
+            </View>
+            <  View style={global_styles.container}>
 
-   const reviewSchema = yup.object({
- 
-    Email: yup.string().email().required('Email is required'),
-    Password: yup.string().min(6),
+                <View>
+                    <Text >Lost your dog?{'\n'}Don't worry!{'\n'}We'll help U find it </Text>
+                </View>
+                <Image
+                    style={global_styles.image}
+                    source={require('./assets/findog.png')}
+                />
+            </View>
+            <View style={global_styles.selling_text}>
 
-      
-  });
+                <Text >Our app provides a revolutionary platform{'\n'}which offers dog-owners a new simple, effective way
+                    {'\n'}to find their precious dogs </Text>
 
-
-  const { passwordVisibility, rightIcon, handlePasswordVisibility } =
-    useTogglePasswordVisibility();
-  const [password, setPassword] = useState('');
-
-  return (
-    <View style={AfterSignedStyle.container}>
-      <View style={AfterSignedStyle.logoheaderContainer}>  
-        <View style={AfterSignedStyle.header}>
-         <Text style={AfterSignedStyle.header}>FinDog</Text>
-      </View>    
-      <TouchableOpacity > <Image source={require('./assets/findog.png')} style={AfterSignedStyle.image}/></TouchableOpacity>
-      </View>
-
-      <View style={AfterSignedStyle.welcome}>  <Text style={AfterSignedStyle.welcome}> Welcome Back!</Text> </View>
+            </View>
 
 
-      <Formik
-        initialValues={{ Email: '',Password:''}}
-        validationSchema={reviewSchema}
-        onSubmit={(values) => {
-          console.log(values);
-        }}
-      >
-        {props => (
 
-<View > 
-    
+            <View style={global_styles.Avatarcontainer}>
+                <TouchableOpacity ><Avatar.Image size={50} source={require('./assets/facebook.png')} style={global_styles.avatar}/></TouchableOpacity>
+                <TouchableOpacity > <Avatar.Image size={50} source={require('./assets/google.png')} style={global_styles.avatar}/></TouchableOpacity>
+            </View>
+            <View style={global_styles.container2}>
+                <View style={global_styles.seperator1} />
+                <Text style={global_styles.text}>OR</Text>
+                <View style={global_styles.seperator2} /> </View>
 
+            <View style={global_styles.signupButton}>
+                <Button mode='contained' title = "Sign up Via Email">  </Button>
+            </View>
 
-<Text style={AfterSignedStyle.errorText}>{props.touched.DateOfBirth && props.errors.DateOfBirth}</Text>
-<TextInput 
-  style={AfterSignedStyle.input}
-  placeholder='Email'
-  onBlur={props.handleBlur('Email')} 
+            <View style={global_styles.container_registered} >
+                <Text> Already registerd?</Text>
+                <TouchableOpacity >  <Text> click HERE</Text> </TouchableOpacity>
+            </View>
+        </View>
 
-  onChangeText={props.handleChange('Email')}
-  value={props.values.Email}
-  keyboardType='numeric'
-/>
-<Text style={AfterSignedStyle.errorText}>{props.touched.Email && props.errors.Email}</Text>
-<View style={AfterSignedStyle.inputContainer}>
-
-<TextInput
-  placeholder='Password'
-  onBlur={props.handleBlur('Password')} 
-
-  onChangeText={props.handleChange('Password')}
-  value={props.values.Password}
-  keyboardType='numeric'
-
-  style={AfterSignedStyle.input}
-  name="password"
-  autoCapitalize="none"
-  autoCorrect={false}
-  textContentType="newPassword"
-  secureTextEntry={passwordVisibility}
-  enablesReturnKeyAutomatically
-/>
-<Pressable onPress={handlePasswordVisibility}>
-  <MaterialCommunityIcons name={rightIcon} size={24} color="#232323" />
-</Pressable>
-
-<Text style={AfterSignedStyle.errorText}>{props.touched.Password && props.errors.Password}</Text>
-</View>
-
-<Button color='maroon' title="Sign me in!" onPress={props.handleSubmit} style={AfterSignedStyle.button} /> 
-</View>
-
-        )}
-      </Formik>
-
-
-    </View>
-  );
+    );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});
