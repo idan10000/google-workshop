@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Modal, Portal, Text, Button, Provider, Card, Chip} from 'react-native-paper';
+import {Modal, Portal, Text, Button, Provider, Card, Chip, Headline} from 'react-native-paper';
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native'
 import * as ImagePicker from 'expo-image-picker';
 
@@ -30,8 +30,8 @@ const PosterPostingComponent = () => {
     }
 
     const modalConfirmPressHandler = () => {
-        setSelectedTags((prevSelected) =>{
-           return prevSelected.concat(modalTags.filter(modalTags => modalTags.state));
+        setSelectedTags((prevSelected) => {
+            return prevSelected.concat(modalTags.filter(modalTags => modalTags.state));
         });
         setModalTags((prevTags) => {
             return prevTags.filter(prevTags => !prevTags.state)
@@ -40,7 +40,7 @@ const PosterPostingComponent = () => {
     }
 
     const selectedTagPressHandler = (tag) => {
-        setModalTags(prevTags => (prevTags.concat({tag:tag, state:false})))
+        setModalTags(prevTags => (prevTags.concat({tag: tag, state: false})))
         setSelectedTags(prevSelected => (prevSelected.filter((prevSelected) => prevSelected.tag !== tag)))
     }
 
@@ -73,7 +73,7 @@ const PosterPostingComponent = () => {
         imagePicker =
             <View style={styles.pictureContainer}>
                 <Image
-                    source={{  uri: selectedImage.localUri }}
+                    source={{uri: selectedImage.localUri}}
                     style={styles.card}
                 />
             </View>
@@ -85,7 +85,8 @@ const PosterPostingComponent = () => {
         <Provider>
             {/*Modal (pop up screen) for selecting the tags describing the dog*/}
             <Portal>
-                <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.modal}>
+                <Modal visible={visible} contentContainerStyle={styles.modal}>
+                    <View><Headline>Select tags:</Headline></View>
                     <View style={styles.chips}>
                         {
                             modalTags.map((item, index) => (
@@ -95,7 +96,8 @@ const PosterPostingComponent = () => {
                         }
                     </View>
                     <View style={styles.modalButtonContainer}>
-                        <Button compact={true} style={styles.modalButton} onPress={modalConfirmPressHandler}>Confirm</Button>
+                        <Button compact={true} style={styles.modalButton}
+                                onPress={modalConfirmPressHandler}>Confirm</Button>
                     </View>
                 </Modal>
             </Portal>
@@ -131,18 +133,11 @@ const styles = StyleSheet.create({
         padding: 4,
         flex: 1
     },
-    stretch: {
-        width: '100%',
-        height: undefined,
-        aspectRatio: 1,
-        borderColor: 'red',
-        borderWidth: 5,
-        resizeMode: 'contain',
-    },
     chips: {
         flexDirection: 'row',
         overflow: "hidden",
-        flexWrap: "wrap"
+        flexWrap: "wrap",
+        paddingTop: 16
     },
     modal: {
         backgroundColor: 'white',
@@ -158,24 +153,22 @@ const styles = StyleSheet.create({
         fontSize: 24
     },
     pictureContainer: {
-        marginTop:30,
-        flex:3,
+        marginTop: 30,
+        flex: 3,
         justifyContent: "center",
-        alignContent:"center",
+        alignContent: "center",
 
     },
     card: {
-        resizeMode:"contain",
-        flex:1
+        resizeMode: "contain",
+        flex: 1
 
     }, modalButtonContainer: {
         justifyContent: "center",
-        alignContent:"center",
-        flexDirection:"row"
+        alignContent: "center",
+        flexDirection: "row"
     },
-    modalButton: {
-
-    },
+    modalButton: {},
 
 
 });
