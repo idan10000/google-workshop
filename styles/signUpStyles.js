@@ -1,12 +1,12 @@
 import { StyleSheet } from 'react-native';
 
-export const globalStyles = StyleSheet.create({
-  container: {
+export const signUpStyles = StyleSheet.create({
+  totalWrapper: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  logoheaderContainer: {
+  logoHeaderContainer: {
     flexDirection: "row",
     alignItems: 'center',
     justifyContent: 'center',
@@ -18,7 +18,7 @@ export const globalStyles = StyleSheet.create({
     justifyContent: 'center',
     marginLeft:40,
   },
-  image:{
+  appLogo:{
     alignItems: 'center',
     justifyContent: 'center',
     height:110,
@@ -26,7 +26,7 @@ export const globalStyles = StyleSheet.create({
     resizeMode: 'stretch',
     marginLeft: 10
 },
-  welcome:{
+  welcomeText:{
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom:8,
@@ -48,7 +48,7 @@ export const globalStyles = StyleSheet.create({
 
     textAlign: 'center',
   },
-  button:{
+  submitButton:{
     alignItems: 'center',
     justifyContent: 'center',
     width:800,

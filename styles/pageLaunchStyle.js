@@ -1,24 +1,24 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-export const global_styles = StyleSheet.create({
-    general:{
+export const pageLaunchStyle = StyleSheet.create({
+    totalWrapper:{
         paddingTop: 50,
         flex: 1,
 
     },
-    header:{
+    appNameHeader:{
         fontSize:35,
         alignItems: 'center',
         justifyContent: 'center',
         margin:10
     },
-    container:{
+    slogenContainer:{
         flexDirection: "row",
         alignItems: 'center',
         justifyContent: 'center',
 
     },
-    image: {
+    appLogo: {
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
@@ -28,19 +28,19 @@ export const global_styles = StyleSheet.create({
         marginLeft: 10
       },
 
-    Avatarcontainer:{
+    AvatarContainer:{
         alignItems: 'flex-end',
         justifyContent: 'center',
         flex: 1,
         flexDirection: "row",
-        
+
     },
 
     avatar:{
         marginRight:20,
         marginLeft: 20
     },
-    container2:{
+    containerForMiddleLines:{
         justifyContent: 'center',
 
         flexDirection: "row",
@@ -48,7 +48,7 @@ export const global_styles = StyleSheet.create({
         alignItems: 'center',
 
     },
-    seperator1: {
+    orSeperator1: {
         width: 70,
         height: 3,
         backgroundColor: '#333',
@@ -56,7 +56,7 @@ export const global_styles = StyleSheet.create({
       text:{
         margin: 13
     },
-      seperator2: {
+      orSeperator2: {
         width: 70,
         height: 3,
         backgroundColor: '#333',
@@ -69,14 +69,14 @@ export const global_styles = StyleSheet.create({
         borderRadius: 50,
 
     },
-    container_registered:{
+    containerForRegisterClick:{
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: "row",
         marginBottom:400,
 
     },
-    selling_text:{
+    sellingText:{
         flexDirection:'column',
         justifyContent: 'center',
         alignItems: 'center',
@@ -84,4 +84,3 @@ export const global_styles = StyleSheet.create({
     }
 
   });
-  
