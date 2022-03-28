@@ -40,7 +40,7 @@ const PosterPostingComponent = () => {
     }
 
     const selectedTagPressHandler = (tag) => {
-        setModalTags(prevTags => (prevTags.concat({tag: tag, state: false})))
+        setModalTags(prevTags => ([...prevTags,{tag: tag, state: false}]))
         setSelectedTags(prevSelected => (prevSelected.filter((prevSelected) => prevSelected.tag !== tag)))
     }
 
