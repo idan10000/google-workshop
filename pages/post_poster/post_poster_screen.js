@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Modal, Portal, Text, Button, Provider, Card, Chip, Headline} from 'react-native-paper';
+import {Modal, Portal, Text, Button, Provider, Card, Chip, Headline, FAB} from 'react-native-paper';
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native'
 import * as ImagePicker from 'expo-image-picker';
 
@@ -40,7 +40,7 @@ const PosterPostingComponent = () => {
     }
 
     const selectedTagPressHandler = (tag) => {
-        setModalTags(prevTags => ([...prevTags,{tag: tag, state: false}]))
+        setModalTags(prevTags => ([...prevTags, {tag: tag, state: false}]))
         setSelectedTags(prevSelected => (prevSelected.filter((prevSelected) => prevSelected.tag !== tag)))
     }
 
@@ -85,7 +85,7 @@ const PosterPostingComponent = () => {
         <Provider>
             {/*Modal (pop up screen) for selecting the tags describing the dog*/}
             <Portal>
-                <Modal visible={visible} contentContainerStyle={styles.modal}>
+                <Modal visible={visible} onDismiss={modalConfirmPressHandler} contentContainerStyle={styles.modal}>
                     <View><Headline>Select tags:</Headline></View>
                     <View style={styles.chips}>
                         {
@@ -105,7 +105,14 @@ const PosterPostingComponent = () => {
             <View style={styles.container}>
 
                 {imagePicker}
-
+                <View style={styles.fabContainer}>
+                    <FAB
+                        style={styles.fab}
+                        small
+                        icon={"camera-plus"}
+                        onPress={openImagePickerAsync}
+                    />
+                </View>
                 <View style={styles.chips}>
                     {
                         selectedTags.map((item, index) => (
@@ -119,7 +126,7 @@ const PosterPostingComponent = () => {
                     Add tags
                 </Button>
 
-                <Button mode={"contained"} style={{marginBottom: 30}} onPress={openImagePickerAsync}>
+                <Button mode={"contained"} style={{marginBottom: 30}}>
                     Submit
                 </Button>
             </View>
@@ -169,8 +176,14 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     modalButton: {},
-
-
+    fabContainer: {
+        flexDirection: 'row-reverse'
+    },
+    fab: {
+        position: 'absolute',
+        left: 16,
+        bottom: 16
+    }
 });
 
 export default PosterPostingComponent;
