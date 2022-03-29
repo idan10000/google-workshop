@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image,TouchableOpacity } from 'react-native';
-import { pageLaunchStyle } from './styles/pageLaunchStyle';
+import { pageLaunchStyle } from '../styles/pageLaunchStyle';
 import { Avatar, Button } from 'react-native-paper';
 export default function App() {
     return (
@@ -15,7 +15,7 @@ export default function App() {
                 </View>
                 <Image
                     style={pageLaunchStyle.appLogo}
-                    source={require('./assets/findog.png')}
+                    source={require('../assets/findog.png')}
                 />
             </View>
             <View style={pageLaunchStyle.sellingText}>
@@ -28,8 +28,8 @@ export default function App() {
 
 
             <View style={pageLaunchStyle.AvatarContainer}>
-                <TouchableOpacity ><Avatar.Image size={50} source={require('./assets/facebook.png')} style={pageLaunchStyle.avatar}/></TouchableOpacity >
-                <TouchableOpacity ><Avatar.Image size={50} source={require('./assets/google.png')} style={pageLaunchStyle.avatar}/></TouchableOpacity >
+                <TouchableOpacity ><Avatar.Image size={50} source={require('../assets/facebook.png')} style={pageLaunchStyle.avatar}/></TouchableOpacity >
+                <TouchableOpacity ><Avatar.Image size={50} source={require('../assets/google.png')} style={pageLaunchStyle.avatar}/></TouchableOpacity >
             </View>
             <View style={pageLaunchStyle.containerForMiddleLines}>
                 <Text style={pageLaunchStyle.text}>OR</Text>

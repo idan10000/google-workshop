@@ -3,7 +3,7 @@ import { StyleSheet, Button, TextInput, View, Text,TouchableOpacity,Image , Pres
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import {signUpStyles} from "./styles/signUpStyles";
+import {signUpStyles} from "../styles/signUpStyles";
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
@@ -52,7 +52,7 @@ export default function App() {
                 <View style={signUpStyles.header}>
                     <Text style={signUpStyles.header}>Welcome To FinDog</Text>
                 </View>
-                <TouchableOpacity ><Image source={require('./assets/findog.png')} style={signUpStyles.appLogo}/></TouchableOpacity>
+                <TouchableOpacity ><Image source={require('../assets/findog.png')} style={signUpStyles.appLogo}/></TouchableOpacity>
             </View>
 
             <View style={signUpStyles.welcomeText}>
