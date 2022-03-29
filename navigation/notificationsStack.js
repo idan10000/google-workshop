@@ -1,5 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import Header from '../shared/header';
+import Header from '../shared_components/header';
 import NotificationsScreen from '../screens/notificationsScreen';
 import NavigationBar from './navigationBar';
 import { NavigationContainer } from '@react-navigation/native';
