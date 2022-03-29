@@ -10,10 +10,10 @@ import {
 
 export default function NotificationsScreen(){
     const [notifications, setNotifications] = useState([
-        {id:1, title: "Is this your dog?", description: "A dog that looks like Rexy was found near you"},
-        {id:2, title: "Is this your dog?", description: "A dog that looks like Rexy was found near you"}, 
-        {id:3, title: "Is this your dog?", description: "A dog that looks like Rexy was found near you"}, 
-        {id:4, title: "Is this your dog?", description: "A dog that looks like Rexy was found near you"}, 
+        {id:1, title: "האם זה הכלב שלך?", description: "כלב שדומה לרקסי נמצא באזורך"},
+        {id:2, title: "האם זה הכלב שלך?", description: "כלב שדומה לרקסי נמצא באזורך"},
+        {id:3, title: "האם זה הכלב שלך?", description: "כלב שדומה לרקסי נמצא באזורך"},
+        {id:4, title: "האם זה הכלב שלך?", description: "כלב שדומה לרקסי נמצא באזורך"},
       ])
 
     const deleteHandler = (id) => {

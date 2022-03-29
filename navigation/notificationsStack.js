@@ -16,11 +16,12 @@ export default function NotificationsStack() {
     <NavigationContainer>
       <Stack.Navigator>
           <Stack.Screen name="Main" component={NavigationBar} options={options}/>
-          <Stack.Screen name="Notifications" component={NotificationsScreen} />
+          <Stack.Screen name="התראות" component={NotificationsScreen} />
       </Stack.Navigator>
       <FAB
         style={styles.fab}
         icon="camera"
+        color='white'
         onPress={() => console.log('Pressed')}
       />
     </NavigationContainer>
@@ -31,7 +32,8 @@ const styles = StyleSheet.create({
   fab: {
     position: 'absolute',
     margin: 16,
-    right: 300,
-    bottom: 50,
+    right: 290,
+    bottom: 60,
+    backgroundColor: "blue"
   },
 })

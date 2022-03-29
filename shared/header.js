@@ -10,8 +10,8 @@ export default function Header({ navigation }) {
         <IconButton
           icon='bell'
           style={globalStyles.button} 
-          onPress={() => {navigation.navigate('Notifications')}}/>
-        <Text style={globalStyles.headerText}> Find my Dog </Text>
+          onPress={() => {navigation.navigate('התראות')}}/>
+        <Text style={globalStyles.headerText}> Findog </Text>
       </View>
   );
 }

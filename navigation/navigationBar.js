@@ -10,9 +10,9 @@ export default function NavigationBar() {
   
   return (
       <Tab.Navigator screenOptions={{headerShown: false}}>
-        <Tab.Screen name="Profile" component={HomeScreen} options={{tabBarIcon: getIcon('account')}}/>
-        <Tab.Screen name="Home" component={HomeScreen} options={{tabBarIcon: getIcon('home')}}/>
-        <Tab.Screen name="Browse" component={HomeScreen} options={{tabBarIcon: getIcon('magnify')}}/>
+        <Tab.Screen name="פרופיל" component={HomeScreen} options={{tabBarIcon: getIcon('account')}}/>
+        <Tab.Screen name="בית" component={HomeScreen} options={{tabBarIcon: getIcon('home')}}/>
+        <Tab.Screen name="חפש" component={HomeScreen} options={{tabBarIcon: getIcon('magnify')}}/>
       </Tab.Navigator>
   );
 }

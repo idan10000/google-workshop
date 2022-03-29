@@ -9,23 +9,27 @@ export default function HomeScreen() {
       <Button                          
         mode='contained'
         icon='camera'
+        color='blue'
         style={styles.button}
         onPress={() => console.log('take a photo')}>
-      take a photo
+      מצאתי כלב!
       </Button>
       
       <Button
         mode='outlined'
         icon='image'
+        color='blue'
         style={styles.smallButton}
         onPress={() => console.log('upload from gallery')}> 
-      upload from gallery
+      העלאה מגלריה
       </Button>
 
       <Button
+        mode='outlined'
+        color='blue'
         style={styles.smallButton}
         onPress={() => console.log('upload missing ad')}> 
-      upload missing ad
+      יצירת מודעה
       </Button>
 
     </View>
