@@ -1,15 +1,20 @@
 import * as React from 'react';
-import {Modal, Portal, Text, Button, Provider, Card, Chip, Headline, FAB} from 'react-native-paper';
-import {View, StyleSheet, TouchableOpacity, Image} from 'react-native'
+import {Modal, Portal, Text, Button, Provider, Card, Chip, Headline, FAB, TextInput} from 'react-native-paper';
+import {View, StyleSheet, TouchableOpacity, Image, I18nManager} from 'react-native'
 import * as ImagePicker from 'expo-image-picker';
 
 
 const PosterPostingComponent = () => {
 
+
     //---------------------- Modal ----------------------
-    const [visible, setVisible] = React.useState(false);
-    const showModal = () => setVisible(true);
-    const hideModal = () => setVisible(false);
+    const [visibleTag, setVisibleTag] = React.useState(false);
+    const showTagModal = () => setVisibleTag(true);
+    const hideTagModal = () => setVisibleTag(false);
+
+    const [visibleDescription, setVisibleDescription] = React.useState(false);
+    const showDescriptionModal = () => setVisibleDescription(true);
+    const hideDescriptionModal = () => setVisibleDescription(false);
 
     //---------------------- Tag Selection ----------------------
     const tagList = [
@@ -36,7 +41,7 @@ const PosterPostingComponent = () => {
         setModalTags((prevTags) => {
             return prevTags.filter(prevTags => !prevTags.state)
         });
-        hideModal();
+        hideTagModal();
     }
 
     const selectedTagPressHandler = (tag) => {
@@ -85,7 +90,8 @@ const PosterPostingComponent = () => {
         <Provider>
             {/*Modal (pop up screen) for selecting the tags describing the dog*/}
             <Portal>
-                <Modal visible={visible} onDismiss={modalConfirmPressHandler} contentContainerStyle={styles.modal}>
+                {/*Tags*/}
+                <Modal visible={visibleTag} onDismiss={modalConfirmPressHandler} contentContainerStyle={styles.modal}>
                     <View><Headline>Select tags:</Headline></View>
                     <View style={styles.chips}>
                         {
@@ -94,6 +100,24 @@ const PosterPostingComponent = () => {
                                       onPress={() => modalChipHandler(index)}>{item.tag}</Chip>
                             ))
                         }
+                    </View>
+                    <View style={styles.modalButtonContainer}>
+                        <Button compact={true} style={styles.modalButton}
+                                onPress={modalConfirmPressHandler}>Confirm</Button>
+                    </View>
+                </Modal>
+                {/*Description*/}
+                <Modal visible={visibleDescription} onDismiss={hideDescriptionModal}
+                       contentContainerStyle={styles.modal}>
+                    <View><Headline>Description:</Headline></View>
+                    <View style={styles.descriptionContainer}>
+                        <TextInput
+                            dense={false}
+                            placeholder={'Add description...'}
+                            mode={'outlined'}
+                            multiline={true}
+                            style={{height:undefined}}
+                        />
                     </View>
                     <View style={styles.modalButtonContainer}>
                         <Button compact={true} style={styles.modalButton}
@@ -122,8 +146,12 @@ const PosterPostingComponent = () => {
                     }
                 </View>
 
-                <Button comapct={true} style={{marginTop: 30}} onPress={showModal}>
+                <Button comapct={true} style={{marginTop: 30}} onPress={showTagModal}>
                     Add tags
+                </Button>
+
+                <Button comapct={true} onPress={showDescriptionModal}>
+                    Add Description
                 </Button>
 
                 <Button mode={"contained"} style={{marginBottom: 30}}>
@@ -138,13 +166,13 @@ const styles = StyleSheet.create({
     container: {
         paddingTop: 50,
         padding: 4,
-        flex: 1
+        flex: 1,
     },
     chips: {
         flexDirection: 'row',
         overflow: "hidden",
         flexWrap: "wrap",
-        paddingTop: 16
+        paddingTop: 16,
     },
     modal: {
         backgroundColor: 'white',
@@ -177,13 +205,14 @@ const styles = StyleSheet.create({
     },
     modalButton: {},
     fabContainer: {
-        flexDirection: 'row-reverse'
+        flexDirection: 'row'
     },
     fab: {
         position: 'absolute',
-        left: 16,
+        right: 16,
         bottom: 16
-    }
+    },
+    descriptionContainer: {}
 });
 
 export default PosterPostingComponent;
