@@ -21,28 +21,28 @@ export default function App() {
             <View style={pageLaunchStyle.sellingText}>
 
                 <Text >Our app provides a revolutionary platform{'\n'}which offers dog-owners a new simple, effective way
-                    {'\n'}to find their precious dogs </Text>
+                    to find their precious dogs </Text>
 
             </View>
 
 
 
             <View style={pageLaunchStyle.AvatarContainer}>
-                <TouchableOpacity ><Avatar.Image size={50} source={require('./assets/facebook.png')} style={pageLaunchStyle.avatar}/></TouchableOpacity>
-                <TouchableOpacity > <Avatar.Image size={50} source={require('./assets/google.png')} style={pageLaunchStyle.avatar}/></TouchableOpacity>
+                <TouchableOpacity ><Avatar.Image size={50} source={require('./assets/facebook.png')} style={pageLaunchStyle.avatar}/></TouchableOpacity >
+                <TouchableOpacity ><Avatar.Image size={50} source={require('./assets/google.png')} style={pageLaunchStyle.avatar}/></TouchableOpacity >
             </View>
             <View style={pageLaunchStyle.containerForMiddleLines}>
-                <View style={pageLaunchStyle.orSeperator1} />
                 <Text style={pageLaunchStyle.text}>OR</Text>
-                <View style={pageLaunchStyle.orSeperator2} /> </View>
+            </View>
 
             <View style={pageLaunchStyle.signupButton}>
                 <Button mode='contained'  > Sign up Via Email </Button>
             </View>
 
             <View style={pageLaunchStyle.containerForRegisterClick} >
-                <Text> Already registerd?</Text>
-                <TouchableOpacity >  <Text> click HERE</Text> </TouchableOpacity>
+                <TouchableOpacity ><Text> click HERE</Text></TouchableOpacity>
+                <Text> Already registered?</Text>
+
             </View>
         </View>
 

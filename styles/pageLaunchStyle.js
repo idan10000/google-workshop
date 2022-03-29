@@ -29,7 +29,6 @@ export const pageLaunchStyle = StyleSheet.create({
       },
 
     AvatarContainer:{
-        alignItems: 'flex-end',
         justifyContent: 'center',
         flex: 1,
         flexDirection: "row",

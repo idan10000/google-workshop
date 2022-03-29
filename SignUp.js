@@ -34,9 +34,8 @@ export default function App() {
             .required('First Name is required'),
         LastName: yup.string()
             .required('Last Name is required'),
-        DateOfBirth:yup.date().typeError('This is not a valid date'),
         Email: yup.string().email().required('Email is required'),
-        Password: yup.string().min(6),
+        Password: yup.string().min(6).required('Password is required'),
 
         PhoneNumber: yup.string().matches(phoneRegExp, 'Phone number is not valid')
 
@@ -53,14 +52,16 @@ export default function App() {
                 <View style={signUpStyles.header}>
                     <Text style={signUpStyles.header}>Welcome To FinDog</Text>
                 </View>
-                <TouchableOpacity > <Image source={require('./assets/findog.png')} style={signUpStyles.appLogo}/></TouchableOpacity>
+                <TouchableOpacity ><Image source={require('./assets/findog.png')} style={signUpStyles.appLogo}/></TouchableOpacity>
             </View>
 
-            <View style={signUpStyles.welcomeText}>  <Text style={signUpStyles.welcomeText}> First of all... Let's get to know you...</Text> </View>
+            <View style={signUpStyles.welcomeText}>
+                <Text style={signUpStyles.welcomeText}>First of all...{'\n'}Let's get to know you...</Text>
+            </View>
 
 
             <Formik
-                initialValues={{ FirstName: '', LastName: '',DateOfBirth:'', Email: '',Password:'', PhoneNumber: '' }}
+                initialValues={{ FirstName: '', LastName: '', Email: '',Password:'', PhoneNumber: '' }}
                 validationSchema={reviewSchema}
                 onSubmit={(values) => {
                     console.log(values);
@@ -90,17 +91,6 @@ export default function App() {
                         />
                         <Text style={signUpStyles.errorText}>{props.touched.LastName && props.errors.LastName}</Text>
 
-
-                        <TextInput
-                            style={signUpStyles.input}
-                            multiline
-                            placeholder='** Date Of Birth'
-                            onBlur={props.handleBlur('DateOfBirth')}
-
-                            onChangeText={props.handleChange('DateOfBirth')}
-                            value={props.values.DateOfBirth}
-                        />
-                        <Text style={signUpStyles.errorText}>{props.touched.DateOfBirth && props.errors.DateOfBirth}</Text>
                         <TextInput
                             style={signUpStyles.input}
                             placeholder='Email'
@@ -129,7 +119,7 @@ export default function App() {
                                 secureTextEntry={passwordVisibility}
                                 enablesReturnKeyAutomatically
                             />
-                            <Pressable onPress={handlePasswordVisibility}>
+                            <Pressable style = {signUpStyles.eyeIcon}onPress={handlePasswordVisibility}>
                                 <MaterialCommunityIcons name={rightIcon} size={24} color="#232323" />
                             </Pressable>
                         </View>
@@ -145,7 +135,9 @@ export default function App() {
                             keyboardType='numeric'
                         />
                         <Text style={signUpStyles.errorText}>{props.touched.PhoneNumber && props.errors.PhoneNumber}</Text>
-                        <View style={signUpStyles.inform}>  <Text> ** is optional</Text> </View>
+                        <View style={signUpStyles.inform}>
+                            <Text> ** is optional</Text>
+                        </View>
 
                         <Button color='maroon' title="Submit" onPress={props.handleSubmit} style={signUpStyles.submitButton} />
 
