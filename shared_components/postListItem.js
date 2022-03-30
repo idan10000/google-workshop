@@ -9,45 +9,53 @@ const postListItem = ({image, date, distance, pressHandler}) => {
     console.log({uri: image})
     return (
         <Provider>
-            {/*<View style={styles.itemContainer}>*/}
-            <Caption style={styles.date}>תאריך:{date}</Caption>
+            <View style={styles.itemContainer}>
+                <View style={styles.detailsContainer}>
+                    <Caption style={styles.date}>{date}</Caption>
+                    <Caption style={styles.distance}>{distance} מטרים ממך</Caption>
+                </View>
                 <View style={styles.imageContainer}>
                     <Image
                         source={{uri: image}}
                         style={styles.image}
                     />
                 </View>
-                <View style={styles.detailsContainer}>
 
-                    <Caption style={styles.distance}>{distance} מטרים ממך</Caption>
-                </View>
-            {/*</View>*/}
+            </View>
         </Provider>
     )
 }
 
 const styles = StyleSheet.create({
     imageContainer: {
-        backgroundColor: "pink",
-        height:"33%",
-        width:"50%",
-        marginRight:30
+        height:200,
+        width: 140,
+        marginBottom:30,
     },
     image: {
         resizeMode: "stretch",
         flex:1,
-        paddingRight:30
+        borderRadius:20,
+
 
     },
-    detailsContainer: {},
-    date: {
-        paddingTop:30
+    detailsContainer: {
+        paddingHorizontal:6,
 
     },
-    distance: {},
+
     itemContainer: {
-        borderWidth:1,
-        flex:1
+        marginTop:300,
+        marginHorizontal:30,
+        borderWidth:2,
+        flexDirection:"row",
+        borderColor: "red",
+        alignItems: 'center',
+        height:90,
+        width:180,
+        borderRadius:15,
+
+
     }
 
 
