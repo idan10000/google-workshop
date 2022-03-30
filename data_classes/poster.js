@@ -1,10 +1,13 @@
 class Poster{
 
-    constructor(image, location, tagList, description, dogName) {
-        self.image = image;
-        self.loc = location
-        self.tagList = tagList
-        self.description = description
-        self.dogName = dogName
+    constructor(image, location, date, tagList, description, dogName) {
+        this.image = image;
+        this.location = location;
+        this.date = date;
+        this.tagList = tagList;
+        this.description = description;
+        this.dogName = dogName;
     }
 }
+
+export default Poster
