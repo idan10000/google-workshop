@@ -7,6 +7,7 @@ import PosterPostingComponent from "./screens/post_poster_screen";
 import PostListItem from "./shared_components/postListItem";
 import BrowsePage from "./screens/browse_page";
 import {I18nManager} from "react-native";
+import HomeScreen from "./screens/homeScreen";
 
 
 export default function App() {
@@ -15,7 +16,7 @@ export default function App() {
 
   return (
     <PaperProvider>
-        <BrowsePage/>
+        <HomeScreen/>
     </PaperProvider>
   );
 }
