@@ -16,12 +16,12 @@ import Poster from "../data_classes/poster";
 const BrowsePage = () => {
 
     var tempPosters = [
-        {poster: new Poster('https://picsum.photos/700/500', 100, "f", "", "", ""), key: '1'},
-        {poster: new Poster('https://picsum.photos/500/400', 100, "e", "", "", ""), key: '4'},
-        {poster: new Poster('https://picsum.photos/700/800', 100, "d", "", "", ""), key: '3'},
-        {poster: new Poster('https://picsum.photos/900/600', 100, "c", "", "", ""), key: '2'},
-        {poster: new Poster('https://picsum.photos/600/500', 100, "b", "", "", ""), key: '5'},
-        {poster: new Poster('https://picsum.photos/300/500', 100, "a", "", "", ""), key: '6'},
+        {poster: new Poster('https://picsum.photos/700/500', 100, "10/10/2022", "", "", ""), key: '1'},
+        {poster: new Poster('https://picsum.photos/500/400', 100, "10/10/2022", "", "", ""), key: '4'},
+        {poster: new Poster('https://picsum.photos/700/800', 100, "10/10/2022", "", "", ""), key: '3'},
+        {poster: new Poster('https://picsum.photos/900/600', 100, "10/10/2022", "", "", ""), key: '2'},
+        {poster: new Poster('https://picsum.photos/600/500', 100, "10/10/2022", "", "", ""), key: '5'},
+        {poster: new Poster('https://picsum.photos/300/500', 100, "10/10/2022", "", "", ""), key: '6'},
 
     ]
     const [posters, setPosters] = React.useState(tempPosters);
@@ -37,6 +37,18 @@ const BrowsePage = () => {
 
     const openSortMenu = () => setVisibleSortMenu(true);
     const closeSortMenu = () => setVisibleSortMenu(false);
+
+    var FlatListItemSeparator = () => {
+        return (
+            <View
+                style={{
+                    height: 1,
+                    width: "100%",
+                    backgroundColor: "#000",
+                }}
+            />
+        );
+    }
 
     return (
         <Provider>
@@ -80,7 +92,7 @@ const BrowsePage = () => {
             </View>
             <View style={styles.listContainer}>
                 {/* List */}
-                <FlatList data={posters} keyExtractor={(item) => item.key} numColumns={2} renderItem={({item}) => {
+                <FlatList data={posters} ItemSeparatorComponent={FlatListItemSeparator} keyExtractor={(item) => item.key} numColumns={2} renderItem={({item}) => {
                     console.log(item.key)
                     return (
                         <View style={{paddingVertical:5}}>

@@ -18,7 +18,9 @@ const postListItem = ({image, date, distance, pressHandler}) => {
                 {/*</View>*/}
                 <View style={styles.detailsContainer}>
                     <Caption style={styles.date}>{date}</Caption>
-                    <Caption style={styles.distance}>{distance} מטרים ממך</Caption>
+
+                    <Caption style={styles.distance}>{distance} מ'</Caption>
+
                 </View>
             </View>
         </Provider>
@@ -32,24 +34,25 @@ const styles = StyleSheet.create({
     image: {
         resizeMode: "cover",
         flex:1,
-        borderRadius:13,
         width:Dimensions.get('window').width / 2.2,
-        height: Dimensions.get('window').width / 3
+        height: Dimensions.get('window').height / 3
 
     },
     detailsContainer: {
-        paddingHorizontal:6,
-
+        paddingHorizontal:4,
+        marginTop:-4,
+        flexDirection:"row",
+        justifyContent:"space-between"
     },
 
     itemContainer: {
-        borderWidth:2,
         flexDirection:"column",
-        borderColor: "red",
-        borderRadius:15,
+        borderColor: "black",
+        paddingHorizontal:4,
+        paddingTop:10
 
+    },
 
-    }
 
 
 })
