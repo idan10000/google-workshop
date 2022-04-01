@@ -28,7 +28,7 @@ export const useTogglePasswordVisibility = () => {
     };
 };
 
-export default function App() {
+export default function SignIn() {
 
     const reviewSchema = yup.object({
 

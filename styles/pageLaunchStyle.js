@@ -48,7 +48,7 @@ export const pageLaunchStyle = StyleSheet.create({
 
     },
     orSeperator1: {
-        width: 70,
+        flex:1,
         height: 3,
         backgroundColor: '#333',
       },
