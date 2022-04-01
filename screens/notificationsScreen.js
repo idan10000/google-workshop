@@ -6,6 +6,7 @@ import {
   View,
   FlatList,
 } from 'react-native';
+import NewReportFAB from '../shared_components/newReportFAB';
 
 
 export default function NotificationsScreen(){
@@ -47,6 +48,7 @@ export default function NotificationsScreen(){
                     />
                 </TouchableOpacity>
               )}}/>
+          <NewReportFAB/>
         </View>
       );
 

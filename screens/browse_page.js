@@ -1,16 +1,20 @@
 import React from 'react';
 import {
+    Modal,
+    Portal,
+    Text,
     Button,
     Provider,
+    Card,
+    Chip,
     Searchbar,
     Divider,
     IconButton,
     Menu,
 
 } from 'react-native-paper';
-import {View, StyleSheet, FlatList, Image, Dimensions} from 'react-native'
-import PostListItem from "../shared_components/postListItem";
-import Poster from "../data_classes/poster";
+import {View, StyleSheet, FlatList,} from 'react-native'
+import NewReportFAB from '../shared_components/newReportFAB';
 
 
 const BrowsePage = () => {
@@ -111,7 +115,7 @@ const BrowsePage = () => {
                 }}/>
 
             </View>
-
+            <NewReportFAB/>
         </Provider>
     )
 
