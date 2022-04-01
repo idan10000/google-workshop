@@ -1,13 +1,23 @@
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, ImageBackground } from 'react-native';
+import NewReportFAB from '../shared_components/newReportFAB';
 
 
 
 export default function Map() {
     return (
         <View>
-            <Image
-                source={require('../assets/map.png')}
-            />
+            <ImageBackground
+                style={styles.image}
+                source={require('../assets/map.png')}>
+                    <NewReportFAB/>
+            </ImageBackground>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    image: {
+        width: '100%',
+        height: '100%'
+    },
+  })

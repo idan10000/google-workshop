@@ -16,6 +16,7 @@ import {
     Avatar
 } from 'react-native-paper';
 import {View, StyleSheet, FlatList,} from 'react-native'
+import NewReportFAB from '../shared_components/newReportFAB';
 
 
 const BrowsePage = () => {
@@ -75,7 +76,7 @@ const BrowsePage = () => {
                 {/*<FlatList data={posters} renderItem={() => ()}/>*/}
 
             </View>
-
+            <NewReportFAB/>
         </Provider>
     )
 

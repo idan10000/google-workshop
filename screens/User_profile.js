@@ -7,7 +7,7 @@ import {
   Text,
   TouchableRipple,
 } from "react-native-paper";
-
+import NewReportFAB from '../shared_components/newReportFAB';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const ProfileScreen = () => {
@@ -95,6 +95,7 @@ const ProfileScreen = () => {
           </View>
         </TouchableRipple>
       </View>
+      <NewReportFAB/>
     </SafeAreaView>
   );
 };
