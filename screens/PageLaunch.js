@@ -11,7 +11,7 @@ export default function pageLaunch() {
             <  View style={pageLaunchStyle.slogenContainer}>
 
                 <View>
-                    <Text >Lost your dog?{'\n'}Don't worry!{'\n'}We'll help U find it </Text>
+                    <Text >איבדתם את הכלב?{'\n'}אל תדאגו!{'\n'} אנחנו פה לעזור לכם למצוא אותם! </Text>
                 </View>
                 <Image
                     style={pageLaunchStyle.appLogo}
@@ -20,8 +20,7 @@ export default function pageLaunch() {
             </View>
             <View style={pageLaunchStyle.sellingText}>
 
-                <Text >Our app provides a revolutionary platform{'\n'}which offers dog-owners a new simple, effective way
-                    to find their precious dogs </Text>
+                <Text >האפליקציה שלנו מספקת פתרון מהפכני{'\n'} שמציע לבעלי כלבים דרך פשוטה ואפקטיבית {'\n'}למצוא את הכלב האהוב שלהם  </Text>
 
             </View>
 
@@ -32,16 +31,17 @@ export default function pageLaunch() {
                 <TouchableOpacity ><Avatar.Image size={50} source={require('../assets/google.png')} style={pageLaunchStyle.avatar}/></TouchableOpacity >
             </View>
             <View style={pageLaunchStyle.containerForMiddleLines}>
-                <Text style={pageLaunchStyle.text}>OR</Text>
+                <Text style={pageLaunchStyle.text}>או</Text>
             </View>
 
             <View style={pageLaunchStyle.signupButton}>
-                <Button mode='contained'  > Sign up Via Email </Button>
+                <Button mode='contained'  > הירשמו באמצעות Email</Button>
             </View>
 
             <View style={pageLaunchStyle.containerForRegisterClick} >
-                <TouchableOpacity ><Text> click HERE</Text></TouchableOpacity>
-                <Text> Already registered?</Text>
+                <Text> כבר נרשמתם?</Text>
+                <TouchableOpacity ><Text> תלחצו כאן!</Text></TouchableOpacity>
+
 
             </View>
         </View>

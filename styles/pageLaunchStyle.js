@@ -31,6 +31,7 @@ export const pageLaunchStyle = StyleSheet.create({
         justifyContent: 'center',
         flex: 1,
         flexDirection: "row",
+        marginVertical:10
 
     },
 
@@ -40,7 +41,7 @@ export const pageLaunchStyle = StyleSheet.create({
     },
     containerForMiddleLines:{
         justifyContent: 'center',
-
+        marginVertical:20,
         flexDirection: "row",
         padding: 1,
         alignItems: 'center',
@@ -78,7 +79,7 @@ export const pageLaunchStyle = StyleSheet.create({
         flexDirection:'column',
         justifyContent: 'center',
         alignItems: 'center',
-        margin:15
+        marginBottom: 20
     }
 
   });
