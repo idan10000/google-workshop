@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import { Text, View, Image } from "react-native";
 import { Chip } from "react-native-paper";
 
-import { AR_styles } from "./Ad_style";
-
-export default function AdTemple() {
+import { AR_styles } from "./Report_style";
+export default function ReportTemplate() {
   const report_data = {
     name: " בוני",
     desc: "אבד בפארק העירוני בסביבות השעה ארבע ביום ראשון. בעקבות רעש זיקוקים.",
@@ -16,9 +15,6 @@ export default function AdTemple() {
   return (
     <View style={AR_styles.container}>
       <View style={AR_styles.card}>
-        <View style={AR_styles.cardHeader}>
-          <Text style={AR_styles.name}>{report_data.name}</Text>
-        </View>
         <View style={AR_styles.cardContent}>
           <View style={AR_styles.mainImageContainer}>
             <Image style={AR_styles.mainImage} source={require("./dog1.png")} />
@@ -42,15 +38,6 @@ export default function AdTemple() {
         </View>
         <View style={AR_styles.cardContent}>
           <Text style={AR_styles.description}>{report_data.desc}</Text>
-        </View>
-      </View>
-
-      <View style={AR_styles.card}>
-        <View style={AR_styles.cardHeader}>
-          <Text style={AR_styles.cardTitle}>פרס כספי</Text>
-        </View>
-        <View style={AR_styles.cardContent}>
-          <Text style={AR_styles.description}>{report_data.price}</Text>
         </View>
       </View>
     </View>
