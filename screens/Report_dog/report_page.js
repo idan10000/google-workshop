@@ -3,12 +3,12 @@ import { Text, View, TouchableOpacity, ScrollView } from "react-native";
 
 import { AR_styles } from "./Report_style";
 
-import ReportTemple from "./report_temple";
+import ReportTemplate from "./report_template";
 export default function ReportPage() {
   return (
     <View style={AR_styles.container}>
       <ScrollView style={AR_styles.content}>
-        <ReportTemple />
+        <ReportTemplate />
         <View style={AR_styles.cardContent}>
           <TouchableOpacity style={AR_styles.shareButton} onPress={() => {}}>
             <Text style={AR_styles.shareButtonText}>פתח מיקום במפה</Text>
