@@ -25,7 +25,6 @@ export const pageLaunchStyle = StyleSheet.create({
         height:160,
         width:200,
         resizeMode: 'stretch',
-        marginLeft: 10
       },
 
     AvatarContainer:{
