@@ -3,37 +3,19 @@ import Header from '../shared_components/header';
 import NotificationsScreen from '../screens/notificationsScreen';
 import NavigationBar from './navigationBar';
 import { NavigationContainer } from '@react-navigation/native';
-import { FAB } from 'react-native-paper';
-import { StyleSheet } from 'react-native';
-
 
 const Stack = createStackNavigator();
 
 export default function NotificationsStack() {
-  const options = {header: ({navigation}) => <Header navigation={navigation}/>}
+  const options = {header: (props) => <Header {...props}/>}
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-          <Stack.Screen name="Main" component={NavigationBar} options={options}/>
+      <Stack.Navigator screenOptions={options}>
+          <Stack.Screen name="Main" component={NavigationBar} />
           <Stack.Screen name="התראות" component={NotificationsScreen} />
       </Stack.Navigator>
-      <FAB
-        style={styles.fab}
-        icon="camera"
-        color='white'
-        onPress={() => console.log('Pressed')}
-      />
     </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 290,
-    bottom: 60,
-    backgroundColor: "blue"
-  },
-})
