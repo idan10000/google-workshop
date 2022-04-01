@@ -12,9 +12,9 @@ const PosterPostingComponent = () => {
     const showTagModal = () => setVisibleTag(true);
     const hideTagModal = () => setVisibleTag(false);
 
-    const [visibleDescription, setVisibleDescription] = React.useState(false);
-    const showDescriptionModal = () => setVisibleDescription(true);
-    const hideDescriptionModal = () => setVisibleDescription(false);
+    const [visibleDetails, setVisibleDetails] = React.useState(false);
+    const showDescriptionModal = () => setVisibleDetails(true);
+    const hideDescriptionModal = () => setVisibleDetails(false);
 
     //---------------------- Tag Selection ----------------------
     const tagList = [
@@ -70,7 +70,7 @@ const PosterPostingComponent = () => {
 
 
     var imagePicker = <TouchableOpacity style={styles.addImageContainer} onPress={openImagePickerAsync}>
-        <Text style={styles.addImageText}>Pick a picture</Text>
+        <Text style={styles.addImageText}>בחר תמונה</Text>
     </TouchableOpacity>
 
     if (selectedImage !== null) {
@@ -92,7 +92,7 @@ const PosterPostingComponent = () => {
             <Portal>
                 {/*Tags*/}
                 <Modal visible={visibleTag} onDismiss={modalConfirmPressHandler} contentContainerStyle={styles.modal}>
-                    <View><Headline>Select tags:</Headline></View>
+                    <View><Headline>בחר תגיות:</Headline></View>
                     <View style={styles.chips}>
                         {
                             modalTags.map((item, index) => (
@@ -106,23 +106,47 @@ const PosterPostingComponent = () => {
                                 onPress={modalConfirmPressHandler}>Confirm</Button>
                     </View>
                 </Modal>
-                {/*Description*/}
-                <Modal visible={visibleDescription} onDismiss={hideDescriptionModal}
+                {/*Details*/}
+                <Modal visible={visibleDetails} onDismiss={hideDescriptionModal}
                        contentContainerStyle={styles.modal}>
-                    <View><Headline>Description:</Headline></View>
+                    <View style={{paddingVertical: 16}}>
+                        <Headline>שם הכלב:</Headline>
+
+                        <TextInput dense={true} placeholder={'שם הכלב...'} multiline={true}
+                                   style={{height: undefined}}/>
+                    </View>
+                    <View><Headline>תיאור:</Headline></View>
                     <View style={styles.descriptionContainer}>
                         <TextInput
                             dense={false}
-                            placeholder={'Add description...'}
+                            placeholder={'הוסף תיאור...'}
                             mode={'outlined'}
+                            multiline={true}
+                            style={{height: undefined}}
+                        />
+                    </View>
+                    <View style={{paddingVertical: 16}}>
+                        <Headline>מיקום:</Headline>
+
+                        <Button mode={'contained'}>עדכן מיקום אחרון</Button>
+                    </View>
+
+                    <View style={{paddingVertical:16}}>
+                        <Headline>פרס כספי:</Headline>
+
+                        <TextInput
+                            dense={true}
+                            placeholder={'פרס כספי...'}
                             multiline={true}
                             style={{height:undefined}}
                         />
                     </View>
+
                     <View style={styles.modalButtonContainer}>
                         <Button compact={true} style={styles.modalButton}
-                                onPress={modalConfirmPressHandler}>Confirm</Button>
+                                onPress={modalConfirmPressHandler}>אישור</Button>
                     </View>
+
                 </Modal>
             </Portal>
 
@@ -147,15 +171,15 @@ const PosterPostingComponent = () => {
                 </View>
 
                 <Button comapct={true} style={{marginTop: 30}} onPress={showTagModal}>
-                    Add tags
+                    הוסף תגיות
                 </Button>
 
                 <Button comapct={true} onPress={showDescriptionModal}>
-                    Add Description
+                    הוסף פרטים
                 </Button>
 
                 <Button mode={"contained"} style={{marginBottom: 30}}>
-                    Submit
+                    אישור
                 </Button>
             </View>
         </Provider>
