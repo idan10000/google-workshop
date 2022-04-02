@@ -20,20 +20,22 @@ import {
   Dimensions,
 } from "react-native";
 
-const postListItem = ({ image, date, distance, pressHandler }) => {
+const postListItem = ({ image, date, distance, report, navigation}) => {
   return (
-    <Provider>
-      <View style={styles.itemContainer}>
-        {/*<View style={styles.imageContainer}>*/}
-        <Image source={{ uri: image }} style={styles.image} />
-        {/*</View>*/}
-        <View style={styles.detailsContainer}>
-          <Caption style={styles.date}>{date}</Caption>
+    <TouchableOpacity onPress={() => {navigation.navigate("Report", {report: report})}}>
+      <Provider>
+        <View style={styles.itemContainer}>
+          {/*<View style={styles.imageContainer}>*/}
+          <Image source={{ uri: image }} style={styles.image} />
+          {/*</View>*/}
+          <View style={styles.detailsContainer}>
+            <Caption style={styles.date}>{date}</Caption>
 
-          <Caption style={styles.distance}>{distance} מ'</Caption>
+            <Caption style={styles.distance}>{distance} מ'</Caption>
+          </View>
         </View>
-      </View>
-    </Provider>
+      </Provider>
+    </TouchableOpacity>
   );
 };
 

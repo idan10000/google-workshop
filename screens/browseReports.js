@@ -11,13 +11,16 @@ import {
     Divider,
     IconButton,
     Menu,
+    
 
 } from 'react-native-paper';
-import {View, StyleSheet, FlatList,} from 'react-native'
+import {View, StyleSheet, FlatList, Dimensions} from 'react-native'
 import NewReportFAB from '../shared_components/newReportFAB';
+import Poster from '../data_classes/poster'
+import PostListItem from '../shared_components/postListItem'
 
 
-const BrowsePage = () => {
+const BrowseReports = ({navigation}) => {
 
     var tempPosters = [
         {poster: new Poster('https://picsum.photos/700/500', 100, "10/10/2022", "", "", ""), key: '1'},
@@ -56,14 +59,6 @@ const BrowsePage = () => {
 
     return (
         <Provider>
-            <View style={styles.tabContainer}>
-                {/*tab switching */}
-
-                <Button onPress={() => console.log("press")} compact={true}>Posters</Button>
-                <Divider style={{width: 1, height: '80%'}}/>
-                <Button onPress={() => console.log("press")} compact={true}>Reports</Button>
-
-            </View>
             <View style={styles.searchBarContainer}>
                 {/* search bar + sort + filter*/}
 
@@ -104,8 +99,8 @@ const BrowsePage = () => {
                             image={item.poster.image}
                             date={item.poster.date}
                             distance={item.poster.location}
-                            pressHandler={() => {
-                            }}
+                            report={item.poster}
+                            navigation={navigation}
                         /></View>
                         // <Image
                         //     source={{uri: item.poster.image}}
@@ -154,4 +149,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default BrowsePage;
+export default BrowseReports;
