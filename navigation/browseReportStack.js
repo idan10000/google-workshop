@@ -1,5 +1,4 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import Header from '../shared_components/header';
 import BrowseReports from '../screens/browseReports';
 import ReportForBrowser from '../screens/Report_dog/report_for_browse';
 
