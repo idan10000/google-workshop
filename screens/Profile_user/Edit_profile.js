@@ -53,7 +53,7 @@ export default function EditProfileScreen() {
         />
       </View>
       <HelperText type="error" visible={hasErrors("name")}>
-        <Text style={edit_styles.error}>Name is invalid!</Text>
+        <Text style={edit_styles.error}>Name is invalid</Text>
       </HelperText>
 
       <View style={edit_styles.actionInput}>
@@ -67,7 +67,7 @@ export default function EditProfileScreen() {
         />
       </View>
       <HelperText type="error" visible={hasErrors("email")}>
-        <Text style={edit_styles.error}>Phone number is invalid!</Text>
+        <Text style={edit_styles.error}>Phone number is invalid</Text>
       </HelperText>
 
       <View style={edit_styles.actionInput}>
@@ -81,7 +81,7 @@ export default function EditProfileScreen() {
         />
       </View>
       <HelperText type="error" visible={hasErrors("phone")}>
-        <Text style={edit_styles.error}>Email address is invalid!</Text>
+        <Text style={edit_styles.error}>Email address is invalid</Text>
       </HelperText>
 
       <View style={edit_styles.actionInput}>
@@ -95,7 +95,7 @@ export default function EditProfileScreen() {
         />
       </View>
       <HelperText type="error" visible={hasErrors("city")}>
-        <Text style={edit_styles.error}>City name is invalid!</Text>
+        <Text style={edit_styles.error}>City name is invalid</Text>
       </HelperText>
 
       <View style={edit_styles.actionInput}>
@@ -109,7 +109,7 @@ export default function EditProfileScreen() {
         />
       </View>
       <HelperText type="error" visible={hasErrors("country")}>
-        <Text style={edit_styles.error}>country name address is invalid!</Text>
+        <Text style={edit_styles.error}>country name address is invalid</Text>
       </HelperText>
 
       <View style={edit_styles.cardContent}>
