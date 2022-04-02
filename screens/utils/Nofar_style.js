@@ -41,7 +41,7 @@ export const Nofar_styles = StyleSheet.create({
   },
   BigButtonText: {
     fontStyle: "normal",
-    color: "FFFFFF",
+    color: "#FFFFFF",
     fontSize: 25,
     textAlign: "center",
     fontWeight: 700,
@@ -100,13 +100,12 @@ export const Nofar_styles = StyleSheet.create({
   },
   SmallButtonTitle: {
     fontStyle: "normal",
-    color: "FFFFFF",
+    color: "#FFFFFF",
     fontSize: 20,
     textAlign: "center",
     fontWeight: 700,
   },
   SmallButton: {
-    display: "row",
     marginBottom: 5,
     marginTop: 5,
     paddingRight: 30,
@@ -116,11 +115,6 @@ export const Nofar_styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 20,
     backgroundColor: "#816A55",
-  },
-
-  //   icon size:
-  icons: {
-    size: 20,
   },
 
   //   text input
