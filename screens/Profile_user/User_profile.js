@@ -1,6 +1,6 @@
 import React from "react";
-import { View, SafeAreaView, Button, TouchableOpacity } from "react-native";
-import { Title, Caption, Text, TouchableRipple } from "react-native-paper";
+import { View, SafeAreaView, TouchableOpacity } from "react-native";
+import { Title, Text } from "react-native-paper";
 import { user_styles } from "./User_profile_style";
 import Avatar from "avataaars";
 import { generateRandomAvatarOptions } from "../utils/avatar";
