@@ -21,7 +21,7 @@ export default function App() {
   I18nManager.forceRTL(true);
   return (
     <PaperProvider>
-      <ProfileScreen />
+      <ReportPage />
       {/* <NavigationContainer>
                 <HomeStack/>
             </NavigationContainer> */}

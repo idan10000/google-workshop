@@ -9,14 +9,14 @@ export const Nofar_styles = StyleSheet.create({
   },
   text: { fontSize: 20 },
   BigTitle: {
-    fontStyle: "bold",
+    fontStyle: "normal",
     color: "#1B1209",
     fontSize: 30,
     // textAlign: "center",
     fontWeight: 700,
   },
   SmallTitle: {
-    fontStyle: "bold",
+    fontStyle: "normal",
     color: "#1B1209",
     fontSize: 20,
     // textAlign: "center",
@@ -40,7 +40,7 @@ export const Nofar_styles = StyleSheet.create({
     shadowRadius: 7.49,
   },
   BigButtonText: {
-    fontStyle: "bold",
+    fontStyle: "normal",
     color: "FFFFFF",
     fontSize: 25,
     textAlign: "center",
@@ -66,7 +66,7 @@ export const Nofar_styles = StyleSheet.create({
     backgroundColor: "#EADDCA",
   },
   chipsText: {
-    fontStyle: "bold",
+    fontStyle: "normal",
     color: "#483C32",
     fontSize: 20,
     textAlign: "center",
@@ -99,7 +99,7 @@ export const Nofar_styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   SmallButtonTitle: {
-    fontStyle: "bold",
+    fontStyle: "normal",
     color: "FFFFFF",
     fontSize: 20,
     textAlign: "center",
