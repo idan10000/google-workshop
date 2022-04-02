@@ -60,7 +60,7 @@ export default function ProfileScreen() {
       <View style={{ flexDirection: "row", marginTop: 15, marginLeft: 40 }}>
         <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
           <Icon name="heart-outline" color="#FFFFFF" size={25} />
-          <Text style={Nofar_styles.BigButtonText}>הצג מודעות ודיווחים</Text>
+          <Text style={Nofar_styles.BigButtonText}>הצגת מודעות ודיווחים</Text>
         </TouchableOpacity>
       </View>
       <View style={{ flexDirection: "row", marginTop: 15, marginLeft: 40 }}>
@@ -72,7 +72,7 @@ export default function ProfileScreen() {
       <View style={{ flexDirection: "row", marginTop: 15, marginLeft: 40 }}>
         <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
           <Icon name="share-outline" color="#FFFFFF" size={25} />
-          <Text style={Nofar_styles.BigButtonText}>שתף אפליקציה</Text>
+          <Text style={Nofar_styles.BigButtonText}>שיתוף אפליקציה</Text>
         </TouchableOpacity>
       </View>
       <View style={{ flexDirection: "row", marginTop: 15, marginLeft: 40 }}>
