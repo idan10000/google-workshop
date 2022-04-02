@@ -1,24 +1,27 @@
-import 'react-native-gesture-handler';
-import React from 'react';
+import "react-native-gesture-handler";
+import React from "react";
 
-import {Provider as PaperProvider} from 'react-native-paper';
-import SignUp from "./screens/SignUp";
-import {I18nManager} from "react-native";
-import PageLaunch from "./screens/PageLaunch";
-import Create_poster_screen from "./screens/create_poster_screen";
-import HomeScreen from "./screens/homeScreen";
-import HomeStack from "./navigation/homeStack";
-import {NavigationContainer} from "@react-navigation/native";
-
-
+import { Provider as PaperProvider } from "react-native-paper";
+// import SignUp from "./screens/SignUp";
+import { I18nManager } from "react-native";
+// import PageLaunch from "./screens/PageLaunch";
+// import Create_poster_screen from "./screens/create_poster_screen";
+// import HomeScreen from "./screens/homeScreen";
+// import HomeStack from "./navigation/homeStack";
+// import { NavigationContainer } from "@react-navigation/native";
+import AdPage from "./screens/Ad_dog/ad_page";
+import AdForBrowser from "./screens/Ad_dog/ad_for_browse";
+import ReportForBrowser from "./screens/Report_dog/report_for_browse";
+import ReportPage from "./screens/Report_dog/report_page";
 export default function App() {
-    I18nManager.allowRTL(true)
-    I18nManager.forceRTL(true)
-    return (
-        <PaperProvider>
-            <NavigationContainer>
+  I18nManager.allowRTL(true);
+  I18nManager.forceRTL(true);
+  return (
+    <PaperProvider>
+      <ReportForBrowser />
+      {/* <NavigationContainer>
                 <HomeStack/>
-            </NavigationContainer>
-        </PaperProvider>
-    );
+            </NavigationContainer> */}
+    </PaperProvider>
+  );
 }

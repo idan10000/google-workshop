@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
-import { Chip } from "react-native-paper";
 import { Nofar_styles } from "../utils/Nofar_style";
 
 import { AR_styles } from "./Ad_style";
-import AdTemple from "./ad_template";
+import AdTemplate from "./ad_template";
 export default function AdPage() {
   return (
     <View style={Nofar_styles.container}>

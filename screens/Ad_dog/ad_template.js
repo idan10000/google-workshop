@@ -11,13 +11,13 @@ export default function AdTemplate() {
     image: "",
     place: "",
     tags: [],
-    price: "100 $",
+    date: "04/04/2022",
   };
   return (
     <View style={Nofar_styles.container}>
       <View style={Nofar_styles.card}>
         <View style={AR_styles.cardHeader}>
-          <Text style={AR_styles.name}>{report_data.name}</Text>
+          <Text style={Nofar_styles.BigTitle}>{report_data.name}</Text>
         </View>
         <View style={AR_styles.cardContent}>
           <View style={AR_styles.mainImageContainer}>
@@ -43,7 +43,15 @@ export default function AdTemplate() {
           <Text style={Nofar_styles.SmallTitle}>תיאור</Text>
         </View>
         <View style={AR_styles.cardContent}>
-          <Text>{report_data.desc}</Text>
+          <Text style={Nofar_styles.text}>{report_data.desc}</Text>
+        </View>
+      </View>
+      <View style={Nofar_styles.card}>
+        <View style={AR_styles.cardHeader}>
+          <Text style={Nofar_styles.SmallTitle}>תאריך פרסום</Text>
+        </View>
+        <View style={AR_styles.cardContent}>
+          <Text style={Nofar_styles.text}>{report_data.date}</Text>
         </View>
       </View>
     </View>

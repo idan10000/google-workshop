@@ -7,6 +7,7 @@ export const Nofar_styles = StyleSheet.create({
     marginTop: 20,
     backgroundColor: "#BBB988",
   },
+  text: { fontSize: 20 },
   BigTitle: {
     fontStyle: "bold",
     color: "#1B1209",
