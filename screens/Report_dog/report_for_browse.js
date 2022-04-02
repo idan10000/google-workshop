@@ -13,12 +13,8 @@ import { AR_styles } from "./Report_style";
 import ReportTemplate from "./report_template";
 export default function ReportForBrowse() {
   const makeCall = () => {
-    let phoneNumber = "";
-    if (Platform.OS === "android") {
-      phoneNumber = "tel:${1234567890}";
-    } else {
-      phoneNumber = "telprompt:${1234567890}";
-    }
+    console.log("Its calling");
+    let phoneNumber = "tel://+1234567890";
     Linking.openURL(phoneNumber);
   };
 
