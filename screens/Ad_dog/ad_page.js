@@ -8,7 +8,7 @@ export default function AdPage() {
   return (
     <View style={AR_styles.container}>
       <ScrollView style={AR_styles.content}>
-        <AdTemple />
+        <AdTemplate />
         <View style={AR_styles.cardContent}>
           <TouchableOpacity style={AR_styles.shareButton} onPress={() => {}}>
             <Text style={AR_styles.shareButtonText}>פתח מיקום במפה</Text>

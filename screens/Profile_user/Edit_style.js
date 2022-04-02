@@ -3,13 +3,35 @@ import { StyleSheet } from "react-native";
 export const edit_styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 20,
+    backgroundColor: "#BBB988",
   },
-  commandButton: {
-    padding: 15,
-    borderRadius: 10,
-    backgroundColor: "#FF6347",
+  cardContent: {
+    flexDirection: "row",
+    overflow: "hidden",
+    flexWrap: "wrap",
+    paddingBottom: 10,
+    paddingVertical: 12.5,
+    paddingHorizontal: 16,
+  },
+  SmallButtonTitle: {
+    fontStyle: "bold",
+    color: "FFFFFF",
+    fontSize: 20,
+    textAlign: "center",
+    fontWeight: 700,
+  },
+  SmallButton: {
+    display: "row",
+    marginBottom: 5,
+    marginTop: 5,
+    paddingRight: 30,
+    paddingLeft: 30,
+    height: 50,
+    justifyContent: "center",
     alignItems: "center",
-    marginTop: 10,
+    borderRadius: 25,
+    backgroundColor: "#816A55",
   },
   panel: {
     padding: 20,
@@ -47,16 +69,11 @@ export const edit_styles = StyleSheet.create({
     marginBottom: 10,
   },
   panelButton: {
-    padding: 13,
-    borderRadius: 10,
-    backgroundColor: "#FF6347",
-    alignItems: "center",
-    marginVertical: 7,
-  },
-  panelButtonTitle: {
-    fontSize: 17,
-    fontWeight: "bold",
-    color: "white",
+    fontStyle: "bold",
+    color: "FFFFFF",
+    fontSize: 10,
+    textAlign: "center",
+    fontWeight: 700,
   },
   action: {
     flexDirection: "row",
@@ -78,5 +95,8 @@ export const edit_styles = StyleSheet.create({
     marginTop: 0,
     paddingLeft: 10,
     color: "#05375a",
+  },
+  icons: {
+    size: 20,
   },
 });

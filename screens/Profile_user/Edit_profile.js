@@ -19,11 +19,7 @@ export default function EditProfileScreen() {
   // };
 
   return (
-    <Animated.View
-      style={{
-        margin: 20,
-      }}
-    >
+    <View style={edit_styles.container}>
       <View style={edit_styles.action}>
         <FontAwesome name="user-o" color={colors.text} size={20} />
         <TextInput
@@ -96,10 +92,18 @@ export default function EditProfileScreen() {
           ]}
         />
       </View>
-      <TouchableOpacity style={edit_styles.commandButton} onPress={() => {}}>
-        <Text style={edit_styles.panelButtonTitle}>עדכן</Text>
-      </TouchableOpacity>
-      <Button title="חזור" onPress={() => {}} />
-    </Animated.View>
+      <View style={edit_styles.cardContent}>
+        <TouchableOpacity style={edit_styles.SmallButton} onPress={() => {}}>
+          <Text style={edit_styles.SmallButtonTitle}>עדכן</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={edit_styles.SmallButton} onPress={() => {}}>
+          <Text style={edit_styles.SmallButtonTitle}>עדכן</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={edit_styles.SmallButton} onPress={() => {}}>
+          <Text style={edit_styles.SmallButtonTitle}>עדכן</Text>
+        </TouchableOpacity>
+      </View>
+      {/* <Button title="חזור" onPress={() => {}} style={edit_styles.SmallButton} /> */}
+    </View>
   );
 }

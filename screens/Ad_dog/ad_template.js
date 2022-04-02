@@ -25,15 +25,16 @@ export default function AdTemplate() {
           </View>
         </View>
       </View>
-      <View style={AR_styles.card}>
-        <View style={AR_styles.cardHeader}>
-          <Text style={AR_styles.cardTitle}>תגיות</Text>
-          <View style={AR_styles.chips}>
-            <Chip>צולע</Chip>
-            <Chip>שריטה על האף</Chip>
-            <Chip>זנב נפול</Chip>
-          </View>
-        </View>
+      <View style={AR_styles.Viewchips}>
+        <Chip style={AR_styles.chips}>
+          <Text style={AR_styles.chipsText}>צולע</Text>
+        </Chip>
+        <Chip style={AR_styles.chips}>
+          <Text style={AR_styles.chipsText}>שריטה על האף</Text>
+        </Chip>
+        <Chip style={AR_styles.chips}>
+          <Text style={AR_styles.chipsText}>זנב נפול</Text>
+        </Chip>
       </View>
 
       <View style={AR_styles.card}>
