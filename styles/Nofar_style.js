@@ -113,7 +113,7 @@ export const Nofar_styles = StyleSheet.create({
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 25,
+    borderRadius: 20,
     backgroundColor: "#816A55",
   },
 

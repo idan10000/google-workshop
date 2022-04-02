@@ -30,7 +30,7 @@ export const edit_styles = StyleSheet.create({
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 25,
+    borderRadius: 20,
     backgroundColor: "#816A55",
   },
   panel: {
@@ -95,8 +95,5 @@ export const edit_styles = StyleSheet.create({
     marginTop: 0,
     paddingLeft: 10,
     color: "#05375a",
-  },
-  icons: {
-    size: 20,
   },
 });
