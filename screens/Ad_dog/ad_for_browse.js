@@ -9,8 +9,8 @@ export default function AdForBrowser() {
       <ScrollView style={AR_styles.content}>
         <AdTemplate />
         <View style={AR_styles.cardContent}>
-          <TouchableOpacity style={AR_styles.shareButton} onPress={() => {}}>
-            <Text style={AR_styles.shareButtonText}>צור קשר עם הבעלים</Text>
+          <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
+            <Text style={Nofar_styles.BigButtonText}>צור קשר עם הבעלים</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

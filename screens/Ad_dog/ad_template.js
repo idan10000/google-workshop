@@ -25,6 +25,7 @@ export default function AdTemplate() {
           </View>
         </View>
       </View>
+
       <View style={Nofar_styles.Viewchips}>
         <Chip style={Nofar_styles.chips}>
           <Text style={Nofar_styles.chipsText}>צולע</Text>
@@ -38,11 +39,11 @@ export default function AdTemplate() {
       </View>
 
       <View style={Nofar_styles.card}>
-        <View style={Nofar_styles.cardHeader}>
-          <Text style={Nofar_styles.cardTitle}>תיאור</Text>
+        <View style={AR_styles.cardHeader}>
+          <Text style={Nofar_styles.SmallTitle}>תיאור</Text>
         </View>
-        <View style={Nofar_styles.cardContent}>
-          <Text style={Nofar_styles.description}>{report_data.desc}</Text>
+        <View style={AR_styles.cardContent}>
+          <Text>{report_data.desc}</Text>
         </View>
       </View>
     </View>
