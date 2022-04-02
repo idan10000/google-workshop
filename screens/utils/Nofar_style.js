@@ -22,6 +22,16 @@ export const Nofar_styles = StyleSheet.create({
     // textAlign: "center",
     fontWeight: 700,
   },
+  cardHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingTop: 12.5,
+    paddingBottom: 10,
+    paddingHorizontal: 16,
+    borderBottomLeftRadius: 1,
+    borderBottomRightRadius: 1,
+  },
+
   BigButton: {
     width: 330,
     height: 60,
@@ -73,6 +83,12 @@ export const Nofar_styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "600",
   },
+  mainImage: {
+    width: 350,
+    height: 250,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 
   //   the white card I have
   card: {
@@ -116,6 +132,10 @@ export const Nofar_styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 20,
     backgroundColor: "#816A55",
+  },
+  cardContent: {
+    paddingVertical: 12.5,
+    paddingHorizontal: 16,
   },
 
   //   text input

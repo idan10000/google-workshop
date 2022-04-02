@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity, ScrollView } from "react-native";
 import { Nofar_styles } from "../utils/Nofar_style";
 import { AR_styles } from "./Ad_style";
 import AdTemplate from "./ad_template";
-export default function AdForBrowser() {
+export default function AdForBrowse() {
   return (
     <View style={Nofar_styles.container}>
       <ScrollView style={AR_styles.content}>
