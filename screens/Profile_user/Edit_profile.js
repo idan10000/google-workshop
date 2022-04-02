@@ -26,6 +26,8 @@ export default function EditProfileScreen() {
           label="שם"
           value={text}
           onChangeText={onChangeText}
+          activeUnderlineColor="#000000"
+          activeOutlineColor="#000000"
           left={<TextInput.Icon name="phone" />}
         />
       </View>
@@ -38,6 +40,8 @@ export default function EditProfileScreen() {
           label="שם"
           value={text}
           onChangeText={onChangeText}
+          activeUnderlineColor="#000000"
+          activeOutlineColor="#000000"
           left={<TextInput.Icon name="phone" />}
         />
       </View>
@@ -50,6 +54,8 @@ export default function EditProfileScreen() {
           label="שם"
           value={text}
           onChangeText={onChangeText}
+          activeUnderlineColor="#000000"
+          activeOutlineColor="#000000"
           left={<TextInput.Icon name="phone" />}
         />
       </View>
@@ -62,6 +68,8 @@ export default function EditProfileScreen() {
           label="שם"
           value={text}
           onChangeText={onChangeText}
+          activeUnderlineColor="#000000"
+          activeOutlineColor="#000000"
           left={<TextInput.Icon name="phone" />}
         />
       </View>
@@ -74,6 +82,8 @@ export default function EditProfileScreen() {
           label="שם"
           value={text}
           onChangeText={onChangeText}
+          activeUnderlineColor="#000000"
+          activeOutlineColor="#000000"
           left={<TextInput.Icon name="phone" />}
         />
       </View>

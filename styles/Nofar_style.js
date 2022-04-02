@@ -137,4 +137,21 @@ export const Nofar_styles = StyleSheet.create({
     fontSize: 17,
     textAlign: "center",
   },
+
+  //   example for input text i have:
+
+  //   <View style={edit_styles.container}>
+  //   <View style={edit_styles.actionInput}>
+  //     <TextInput
+  //       label="שם"
+  //       value={text}
+  //       onChangeText={onChangeText}
+  //       activeUnderlineColor="#000000"
+  //       activeOutlineColor="#000000"
+  //       left={<TextInput.Icon name="phone" />}
+  //     />
+  //   </View>
+  //   <HelperText type="error" visible={hasErrors()}>
+  //     <Text style={edit_styles.error}>Email address is invalid!</Text>
+  //   </HelperText>
 });
