@@ -13,12 +13,13 @@ import AdPage from "./screens/Ad_dog/ad_page";
 import AdForBrowser from "./screens/Ad_dog/ad_for_browse";
 import ReportForBrowser from "./screens/Report_dog/report_for_browse";
 import ReportPage from "./screens/Report_dog/report_page";
+import EditProfileScreen from "./screens/Profile_user/Edit_profile";
 export default function App() {
   I18nManager.allowRTL(true);
   I18nManager.forceRTL(true);
   return (
     <PaperProvider>
-      <ReportForBrowser />
+      <EditProfileScreen />
       {/* <NavigationContainer>
                 <HomeStack/>
             </NavigationContainer> */}

@@ -49,7 +49,7 @@ export default function EditProfileScreen() {
           // onChangeText={handleChange}
           activeUnderlineColor="#000000"
           activeOutlineColor="#000000"
-          left={<TextInput.Icon name="phone" />}
+          left={<TextInput.Icon name="face" />}
         />
       </View>
       <HelperText type="error" visible={hasErrors("name")}>
@@ -63,7 +63,7 @@ export default function EditProfileScreen() {
           // onChangeText={handleChange("email")}
           activeUnderlineColor="#000000"
           activeOutlineColor="#000000"
-          left={<TextInput.Icon name="phone" />}
+          left={<TextInput.Icon name="email" />}
         />
       </View>
       <HelperText type="error" visible={hasErrors("email")}>
@@ -91,7 +91,7 @@ export default function EditProfileScreen() {
           // onChangeText={handleChange("city")}
           activeUnderlineColor="#000000"
           activeOutlineColor="#000000"
-          left={<TextInput.Icon name="phone" />}
+          left={<TextInput.Icon name="map" />}
         />
       </View>
       <HelperText type="error" visible={hasErrors("city")}>
@@ -105,16 +105,16 @@ export default function EditProfileScreen() {
           // onChangeText={handleChange("country")}
           activeUnderlineColor="#000000"
           activeOutlineColor="#000000"
-          left={<TextInput.Icon name="phone" />}
+          left={<TextInput.Icon name="map" />}
         />
       </View>
       <HelperText type="error" visible={hasErrors("country")}>
-        <Text style={edit_styles.error}>country name address is invalid</Text>
+        <Text style={edit_styles.error}>country name is invalid</Text>
       </HelperText>
 
       <View style={edit_styles.cardContent}>
         <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
-          <Text style={Nofar_styles.BigButtonText}>עדכן</Text>
+          <Text style={Nofar_styles.BigButtonText}>עדכן פרטים</Text>
         </TouchableOpacity>
       </View>
     </View>
