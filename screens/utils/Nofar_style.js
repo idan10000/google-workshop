@@ -13,7 +13,7 @@ export const Nofar_styles = StyleSheet.create({
     color: "#1B1209",
     fontSize: 30,
     // textAlign: "center",
-    fontWeight: 750,
+    fontWeight: 700,
   },
   SmallTitle: {
     fontStyle: "bold",
