@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image,TouchableOpacity } from 'react-native';
 import { pageLaunchStyle } from '../styles/pageLaunchStyle';
 import { Avatar, Button } from 'react-native-paper';
-export default function pageLaunch() {
+export default function PageLaunch() {
     return (
         <View style ={pageLaunchStyle.totalWrapper}>
             <View style={pageLaunchStyle.appNameHeader}>

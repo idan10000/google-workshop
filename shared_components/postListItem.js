@@ -1,22 +1,12 @@
 import * as React from "react";
 import {
-  Text,
-  Button,
   Provider,
-  Card,
-  Chip,
-  Headline,
-  FAB,
-  TextInput,
-  Divider,
   Caption,
 } from "react-native-paper";
 import {
   View,
   StyleSheet,
-  TouchableOpacity,
   Image,
-  I18nManager,
   Dimensions,
 } from "react-native";
 

@@ -3,7 +3,7 @@ import { Text, View, Image } from "react-native";
 import { Chip } from "react-native-paper";
 
 import { AR_styles } from "./Report_style";
-export default function ReportTemplate() {
+export default function ReportTemplate({report}) {
   const report_data = {
     name: " בוני",
     desc: "אבד בפארק העירוני בסביבות השעה ארבע ביום ראשון. בעקבות רעש זיקוקים.",
@@ -17,7 +17,7 @@ export default function ReportTemplate() {
       <View style={AR_styles.card}>
         <View style={AR_styles.cardContent}>
           <View style={AR_styles.mainImageContainer}>
-            <Image style={AR_styles.mainImage} source={require("./dog1.png")} />
+            <Image style={AR_styles.mainImage} source={{uri: report.image}} />
           </View>
         </View>
       </View>
@@ -25,9 +25,11 @@ export default function ReportTemplate() {
         <View style={AR_styles.cardHeader}>
           <Text style={AR_styles.cardTitle}>תגיות</Text>
           <View style={AR_styles.chips}>
-            <Chip>צולע</Chip>
-            <Chip>שריטה על האף</Chip>
-            <Chip>זנב נפול</Chip>
+            {
+              report.tagList.map((item, index) => (
+                  <Chip key={index}>{item.tag}</Chip>
+              ))
+            }
           </View>
         </View>
       </View>
@@ -37,7 +39,7 @@ export default function ReportTemplate() {
           <Text style={AR_styles.cardTitle}>תיאור</Text>
         </View>
         <View style={AR_styles.cardContent}>
-          <Text style={AR_styles.description}>{report_data.desc}</Text>
+          <Text style={AR_styles.description}>{report.description}</Text>
         </View>
       </View>
     </View>

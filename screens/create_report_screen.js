@@ -1,30 +1,31 @@
 import * as React from 'react';
-import {Modal, Portal, Text, Button, Provider, Card, Chip, Headline, FAB, TextInput} from 'react-native-paper';
-import {View, StyleSheet, TouchableOpacity, Image, I18nManager, Dimensions} from 'react-native'
-import * as ImagePicker from 'expo-image-picker';
+import {Modal, Portal, Button, Provider, Chip, Headline, TextInput, Text} from 'react-native-paper';
+import {View, StyleSheet, Image} from 'react-native'
+import Report from '../data_classes/report'
 
 
-const ReportCreationScreen = ({image}) => {
+const ReportCreationScreen = ({route, navigation}) => {
 
+    console.log("opened report screen")
+    let report = route.params.report
 
-    //---------------------- Modal ----------------------
+    //---------------------- Tag Selection Modal ----------------------
     const [visibleTag, setVisibleTag] = React.useState(false);
     const showTagModal = () => setVisibleTag(true);
     const hideTagModal = () => setVisibleTag(false);
 
-    const [visibleDetails, setVisibleDetails] = React.useState(false);
-    const showDescriptionModal = () => setVisibleDetails(true);
-    const hideDescriptionModal = () => setVisibleDetails(false);
-
-    //---------------------- Tag Selection ----------------------
     const tagList = [
         {tag: "Shy", state: false},
         {tag: "Friendly", state: false},
         {tag: "Aggressive", state: false}]
 
-    const [modalTags, setModalTags] = React.useState(tagList);
-    const [selectedTags, setSelectedTags] = React.useState([]);
 
+    const initSelectedTagList = route.params.edit ? report.tagList.map(({tag}) => ({tag: tag, state: false})) : []
+    console.log(initSelectedTagList)
+    const initModalTagList = route.params.edit ?
+        tagList.filter((item) => !initSelectedTagList.some(e => e.tag === item.tag)) : tagList
+    const [modalTags, setModalTags] = React.useState(initModalTagList);
+    const [selectedTags, setSelectedTags] = React.useState(initSelectedTagList);
 
     const modalChipHandler = (index) => {
         setModalTags(prevStates => {
@@ -49,6 +50,29 @@ const ReportCreationScreen = ({image}) => {
         setSelectedTags(prevSelected => (prevSelected.filter((prevSelected) => prevSelected.tag !== tag)))
     }
 
+    //---------------------- Details Modal ----------------------
+    const [visibleDetails, setVisibleDetails] = React.useState(false);
+    const showDescriptionModal = () => setVisibleDetails(true);
+    const hideDescriptionModal = () => setVisibleDetails(false);
+
+    const initDescription = route.params.edit ? report.description : ''
+    const [descriptionText, setDescription] = React.useState(initDescription);
+
+    const [location, setLocation] = React.useState('');
+
+    const reportConfirmHandler = () => {
+        // let date = new Date();
+        // let newReport = new Report(image, location, date, selectedTags, descriptionText)
+        // console.log(newReport)
+        let date = route.params.edit ? report.date : new Date().getDate()
+        navigation.pop()
+        navigation.navigate("ReportPage", {report: new Report(image, location, date, selectedTags, descriptionText)})
+    }
+
+    //---------------------- Create / Edit setup ----------------------
+
+    let image = route.params.edit ? report.image : route.params.image
+
     return (
         <Provider>
             {/*Modal (pop up screen) for selecting the tags describing the dog*/}
@@ -72,17 +96,13 @@ const ReportCreationScreen = ({image}) => {
                 {/*Details*/}
                 <Modal visible={visibleDetails} onDismiss={hideDescriptionModal}
                        contentContainerStyle={styles.modal}>
-                    <View style={{paddingVertical: 16}}>
-                        <Headline>שם הכלב:</Headline>
-
-                        <TextInput dense={true} placeholder={'שם הכלב...'} multiline={true}
-                                   style={{height: undefined}}/>
-                    </View>
                     <View><Headline>תיאור:</Headline></View>
                     <View style={styles.descriptionContainer}>
                         <TextInput
                             dense={false}
                             placeholder={'הוסף תיאור...'}
+                            value={descriptionText}
+                            onChangeText={setDescription}
                             mode={'outlined'}
                             multiline={true}
                             style={{height: undefined}}
@@ -91,7 +111,7 @@ const ReportCreationScreen = ({image}) => {
                     <View style={{paddingVertical: 16}}>
                         <Headline>מיקום:</Headline>
 
-                        <Button mode={'contained'}>עדכן מיקום:</Button>
+                        <Button mode={'contained'}>עדכון מיקום</Button>
                     </View>
 
                     <View style={styles.modalButtonContainer}>
@@ -106,10 +126,10 @@ const ReportCreationScreen = ({image}) => {
 
                 <View style={styles.pictureContainer}>
                     <Image
-                    source={{uri: image}}
-                    style={styles.card}/>
+                        source={{uri: image}}
+                        style={styles.card}/>
                 </View>
-
+                <Headline>תגיות:</Headline>
                 <View style={styles.chips}>
                     {
                         selectedTags.map((item, index) => (
@@ -119,7 +139,7 @@ const ReportCreationScreen = ({image}) => {
                     }
                 </View>
 
-                <Button comapct={true} style={{marginTop: 30}} onPress={showTagModal}>
+                <Button comapct={true} style={{marginTop: 8}} onPress={showTagModal}>
                     הוסף תגיות
                 </Button>
 
@@ -127,7 +147,7 @@ const ReportCreationScreen = ({image}) => {
                     הוסף פרטים
                 </Button>
 
-                <Button mode={"contained"} style={{marginBottom: 30}}>
+                <Button mode={"contained"} style={{marginBottom: 30}} onPress={reportConfirmHandler}>
                     אישור
                 </Button>
             </View>
@@ -137,7 +157,6 @@ const ReportCreationScreen = ({image}) => {
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 50,
         padding: 4,
         flex: 1,
     },
@@ -169,7 +188,7 @@ const styles = StyleSheet.create({
     },
     card: {
         resizeMode: "contain",
-        flex:1
+        flex: 1
 
     }, modalButtonContainer: {
         justifyContent: "center",
