@@ -123,5 +123,18 @@ export const Nofar_styles = StyleSheet.create({
   },
 
   //   text input
-  SmallTextInput: {},
+  actionInput: {
+    marginTop: 30,
+    marginRight: 30,
+    marginLeft: 30,
+    borderBottomWidth: 5,
+    borderBottomColor: "#f2f2f2",
+  },
+  error: {
+    marginRight: 30,
+    marginLeft: 30,
+    marginTop: 0,
+    fontSize: 17,
+    textAlign: "center",
+  },
 });

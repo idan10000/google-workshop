@@ -75,14 +75,6 @@ export const edit_styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: 700,
   },
-  action: {
-    flexDirection: "row",
-    marginTop: 10,
-    marginBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#f2f2f2",
-    paddingBottom: 5,
-  },
   actionError: {
     flexDirection: "row",
     marginTop: 10,
@@ -92,8 +84,24 @@ export const edit_styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
+    marginTop: 10,
+    paddingRight: 10,
+    fontStyle: "bold",
+    fontSize: 20,
+    fontWeight: 720,
+  },
+  actionInput: {
+    marginTop: 30,
+    marginRight: 30,
+    marginLeft: 30,
+    borderBottomWidth: 5,
+    borderBottomColor: "#f2f2f2",
+  },
+  error: {
+    marginRight: 30,
+    marginLeft: 30,
     marginTop: 0,
-    paddingLeft: 10,
-    color: "#05375a",
+    fontSize: 17,
+    textAlign: "center",
   },
 });
