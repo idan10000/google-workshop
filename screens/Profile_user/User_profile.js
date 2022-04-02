@@ -5,6 +5,7 @@ import { user_styles } from "./User_profile_style";
 import Avatar from "avataaars";
 import { generateRandomAvatarOptions } from "../utils/avatar";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Nofar_styles } from "../utils/Nofar_style";
 
 export default function ProfileScreen() {
   const userDetalies = {
@@ -73,7 +74,7 @@ export default function ProfileScreen() {
         <View style={user_styles.menuItem}>
           <Icon name="heart-outline" color="#FF6347" size={25} />
           <Button
-            title="הצג את המודעות והדיווחים שלי"
+            title="הצגת מודעות ודיווחים"
             style={user_styles.menuItemText}
             onPress={() => {}}
           />
@@ -81,7 +82,7 @@ export default function ProfileScreen() {
         <View style={user_styles.menuItem}>
           <Icon name="account-edit" color="#FF6347" size={25} />
           <Button
-            title="עדכן פרטי משתמש"
+            title="עדכון פרטי משתמש"
             style={user_styles.menuItemText}
             onPress={() => {}}
           />
@@ -89,7 +90,7 @@ export default function ProfileScreen() {
         <View style={user_styles.menuItem}>
           <Icon name="share-outline" color="#FF6347" size={25} />
           <Button
-            title="שתף את האפליקציה"
+            title="שיתוף אפליקציה"
             style={user_styles.menuItemText}
             onPress={() => {}}
           />

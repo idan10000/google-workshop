@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Text, View, Image } from "react-native";
 import { Chip } from "react-native-paper";
-
+import { Nofar_styles } from "../utils/Nofar_style";
 import { AR_styles } from "./Ad_style";
 
 export default function AdTemplate() {
@@ -14,8 +14,8 @@ export default function AdTemplate() {
     price: "100 $",
   };
   return (
-    <View style={AR_styles.container}>
-      <View style={AR_styles.card}>
+    <View style={Nofar_styles.container}>
+      <View style={Nofar_styles.card}>
         <View style={AR_styles.cardHeader}>
           <Text style={AR_styles.name}>{report_data.name}</Text>
         </View>
@@ -25,24 +25,24 @@ export default function AdTemplate() {
           </View>
         </View>
       </View>
-      <View style={AR_styles.Viewchips}>
-        <Chip style={AR_styles.chips}>
-          <Text style={AR_styles.chipsText}>צולע</Text>
+      <View style={Nofar_styles.Viewchips}>
+        <Chip style={Nofar_styles.chips}>
+          <Text style={Nofar_styles.chipsText}>צולע</Text>
         </Chip>
-        <Chip style={AR_styles.chips}>
-          <Text style={AR_styles.chipsText}>שריטה על האף</Text>
+        <Chip style={Nofar_styles.chips}>
+          <Text style={Nofar_styles.chipsText}>שריטה על האף</Text>
         </Chip>
-        <Chip style={AR_styles.chips}>
-          <Text style={AR_styles.chipsText}>זנב נפול</Text>
+        <Chip style={Nofar_styles.chips}>
+          <Text style={Nofar_styles.chipsText}>זנב נפול</Text>
         </Chip>
       </View>
 
-      <View style={AR_styles.card}>
-        <View style={AR_styles.cardHeader}>
-          <Text style={AR_styles.cardTitle}>תיאור</Text>
+      <View style={Nofar_styles.card}>
+        <View style={Nofar_styles.cardHeader}>
+          <Text style={Nofar_styles.cardTitle}>תיאור</Text>
         </View>
-        <View style={AR_styles.cardContent}>
-          <Text style={AR_styles.description}>{report_data.desc}</Text>
+        <View style={Nofar_styles.cardContent}>
+          <Text style={Nofar_styles.description}>{report_data.desc}</Text>
         </View>
       </View>
     </View>

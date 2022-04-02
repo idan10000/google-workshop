@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, ScrollView } from "react-native";
-
+import { Nofar_styles } from "../utils/Nofar_style";
 import { AR_styles } from "./Ad_style";
 import AdTemplate from "./ad_template";
 export default function AdForBrowser() {

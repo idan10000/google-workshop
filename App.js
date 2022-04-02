@@ -14,7 +14,7 @@ import { I18nManager } from "react-native";
 // import ReportForBrowser from "./screens/Report_dog/report_for_browser";
 // import ReportPage from "./screens/Report_dog/report_page";
 // import AdTemple from "./screens/Ad_dog/ad_temple";
-// import AdPage from "./screens/Ad_dog/Ad_page";
+import AdPage from "./screens/Ad_dog/Ad_page";
 // import AdForBrowser from "./screens/Ad_dog/ad_for_browse";
 // import SupportScreen from "./screens/Profile_user/Technical_support";
 import EditProfileScreen from "./screens/Profile_user/Edit_profile";
@@ -28,7 +28,7 @@ export default function App() {
 
   return (
     <PaperProvider>
-      <EditProfileScreen />
+      <AdPage />
     </PaperProvider>
   );
 }
