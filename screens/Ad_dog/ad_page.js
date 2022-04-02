@@ -12,7 +12,7 @@ export default function AdPage() {
         <AdTemplate />
         <View style={AR_styles.cardContent}>
           <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
-            <Text style={Nofar_styles.shareButtonText}>פתח מיקום במפה</Text>
+            <Text style={Nofar_styles.BigButtonText}>פתח מיקום במפה</Text>
           </TouchableOpacity>
         </View>
 
