@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {Modal, Portal, Text, Button, Provider, Card, Chip, Headline, FAB, TextInput} from 'react-native-paper';
-import {View, StyleSheet, TouchableOpacity, Image, I18nManager} from 'react-native'
+import {Modal, Portal, Text, Button, Provider, Card, Chip, Headline, FAB, TextInput, Subheading, HelperText} from 'react-native-paper';
+import {View, StyleSheet, TouchableOpacity, Image, I18nManager, ScrollView, Dimensions} from 'react-native'
 import * as ImagePicker from 'expo-image-picker';
 
 
@@ -85,6 +85,14 @@ const PosterPostingComponent = () => {
 
     }
 
+    const [text, setText] = React.useState('');
+
+    const onChangeText = text => setText(text);
+
+    const hasErrors = () => {
+        return !text.includes('@');
+    };
+
 
     return (
         <Provider>
@@ -106,14 +114,49 @@ const PosterPostingComponent = () => {
                                 onPress={modalConfirmPressHandler}>Confirm</Button>
                     </View>
                 </Modal>
-                {/*Details*/}
-                <Modal visible={visibleDetails} onDismiss={hideDescriptionModal}
-                       contentContainerStyle={styles.modal}>
+            </Portal>
+
+            <ScrollView>
+            <View style={styles.container}>
+
+                {imagePicker}
+                <View style={styles.fabContainer}>
+                    <FAB
+                        style={styles.fab}
+                        small
+                        icon={"camera-plus"}
+                        onPress={openImagePickerAsync}
+                    />
+                </View>
+                <Headline>תגיות:</Headline>
+                <View style={styles.chips}>
+                    {
+                        selectedTags.map((item, index) => (
+                            <Chip key={index} icon={"close"} selected={false}
+                                  onPress={() => selectedTagPressHandler(item.tag)}>{item.tag}</Chip>
+                        ))
+                    }
+                </View>
+
+                <Button comapct={true} style={styles.addTagsBT} onPress={showTagModal}>
+                    הוסף תגיות
+                </Button>
+
+
+                <View style={styles.detailsContainer}>
                     <View style={{paddingVertical: 16}}>
                         <Headline>שם הכלב:</Headline>
 
-                        <TextInput dense={true} placeholder={'שם הכלב...'} multiline={true}
-                                   style={{height: undefined}}/>
+                        <TextInput dense={true} placeholder={'שם הכלב...'}
+                                   error={hasErrors}
+                                   style={{height: undefined}}
+                                   value={text}
+                                   onChangeText={onChangeText}
+
+                        />
+                        <HelperText type="error" visible={hasErrors()}>
+                            שם הכלב צריך להכיל רק אותיות
+                        </HelperText>
                     </View>
                     <View><Headline>תיאור:</Headline></View>
                     <View style={styles.descriptionContainer}>
@@ -130,58 +173,14 @@ const PosterPostingComponent = () => {
 
                         <Button mode={'contained'}>עדכן מיקום אחרון</Button>
                     </View>
-
-                    <View style={{paddingVertical:16}}>
-                        <Headline>פרס כספי:</Headline>
-
-                        <TextInput
-                            dense={true}
-                            placeholder={'פרס כספי...'}
-                            multiline={true}
-                            style={{height:undefined}}
-                        />
-                    </View>
-
-                    <View style={styles.modalButtonContainer}>
-                        <Button compact={true} style={styles.modalButton}
-                                onPress={modalConfirmPressHandler}>אישור</Button>
-                    </View>
-
-                </Modal>
-            </Portal>
-
-            <View style={styles.container}>
-
-                {imagePicker}
-                <View style={styles.fabContainer}>
-                    <FAB
-                        style={styles.fab}
-                        small
-                        icon={"camera-plus"}
-                        onPress={openImagePickerAsync}
-                    />
-                </View>
-                <View style={styles.chips}>
-                    {
-                        selectedTags.map((item, index) => (
-                            <Chip key={index} icon={"close"} selected={false}
-                                  onPress={() => selectedTagPressHandler(item.tag)}>{item.tag}</Chip>
-                        ))
-                    }
                 </View>
 
-                <Button comapct={true} style={{marginTop: 30}} onPress={showTagModal}>
-                    הוסף תגיות
-                </Button>
-
-                <Button comapct={true} onPress={showDescriptionModal}>
-                    הוסף פרטים
-                </Button>
 
                 <Button mode={"contained"} style={{marginBottom: 30}}>
                     אישור
                 </Button>
             </View>
+            </ScrollView>
         </Provider>
     );
 };
@@ -189,7 +188,7 @@ const PosterPostingComponent = () => {
 const styles = StyleSheet.create({
     container: {
         paddingTop: 50,
-        padding: 4,
+        paddingHorizontal:8,
         flex: 1,
     },
     chips: {
@@ -205,23 +204,23 @@ const styles = StyleSheet.create({
     addImageContainer: {
         justifyContent: "center",
         borderWidth: 1,
-        flex: 1
+        flex: 1,
+        height: Dimensions.get('window').height / 2
     },
     addImageText: {
         textAlign: "center",
         fontSize: 24
     },
     pictureContainer: {
-        marginTop: 30,
         flex: 3,
         justifyContent: "center",
         alignContent: "center",
+        height: Dimensions.get('window').height / 2
 
     },
     card: {
         resizeMode: "contain",
         flex: 1
-
     }, modalButtonContainer: {
         justifyContent: "center",
         alignContent: "center",
@@ -236,7 +235,10 @@ const styles = StyleSheet.create({
         right: 16,
         bottom: 16
     },
-    descriptionContainer: {}
+    descriptionContainer: {},
+    addTagsBT: {
+
+    }
 });
 
 export default PosterPostingComponent;

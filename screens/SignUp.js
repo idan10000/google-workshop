@@ -119,7 +119,7 @@ export default function SignUp() {
                                 secureTextEntry={passwordVisibility}
                                 enablesReturnKeyAutomatically
                             />
-                            <Pressable style = {signUpStyles.eyeIcon}onPress={handlePasswordVisibility}>
+                            <Pressable style = {signUpStyles.eyeIcon} onPress={handlePasswordVisibility}>
                                 <MaterialCommunityIcons name={rightIcon} size={24} color="#232323" />
                             </Pressable>
                         </View>

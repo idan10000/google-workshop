@@ -1,19 +1,17 @@
-import {StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, View, Image, Dimensions} from 'react-native';
 import {Button} from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
-import {useState} from "react";
 
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
 
-    const [pickedImagePath, setPickedImagePath] = useState('');
 
     const openCamera = async () => {
         // Ask the user for the permission to access the camera
         const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
 
         if (permissionResult.granted === false) {
-            alert("You've refused to allow this appp to access your camera!");
+            alert("You've refused to allow this app to access your camera!");
             return;
         }
 
@@ -23,8 +21,7 @@ export default function HomeScreen() {
         console.log(result);
 
         if (!result.cancelled) {
-            setPickedImagePath(result.uri);
-            console.log(result.uri);
+            navigation.navigate('ReportCreation',{image:result.uri, edit:false})
         }
     }
 
@@ -72,7 +69,10 @@ const styles = StyleSheet.create({
         bottom: 60
     },
     button: {
-        padding: 50,
+        height:Dimensions.get("window").height/3,
+        width:Dimensions.get("window").width/1.3,
+        alignContent:'center',
+        justifyContent:"center",
         bottom: 150,
         borderRadius: 50
     }
