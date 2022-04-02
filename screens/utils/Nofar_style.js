@@ -25,7 +25,8 @@ export const Nofar_styles = StyleSheet.create({
   BigButton: {
     width: 330,
     height: 60,
-    marginTop: 10,
+    // marginTop: 5,
+    // marginBottom: 0,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -34,7 +35,7 @@ export const Nofar_styles = StyleSheet.create({
     shadowColor: "#00000021",
     shadowOffset: {
       width: 5,
-      height: 10,
+      height: 5,
     },
     shadowOpacity: 0.9,
     shadowRadius: 7.49,
@@ -58,7 +59,7 @@ export const Nofar_styles = StyleSheet.create({
     marginLeft: 5,
     paddingRight: 3,
     paddingLeft: 3,
-    height: 50,
+    // height: 35,
     marginTop: 10,
     justifyContent: "center",
     alignItems: "center",
@@ -68,9 +69,9 @@ export const Nofar_styles = StyleSheet.create({
   chipsText: {
     fontStyle: "normal",
     color: "#483C32",
-    fontSize: 20,
+    fontSize: 19,
     textAlign: "center",
-    fontWeight: 720,
+    fontWeight: "600",
   },
 
   //   the white card I have
