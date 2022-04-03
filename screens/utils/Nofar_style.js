@@ -139,7 +139,7 @@ export const Nofar_styles = StyleSheet.create({
     marginRight: 30,
     marginLeft: 30,
     borderBottomWidth: 5,
-    borderBottomColor: "#f2f2f2",
+    borderBottomColor: "#A9A9A9",
   },
   error: {
     marginRight: 30,
@@ -147,22 +147,7 @@ export const Nofar_styles = StyleSheet.create({
     marginTop: 0,
     fontSize: 17,
     textAlign: "center",
+    color: "#3B3B3B",
+    fontWeight: "600",
   },
-
-  //   example for input text i have:
-
-  //   <View style={edit_styles.container}>
-  //   <View style={edit_styles.actionInput}>
-  //     <TextInput
-  //       label="שם"
-  //       value={text}
-  //       onChangeText={onChangeText}
-  //       activeUnderlineColor="#000000"
-  //       activeOutlineColor="#000000"
-  //       left={<TextInput.Icon name="phone" />}
-  //     />
-  //   </View>
-  //   <HelperText type="error" visible={hasErrors()}>
-  //     <Text style={edit_styles.error}>Email address is invalid!</Text>
-  //   </HelperText>
 });

@@ -13,7 +13,7 @@ import AdPage from "./screens/Ad_dog/ad_page";
 import AdForBrowse from "./screens/Ad_dog/ad_for_browse";
 // import ReportForBrowse from "./screens/Report_dog/report_for_browse";
 // import ReportPage from "./screens/Report_dog/report_page";
-// import EditProfileScreen from "./screens/Profile_user/Edit_profile";
+import EditProfileScreen from "./screens/Profile_user/Edit_profile";
 // import ProfileScreen from "./screens/Profile_user/User_profile";
 // import SupportScreen from "./screens/Profile_user/Technical_support";
 
@@ -22,7 +22,7 @@ export default function App() {
   I18nManager.forceRTL(true);
   return (
     <PaperProvider>
-      <AdForBrowse />
+      <EditProfileScreen />
       {/* <NavigationContainer>
                 <HomeStack/>
             </NavigationContainer> */}

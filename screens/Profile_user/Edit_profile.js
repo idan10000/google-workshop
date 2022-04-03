@@ -41,8 +41,8 @@ export default function EditProfileScreen() {
     }
   };
   return (
-    <View style={edit_styles.container}>
-      <View style={edit_styles.actionInput}>
+    <View style={Nofar_styles.container}>
+      <View style={Nofar_styles.actionInput}>
         <TextInput
           label="שם"
           value={state.fname}
@@ -53,10 +53,12 @@ export default function EditProfileScreen() {
         />
       </View>
       <HelperText type="error" visible={hasErrors("name")}>
-        <Text style={edit_styles.error}>Name is invalid</Text>
+        <Text style={Nofar_styles.error}>
+          {"אותיות בעברית בלבד, ללא תווים מיוחדים"}
+        </Text>
       </HelperText>
 
-      <View style={edit_styles.actionInput}>
+      <View style={Nofar_styles.actionInput}>
         <TextInput
           label="אימייל"
           value={state.email}
@@ -67,10 +69,10 @@ export default function EditProfileScreen() {
         />
       </View>
       <HelperText type="error" visible={hasErrors("email")}>
-        <Text style={edit_styles.error}>Phone number is invalid</Text>
+        <Text style={Nofar_styles.error}> abc@gmail.com</Text>
       </HelperText>
 
-      <View style={edit_styles.actionInput}>
+      <View style={Nofar_styles.actionInput}>
         <TextInput
           label="טלפון"
           value={state.phone}
@@ -81,10 +83,10 @@ export default function EditProfileScreen() {
         />
       </View>
       <HelperText type="error" visible={hasErrors("phone")}>
-        <Text style={edit_styles.error}>Email address is invalid</Text>
+        <Text style={Nofar_styles.error}>מספרים 0-9</Text>
       </HelperText>
 
-      <View style={edit_styles.actionInput}>
+      <View style={Nofar_styles.actionInput}>
         <TextInput
           label="עיר"
           value={state.city}
@@ -95,10 +97,12 @@ export default function EditProfileScreen() {
         />
       </View>
       <HelperText type="error" visible={hasErrors("city")}>
-        <Text style={edit_styles.error}>City name is invalid</Text>
+        <Text style={Nofar_styles.error}>
+          {"אותיות בעברית בלבד, ללא תווים מיוחדים"}
+        </Text>
       </HelperText>
 
-      <View style={edit_styles.actionInput}>
+      <View style={Nofar_styles.actionInput}>
         <TextInput
           label="מדינה"
           value={state.country}
@@ -109,10 +113,12 @@ export default function EditProfileScreen() {
         />
       </View>
       <HelperText type="error" visible={hasErrors("country")}>
-        <Text style={edit_styles.error}>country name is invalid</Text>
+        <Text style={Nofar_styles.error}>
+          {"אותיות בעברית בלבד, ללא תווים מיוחדים"}
+        </Text>
       </HelperText>
 
-      <View style={edit_styles.cardContent}>
+      <View style={{ marginLeft: 50, marginTop: 20 }}>
         <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
           <Text style={Nofar_styles.BigButtonText}>עדכן פרטים</Text>
         </TouchableOpacity>
