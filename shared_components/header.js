@@ -1,6 +1,5 @@
 import React from 'react';
 import { Appbar } from 'react-native-paper';
-import { globalStyles } from '../styles/global';
 import {StyleSheet} from 'react-native';
 
 export default function Header({ navigation, back }) {
