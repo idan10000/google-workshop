@@ -110,7 +110,7 @@ const BrowseReports = ({navigation}) => {
                 }}/>
 
             </View>
-            <NewReportFAB/>
+            {/* <NewReportFAB/> */}
         </Provider>
     )
 

@@ -2,7 +2,6 @@ import {StyleSheet, View, Image, Dimensions} from 'react-native';
 import {Button} from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 
-
 export default function HomeScreen({navigation}) {
 
 
@@ -27,32 +26,38 @@ export default function HomeScreen({navigation}) {
 
     return (
         <View style={styles.container}>
-            <Button
-                mode='contained'
-                icon='camera'
-                color='blue'
-                style={styles.button}
-                onPress={openCamera}>
-                מצאתי כלב!
-            </Button>
-
-            <Button
-                mode='outlined'
-                icon='image'
-                color='blue'
-                style={styles.smallButton}
-                onPress={() => console.log('upload from gallery')}>
-                העלאה מגלריה
-            </Button>
-
-            <Button
-                mode='outlined'
-                color='blue'
-                style={styles.smallButton}
-                onPress={() => console.log('upload missing ad')}>
-                יצירת מודעה
-            </Button>
-
+            <View style={styles.BigButtonView}>
+                <Button
+                    mode='contained'
+                    icon='camera'
+                    style={styles.BigButton}
+                    onPress={openCamera}
+                    labelStyle={styles.BigButtonText}>
+                    מצאתי כלב!
+                </Button>
+            </View>
+            <View style={styles.SmallButtonsView}>
+                <View style={styles.SmallButtonView}>
+                    <Button
+                        mode='outlined'
+                        icon='image'
+                        style={styles.SmallButton}
+                        onPress={() => console.log('upload from gallery')}
+                        labelStyle={styles.SmallButtonTitle}>
+                        העלאה מגלריה
+                    </Button>
+                </View>
+                
+                <View style={styles.SmallButtonView}>
+                    <Button
+                        mode='outlined'
+                        style={styles.SmallButton}
+                        onPress={() => console.log('upload missing ad')}
+                        labelStyle={styles.SmallButtonTitle}>
+                        יצירת מודעה
+                    </Button>
+                </View>
+            </View>
         </View>
     );
 }
@@ -60,20 +65,49 @@ export default function HomeScreen({navigation}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
+        backgroundColor: "#BBB988",
     },
-    smallButton: {
-        margin: 20,
-        bottom: 60
+    
+    
+    //   small button
+    SmallButtonsView: {
+        marginTop:"25%",
     },
-    button: {
-        height:Dimensions.get("window").height/3,
-        width:Dimensions.get("window").width/1.3,
-        alignContent:'center',
-        justifyContent:"center",
-        bottom: 150,
-        borderRadius: 50
-    }
+    SmallButtonView: {
+        alignSelf:"center",
+    },
+    SmallButtonTitle: {
+        color: "#FFFFFF",
+        fontSize: 16,
+        textAlign: "center",
+        fontWeight: "500",
+    },
+    SmallButton: {
+        width:Dimensions.get('window').width * 0.65,
+        height: Dimensions.get('window').height * 0.05,
+        marginTop: "10%",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 20,
+        backgroundColor: "#816A55",
+    },
+    BigButtonView: {
+        alignSelf:"center",
+    },
+    BigButton: {
+        width:Dimensions.get('window').width * 0.80,
+        height: Dimensions.get('window').height * 0.15,
+        marginTop: "60%",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 50,
+        backgroundColor: "#816A55",
+      },
+    BigButtonText: {
+    color: "#FFFFFF",
+    fontSize: 25,
+    textAlign: "center",
+    fontWeight: "700",
+    },
 });
