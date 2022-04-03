@@ -5,7 +5,8 @@ export const stylesPoster = StyleSheet.create({
     flexDirection: "row",
     overflow: "hidden",
     flexWrap: "wrap",
-    paddingHorizontal:"5%"
+    paddingHorizontal:"5%",
+    paddingTop:"3%"
   },
   modal: {
     backgroundColor:"#BBB988",

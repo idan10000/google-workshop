@@ -1,7 +1,7 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import Header from '../shared_components/header';
 import HomeScreen from "../screens/homeScreen";
-import ReportCreationScreen from "../screens/create_report_screen";
+import ReportCreationScreen from "../screens/reportCreate/create_report_screen";
 import ReportPage from "../screens/Report_dog/report_page";
 
 const Stack = createStackNavigator();
