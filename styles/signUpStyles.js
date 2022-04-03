@@ -43,9 +43,9 @@ export const signUpStyles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: '#ddd',
-    padding: 10,
     fontSize: 18,
     width:300,
+    height:30,
     borderRadius: 6,
   },
   errorText: {
@@ -66,7 +66,6 @@ export const signUpStyles = StyleSheet.create({
     marginBottom:10
   },
   inputContainer: {
-    backgroundColor: 'white',
     width: '100%',
     borderRadius: 8,
     flexDirection: 'row',
@@ -74,7 +73,15 @@ export const signUpStyles = StyleSheet.create({
 
   }, eyeIcon: {
     position:"absolute",
-    left:10
+    right:'5%',
+
+  },
+  totalInput: {
+    flex:1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+
   }
 
 

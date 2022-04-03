@@ -19,25 +19,23 @@ export const pageLaunchStyle = StyleSheet.create({
 
     },
     appLogo: {
-        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-        height:160,
-        width:200,
+        height:80,
+        width:100,
         resizeMode: 'stretch',
-      },
+    },
 
     AvatarContainer:{
         justifyContent: 'center',
         flex: 1,
         flexDirection: "row",
-        marginVertical:10
 
     },
 
     avatar:{
-        marginRight:20,
-        marginLeft: 20
+        marginRight:2,
+        marginLeft:2,
     },
     containerForMiddleLines:{
         justifyContent: 'center',
@@ -51,35 +49,42 @@ export const pageLaunchStyle = StyleSheet.create({
         flex:1,
         height: 3,
         backgroundColor: '#333',
-      },
-      text:{
+    },
+    text:{
         margin: 13
     },
-      orSeperator2: {
+    orSeperator2: {
         width: 70,
         height: 3,
         backgroundColor: '#333',
-      },
+    },
     signupButton:{
-        height: 60,
         marginBottom:24,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 50,
+        borderRadius: 20,
+        backgroundColor: "#816A55",
+        shadowColor: "#00000021",
+        width: 330,
+        height: 60,
+        shadowOffset: {
+            width: 5,
+            height: 5,
+        }
 
     },
     containerForRegisterClick:{
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: "row",
-        marginBottom:400,
 
     },
     sellingText:{
+        marginTop:20,
+        marginBottom:10,
         flexDirection:'column',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 20
     }
 
-  });
+});

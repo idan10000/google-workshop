@@ -16,25 +16,27 @@ export default function ReportPage({ route, navigation }) {
     <View style={Nofar_styles.container}>
       <ScrollView style={AR_styles.content}>
         <ReportTemplate />
-        <View style={AR_styles.cardContent}>
-          <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
-            <Text style={Nofar_styles.BigButtonText}>פתח מיקום במפה</Text>
-          </TouchableOpacity>
-        </View>
+        <View style={{ marginLeft: 15 }}>
+          <View style={AR_styles.cardContent}>
+            <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
+              <Text style={Nofar_styles.BigButtonText}>פתח מיקום במפה</Text>
+            </TouchableOpacity>
+          </View>
 
-        <View style={AR_styles.cardContent}>
-          <TouchableOpacity
-            style={Nofar_styles.BigButton}
-            onPress={editButtonPressHandler}
-          >
-            <Text style={Nofar_styles.BigButtonText}>עדכן דיווח</Text>
-          </TouchableOpacity>
-        </View>
+          <View style={AR_styles.cardContent}>
+            <TouchableOpacity
+              style={Nofar_styles.BigButton}
+              onPress={editButtonPressHandler}
+            >
+              <Text style={Nofar_styles.BigButtonText}>עדכן דיווח</Text>
+            </TouchableOpacity>
+          </View>
 
-        <View style={AR_styles.cardContent}>
-          <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
-            <Text style={Nofar_styles.BigButtonText}> מחק דיווח</Text>
-          </TouchableOpacity>
+          <View style={AR_styles.cardContent}>
+            <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
+              <Text style={Nofar_styles.BigButtonText}> מחק דיווח</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </View>

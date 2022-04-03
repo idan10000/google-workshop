@@ -9,14 +9,12 @@ export const Nofar_styles = StyleSheet.create({
   },
   text: { fontSize: 20 },
   BigTitle: {
-    fontStyle: "normal",
     color: "#1B1209",
     fontSize: 30,
     // textAlign: "center",
     fontWeight: "700",
   },
   SmallTitle: {
-    fontStyle: "normal",
     color: "#1B1209",
     fontSize: 20,
     // textAlign: "center",
@@ -51,7 +49,6 @@ export const Nofar_styles = StyleSheet.create({
     shadowRadius: 7.49,
   },
   BigButtonText: {
-    fontStyle: "normal",
     color: "#FFFFFF",
     fontSize: 25,
     textAlign: "center",
@@ -77,7 +74,6 @@ export const Nofar_styles = StyleSheet.create({
     backgroundColor: "#EADDCA",
   },
   chipsText: {
-    fontStyle: "normal",
     color: "#483C32",
     fontSize: 20,
     textAlign: "center",
@@ -116,7 +112,6 @@ export const Nofar_styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   SmallButtonTitle: {
-    fontStyle: "normal",
     color: "#FFFFFF",
     fontSize: 20,
     textAlign: "center",
@@ -144,7 +139,7 @@ export const Nofar_styles = StyleSheet.create({
     marginRight: 30,
     marginLeft: 30,
     borderBottomWidth: 5,
-    borderBottomColor: "#f2f2f2",
+    borderBottomColor: "#A9A9A9",
   },
   error: {
     marginRight: 30,
@@ -152,22 +147,7 @@ export const Nofar_styles = StyleSheet.create({
     marginTop: 0,
     fontSize: 17,
     textAlign: "center",
+    color: "#3B3B3B",
+    fontWeight: "600",
   },
-
-  //   example for input text i have:
-
-  //   <View style={edit_styles.container}>
-  //   <View style={edit_styles.actionInput}>
-  //     <TextInput
-  //       label="שם"
-  //       value={text}
-  //       onChangeText={onChangeText}
-  //       activeUnderlineColor="#000000"
-  //       activeOutlineColor="#000000"
-  //       left={<TextInput.Icon name="phone" />}
-  //     />
-  //   </View>
-  //   <HelperText type="error" visible={hasErrors()}>
-  //     <Text style={edit_styles.error}>Email address is invalid!</Text>
-  //   </HelperText>
 });

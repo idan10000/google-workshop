@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { StyleSheet, Button, TextInput, View, Text,TouchableOpacity,Image , Pressable} from 'react-native';
+import { StyleSheet, Button, View, Text,TouchableOpacity,Image , Pressable} from 'react-native';
+import { HelperText, TextInput } from 'react-native-paper';
+
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import {signUpStyles} from "../styles/signUpStyles";
+import {Nofar_styles} from "./utils/Nofar_style";
+
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
@@ -47,12 +51,12 @@ export default function SignUp() {
     const [password, setPassword] = useState('');
 
     return (
-        <View style={signUpStyles.totalWrapper}>
+        <View style={Nofar_styles.container}>
             <View style={signUpStyles.logoHeaderContainer}>
-                <View style={signUpStyles.header}>
-                    <Text style={signUpStyles.header}>Welcome To FinDog</Text>
+                <View style={Nofar_styles.BigTitle}>
+                    <Text style={Nofar_styles.BigTitle}>Welcome To FinDog</Text>
                 </View>
-                <TouchableOpacity ><Image source={require('../assets/findog.png')} style={signUpStyles.appLogo}/></TouchableOpacity>
+                <TouchableOpacity ><Image source={require('../assets/Find my dog_logo.png')} style={signUpStyles.appLogo}/></TouchableOpacity>
             </View>
 
             <View style={signUpStyles.welcomeText}>
@@ -71,7 +75,7 @@ export default function SignUp() {
 
                     <View >
                         <TextInput
-                            style={signUpStyles.input}
+                            style={Nofar_styles.actionInput}
                             placeholder='First Name'
                             onChangeText={props.handleChange('FirstName')}
                             onBlur={props.handleBlur('FirstName')}
@@ -81,7 +85,7 @@ export default function SignUp() {
                         <Text style={signUpStyles.errorText}>{props.touched.FirstName && props.errors.FirstName}</Text>
 
                         <TextInput
-                            style={signUpStyles.input}
+                            style={Nofar_styles.actionInput}
                             multiline
                             placeholder='Last Name'
                             onBlur={props.handleBlur('LastName')}
@@ -92,7 +96,7 @@ export default function SignUp() {
                         <Text style={signUpStyles.errorText}>{props.touched.LastName && props.errors.LastName}</Text>
 
                         <TextInput
-                            style={signUpStyles.input}
+                            style={Nofar_styles.actionInput}
                             placeholder='Email'
                             onBlur={props.handleBlur('Email')}
 
@@ -102,7 +106,9 @@ export default function SignUp() {
                         />
                         <Text style={signUpStyles.errorText}>{props.touched.Email && props.errors.Email}</Text>
                         <View style={signUpStyles.inputContainer}>
-
+                            <Pressable style = {signUpStyles.eyeIcon} onPress={handlePasswordVisibility}>
+                                <MaterialCommunityIcons name={rightIcon} size={24} color="#232323" />
+                            </Pressable>
                             <TextInput
                                 placeholder='Password'
                                 onBlur={props.handleBlur('Password')}
@@ -111,7 +117,7 @@ export default function SignUp() {
                                 value={props.values.Password}
                                 keyboardType='numeric'
 
-                                style={signUpStyles.input}
+                                style={Nofar_styles.actionInput}
                                 name="password"
                                 autoCapitalize="none"
                                 autoCorrect={false}
@@ -119,14 +125,12 @@ export default function SignUp() {
                                 secureTextEntry={passwordVisibility}
                                 enablesReturnKeyAutomatically
                             />
-                            <Pressable style = {signUpStyles.eyeIcon} onPress={handlePasswordVisibility}>
-                                <MaterialCommunityIcons name={rightIcon} size={24} color="#232323" />
-                            </Pressable>
+
                         </View>
 
                         <Text style={signUpStyles.errorText}>{props.touched.Password && props.errors.Password}</Text>
                         <TextInput
-                            style={signUpStyles.input}
+                            style={Nofar_styles.actionInput}
                             placeholder='** Phone Number'
                             onBlur={props.handleBlur('PhoneNumber')}
 
@@ -139,7 +143,7 @@ export default function SignUp() {
                             <Text> ** is optional</Text>
                         </View>
 
-                        <Button color='maroon' title="Submit" onPress={props.handleSubmit} style={signUpStyles.submitButton} />
+                        <Button color='maroon' title="Submit" onPress={props.handleSubmit} style={Nofar_styles.BigButton} />
 
                     </View>
                 )}
