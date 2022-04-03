@@ -192,7 +192,7 @@ export default function SignUp() {
                             {/*    <Text style={Nofar_styles.BigButtonText}>עדכן פרטים</Text>*/}
                             {/*</TouchableOpacity>*/}
                             <TouchableOpacity style={Nofar_styles.SmallButton} onPress={props.handleSubmit}>
-                                <Text style={Nofar_styles.SmallButtonTitle}>עדכן פרטים</Text>
+                                <Text style={Nofar_styles.SmallButtonTitle}>תרשמו אותי!</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

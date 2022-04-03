@@ -7,35 +7,40 @@ export const pageLaunchStyle = StyleSheet.create({
 
     },
     appNameHeader:{
-        fontSize:35,
+        fontSize:70,
         alignItems: 'center',
         justifyContent: 'center',
-        margin:10
+        margin:8,
+
     },
     slogenContainer:{
-        flexDirection: "row",
+        flexDirection: "column",
         alignItems: 'center',
         justifyContent: 'center',
+
 
     },
     appLogo: {
         alignItems: 'center',
         justifyContent: 'center',
-        height:80,
-        width:100,
+        height:150,
+        width:170,
         resizeMode: 'stretch',
+        marginBottom:'5%'
+
     },
 
     AvatarContainer:{
+        marginVertical:10,
+        marginTop:30,
         justifyContent: 'center',
-        flex: 1,
         flexDirection: "row",
 
     },
 
     avatar:{
-        marginRight:2,
-        marginLeft:2,
+        marginRight:10,
+        marginLeft:10,
     },
     containerForMiddleLines:{
         justifyContent: 'center',
@@ -74,17 +79,43 @@ export const pageLaunchStyle = StyleSheet.create({
 
     },
     containerForRegisterClick:{
+        marginTop:30,
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: "row",
 
     },
     sellingText:{
-        marginTop:20,
-        marginBottom:10,
-        flexDirection:'column',
+        textAlign: 'center',
+        marginTop:40,
         justifyContent: 'center',
         alignItems: 'center',
+    }, bottomText: {
+        fontSize: 16,
+    },
+    howToSign: {
+        marginTop:30,
+        flexDirection:'column',
+        justifyContent: 'center',
+    },
+    cliclHere: {
+        fontSize:20,
+        fontWeight: 'bold'
+    },
+        bigTitle: {
+            color: "#1B1209",
+            fontSize: 24,
+            fontWeight: "700",
+            justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center',
+
+        },
+    emailRegist: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        Color:"#1B1209",
     }
+
 
 });
