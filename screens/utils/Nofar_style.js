@@ -12,13 +12,13 @@ export const Nofar_styles = StyleSheet.create({
     color: "#1B1209",
     fontSize: 30,
     // textAlign: "center",
-    fontWeight: 700,
+    fontWeight: "700",
   },
   SmallTitle: {
     color: "#1B1209",
     fontSize: 20,
     // textAlign: "center",
-    fontWeight: 700,
+    fontWeight: "700",
   },
   cardHeader: {
     flexDirection: "row",
@@ -52,7 +52,7 @@ export const Nofar_styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 25,
     textAlign: "center",
-    fontWeight: 700,
+    fontWeight: "700",
   },
 
   //   chips:
@@ -66,7 +66,7 @@ export const Nofar_styles = StyleSheet.create({
     marginLeft: 5,
     paddingRight: 3,
     paddingLeft: 3,
-    // height: 35,
+    height: 50,
     marginTop: 10,
     justifyContent: "center",
     alignItems: "center",
@@ -75,9 +75,9 @@ export const Nofar_styles = StyleSheet.create({
   },
   chipsText: {
     color: "#483C32",
-    fontSize: 19,
+    fontSize: 20,
     textAlign: "center",
-    fontWeight: "600",
+    fontWeight: "700",
   },
   mainImage: {
     width: 350,
@@ -115,7 +115,7 @@ export const Nofar_styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 20,
     textAlign: "center",
-    fontWeight: 700,
+    fontWeight: "700",
   },
   SmallButton: {
     marginBottom: 5,

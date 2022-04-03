@@ -88,7 +88,7 @@ export const edit_styles = StyleSheet.create({
     paddingRight: 10,
     fontStyle: "bold",
     fontSize: 20,
-    fontWeight: 720,
+    fontWeight: "700",
   },
   actionInput: {
     marginTop: 30,
