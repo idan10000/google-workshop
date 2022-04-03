@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Button, View, Text,TouchableOpacity,Image , Pressable} from 'react-native';
-import { HelperText, TextInput } from 'react-native-paper';
+import { StyleSheet, View, Text,TouchableOpacity,Image , Pressable} from 'react-native';
+import { HelperText, TextInput,Button } from 'react-native-paper';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Formik } from 'formik';
@@ -31,123 +31,176 @@ export const useTogglePasswordVisibility = () => {
         handlePasswordVisibility
     };
 };
+
 export default function SignUp() {
 
     const reviewSchema = yup.object({
-        FirstName: yup.string()
-            .required('First Name is required'),
-        LastName: yup.string()
-            .required('Last Name is required'),
-        Email: yup.string().email().required('Email is required'),
-        Password: yup.string().min(6).required('Password is required'),
+        Name: yup.string()
+             .required('שם הוא שדה חובה'),
+        Email: yup.string().email('זו לא כתובת אימייל חוקית').required('אימייל הוא שדה חובה'),
+        Password: yup.string().min(6,'סיסמה חייבת להיות לפחות 6 תווים').required('סיסמה היא שדה חובה'),
 
-        PhoneNumber: yup.string().matches(phoneRegExp, 'Phone number is not valid')
+        PhoneNumber: yup.string().matches(phoneRegExp, 'מספר טלפון לא תקין')
 
     });
 
 
+
     const { passwordVisibility, rightIcon, handlePasswordVisibility } =
         useTogglePasswordVisibility();
-    const [password, setPassword] = useState('');
+    const hasErrors = (det, val, touched) => {
+        if (det == "email") {
+            return touched && !val.includes("@");
+        }
+        if (det == "name") {
+            return touched && val.localeCompare(" ")
+        }
+        if (det == "phone") {
+            return touched && !val.match(phoneRegExp)
+        }
+        if(det =="password"){
+            return touched && val.length <6
+        }
+    }
+
+
+    // const [name, setName] = React.useState( "")
+    // const onChangeName = name => setName(name);
+    //
+    // const [email, setEmail] = React.useState('')
+    // const onChangeEmail = email => setEmail(email);
+    //
+    // const [password, setPassword] = React.useState('')
+    // const onChangePassword = password => setPassword(password);
+    //
+    // const [phone, setPhone] = React.useState('')
+    // const onChangePhone = phone => setName(phone);
+
+
+    // const [state, setState] = useState({
+    //     fname: "",
+    //     phone: "",
+    //     email: "",
+    //     city: "",
+    //     country: "",
+    // });
+
 
     return (
         <View style={Nofar_styles.container}>
             <View style={signUpStyles.logoHeaderContainer}>
-                <View style={Nofar_styles.BigTitle}>
-                    <Text style={Nofar_styles.BigTitle}>Welcome To FinDog</Text>
-                </View>
+
                 <TouchableOpacity ><Image source={require('../assets/Find my dog_logo.png')} style={signUpStyles.appLogo}/></TouchableOpacity>
+                <View style={Nofar_styles.BigTitle}>
+                    <Text style={Nofar_styles.BigTitle}>Welcome{'\n'}To FinDog</Text>
+                </View>
             </View>
 
             <View style={signUpStyles.welcomeText}>
-                <Text style={signUpStyles.welcomeText}>First of all...{'\n'}Let's get to know you...</Text>
+                <Text style={signUpStyles.welcomeText}>קודם כל... בוא נכיר אותך...</Text>
             </View>
 
 
             <Formik
-                initialValues={{ FirstName: '', LastName: '', Email: '',Password:'', PhoneNumber: '' }}
-                validationSchema={reviewSchema}
-                onSubmit={(values) => {
+                initialValues={{ Name: '', Email: '',Password:'', PhoneNumber: '' }}
+                validationSchema={reviewSchema}               onSubmit={(values) => {
                     console.log(values);
                 }}
             >
                 {props => (
 
                     <View >
-                        <TextInput
-                            style={Nofar_styles.actionInput}
-                            placeholder='First Name'
-                            onChangeText={props.handleChange('FirstName')}
-                            onBlur={props.handleBlur('FirstName')}
+            <View style={Nofar_styles.actionInput}>
+                <TextInput
+                    placeholder="שם"
+                    error={hasErrors('name', props.values.Name,props.touched.Name)}
+                    // value={state.fname}
+                    // onChangeText={onChangeName}
+                    onChangeText={props.handleChange('Name')}
+                    value={props.values.Name}
+                    onBlur={props.handleBlur('Name')}
 
-                            value={props.values.FirstName}
-                        />
-                        <Text style={signUpStyles.errorText}>{props.touched.FirstName && props.errors.FirstName}</Text>
+                    activeUnderlineColor="#000000"
+                    activeOutlineColor="#000000"
+                    left={<TextInput.Icon name="face" />}
+                />
+                <Text style={signUpStyles.errorText}>{props.touched.Name && props.errors.Name}</Text>
+            </View>
 
-                        <TextInput
-                            style={Nofar_styles.actionInput}
-                            multiline
-                            placeholder='Last Name'
-                            onBlur={props.handleBlur('LastName')}
 
-                            onChangeText={props.handleChange('LastName')}
-                            value={props.values.LastName}
-                        />
-                        <Text style={signUpStyles.errorText}>{props.touched.LastName && props.errors.LastName}</Text>
+                        <View style={Nofar_styles.actionInput}>
+                <TextInput
+                    placeholder="אימייל"
+                    // value={state.email}
+                    //
+                    // onChangeText={onChangeEmail}
+                    onChangeText={props.handleChange('Email')}
+                    value={props.values.Email}
+                    onBlur={props.handleBlur('Email')}
+                    error={hasErrors('email', props.values.Email,props.touched.Email)}
 
-                        <TextInput
-                            style={Nofar_styles.actionInput}
-                            placeholder='Email'
-                            onBlur={props.handleBlur('Email')}
+                    activeUnderlineColor="#000000"
+                    activeOutlineColor="#000000"
+                    left={<TextInput.Icon name="email" />}
+                />
+                            <Text style={signUpStyles.errorText}>{props.touched.Email && props.errors.Email}</Text>
+            </View>
 
-                            onChangeText={props.handleChange('Email')}
-                            value={props.values.Email}
-                            keyboardType='numeric'
-                        />
-                        <Text style={signUpStyles.errorText}>{props.touched.Email && props.errors.Email}</Text>
-                        <View style={signUpStyles.inputContainer}>
-                            <Pressable style = {signUpStyles.eyeIcon} onPress={handlePasswordVisibility}>
-                                <MaterialCommunityIcons name={rightIcon} size={24} color="#232323" />
-                            </Pressable>
-                            <TextInput
-                                placeholder='Password'
-                                onBlur={props.handleBlur('Password')}
 
-                                onChangeText={props.handleChange('Password')}
-                                value={props.values.Password}
-                                keyboardType='numeric'
 
-                                style={Nofar_styles.actionInput}
-                                name="password"
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                textContentType="newPassword"
-                                secureTextEntry={passwordVisibility}
-                                enablesReturnKeyAutomatically
-                            />
 
+                <View style={Nofar_styles.actionInput}>
+                    <TextInput
+                        placeholder="סיסמה"
+                        // value={state.password}
+                        // onChangeText={onChangePassword}
+                        onChangeText={props.handleChange('Password')}
+                        value={props.values.Password}
+                        secureTextEntry={passwordVisibility}
+                        error={hasErrors('password', props.values.Password,props.touched.Password)}
+                        onBlur={props.handleBlur('Password')}
+
+                        activeUnderlineColor="#000000"
+                        activeOutlineColor="#000000"
+                        right={<TextInput.Icon onPress={handlePasswordVisibility} name={rightIcon} />}
+                        left ={<TextInput.Icon  name ="lock" />}
+
+                    />
+                    <Text style={signUpStyles.errorText}>{props.touched.Password && props.errors.Password}</Text>
+            </View>
+
+
+
+                        <View style={Nofar_styles.actionInput}>
+                <TextInput
+                    placeholder="טלפון (*רשות)"
+                    // value={state.phone}
+                    // onChangeText={onChangePhone}
+                    onChangeText={props.handleChange('PhoneNumber')}
+                    value={props.values.PhoneNumber}
+                    onBlur={props.handleBlur('PhoneNumber')}
+                    keyboardType='numeric'
+                    activeUnderlineColor="#000000"
+                    activeOutlineColor="#000000"
+                    left={<TextInput.Icon name="phone" />}
+                />
+                            <Text style={signUpStyles.errorText}>{props.touched.PhoneNumber && props.errors.PhoneNumber}</Text>
+            </View>
+
+                        <View style={signUpStyles.submitButton}>
+                            {/*<TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>*/}
+                            {/*    <Text style={Nofar_styles.BigButtonText}>עדכן פרטים</Text>*/}
+                            {/*</TouchableOpacity>*/}
+                            <TouchableOpacity style={Nofar_styles.SmallButton} onPress={props.handleSubmit}>
+                                <Text style={Nofar_styles.SmallButtonTitle}>עדכן פרטים</Text>
+                            </TouchableOpacity>
                         </View>
-
-                        <Text style={signUpStyles.errorText}>{props.touched.Password && props.errors.Password}</Text>
-                        <TextInput
-                            style={Nofar_styles.actionInput}
-                            placeholder='** Phone Number'
-                            onBlur={props.handleBlur('PhoneNumber')}
-
-                            onChangeText={props.handleChange('PhoneNumber')}
-                            value={props.values.PhoneNumber}
-                            keyboardType='numeric'
-                        />
-                        <Text style={signUpStyles.errorText}>{props.touched.PhoneNumber && props.errors.PhoneNumber}</Text>
-                        <View style={signUpStyles.inform}>
-                            <Text> ** is optional</Text>
-                        </View>
-
-                        <Button color='maroon' title="Submit" onPress={props.handleSubmit} style={Nofar_styles.BigButton} />
-
                     </View>
                 )}
             </Formik>
+
+
+
 
 
         </View>

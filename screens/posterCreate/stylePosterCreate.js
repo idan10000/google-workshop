@@ -60,7 +60,8 @@ export const stylesPoster = StyleSheet.create({
     paddingHorizontal:"5%"
   },
   confirmBTContainer:{
-    alignSelf:"center"
+    alignSelf:"center",
+    paddingBottom:"5%"
   }
 
 });
