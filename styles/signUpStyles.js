@@ -15,26 +15,26 @@ export const signUpStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   header:{
-    fontSize: 34,
-    fontWeight: 'bold',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft:20,
+    color: "#1B1209",
+    fontSize: 30,
+    // textAlign: "center",
+    fontWeight: 700,
+    marginLeft:10,
   },
   appLogo:{
     alignItems: 'center',
+    marginTop:'10%',
     justifyContent: 'center',
-    height:85,
-    width:100,
+    height:100,
+    width:120,
     resizeMode: 'stretch',
     marginRight:20
 },
   welcomeText:{
-    marginTop: 5,
+    marginTop: 15,
     fontSize: 20,
-    marginLeft: 20,
+    marginLeft: '4%',
     fontWeight: 'bold',
-    marginBottom:8,
 
   },
   input: {
@@ -52,13 +52,12 @@ export const signUpStyles = StyleSheet.create({
     color: 'crimson',
     fontWeight: 'bold',
 
-    textAlign: 'center',
   },
   submitButton:{
     alignItems: 'center',
     justifyContent: 'center',
-    width:800,
-    marginBottom:10
+    Color:"#1B1209",
+    marginTop:'12%'
 
   },
   inform:{
@@ -82,7 +81,8 @@ export const signUpStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
 
-  }
+  },
+
 
 
 });
