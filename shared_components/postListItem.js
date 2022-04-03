@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Image,
   Dimensions,
+  TouchableOpacity
 } from "react-native";
 
 const postListItem = ({ image, date, distance, report, navigation}) => {

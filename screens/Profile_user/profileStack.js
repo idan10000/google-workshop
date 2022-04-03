@@ -17,4 +17,5 @@ const screens = {
 
 const ProfileStack = createStackNavigator(screens);
 
-export default createAppContainer(ProfileStack);
+//export default createAppContainer(ProfileStack);
+export default ProfileStack;

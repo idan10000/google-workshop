@@ -44,7 +44,7 @@ export default function EditProfileScreen() {
     <View style={Nofar_styles.container}>
       <View style={Nofar_styles.actionInput}>
         <TextInput
-          label="שם"
+            placeholder="שם"
           value={state.fname}
           // onChangeText={handleChange}
           activeUnderlineColor="#000000"
@@ -60,7 +60,7 @@ export default function EditProfileScreen() {
 
       <View style={Nofar_styles.actionInput}>
         <TextInput
-          label="אימייל"
+            placeholder="אימייל"
           value={state.email}
           // onChangeText={handleChange("email")}
           activeUnderlineColor="#000000"
@@ -74,7 +74,7 @@ export default function EditProfileScreen() {
 
       <View style={Nofar_styles.actionInput}>
         <TextInput
-          label="טלפון"
+            placeholder="טלפון"
           value={state.phone}
           // onChangeText={handleChange("phone")}
           activeUnderlineColor="#000000"
@@ -88,7 +88,7 @@ export default function EditProfileScreen() {
 
       <View style={Nofar_styles.actionInput}>
         <TextInput
-          label="עיר"
+            placeholder="עיר"
           value={state.city}
           // onChangeText={handleChange("city")}
           activeUnderlineColor="#000000"
@@ -104,7 +104,7 @@ export default function EditProfileScreen() {
 
       <View style={Nofar_styles.actionInput}>
         <TextInput
-          label="מדינה"
+          placeholder="מדינה"
           value={state.country}
           // onChangeText={handleChange("country")}
           activeUnderlineColor="#000000"

@@ -1,10 +1,10 @@
-import { StyleSheet } from "react-native";
+import {Dimensions, StyleSheet} from "react-native";
 
 export const Nofar_styles = StyleSheet.create({
   // background:
   container: {
     flex: 1,
-    marginTop: 20,
+    paddingTop: 20,
     backgroundColor: "#BBB988",
   },
   text: { fontSize: 20 },
@@ -60,14 +60,14 @@ export const Nofar_styles = StyleSheet.create({
     flexDirection: "row",
     overflow: "hidden",
     flexWrap: "wrap",
-    paddingBottom: 10,
+
   },
   chips: {
-    marginLeft: 5,
+    marginRight: "1.5%",
     paddingRight: 3,
     paddingLeft: 3,
-    height: 50,
-    marginTop: 10,
+    height: 35,
+
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 25,
@@ -80,10 +80,11 @@ export const Nofar_styles = StyleSheet.create({
     fontWeight: "700",
   },
   mainImage: {
-    width: 350,
-    height: 250,
+    width: Dimensions.get('window').width / 1.2,
+    height: Dimensions.get('window').height / 2.2,
     justifyContent: "center",
     alignItems: "center",
+    resizeMode: "cover"
   },
 
   //   the white card I have
@@ -100,6 +101,27 @@ export const Nofar_styles = StyleSheet.create({
     marginVertical: 5,
     backgroundColor: "white",
     marginHorizontal: 5,
+  },
+
+  //   tiny button
+  TinyButtonView: {
+    overflow: "hidden",
+    paddingVertical: "8%",
+    paddingHorizontal: 16,
+  },
+  TinyButtonTitle: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    textAlign: "center",
+    fontWeight: "700",
+  },
+  TinyButton: {
+    paddingRight: 15,
+    paddingLeft: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
+    backgroundColor: "#816A55",
   },
 
   //   small button
@@ -135,11 +157,8 @@ export const Nofar_styles = StyleSheet.create({
 
   //   text input
   actionInput: {
-    marginTop: 30,
-    marginRight: 30,
-    marginLeft: 30,
-    borderBottomWidth: 5,
-    borderBottomColor: "#A9A9A9",
+    paddingRight: "8%",
+    paddingLeft: "8%",
   },
   error: {
     marginRight: 30,

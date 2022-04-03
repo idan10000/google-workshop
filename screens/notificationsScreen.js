@@ -48,7 +48,7 @@ export default function NotificationsScreen(){
                     />
                 </TouchableOpacity>
               )}}/>
-          <NewReportFAB/>
+          {/* <NewReportFAB/> */}
         </View>
       );
 
@@ -57,11 +57,11 @@ export default function NotificationsScreen(){
 
 const styles = StyleSheet.create({
     notificationList:{
-      marginTop:20,
-      padding:10,
+      marginTop:0,
+      padding:0,
     },
     container:{
-      backgroundColor:'white',
+      backgroundColor: "#BBB988",
       flex:1
     }
   });

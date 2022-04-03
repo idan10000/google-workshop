@@ -1,7 +1,9 @@
 import * as React from 'react';
-import {Modal, Portal, Button, Provider, Chip, Headline, TextInput, Text} from 'react-native-paper';
-import {View, StyleSheet, Image} from 'react-native'
-import Report from '../data_classes/report'
+import {Modal, Portal, Button, Provider, Chip, Headline, TextInput} from 'react-native-paper';
+import {View, StyleSheet, Image, Text} from 'react-native'
+import Report from '../../data_classes/report'
+import {stylesPoster} from "../posterCreate/stylePosterCreate";
+import {Nofar_styles} from "../utils/Nofar_style";
 
 
 const ReportCreationScreen = ({route, navigation}) => {
@@ -78,25 +80,42 @@ const ReportCreationScreen = ({route, navigation}) => {
             {/*Modal (pop up screen) for selecting the tags describing the dog*/}
             <Portal>
                 {/*Tags*/}
-                <Modal visible={visibleTag} onDismiss={modalConfirmPressHandler} contentContainerStyle={styles.modal}>
-                    <View><Headline>בחר תגיות:</Headline></View>
-                    <View style={styles.chips}>
-                        {
-                            modalTags.map((item, index) => (
-                                <Chip key={index} selected={modalTags[index].state}
-                                      onPress={() => modalChipHandler(index)}>{item.tag}</Chip>
-                            ))
-                        }
+                <Modal
+                    visible={visibleTag}
+                    onDismiss={modalConfirmPressHandler}
+                    contentContainerStyle={stylesPoster.modal}
+                >
+
+                    <View>
+                        <Text style={Nofar_styles.SmallTitle}>בחר תגיות:</Text>
                     </View>
-                    <View style={styles.modalButtonContainer}>
-                        <Button compact={true} style={styles.modalButton}
-                                onPress={modalConfirmPressHandler}>Confirm</Button>
+                    <View style={stylesPoster.chips}>
+                        {modalTags.map((item, index) => (
+                            <Chip
+                                key={index}
+                                selected={modalTags[index].state}
+                                onPress={() => modalChipHandler(index)}
+                                style={Nofar_styles.chips}
+                            >
+                                {item.tag}
+                            </Chip>
+                        ))}
+                    </View>
+                    <View style={stylesPoster.modalButtonContainer}>
+                        <Button
+                            compact={true}
+                            style={stylesPoster.modalButton}
+                            onPress={modalConfirmPressHandler}
+                        >
+                            Confirm
+                        </Button>
                     </View>
                 </Modal>
+
                 {/*Details*/}
                 <Modal visible={visibleDetails} onDismiss={hideDescriptionModal}
-                       contentContainerStyle={styles.modal}>
-                    <View><Headline>תיאור:</Headline></View>
+                       contentContainerStyle={stylesPoster.modal}>
+                    <View><Text style={Nofar_styles.SmallTitle}>תיאור:</Text></View>
                     <View style={styles.descriptionContainer}>
                         <TextInput
                             dense={false}
@@ -105,51 +124,71 @@ const ReportCreationScreen = ({route, navigation}) => {
                             onChangeText={setDescription}
                             mode={'outlined'}
                             multiline={true}
-                            style={{height: undefined}}
                         />
                     </View>
                     <View style={{paddingVertical: 16}}>
-                        <Headline>מיקום:</Headline>
+                        <View><Text style={Nofar_styles.SmallTitle}>מיקום:</Text></View>
 
-                        <Button mode={'contained'}>עדכון מיקום</Button>
+                        <Button
+                            comapct={false}
+                            style={Nofar_styles.TinyButton}
+                        >
+                            <Text style={Nofar_styles.TinyButtonTitle}>עדכון מיקום</Text>
+                        </Button>
                     </View>
 
-                    <View style={styles.modalButtonContainer}>
-                        <Button compact={true} style={styles.modalButton}
-                                onPress={modalConfirmPressHandler}>אישור</Button>
-                    </View>
+                    <Button
+                        comapct={false}
+                        style={Nofar_styles.SmallButton}
+                        onPress={hideDescriptionModal}
+                    >
+                        <Text style={Nofar_styles.SmallButtonTitle}>אישור</Text>
+                    </Button>
 
                 </Modal>
             </Portal>
 
-            <View style={styles.container}>
+            <View style={Nofar_styles.container}>
 
                 <View style={styles.pictureContainer}>
                     <Image
                         source={{uri: image}}
                         style={styles.card}/>
                 </View>
-                <Headline>תגיות:</Headline>
-                <View style={styles.chips}>
+
+                <View style={stylesPoster.addTagsBTContainer}>
+                    <Button
+                        comapct={false}
+                        style={Nofar_styles.TinyButton}
+                        onPress={showTagModal}
+                    >
+                        <Text style={Nofar_styles.TinyButtonTitle}>הוסף תגיות</Text>
+                    </Button>
+                    <Button mode={"contained"}
+                            style={Nofar_styles.TinyButton}
+                            onPress={showDescriptionModal}
+                    >
+                        <Text style={Nofar_styles.TinyButtonTitle}>עדכון פרטים</Text>
+                    </Button>
+                </View>
+
+                <View style={stylesPoster.chips}>
                     {
                         selectedTags.map((item, index) => (
-                            <Chip key={index} icon={"close"} selected={false}
+                            <Chip key={index}
+                                  icon={"close"}
+                                  selected={false}
+                                  style={Nofar_styles.chips}
                                   onPress={() => selectedTagPressHandler(item.tag)}>{item.tag}</Chip>
                         ))
                     }
                 </View>
 
-                <Button comapct={true} style={{marginTop: 8}} onPress={showTagModal}>
-                    הוסף תגיות
-                </Button>
-
-                <Button comapct={true} onPress={showDescriptionModal}>
-                    הוסף פרטים
-                </Button>
-
-                <Button mode={"contained"} style={{marginBottom: 30}} onPress={reportConfirmHandler}>
-                    אישור
-                </Button>
+                <View style={stylesPoster.confirmBTContainer}>
+                    <Button mode={"contained"} style={Nofar_styles.BigButton} onPress={reportConfirmHandler}>
+                        <Text style={Nofar_styles.BigButtonText}>אישור</Text>
+                    </Button>
+                </View>
             </View>
         </Provider>
     );
