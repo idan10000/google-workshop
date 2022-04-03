@@ -1,19 +1,14 @@
 import { StyleSheet, Dimensions } from "react-native";
 
 export const stylesPoster = StyleSheet.create({
-  container: {
-    paddingTop: 50,
-    paddingHorizontal: 8,
-    flex: 1,
-  },
   chips: {
     flexDirection: "row",
     overflow: "hidden",
     flexWrap: "wrap",
-    paddingTop: 16,
+    paddingHorizontal:"5%"
   },
   modal: {
-    backgroundColor: "white",
+    backgroundColor:"#BBB988",
     padding: 20,
   },
   addImageContainer: {
@@ -49,7 +44,24 @@ export const stylesPoster = StyleSheet.create({
     position: "absolute",
     right: 16,
     bottom: 16,
+    backgroundColor:"#816A55",
+
   },
   descriptionContainer: {},
-  addTagsBT: {},
+  addTagsBTContainer: {
+    paddingVertical:"5%",
+    flexDirection:"row",
+    paddingHorizontal:"5%",
+    justifyContent:"space-around"
+  },
+  locationBTContainer: {
+    paddingBottom:"5%",
+    flexDirection:"row",
+    paddingHorizontal:"5%"
+  },
+  confirmBTContainer:{
+    alignSelf:"center",
+    paddingBottom:"5%"
+  }
+
 });
