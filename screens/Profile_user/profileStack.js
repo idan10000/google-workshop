@@ -1,8 +1,8 @@
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
-import ProfileScreen from "../User_profile";
-import EditProfileScreen from "../Edit_profile";
-import SupportScreen from "../Technical_support";
+import ProfileScreen from "./User_profile";
+import EditProfileScreen from "./Edit_profile";
+import SupportScreen from "./Technical_support";
 const screens = {
   Profile: {
     screen: ProfileScreen,
