@@ -31,8 +31,7 @@ export const pageLaunchStyle = StyleSheet.create({
     },
 
     AvatarContainer:{
-        marginVertical:10,
-        marginTop:30,
+
         justifyContent: 'center',
         flexDirection: "row",
 
@@ -42,44 +41,16 @@ export const pageLaunchStyle = StyleSheet.create({
         marginRight:10,
         marginLeft:10,
     },
-    containerForMiddleLines:{
-        justifyContent: 'center',
-        marginVertical:20,
-        flexDirection: "row",
-        padding: 1,
-        alignItems: 'center',
 
-    },
-    orSeperator1: {
-        flex:1,
-        height: 3,
-        backgroundColor: '#333',
-    },
+
     text:{
-        margin: 13
+        fontSize: 18,
+        margin: 2
     },
-    orSeperator2: {
-        width: 70,
-        height: 3,
-        backgroundColor: '#333',
-    },
-    signupButton:{
-        marginBottom:24,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 20,
-        backgroundColor: "#816A55",
-        shadowColor: "#00000021",
-        width: 330,
-        height: 60,
-        shadowOffset: {
-            width: 5,
-            height: 5,
-        }
 
-    },
+
     containerForRegisterClick:{
-        marginTop:30,
+        marginTop:70,
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: "row",
@@ -112,6 +83,8 @@ export const pageLaunchStyle = StyleSheet.create({
 
         },
     emailRegist: {
+        marginVertical:10,
+        marginTop:50,
         alignItems: 'center',
         justifyContent: 'center',
         Color:"#1B1209",
