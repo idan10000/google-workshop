@@ -9,7 +9,7 @@ export default function Map() {
             <ImageBackground
                 style={styles.image}
                 source={require('../assets/map.png')}>
-                    <NewReportFAB/>
+                    {/* <NewReportFAB/> */}
             </ImageBackground>
         </View>
     )

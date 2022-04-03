@@ -10,12 +10,10 @@ export default function NotificationsStack() {
   const options = {header: (props) => <Header {...props}/>}
 
   return (
-    <NavigationContainer>
       <Stack.Navigator screenOptions={options}>
           <Stack.Screen name="Main" component={NavigationBar} />
           <Stack.Screen name="התראות" component={NotificationsScreen} />
       </Stack.Navigator>
-    </NavigationContainer>
   );
 }
 
