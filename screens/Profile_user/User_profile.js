@@ -23,11 +23,11 @@ export default function ProfileScreen() {
     <SafeAreaView style={Nofar_styles.container}>
       <View style={user_styles.ProfileCard}>
         <View style={{ flexDirection: "row", marginTop: 15, marginLeft: 20 }}>
-          <Avatar
+          {/* <Avatar
             style={{ width: "100px", height: "100px" }}
             avatarStyle="Circle"
             {...generateRandomAvatarOptions()}
-          />
+          /> */}
           <View style={{ marginTop: 30, marginRight: 10 }}>
             <Title style={Nofar_styles.BigTitle}>{userDetalies.name}</Title>
           </View>
