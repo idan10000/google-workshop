@@ -87,7 +87,7 @@ export const pageLaunchStyle = StyleSheet.create({
         marginTop:50,
         alignItems: 'center',
         justifyContent: 'center',
-        Color:"#1B1209",
+        color:"#1B1209",
     }
 
 

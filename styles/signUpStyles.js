@@ -18,7 +18,7 @@ export const signUpStyles = StyleSheet.create({
     color: "#1B1209",
     fontSize: 30,
     // textAlign: "center",
-    fontWeight: 700,
+    fontWeight: '700',
     marginLeft:10,
   },
   appLogo:{
@@ -56,7 +56,7 @@ export const signUpStyles = StyleSheet.create({
   submitButton:{
     alignItems: 'center',
     justifyContent: 'center',
-    Color:"#1B1209",
+    color:"#1B1209",
     marginTop:'12%'
 
   },

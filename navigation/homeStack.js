@@ -7,7 +7,7 @@ import ReportPage from "../screens/Report_dog/report_page";
 const Stack = createStackNavigator();
 
 export default function HomeStack() {
-    const options = {header: (props) => <Header {...props}/>}
+    const options = {headerShown: false}
 
     return (
         <Stack.Navigator screenOptions={options}>
