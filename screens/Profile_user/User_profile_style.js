@@ -11,7 +11,7 @@ export const user_styles = StyleSheet.create({
     marginLeft: 30,
     marginBottom: 50,
     borderRadius: 15,
-    shadowColor: "#00000021",
+    shadowColor: "#F5F5DC",
     shadowOffset: {
       width: 20,
       height: 10,
