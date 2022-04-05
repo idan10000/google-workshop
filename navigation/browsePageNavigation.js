@@ -9,7 +9,7 @@ export default function BrowseTabs() {
     <Tab.Navigator screenOptions={{
       tabBarIndicatorStyle: {backgroundColor: "#1B1209"},
       tabBarStyle: { backgroundColor: "#BBB988" },
-      tabBarLabelStyle: {color: "#1B1209"}
+      tabBarLabelStyle: {color: "#1B1209", fontSize:16}
     }}>
       <Tab.Screen name="נמצאו" component={BrowseReportStack} />
       
