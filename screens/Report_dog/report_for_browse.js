@@ -26,7 +26,7 @@ export default function ReportForBrowse() {
           <View style={AR_styles.cardContent}>
             <TouchableOpacity
               style={Nofar_styles.BigButton}
-              onPress={makeCall()}
+              onPress={makeCall}
             >
               <Text style={Nofar_styles.BigButtonText}>צור קשר עם המדווח</Text>
             </TouchableOpacity>

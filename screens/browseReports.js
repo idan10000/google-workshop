@@ -18,6 +18,7 @@ import {View, StyleSheet, FlatList, Dimensions} from 'react-native'
 import NewReportFAB from '../shared_components/newReportFAB';
 import Poster from '../data_classes/poster'
 import PostListItem from '../shared_components/postListItem'
+import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
 
 const BrowseReports = ({navigation}) => {
@@ -123,11 +124,14 @@ const styles = StyleSheet.create({
         justifyContent: "space-evenly"
     },
     searchBarContainer: {
-        flexDirection: 'row'
+        paddingTop: 10,
+        flexDirection: 'row',
+        backgroundColor: "#BBB988"
     },
     filterButton: {
         position: "absolute",
         right: 16,
+        top:10,
         zIndex: 2
     },
     Search: {
@@ -138,7 +142,8 @@ const styles = StyleSheet.create({
     listContainer: {
         flex: 1,
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        backgroundColor: "#BBB988"
     },
     image: {
         width:Dimensions.get('window').width / 2,
