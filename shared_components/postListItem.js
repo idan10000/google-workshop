@@ -13,7 +13,7 @@ import {
 
 const postListItem = ({ image, date, distance, report, navigation}) => {
   return (
-    <TouchableOpacity onPress={() => {navigation.navigate("Report", {report: report})}}>
+    <TouchableOpacity onPress={() => {navigation.navigate("ReportForBrowse", {report: report})}}>
       <Provider>
         <View style={styles.itemContainer}>
           {/*<View style={styles.imageContainer}>*/}
