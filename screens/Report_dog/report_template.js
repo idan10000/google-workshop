@@ -35,7 +35,7 @@ export default function ReportTemplate({ report }) {
           <Text style={Nofar_styles.SmallTitle}>תיאור</Text>
         </View>
         <View style={AR_styles.cardContent}>
-          <Text style={Nofar_styles.text}>{report_data.desc}</Text>
+          <Text style={Nofar_styles.text}>{report.description}</Text>
         </View>
       </View>
     </View>
