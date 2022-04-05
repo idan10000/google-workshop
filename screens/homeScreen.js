@@ -55,7 +55,7 @@ export default function HomeScreen({navigation}) {
                     <Button
                         mode='outlined'
                         style={styles.SmallButton}
-                        onPress={() => console.log('upload missing ad')}
+                        onPress={() => navigation.navigate("CreateAd")}
                         labelStyle={styles.SmallButtonTitle}>
                         יצירת מודעה
                     </Button>

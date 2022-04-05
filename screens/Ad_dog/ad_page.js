@@ -4,7 +4,7 @@ import { Nofar_styles } from "../utils/Nofar_style";
 
 import { AR_styles } from "./Ad_style";
 import AdTemplate from "./ad_template";
-export default function AdPage() {
+export default function AdPage({navigation}) {
   return (
     <View style={Nofar_styles.container}>
       <ScrollView style={AR_styles.content}>
@@ -17,7 +17,7 @@ export default function AdPage() {
           </View>
 
           <View style={AR_styles.cardContent}>
-            <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
+            <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {navigation.replace("CreateAd")}}>
               <Text style={Nofar_styles.BigButtonText}> עדכן את המודעה</Text>
             </TouchableOpacity>
           </View>
