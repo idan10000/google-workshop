@@ -1,4 +1,4 @@
-# Find my Dog
+# FinDog
 
 Your dog is missing? Find my Dog is here to help! We use machine learning tools to match your dog's missing ad with someone that found your dog.
  

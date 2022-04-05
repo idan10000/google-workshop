@@ -8,7 +8,7 @@ export default function Header({ navigation, back }) {
     <Appbar.Header style={styles.header}>
       
       {back ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
-      <Appbar.Content title="Find my Dog" style={styles.content} titleStyle={styles.title}/>
+      <Appbar.Content title="FindDog" style={styles.content} titleStyle={styles.title}/>
       {back ? null : <Appbar.Action style={styles.action} icon="bell" color='#1B1209' onPress={() => {navigation.navigate('התראות')}} />}
 
     </Appbar.Header>
