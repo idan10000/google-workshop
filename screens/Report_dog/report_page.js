@@ -32,9 +32,7 @@ export default function ReportPage({ route, navigation }) {
           <Button
             mode={"contained"}
             style={Nofar_styles.BigButton}
-            onPress={() => {
-              navigation.replace("CreateAd");
-            }}
+            onPress={editButtonPressHandler}
           >
             <Text style={Nofar_styles.BigButtonText}>עדכן את הדיווח</Text>
           </Button>
