@@ -15,14 +15,15 @@ export default function AdTemplate() {
   };
   return (
     <View style={Nofar_styles.container}>
-      <View style={Nofar_styles.card}>
-        <View style={AR_styles.cardHeader}>
-          <Text style={Nofar_styles.BigTitle}>{report_data.name}</Text>
-        </View>
-        <View style={AR_styles.cardContent}>
-          <View style={AR_styles.mainImageContainer}>
-            <Image style={AR_styles.mainImage} source={require("./dog1.png")} />
-          </View>
+      <View style={AR_styles.cardHeader}>
+        <Text style={Nofar_styles.BigTitle}>{report_data.name}</Text>
+      </View>
+      <View style={AR_styles.cardContent}>
+        <View style={{ ...Nofar_styles.mainImage, alignSelf: "center" }}>
+          <Image
+            style={Nofar_styles.mainImage}
+            source={require("./dog1.png")}
+          />
         </View>
       </View>
 
@@ -44,14 +45,6 @@ export default function AdTemplate() {
         </View>
         <View style={AR_styles.cardContent}>
           <Text style={Nofar_styles.text}>{report_data.desc}</Text>
-        </View>
-      </View>
-      <View style={Nofar_styles.card}>
-        <View style={AR_styles.cardHeader}>
-          <Text style={Nofar_styles.SmallTitle}>תאריך פרסום</Text>
-        </View>
-        <View style={AR_styles.cardContent}>
-          <Text style={Nofar_styles.text}>{report_data.date}</Text>
         </View>
       </View>
     </View>

@@ -57,29 +57,44 @@ export default function ProfileScreen() {
         </View>
       </View>
 
-      <View style={{ flexDirection: "row", marginTop: 15, marginLeft: 40 }}>
-        <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
-          <Icon name="heart-outline" color="#FFFFFF" size={25} />
+      <View style={user_styles.confirmBTContainer}>
+        <Button
+          mode={"contained"}
+          style={Nofar_styles.BigButton}
+          onPress={() => {}}
+        >
           <Text style={Nofar_styles.BigButtonText}>הצגת מודעות ודיווחים</Text>
-        </TouchableOpacity>
+        </Button>
       </View>
-      <View style={{ flexDirection: "row", marginTop: 15, marginLeft: 40 }}>
-        <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
-          <Icon name="account-edit" color="#FFFFFF" size={25} />
+
+      <View style={user_styles.confirmBTContainer}>
+        <Button
+          mode={"contained"}
+          style={Nofar_styles.BigButton}
+          onPress={() => {}}
+        >
           <Text style={Nofar_styles.BigButtonText}>עדכון פרטים</Text>
-        </TouchableOpacity>
+        </Button>
       </View>
-      <View style={{ flexDirection: "row", marginTop: 15, marginLeft: 40 }}>
-        <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
-          <Icon name="share-outline" color="#FFFFFF" size={25} />
+
+      <View style={user_styles.confirmBTContainer}>
+        <Button
+          mode={"contained"}
+          style={Nofar_styles.BigButton}
+          onPress={() => {}}
+        >
           <Text style={Nofar_styles.BigButtonText}>שיתוף אפליקציה</Text>
-        </TouchableOpacity>
+        </Button>
       </View>
-      <View style={{ flexDirection: "row", marginTop: 15, marginLeft: 40 }}>
-        <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
-          <Icon name="account-check-outline" color="#FFFFFF" size={25} />
+
+      <View style={user_styles.confirmBTContainer}>
+        <Button
+          mode={"contained"}
+          style={Nofar_styles.BigButton}
+          onPress={() => {}}
+        >
           <Text style={Nofar_styles.BigButtonText}>תמיכה טכנית</Text>
-        </TouchableOpacity>
+        </Button>
       </View>
     </SafeAreaView>
   );
