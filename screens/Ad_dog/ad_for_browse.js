@@ -22,16 +22,16 @@ export default function AdForBrowse() {
     <View style={Nofar_styles.container}>
       <ScrollView style={AR_styles.content}>
         <AdTemplate />
-        <View style={{ marginLeft: 15 }}>
-          <View style={AR_styles.cardContent}>
-            <TouchableOpacity
-              style={Nofar_styles.BigButton}
-              onPress={makeCall()}
-              activeOpacity={0.7}
-            >
-              <Text style={Nofar_styles.BigButtonText}>צור קשר עם הבעלים</Text>
-            </TouchableOpacity>
-          </View>
+
+        <View style={AR_styles.confirmBTContainer}>
+          <Button
+            mode={"contained"}
+            style={Nofar_styles.BigButton}
+            onPress={makeCall()}
+            activeOpacity={0.7}
+          >
+            <Text style={Nofar_styles.BigButtonText}>צור קשר עם הבעלים</Text>
+          </Button>
         </View>
       </ScrollView>
     </View>
