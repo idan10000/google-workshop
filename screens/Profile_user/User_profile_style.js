@@ -1,5 +1,10 @@
 import { StyleSheet } from "react-native";
 export const user_styles = StyleSheet.create({
+  confirmBTContainer: {
+    alignSelf: "center",
+    paddingBottom: "5%",
+  },
+
   ProfileCard: {
     marginTop: 60,
     marginRight: 30,
