@@ -17,7 +17,7 @@ export default function ReportTemplate({ report }) {
         <Image style={Nofar_styles.mainImage} source={require("./dog1.png")} />
       </View>
 
-      <View style={Nofar_styles.Viewchips}>
+      <View style={{ ...Nofar_styles.Viewchips, marginTop: "10" }}>
         <Chip style={Nofar_styles.chips}>
           <Text style={Nofar_styles.chipsText}>צולע</Text>
         </Chip>
