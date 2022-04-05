@@ -90,7 +90,7 @@ export default function SignUp() {
         <View style={Nofar_styles.container}>
             <View style={signUpStyles.logoHeaderContainer}>
 
-                <TouchableOpacity ><Image source={require('../assets/Find my dog_logo.png')} style={signUpStyles.appLogo}/></TouchableOpacity>
+               <Image source={require('../assets/img.png')} style={signUpStyles.appLogo}/>
                 <View style={Nofar_styles.BigTitle}>
                     <Text style={Nofar_styles.BigTitle}>Welcome{'\n'}To FinDog</Text>
                 </View>

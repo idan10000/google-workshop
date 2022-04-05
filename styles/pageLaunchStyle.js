@@ -50,7 +50,7 @@ export const pageLaunchStyle = StyleSheet.create({
 
 
     containerForRegisterClick:{
-        marginTop:70,
+        marginTop:"8%",
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: "row",
@@ -84,10 +84,10 @@ export const pageLaunchStyle = StyleSheet.create({
         },
     emailRegist: {
         marginVertical:10,
-        marginTop:50,
+        marginTop:"8%",
         alignItems: 'center',
         justifyContent: 'center',
-        Color:"#1B1209",
+        color:"#1B1209",
     }
 
 

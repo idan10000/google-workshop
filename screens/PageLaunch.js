@@ -1,11 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image,TouchableOpacity } from 'react-native';
+import { Text, View, Image,TouchableOpacity } from 'react-native';
 import { pageLaunchStyle } from '../styles/pageLaunchStyle';
 
-import { Avatar, Button } from 'react-native-paper';
+import { Avatar } from 'react-native-paper';
 import {Nofar_styles} from "./utils/Nofar_style";
 import React from "react";
-import {signUpStyles} from "../styles/signUpStyles";
 export default function PageLaunch() {
     return (
         <View style ={Nofar_styles.container}>
@@ -17,7 +15,7 @@ export default function PageLaunch() {
 
             <Image
                 style={pageLaunchStyle.appLogo}
-                source={require('../assets/Find my dog_logo.png')}
+                source={require('../assets/img.png')}
             />
             </View>
 

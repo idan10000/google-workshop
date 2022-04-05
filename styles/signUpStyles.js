@@ -14,24 +14,17 @@ export const signUpStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  header:{
-    color: "#1B1209",
-    fontSize: 30,
-    // textAlign: "center",
-    fontWeight: 700,
-    marginLeft:10,
-  },
   appLogo:{
     alignItems: 'center',
     marginTop:'10%',
     justifyContent: 'center',
-    height:100,
-    width:120,
-    resizeMode: 'stretch',
+    height:92,
+    width:113,
+    resizeMode: 'contain',
     marginRight:20
 },
   welcomeText:{
-    marginTop: 15,
+    marginVertical:"2%",
     fontSize: 20,
     marginLeft: '4%',
     fontWeight: 'bold',
@@ -56,7 +49,7 @@ export const signUpStyles = StyleSheet.create({
   submitButton:{
     alignItems: 'center',
     justifyContent: 'center',
-    Color:"#1B1209",
+    color:"#1B1209",
     marginTop:'12%'
 
   },
