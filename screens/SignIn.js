@@ -106,8 +106,8 @@ export default function SignIn() {
                                 style={AfterSignedStyle.errorText}>{props.touched.Password && props.errors.Password}</Text>
                         </View>
 
-                        <Button color='maroon' title="Sign me in!" onPress={props.handleSubmit}
-                                style={AfterSignedStyle.button}/>
+                        <Button color='maroon' onPress={props.handleSubmit}
+                                style={AfterSignedStyle.button}>התחבר</Button>
                     </View>
 
                 )}

@@ -1,14 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image,TouchableOpacity } from 'react-native';
+import { ImageBackground, Text, View, Image,TouchableOpacity } from 'react-native';
 import { pageLaunchStyle } from '../styles/pageLaunchStyle';
 
 import { Avatar, Button } from 'react-native-paper';
 import {Nofar_styles} from "./utils/Nofar_style";
 import React from "react";
-import {signUpStyles} from "../styles/signUpStyles";
 export default function PageLaunch({navigation}) {
     return (
-        <View style ={Nofar_styles.container}>
+        <ImageBackground
+            style={{flex:1}}
+            source={require('../assets/background_design.png')}>
 
             <View style={pageLaunchStyle.appNameHeader}>
                 <Text style={pageLaunchStyle.appNameHeader}> FinDog</Text>
@@ -23,7 +23,7 @@ export default function PageLaunch({navigation}) {
 
 
                 <View style = {pageLaunchStyle.bigTitle}>
-                    <Text style = {pageLaunchStyle.bigTitle}>הכלב אבד?  אל דאגה!{'\n'}נעזור לכם למצוא במהרה!</Text>
+                    <Text style = {pageLaunchStyle.bigTitle}>הכלב חסר? אל תדאגו!{'\n'}נעזור למצוא אותו מהר!</Text>
                 </View>
 
             {/*<View style={pageLaunchStyle.howToSign}>*/}
@@ -50,8 +50,8 @@ export default function PageLaunch({navigation}) {
                 <TouchableOpacity ><Avatar.Image size={55} source={require('../assets/google.png')} style={pageLaunchStyle.avatar}/></TouchableOpacity >
             </View>
             <View style={pageLaunchStyle.containerForRegisterClick} >
-                <Text style = {Nofar_styles.text}> כבר רשומים? </Text>
-                <TouchableOpacity ><Text style = {pageLaunchStyle.cliclHere}> לחצו כאן!</Text></TouchableOpacity>
+                <Text style = {Nofar_styles.text}> כבר רשומים?  </Text>
+                <TouchableOpacity ><Text style = {pageLaunchStyle.clickHere}>לחצו כאן!</Text></TouchableOpacity>
 
 
             </View>
@@ -60,7 +60,8 @@ export default function PageLaunch({navigation}) {
                 <Text style = {pageLaunchStyle.bottomText}>האפליקציה שלנו מספקת פתרון מהפכני{'\n'}שמציע לבעלי כלבים דרך פשוטה ואפקטיבית{'\n'}למצוא את הכלב האהוב שלהם</Text>
 
             </View>
-        </View>
+        </ImageBackground>
+
 
     );
 }

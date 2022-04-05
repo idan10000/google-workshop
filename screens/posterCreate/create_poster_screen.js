@@ -15,6 +15,8 @@ import {Nofar_styles} from "../utils/Nofar_style";
 import {stylesPoster} from "./stylePosterCreate";
 // import * as util from "./utilsPosterCreate";
 import * as ImagePicker from "expo-image-picker";
+import Report from "../../data_classes/report";
+import Poster from "../../data_classes/poster";
 
 export default function PosterPostingComponent({navigation}) {
     //---------------------- Modal ----------------------
@@ -76,7 +78,7 @@ export default function PosterPostingComponent({navigation}) {
             return;
         }
 
-        setSelectedImage({uri: pickerResult.uri});
+        setSelectedImage(pickerResult.uri);
     };
 
     var imagePicker = (
@@ -96,7 +98,7 @@ export default function PosterPostingComponent({navigation}) {
                 <View style={{...Nofar_styles.mainImage, alignSelf: 'center'}}>
                     <Image
                         style={Nofar_styles.mainImage}
-                        source={selectedImage}
+                        source={{uri:selectedImage}}
                     />
                 </View>
                 <View style={stylesPoster.fabContainer}>
@@ -112,12 +114,26 @@ export default function PosterPostingComponent({navigation}) {
     }
 
     const [text, setText] = React.useState("");
+    const [descriptionText, setDescription] = React.useState("");
+    const [nameText, setName] = React.useState("");
 
     const onChangeText = (text) => setText(text);
 
     const hasErrors = () => {
         return !text.includes("@");
     };
+
+    const posterConfirmHandler = () => {
+
+        let date = new Date()
+        const dd = String(date.getDate()).padStart(2, '0');
+        const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+        const yyyy = date.getFullYear();
+
+        let today = dd + '/' + mm + '/' + yyyy;
+        navigation.pop()
+        navigation.navigate("AdPage", {poster: new Poster(selectedImage, "", today, selectedTags, descriptionText,nameText)})
+    }
 
     return (
         <Provider>
@@ -131,7 +147,7 @@ export default function PosterPostingComponent({navigation}) {
                 >
 
                     <View>
-                        <Headline>בחר תגיות:</Headline>
+                        <Text style={{...Nofar_styles.SmallTitle,paddingBottom:"3%"}}>בחר תגיות:</Text>
                     </View>
                     <View style={stylesPoster.chips}>
                         {modalTags.map((item, index) => (
@@ -145,13 +161,13 @@ export default function PosterPostingComponent({navigation}) {
                             </Chip>
                         ))}
                     </View>
-                    <View style={stylesPoster.modalButtonContainer}>
+                    <View style={{...stylesPoster.modalButtonContainer, paddingTop:"3%"}}>
                         <Button
-                            compact={true}
-                            style={stylesPoster.modalButton}
+                            comapct={false}
+                            style={Nofar_styles.TinyButton}
                             onPress={modalConfirmPressHandler}
                         >
-                            Confirm
+                            <Text style={Nofar_styles.TinyButtonTitle}>אישור</Text>
                         </Button>
                     </View>
                 </Modal>
@@ -174,15 +190,14 @@ export default function PosterPostingComponent({navigation}) {
                             </Button>
                         </View>
 
-                        <View style={stylesPoster.chips}>
+                    <View style={{...stylesPoster.chips,marginLeft:"2.8%"}}>
                             {selectedTags.map((item, index) => (
                                 <Chip
                                     key={index}
                                     icon={"close"}
                                     selected={false}
                                     onPress={() => selectedTagPressHandler(item.tag)}
-                                    style={Nofar_styles.chips}
-
+                                    style={{...Nofar_styles.chips, marginTop:"5%"}}
                                 >
                                     {item.tag}
                                 </Chip>
@@ -190,12 +205,12 @@ export default function PosterPostingComponent({navigation}) {
                         </View>
 
                         <View style={stylesPoster.detailsContainer}>
-                            <View style={{...Nofar_styles.actionInput,paddingBottom:"5%"}}>
+                            <View style={{...Nofar_styles.actionInput,paddingVertical:"5%"}}>
                                 <TextInput
                                     dense={false}
                                     placeholder={"שם הכלב"}
-                                    // value={state.fname}
-                                    // onChangeText={handleChange}
+                                    value={nameText}
+                                    onChangeText={setName}
                                     mode="outlined"
                                     activeUnderlineColor="#000000"
                                     activeOutlineColor="#000000"
@@ -211,13 +226,13 @@ export default function PosterPostingComponent({navigation}) {
                                 <TextInput
                                     dense={false}
                                     placeholder={"תיאור"}
-                                    // value={state.fname}
-                                    // onChangeText={handleChange}
+                                    value={descriptionText}
+                                    onChangeText={setDescription}
                                     mode="outlined"
                                     activeUnderlineColor="#000000"
                                     activeOutlineColor="#000000"
                                     multiline={true}
-                                    style={{height: 200, backgroundColor: "#D3D3D3"}}
+                                    style={{backgroundColor: "#D3D3D3"}}
                                 />
                             </View>
                             {/* <HelperText type="error" visible={hasErrors("name")}>
@@ -227,7 +242,7 @@ export default function PosterPostingComponent({navigation}) {
                         </View>
 
                         <View style={stylesPoster.confirmBTContainer}>
-                            <Button mode={"contained"} style={Nofar_styles.BigButton} onPress={() => navigation.navigate("AdPage")}>
+                            <Button mode={"contained"} style={Nofar_styles.BigButton} onPress={posterConfirmHandler}>
                                 <Text style={Nofar_styles.BigButtonText}>אישור</Text>
                             </Button>
                         </View>

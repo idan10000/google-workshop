@@ -4,7 +4,7 @@ export const Nofar_styles = StyleSheet.create({
   // background:
   container: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: "1%",
     backgroundColor: "#BBB988",
   },
   text: { fontSize: 20 },

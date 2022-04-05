@@ -4,7 +4,7 @@ import { Chip } from "react-native-paper";
 import { Nofar_styles } from "../utils/Nofar_style";
 import { AR_styles } from "./Ad_style";
 
-export default function AdTemplate() {
+export default function AdTemplate({poster}) {
   const report_data = {
     name: " בוני",
     desc: "אבד בפארק העירוני בסביבות השעה ארבע ביום ראשון. בעקבות רעש זיקוקים.",
@@ -16,25 +16,24 @@ export default function AdTemplate() {
   return (
     <View style={Nofar_styles.container}>
       <View>
-        <Text style={Nofar_styles.BigTitle}>{report_data.name}</Text>
-        <View style={{ ...Nofar_styles.mainImage, alignSelf: "center" }}>
+        <Text style={{...Nofar_styles.BigTitle, paddingBottom:"3%"}}>{poster.dogName}</Text>
+        <View style={{ alignSelf: "center" }}>
           <Image
             style={Nofar_styles.mainImage}
-            source={require("./dog1.png")}
-          />
+            source={{uri:poster.image}}/>
         </View>
       </View>
 
-      <View style={{ ...Nofar_styles.Viewchips, marginTop: "3" }}>
-        <Chip style={Nofar_styles.chips}>
-          <Text style={Nofar_styles.chipsText}>צולע</Text>
-        </Chip>
-        <Chip style={Nofar_styles.chips}>
-          <Text style={Nofar_styles.chipsText}>שריטה על האף</Text>
-        </Chip>
-        <Chip style={Nofar_styles.chips}>
-          <Text style={Nofar_styles.chipsText}>זנב נפול</Text>
-        </Chip>
+      <View style={{ ...Nofar_styles.Viewchips, marginTop: "3%" }}>
+        {poster.tagList.map((item, index) => (
+            <Chip
+                key={index}
+                selected={false}
+                style={Nofar_styles.chips}
+            >
+              {item.tag}
+            </Chip>
+        ))}
       </View>
 
       <View style={Nofar_styles.card}>
@@ -42,7 +41,15 @@ export default function AdTemplate() {
           <Text style={Nofar_styles.SmallTitle}>תיאור</Text>
         </View>
         <View style={AR_styles.cardContent}>
-          <Text style={Nofar_styles.text}>{report_data.desc}</Text>
+          <Text style={Nofar_styles.text}>{poster.description}</Text>
+        </View>
+      </View>
+      <View style={Nofar_styles.card}>
+        <View style={AR_styles.cardHeader}>
+          <Text style={Nofar_styles.SmallTitle}>תאריך פרסום</Text>
+        </View>
+        <View style={AR_styles.cardContent}>
+          <Text style={Nofar_styles.text}>{poster.date}</Text>
         </View>
       </View>
     </View>

@@ -54,10 +54,12 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   date:{
-    color:"black"
+    color:"black",
+    fontWeight:"bold"
   },
   distance:{
-    color:"black"
+    color:"black",
+    fontWeight:"bold"
   }
 });
 

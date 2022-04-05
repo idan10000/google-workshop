@@ -1,5 +1,4 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import NotificationsStack from './notificationsStack';
 import PageLaunch from '../screens/PageLaunch';
 import SignUp from '../screens/SignUp';
 import HomeStack from './homeStack';

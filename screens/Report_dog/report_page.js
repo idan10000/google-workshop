@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, ScrollView } from "react-native";
 import { Nofar_styles } from "../utils/Nofar_style";
 import { AR_styles } from "./Report_style";
 import ReportTemplate from "./report_template";
+import {Button} from "react-native-paper";
 export default function ReportPage({ route, navigation }) {
   const editButtonPressHandler = () => {
     console.log("opening report screen");
@@ -12,10 +13,11 @@ export default function ReportPage({ route, navigation }) {
     });
   };
 
+
   return (
     <View style={Nofar_styles.container}>
       <ScrollView style={AR_styles.content}>
-        <ReportTemplate />
+        <ReportTemplate report={route.params.report} />
         <View style={AR_styles.confirmBTContainer}>
           <Button
             mode={"contained"}

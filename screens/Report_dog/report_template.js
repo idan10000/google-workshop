@@ -5,6 +5,7 @@ import { Nofar_styles } from "../utils/Nofar_style";
 import { AR_styles } from "./Report_style";
 export default function ReportTemplate({ report }) {
   const report_data = {
+    name: "אבנר",
     desc: "נמצא בפארק העירוני בסביבות השעה ארבע ביום ראשון .",
     image: "",
     place: "",
@@ -13,20 +14,21 @@ export default function ReportTemplate({ report }) {
   };
   return (
     <View style={Nofar_styles.container}>
-      <View style={{ ...Nofar_styles.mainImage, alignSelf: "center" }}>
-        <Image style={Nofar_styles.mainImage} source={require("./dog1.png")} />
+
+      <View style={{alignSelf: "center" }}>
+        <Image style={AR_styles.mainImage} source={{uri: report.image}} />
       </View>
 
-      <View style={{ ...Nofar_styles.Viewchips, marginTop: "10" }}>
-        <Chip style={Nofar_styles.chips}>
-          <Text style={Nofar_styles.chipsText}>צולע</Text>
-        </Chip>
-        <Chip style={Nofar_styles.chips}>
-          <Text style={Nofar_styles.chipsText}>שריטה על האף</Text>
-        </Chip>
-        <Chip style={Nofar_styles.chips}>
-          <Text style={Nofar_styles.chipsText}>זנב נפול</Text>
-        </Chip>
+        <View style={{ ...Nofar_styles.Viewchips, marginVertical: "3%", marginLeft:"1.2%"}}>
+        {
+          report.tagList.map((item, index) => (
+              <Chip key={index}
+                    icon={"close"}
+                    selected={false}
+                    style={Nofar_styles.chips}
+                    >{item.tag}</Chip>
+          ))
+        }
       </View>
 
       <View style={Nofar_styles.card}>
@@ -34,7 +36,15 @@ export default function ReportTemplate({ report }) {
           <Text style={Nofar_styles.SmallTitle}>תיאור</Text>
         </View>
         <View style={AR_styles.cardContent}>
-          <Text style={Nofar_styles.text}>{report_data.desc}</Text>
+          <Text style={Nofar_styles.text}>{report.description}</Text>
+        </View>
+      </View>
+      <View style={Nofar_styles.card}>
+        <View style={AR_styles.cardHeader}>
+          <Text style={Nofar_styles.SmallTitle}>תאריך פרסום</Text>
+        </View>
+        <View style={AR_styles.cardContent}>
+          <Text style={Nofar_styles.text}>{report.date}</Text>
         </View>
       </View>
     </View>

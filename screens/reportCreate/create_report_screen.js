@@ -17,9 +17,10 @@ const ReportCreationScreen = ({route, navigation}) => {
     const hideTagModal = () => setVisibleTag(false);
 
     const tagList = [
-        {tag: "Shy", state: false},
-        {tag: "Friendly", state: false},
-        {tag: "Aggressive", state: false}]
+        {tag: "ביישן", state: false},
+        {tag: "חברותי", state: false},
+        {tag: "אגרסיבי", state: false},
+    ];
 
 
     const initSelectedTagList = route.params.edit ? report.tagList.map(({tag}) => ({tag: tag, state: false})) : []
@@ -66,9 +67,14 @@ const ReportCreationScreen = ({route, navigation}) => {
         // let date = new Date();
         // let newReport = new Report(image, location, date, selectedTags, descriptionText)
         // console.log(newReport)
-        let date = route.params.edit ? report.date : new Date().getDate()
+        let date = new Date()
+        const dd = String(date.getDate()).padStart(2, '0');
+        const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+        const yyyy = date.getFullYear();
+
+        let today = route.params.edit ? report.date : dd + '/' + mm + '/' + yyyy;
         navigation.pop()
-        navigation.navigate("ReportPage", {report: new Report(image, location, date, selectedTags, descriptionText)})
+        navigation.navigate("ReportPage", {report: new Report(image, location, today, selectedTags, descriptionText)})
     }
 
     //---------------------- Create / Edit setup ----------------------
@@ -87,7 +93,7 @@ const ReportCreationScreen = ({route, navigation}) => {
                 >
 
                     <View>
-                        <Text style={Nofar_styles.SmallTitle}>בחר תגיות:</Text>
+                        <Text style={{...Nofar_styles.SmallTitle,paddingBottom:"3%"}}>בחר תגיות:</Text>
                     </View>
                     <View style={stylesPoster.chips}>
                         {modalTags.map((item, index) => (
@@ -101,13 +107,13 @@ const ReportCreationScreen = ({route, navigation}) => {
                             </Chip>
                         ))}
                     </View>
-                    <View style={stylesPoster.modalButtonContainer}>
+                    <View style={{...stylesPoster.modalButtonContainer, paddingTop:"3%"}}>
                         <Button
-                            compact={true}
-                            style={stylesPoster.modalButton}
+                            comapct={false}
+                            style={Nofar_styles.TinyButton}
                             onPress={modalConfirmPressHandler}
                         >
-                            Confirm
+                            <Text style={Nofar_styles.TinyButtonTitle}>אישור</Text>
                         </Button>
                     </View>
                 </Modal>
@@ -126,8 +132,7 @@ const ReportCreationScreen = ({route, navigation}) => {
                             multiline={true}
                         />
                     </View>
-                    <View style={{paddingVertical: 16}}>
-                        <View><Text style={Nofar_styles.SmallTitle}>מיקום:</Text></View>
+                    <View style={{paddingVertical: "5%"}}>
 
                         <Button
                             comapct={false}
@@ -136,7 +141,7 @@ const ReportCreationScreen = ({route, navigation}) => {
                             <Text style={Nofar_styles.TinyButtonTitle}>עדכון מיקום</Text>
                         </Button>
                     </View>
-
+                    <View style={{flexDirection:"row", alignSelf:"center"}}>
                     <Button
                         comapct={false}
                         style={Nofar_styles.SmallButton}
@@ -144,6 +149,7 @@ const ReportCreationScreen = ({route, navigation}) => {
                     >
                         <Text style={Nofar_styles.SmallButtonTitle}>אישור</Text>
                     </Button>
+                    </View>
 
                 </Modal>
             </Portal>
@@ -172,19 +178,19 @@ const ReportCreationScreen = ({route, navigation}) => {
                     </Button>
                 </View>
 
-                <View style={stylesPoster.chips}>
+                <View style={{...stylesPoster.chips,marginLeft:"2.8%"}}>
                     {
                         selectedTags.map((item, index) => (
                             <Chip key={index}
                                   icon={"close"}
                                   selected={false}
-                                  style={Nofar_styles.chips}
+                                  style={{...Nofar_styles.chips, marginTop:"5%"}}
                                   onPress={() => selectedTagPressHandler(item.tag)}>{item.tag}</Chip>
                         ))
                     }
                 </View>
 
-                <View style={stylesPoster.confirmBTContainer}>
+                <View style={{...stylesPoster.confirmBTContainer,paddingTop: "5%"}}>
                     <Button mode={"contained"} style={Nofar_styles.BigButton} onPress={reportConfirmHandler}>
                         <Text style={Nofar_styles.BigButtonText}>אישור</Text>
                     </Button>

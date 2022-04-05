@@ -1,35 +1,25 @@
 import React from 'react';
 import {
-    Modal,
-    Portal,
-    Text,
-    Button,
     Provider,
-    Card,
-    Chip,
     Searchbar,
-    Divider,
     IconButton,
     Menu,
-    
+
 
 } from 'react-native-paper';
 import {View, StyleSheet, FlatList, Dimensions} from 'react-native'
-import NewReportFAB from '../shared_components/newReportFAB';
-import Poster from '../data_classes/poster'
 import PostListItem from '../shared_components/postListItem'
-import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+import Report from "../data_classes/report";
 
 
 const BrowseReports = ({navigation}) => {
 
     var tempPosters = [
-        {poster: new Poster('https://picsum.photos/700/500', 100, "10/10/2022", "", "", ""), key: '1'},
-        {poster: new Poster('https://picsum.photos/500/400', 100, "10/10/2022", "", "", ""), key: '4'},
-        {poster: new Poster('https://picsum.photos/700/800', 100, "10/10/2022", "", "", ""), key: '3'},
-        {poster: new Poster('https://picsum.photos/900/600', 100, "10/10/2022", "", "", ""), key: '2'},
-        {poster: new Poster('https://picsum.photos/600/500', 100, "10/10/2022", "", "", ""), key: '5'},
-        {poster: new Poster('https://picsum.photos/300/500', 100, "10/10/2022", "", "", ""), key: '6'},
+        {poster: new Report('https://www.rd.com/wp-content/uploads/2019/01/shutterstock_673465372.jpg?fit=700,467', 100, "10/10/2022", [{tag: "ביישן", state: false},{tag: "חברותי", state: false}], "תיאור לכלב",), key: '1'},
+        {poster: new Report('https://i.pinimg.com/736x/b4/fd/0b/b4fd0bf7276d1f98064862b160459f01.jpg', 100, "10/10/2022", [{tag: "ביישן", state: false}], "",), key: '4'},
+        {poster: new Report('https://lh3.googleusercontent.com/xCGq6z8ttJPLImoEYYChE57se-Lu2yVwQolx5HbAmaiOLfMf3wJjzz690LA4O402IyfTPuFaErY4lEBe93T9LU7LiMM=w640-h400-e365-rj-sc0x00ffffff', 100, "10/10/2022", [], "",), key: '3'},
+        {poster: new Report('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVNU5QHQISeoWAO7EKcueW7X9JykV7vCF2iQ&usqp=CAU', 100, "10/10/2022", [], "",), key: '2'},
+
 
     ]
     const [posters, setPosters] = React.useState(tempPosters);
@@ -70,11 +60,6 @@ const BrowseReports = ({navigation}) => {
                         icon={"sort"}
                         onPress={openSortMenu}/>}>
                     <Menu.Item onPress={() => {sortByDate()}} title="תאריך"/>
-                    <Menu.Item onPress={() => {
-                    }} title="Item 2"/>
-                    <Divider/>
-                    <Menu.Item onPress={() => {
-                    }} title="Item 3"/>
                 </Menu>
 
                 <View style={styles.Search}>
@@ -103,10 +88,6 @@ const BrowseReports = ({navigation}) => {
                             report={item.poster}
                             navigation={navigation}
                         /></View>
-                        // <Image
-                        //     source={{uri: item.poster.image}}
-                        //     style={styles.image}
-                        // />
                     )
                 }}/>
 
@@ -121,29 +102,32 @@ const styles = StyleSheet.create({
     tabContainer: {
         paddingTop: 30,
         flexDirection: "row",
-        justifyContent: "space-evenly"
+        justifyContent: "space-evenly",
+
     },
     searchBarContainer: {
-        paddingTop: 10,
+        paddingVertical: 10,
         flexDirection: 'row',
-        backgroundColor: "#BBB988"
+        backgroundColor: "#BBB988",
     },
     filterButton: {
         position: "absolute",
         right: 16,
         top:10,
-        zIndex: 2
+        zIndex: 2,
     },
     Search: {
         flex: 1,
         paddingRight: 16,
-        zIndex: 1
+        zIndex: 1,
+
     },
     listContainer: {
         flex: 1,
         alignItems:'center',
         justifyContent:'center',
-        backgroundColor: "#BBB988"
+        backgroundColor: "#BBB988",
+
     },
     image: {
         width:Dimensions.get('window').width / 2,

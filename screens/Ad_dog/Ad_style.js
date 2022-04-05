@@ -8,7 +8,6 @@ export const AR_styles = StyleSheet.create({
   content: {
     marginLeft: 10,
     marginRight: 10,
-    marginTop: 20,
   },
   header: {
     flexDirection: "row",

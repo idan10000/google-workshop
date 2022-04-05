@@ -69,9 +69,10 @@ export const pageLaunchStyle = StyleSheet.create({
         flexDirection:'column',
         justifyContent: 'center',
     },
-    cliclHere: {
+    clickHere: {
         fontSize:20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        textDecorationLine:"underline"
     },
         bigTitle: {
             color: "#1B1209",

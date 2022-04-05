@@ -1,15 +1,13 @@
-import React, { Component } from "react";
 import {
   Text,
   View,
-  TouchableOpacity,
   ScrollView,
   Linking,
-  Platform,
 } from "react-native";
 import { Nofar_styles } from "../utils/Nofar_style";
 import { AR_styles } from "./Ad_style";
 import AdTemplate from "./ad_template";
+import {Button} from "react-native-paper";
 
 export default function AdForBrowse() {
   const makeCall = () => {
