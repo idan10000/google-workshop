@@ -1,4 +1,4 @@
-import {StyleSheet, View, Image, Dimensions} from 'react-native';
+import {StyleSheet, View, ImageBackground, Dimensions, ScrollView} from 'react-native';
 import {Button} from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 
@@ -25,7 +25,10 @@ export default function HomeScreen({navigation}) {
     }
 
     return (
-        <View style={styles.container}>
+        // <ScrollView style={styles.container}>
+            <ImageBackground
+                style={styles.image}
+                source={require('../assets/background_design.png')}>
             <View style={styles.BigButtonView}>
                 <Button
                     mode='contained'
@@ -52,20 +55,21 @@ export default function HomeScreen({navigation}) {
                     <Button
                         mode='outlined'
                         style={styles.SmallButton}
-                        onPress={() => console.log('upload missing ad')}
+                        onPress={() => navigation.navigate("CreateAd")}
                         labelStyle={styles.SmallButtonTitle}>
                         יצירת מודעה
                     </Button>
                 </View>
             </View>
-        </View>
+            </ImageBackground>
+        // </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: "#BBB988",
+        // backgroundColor: "#BBB988",
+        backgroundColor:"white"
     },
     
     
@@ -109,5 +113,9 @@ const styles = StyleSheet.create({
     fontSize: 25,
     textAlign: "center",
     fontWeight: "700",
+    },
+
+    image: {
+        flex: 1,
     },
 });

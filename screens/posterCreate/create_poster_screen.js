@@ -16,7 +16,7 @@ import {stylesPoster} from "./stylePosterCreate";
 // import * as util from "./utilsPosterCreate";
 import * as ImagePicker from "expo-image-picker";
 
-export default function PosterPostingComponent() {
+export default function PosterPostingComponent({navigation}) {
     //---------------------- Modal ----------------------
     const [visibleTag, setVisibleTag] = React.useState(false);
     const showTagModal = () => setVisibleTag(true);
@@ -227,7 +227,7 @@ export default function PosterPostingComponent() {
                         </View>
 
                         <View style={stylesPoster.confirmBTContainer}>
-                            <Button mode={"contained"} style={Nofar_styles.BigButton}>
+                            <Button mode={"contained"} style={Nofar_styles.BigButton} onPress={() => navigation.navigate("AdPage")}>
                                 <Text style={Nofar_styles.BigButtonText}>אישור</Text>
                             </Button>
                         </View>

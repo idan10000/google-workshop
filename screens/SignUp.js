@@ -32,7 +32,7 @@ export const useTogglePasswordVisibility = () => {
     };
 };
 
-export default function SignUp() {
+export default function SignUp({navigation}) {
 
     const reviewSchema = yup.object({
         Name: yup.string()
@@ -90,7 +90,7 @@ export default function SignUp() {
         <View style={Nofar_styles.container}>
             <View style={signUpStyles.logoHeaderContainer}>
 
-               <Image source={require('../assets/img.png')} style={signUpStyles.appLogo}/>
+                <TouchableOpacity ><Image source={require('../assets/Find_my_dog_logo.png')} style={signUpStyles.appLogo}/></TouchableOpacity>
                 <View style={Nofar_styles.BigTitle}>
                     <Text style={Nofar_styles.BigTitle}>Welcome{'\n'}To FinDog</Text>
                 </View>
@@ -191,7 +191,8 @@ export default function SignUp() {
                             {/*<TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>*/}
                             {/*    <Text style={Nofar_styles.BigButtonText}>עדכן פרטים</Text>*/}
                             {/*</TouchableOpacity>*/}
-                            <TouchableOpacity style={Nofar_styles.SmallButton} onPress={props.handleSubmit}>
+                            <TouchableOpacity style={Nofar_styles.SmallButton} onPress={() => {navigation.popToTop();
+                                                                                                    navigation.replace("App")}}>
                                 <Text style={Nofar_styles.SmallButtonTitle}>תרשמו אותי!</Text>
                             </TouchableOpacity>
                         </View>

@@ -14,6 +14,13 @@ export const signUpStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  header:{
+    color: "#1B1209",
+    fontSize: 30,
+    // textAlign: "center",
+    fontWeight: '700',
+    marginLeft:10,
+  },
   appLogo:{
     alignItems: 'center',
     marginTop:'10%',

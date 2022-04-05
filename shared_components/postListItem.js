@@ -53,6 +53,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
     paddingTop: 10,
   },
+  date:{
+    color:"black"
+  },
+  distance:{
+    color:"black"
+  }
 });
 
 export default postListItem;

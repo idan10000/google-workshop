@@ -1,10 +1,12 @@
-import { Text, View, Image,TouchableOpacity } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, Image,TouchableOpacity } from 'react-native';
 import { pageLaunchStyle } from '../styles/pageLaunchStyle';
 
-import { Avatar } from 'react-native-paper';
+import { Avatar, Button } from 'react-native-paper';
 import {Nofar_styles} from "./utils/Nofar_style";
 import React from "react";
-export default function PageLaunch() {
+import {signUpStyles} from "../styles/signUpStyles";
+export default function PageLaunch({navigation}) {
     return (
         <View style ={Nofar_styles.container}>
 
@@ -15,7 +17,7 @@ export default function PageLaunch() {
 
             <Image
                 style={pageLaunchStyle.appLogo}
-                source={require('../assets/img.png')}
+                source={require('../assets/Find_my_dog_logo.png')}
             />
             </View>
 
@@ -35,7 +37,7 @@ export default function PageLaunch() {
 
             <View style={pageLaunchStyle.emailRegist}>
 
-            <TouchableOpacity style={Nofar_styles.SmallButton}>
+            <TouchableOpacity style={Nofar_styles.SmallButton} onPress={() => navigation.navigate('SignUp')}>
                 <Text style={Nofar_styles.SmallButtonTitle}>הרשמה באמצעות מייל</Text>
             </TouchableOpacity>
                 <Text style = {pageLaunchStyle.text}> או באמצעות </Text>
