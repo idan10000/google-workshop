@@ -5,7 +5,6 @@ import { Nofar_styles } from "../utils/Nofar_style";
 import { AR_styles } from "./Report_style";
 export default function ReportTemplate({ report }) {
   const report_data = {
-    name: "אבנר",
     desc: "נמצא בפארק העירוני בסביבות השעה ארבע ביום ראשון .",
     image: "",
     place: "",
@@ -36,15 +35,7 @@ export default function ReportTemplate({ report }) {
           <Text style={Nofar_styles.SmallTitle}>תיאור</Text>
         </View>
         <View style={AR_styles.cardContent}>
-          <Text style={Nofar_styles.text}>{report.description}</Text>
-        </View>
-      </View>
-      <View style={Nofar_styles.card}>
-        <View style={AR_styles.cardHeader}>
-          <Text style={Nofar_styles.SmallTitle}>תאריך פרסום</Text>
-        </View>
-        <View style={AR_styles.cardContent}>
-          <Text style={Nofar_styles.text}>{report.date}</Text>
+          <Text style={Nofar_styles.text}>{report_data.desc}</Text>
         </View>
       </View>
     </View>
