@@ -22,7 +22,6 @@ export default function ReportTemplate({ report }) {
         {
           report.tagList.map((item, index) => (
               <Chip key={index}
-                    icon={"close"}
                     selected={false}
                     style={Nofar_styles.chips}
                     >{item.tag}</Chip>
