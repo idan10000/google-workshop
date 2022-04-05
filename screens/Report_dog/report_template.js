@@ -13,12 +13,8 @@ export default function ReportTemplate({ report }) {
   };
   return (
     <View style={Nofar_styles.container}>
-      <View style={Nofar_styles.card}>
-        <View style={AR_styles.cardContent}>
-          <View style={AR_styles.mainImageContainer}>
-            <Image style={AR_styles.mainImage} source={require("./dog1.png")} />
-          </View>
-        </View>
+      <View style={{ ...Nofar_styles.mainImage, alignSelf: "center" }}>
+        <Image style={Nofar_styles.mainImage} source={require("./dog1.png")} />
       </View>
 
       <View style={Nofar_styles.Viewchips}>

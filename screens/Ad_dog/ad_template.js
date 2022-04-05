@@ -18,13 +18,8 @@ export default function AdTemplate() {
       <View style={AR_styles.cardHeader}>
         <Text style={Nofar_styles.BigTitle}>{report_data.name}</Text>
       </View>
-      <View style={AR_styles.cardContent}>
-        <View style={{ ...Nofar_styles.mainImage, alignSelf: "center" }}>
-          <Image
-            style={Nofar_styles.mainImage}
-            source={require("./dog1.png")}
-          />
-        </View>
+      <View style={{ ...Nofar_styles.mainImage, alignSelf: "center" }}>
+        <Image style={Nofar_styles.mainImage} source={require("./dog1.png")} />
       </View>
 
       <View style={Nofar_styles.Viewchips}>
