@@ -15,9 +15,14 @@ export default function AdTemplate() {
   };
   return (
     <View style={Nofar_styles.container}>
-      <Text style={Nofar_styles.BigTitle}>{report_data.name}</Text>
-      <View style={{ ...Nofar_styles.mainImage, alignSelf: "center" }}>
-        <Image style={Nofar_styles.mainImage} source={require("./dog1.png")} />
+      <View>
+        <Text style={Nofar_styles.BigTitle}>{report_data.name}</Text>
+        <View style={{ ...Nofar_styles.mainImage, alignSelf: "center" }}>
+          <Image
+            style={Nofar_styles.mainImage}
+            source={require("./dog1.png")}
+          />
+        </View>
       </View>
 
       <View style={{ ...Nofar_styles.Viewchips, marginTop: "3" }}>
