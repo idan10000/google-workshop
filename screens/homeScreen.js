@@ -1,6 +1,7 @@
 import {StyleSheet, View, ImageBackground, Dimensions, ScrollView} from 'react-native';
 import {Button} from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
+import {user} from "./SignUp";
 
 export default function HomeScreen({navigation}) {
 
@@ -23,6 +24,9 @@ export default function HomeScreen({navigation}) {
             navigation.navigate('ReportCreation',{image:result.uri, edit:false})
         }
     }
+
+    console.log("homescreen")
+    console.log(user)
 
     return (
         // <ScrollView style={styles.container}>
@@ -50,7 +54,7 @@ export default function HomeScreen({navigation}) {
                         העלאה מגלריה
                     </Button>
                 </View>
-                
+
                 <View style={styles.SmallButtonView}>
                     <Button
                         mode='outlined'
@@ -71,8 +75,8 @@ const styles = StyleSheet.create({
         // backgroundColor: "#BBB988",
         backgroundColor:"white"
     },
-    
-    
+
+
     //   small button
     SmallButtonsView: {
         marginTop:"25%",
