@@ -4,19 +4,18 @@ import {
     Portal,
     Button,
     Chip,
-    Headline,
     FAB,
     TextInput,
-    HelperText,
     Text, Provider,
 } from "react-native-paper";
 import {View, ScrollView, TouchableOpacity, Image} from "react-native";
 import {Nofar_styles} from "../utils/Nofar_style";
 import {stylesPoster} from "./stylePosterCreate";
-// import * as util from "./utilsPosterCreate";
 import * as ImagePicker from "expo-image-picker";
-import Report from "../../data_classes/report";
-import Poster from "../../data_classes/poster";
+import Poster, {posterConverter} from "../../data_classes/poster";
+import {useContext} from "react";
+import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
+import {collection, doc, updateDoc, getFirestore, addDoc, arrayUnion} from "firebase/firestore";
 
 export default function PosterPostingComponent({navigation}) {
     //---------------------- Modal ----------------------
@@ -81,7 +80,7 @@ export default function PosterPostingComponent({navigation}) {
         setSelectedImage(pickerResult.uri);
     };
 
-    var imagePicker = (
+    let imagePicker = (
         <View style={{...Nofar_styles.mainImage, borderWidth: 1, alignSelf: 'center'}}>
             <TouchableOpacity
                 onPress={openImagePickerAsync}
@@ -98,7 +97,7 @@ export default function PosterPostingComponent({navigation}) {
                 <View style={{...Nofar_styles.mainImage, alignSelf: 'center'}}>
                     <Image
                         style={Nofar_styles.mainImage}
-                        source={{uri:selectedImage}}
+                        source={{uri: selectedImage}}
                     />
                 </View>
                 <View style={stylesPoster.fabContainer}>
@@ -123,16 +122,30 @@ export default function PosterPostingComponent({navigation}) {
         return !text.includes("@");
     };
 
-    const posterConfirmHandler = () => {
+    //---------------------- Uploading Poster handler ----------------------
 
+
+    const {user} = useContext(AuthenticatedUserContext);
+    const posterConfirmHandler = async () => {
+
+        // get current date
         let date = new Date()
         const dd = String(date.getDate()).padStart(2, '0');
         const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
         const yyyy = date.getFullYear();
 
         let today = dd + '/' + mm + '/' + yyyy;
-        navigation.pop()
-        navigation.navigate("AdPage", {poster: new Poster(selectedImage, "", today, selectedTags, descriptionText,nameText)})
+
+        // create poster
+        const poster = new Poster(selectedImage, "", today, selectedTags, descriptionText, nameText, user.uid)
+        const db = getFirestore();
+        const docRef = await addDoc(collection(db, "Posters").withConverter(posterConverter), poster)
+
+        //update user posters
+        await updateDoc(doc(db, "Users", user.uid), {posters: arrayUnion(docRef)}).then(() => {
+            navigation.pop()
+            navigation.navigate("AdPage", {poster: poster, ref:docRef})
+        });
     }
 
     return (
@@ -147,7 +160,7 @@ export default function PosterPostingComponent({navigation}) {
                 >
 
                     <View>
-                        <Text style={{...Nofar_styles.SmallTitle,paddingBottom:"3%"}}>בחר תגיות:</Text>
+                        <Text style={{...Nofar_styles.SmallTitle, paddingBottom: "3%"}}>בחר תגיות:</Text>
                     </View>
                     <View style={stylesPoster.chips}>
                         {modalTags.map((item, index) => (
@@ -161,7 +174,7 @@ export default function PosterPostingComponent({navigation}) {
                             </Chip>
                         ))}
                     </View>
-                    <View style={{...stylesPoster.modalButtonContainer, paddingTop:"3%"}}>
+                    <View style={{...stylesPoster.modalButtonContainer, paddingTop: "3%"}}>
                         <Button
                             comapct={false}
                             style={Nofar_styles.TinyButton}
@@ -175,77 +188,77 @@ export default function PosterPostingComponent({navigation}) {
 
             <View style={Nofar_styles.container}>
                 <ScrollView>
-                        {imagePicker}
+                    {imagePicker}
 
-                        <View style={stylesPoster.addTagsBTContainer}>
-                            <Button
-                                comapct={false}
-                                style={Nofar_styles.TinyButton}
-                                onPress={showTagModal}
+                    <View style={stylesPoster.addTagsBTContainer}>
+                        <Button
+                            comapct={false}
+                            style={Nofar_styles.TinyButton}
+                            onPress={showTagModal}
+                        >
+                            <Text style={Nofar_styles.TinyButtonTitle}>הוסף תגיות</Text>
+                        </Button>
+                        <Button mode={"contained"} style={Nofar_styles.TinyButton}>
+                            <Text style={Nofar_styles.TinyButtonTitle}>עדכון מיקום</Text>
+                        </Button>
+                    </View>
+
+                    <View style={{...stylesPoster.chips, marginLeft: "2.8%"}}>
+                        {selectedTags.map((item, index) => (
+                            <Chip
+                                key={index}
+                                icon={"close"}
+                                selected={false}
+                                onPress={() => selectedTagPressHandler(item.tag)}
+                                style={{...Nofar_styles.chips, marginTop: "5%"}}
                             >
-                                <Text style={Nofar_styles.TinyButtonTitle}>הוסף תגיות</Text>
-                            </Button>
-                            <Button mode={"contained"} style={Nofar_styles.TinyButton}>
-                                <Text style={Nofar_styles.TinyButtonTitle}>עדכון מיקום</Text>
-                            </Button>
+                                {item.tag}
+                            </Chip>
+                        ))}
+                    </View>
+
+                    <View style={stylesPoster.detailsContainer}>
+                        <View style={{...Nofar_styles.actionInput, paddingVertical: "5%"}}>
+                            <TextInput
+                                dense={false}
+                                placeholder={"שם הכלב"}
+                                value={nameText}
+                                onChangeText={setName}
+                                mode="outlined"
+                                activeUnderlineColor="#000000"
+                                activeOutlineColor="#000000"
+                                multiline={true}
+                                style={{backgroundColor: "#D3D3D3"}}
+                            />
                         </View>
 
-                    <View style={{...stylesPoster.chips,marginLeft:"2.8%"}}>
-                            {selectedTags.map((item, index) => (
-                                <Chip
-                                    key={index}
-                                    icon={"close"}
-                                    selected={false}
-                                    onPress={() => selectedTagPressHandler(item.tag)}
-                                    style={{...Nofar_styles.chips, marginTop:"5%"}}
-                                >
-                                    {item.tag}
-                                </Chip>
-                            ))}
-                        </View>
-
-                        <View style={stylesPoster.detailsContainer}>
-                            <View style={{...Nofar_styles.actionInput,paddingVertical:"5%"}}>
-                                <TextInput
-                                    dense={false}
-                                    placeholder={"שם הכלב"}
-                                    value={nameText}
-                                    onChangeText={setName}
-                                    mode="outlined"
-                                    activeUnderlineColor="#000000"
-                                    activeOutlineColor="#000000"
-                                    multiline={true}
-                                    style={{backgroundColor: "#D3D3D3"}}
-                                />
-                            </View>
-
-                            {/* <HelperText type="error" visible={hasErrors("name")}>
+                        {/* <HelperText type="error" visible={hasErrors("name")}>
               <Text style={edit_styles.error}>טעות בתיאור הטקסט</Text>
             </HelperText> */}
-                            <View style={{...Nofar_styles.actionInput,paddingBottom:"5%"}}>
-                                <TextInput
-                                    dense={false}
-                                    placeholder={"תיאור"}
-                                    value={descriptionText}
-                                    onChangeText={setDescription}
-                                    mode="outlined"
-                                    activeUnderlineColor="#000000"
-                                    activeOutlineColor="#000000"
-                                    multiline={true}
-                                    style={{backgroundColor: "#D3D3D3"}}
-                                />
-                            </View>
-                            {/* <HelperText type="error" visible={hasErrors("name")}>
+                        <View style={{...Nofar_styles.actionInput, paddingBottom: "5%"}}>
+                            <TextInput
+                                dense={false}
+                                placeholder={"תיאור"}
+                                value={descriptionText}
+                                onChangeText={setDescription}
+                                mode="outlined"
+                                activeUnderlineColor="#000000"
+                                activeOutlineColor="#000000"
+                                multiline={true}
+                                style={{backgroundColor: "#D3D3D3"}}
+                            />
+                        </View>
+                        {/* <HelperText type="error" visible={hasErrors("name")}>
               <Text style={edit_styles.error}>טעות בתיאור הטקסט</Text>
             </HelperText> */}
 
-                        </View>
+                    </View>
 
-                        <View style={stylesPoster.confirmBTContainer}>
-                            <Button mode={"contained"} style={Nofar_styles.BigButton} onPress={posterConfirmHandler}>
-                                <Text style={Nofar_styles.BigButtonText}>אישור</Text>
-                            </Button>
-                        </View>
+                    <View style={stylesPoster.confirmBTContainer}>
+                        <Button mode={"contained"} style={Nofar_styles.BigButton} onPress={posterConfirmHandler}>
+                            <Text style={Nofar_styles.BigButtonText}>אישור</Text>
+                        </Button>
+                    </View>
                 </ScrollView>
             </View>
         </Provider>

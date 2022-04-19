@@ -5,6 +5,7 @@ import {Avatar, Button} from 'react-native-paper';
 import {Nofar_styles} from "./utils/Nofar_style";
 import React from "react";
 import {fireAuth} from "../shared_components/firebase";
+import {signInWithEmailAndPassword} from "firebase/auth";
 
 
 export default function PageLaunch({navigation}) {
@@ -64,6 +65,27 @@ export default function PageLaunch({navigation}) {
 //             });
 //         }
 //     }
+    const tempDebugLoginHandler = (email, password) => {
+        console.log(email)
+        console.log(password)
+        signInWithEmailAndPassword(fireAuth,email,password)
+            .then(() => {
+                console.log('User account created & signed in!');
+                navigation.popToTop();
+                navigation.replace("App")
+            })
+            .catch(error => {
+                if (error.code === 'auth/email-already-in-use') {
+                    console.log('That email address is already in use!');
+                }
+
+                if (error.code === 'auth/invalid-email') {
+                    console.log('That email address is invalid!');
+                }
+
+                console.error(error);
+            });
+    }
 
     return (
         <ImageBackground
@@ -112,7 +134,7 @@ export default function PageLaunch({navigation}) {
             </View>
             <View style={pageLaunchStyle.containerForRegisterClick}>
                 <Text style={Nofar_styles.text}> כבר רשומים? </Text>
-                <TouchableOpacity><Text style={pageLaunchStyle.clickHere}>לחצו כאן!</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => {tempDebugLoginHandler("idan.pinto3@gmail.com","123456")}}><Text style={pageLaunchStyle.clickHere}>לחצו כאן!</Text></TouchableOpacity>
 
 
             </View>

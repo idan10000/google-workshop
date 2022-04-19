@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {Formik} from 'formik';
@@ -6,11 +6,11 @@ import * as yup from 'yup';
 import {signUpStyles} from "../styles/signUpStyles";
 import {Nofar_styles} from "./utils/Nofar_style";
 import {fireAuth} from "../shared_components/firebase";
-import {createUserWithEmailAndPassword,} from 'firebase/auth';
+import {createUserWithEmailAndPassword, getAuth,} from 'firebase/auth';
+import { getFirestore, setDoc, doc } from 'firebase/firestore';
 
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
-export let user;
 
 export const useTogglePasswordVisibility = () => {
     const [passwordVisibility, setPasswordVisibility] = useState(true);
@@ -87,29 +87,40 @@ export default function SignUp({navigation}) {
 
     // Set an initializing state whilst Firebase connects
     const [initializing, setInitializing] = useState(true);
-    const [loggedUser, setLoggedUser] = useState();
 
 
     // Handle user state changes
-    function onAuthStateChanged(newUser) {
-        setLoggedUser(newUser);
+    async function onAuthStateChanged(newUser) {
         console.log(newUser)
-        user = newUser
         if (initializing) setInitializing(false);
-        navigation.popToTop();
-        navigation.replace("App")
+        const db = getFirestore();
+
+        await setDoc(doc(db,"Users",newUser.uid), {
+            name: formRef.current.values.Name,
+            email: formRef.current.values.Email,
+            phone: formRef.current.values.PhoneNumber,
+            reports: [],
+            posters: []
+        }).then(() => {
+            navigation.popToTop();
+            navigation.replace("App")
+        }).catch(error => {
+            console.log(error)
+        })
+        newUser.sendEmailVerification()
+
     }
 
     useEffect(() => {
         return fireAuth.onAuthStateChanged(onAuthStateChanged); // unsubscribe on unmount
     }, []);
 
-    const handleSubmitPress = (email, password) => {
+    const handleSubmitPress = async (email, password) => {
         console.log(email)
         console.log(password)
-        createUserWithEmailAndPassword(fireAuth, email, password)
+        await createUserWithEmailAndPassword(fireAuth, email, password)
             .then(() => {
-                console.log('User account created & signed in!');
+                getAuth().currentUser.sendEmailVerification()
             })
             .catch(error => {
                 if (error.code === 'auth/email-already-in-use') {
@@ -123,6 +134,8 @@ export default function SignUp({navigation}) {
                 console.error(error);
             });
     }
+
+    const formRef = useRef();
 
     return (
         <View style={Nofar_styles.container}>
@@ -142,6 +155,7 @@ export default function SignUp({navigation}) {
 
             <Formik
                 initialValues={{Name: '', Email: '', Password: '', PhoneNumber: ''}}
+                innerRef={formRef}
                 validationSchema={reviewSchema} onSubmit={(values) => {
                 console.log(values);
             }}

@@ -31,7 +31,7 @@ export const useTogglePasswordVisibility = () => {
     };
 };
 
-export default function SignIn() {
+export default function SignIn({navigation}) {
 
     const [initializing, setInitializing] = useState(true);
     const [loggedUser, setLoggedUser] = useState();
@@ -55,6 +55,8 @@ export default function SignIn() {
         signInWithEmailAndPassword(fireAuth,email,password)
             .then(() => {
                 console.log('User account created & signed in!');
+                navigation.popToTop();
+                navigation.replace("App")
             })
             .catch(error => {
                 if (error.code === 'auth/email-already-in-use') {

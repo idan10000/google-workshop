@@ -1,9 +1,13 @@
 import * as React from 'react';
 import {Modal, Portal, Button, Provider, Chip, Headline, TextInput} from 'react-native-paper';
 import {View, StyleSheet, Image, Text} from 'react-native'
-import Report from '../../data_classes/report'
+import Report, {reportConverter} from '../../data_classes/report'
 import {stylesPoster} from "../posterCreate/stylePosterCreate";
 import {Nofar_styles} from "../utils/Nofar_style";
+import {addDoc, arrayUnion, collection, doc, getFirestore, updateDoc} from "firebase/firestore";
+import {posterConverter} from "../../data_classes/poster";
+import {useContext} from "react";
+import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
 
 
 const ReportCreationScreen = ({route, navigation}) => {
@@ -63,18 +67,21 @@ const ReportCreationScreen = ({route, navigation}) => {
 
     const [location, setLocation] = React.useState('');
 
-    const reportConfirmHandler = () => {
-        // let date = new Date();
-        // let newReport = new Report(image, location, date, selectedTags, descriptionText)
-        // console.log(newReport)
+    const {user} = useContext(AuthenticatedUserContext);
+    const reportConfirmHandler = async () => {
         let date = new Date()
         const dd = String(date.getDate()).padStart(2, '0');
         const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
         const yyyy = date.getFullYear();
 
         let today = route.params.edit ? report.date : dd + '/' + mm + '/' + yyyy;
-        navigation.pop()
-        navigation.navigate("ReportPage", {report: new Report(image, location, today, selectedTags, descriptionText)})
+        const newReport = new Report(image, location, today, selectedTags, descriptionText, user)
+        const db = getFirestore();
+        const docRef = await addDoc(collection(db, "Reports").withConverter(reportConverter), newReport)
+        await updateDoc(doc(db, "Users", user.uid), {reports: arrayUnion(docRef)}).then(() => {
+            navigation.pop()
+            navigation.navigate("ReportPage", {report: newReport, ref: docRef})
+        });
     }
 
     //---------------------- Create / Edit setup ----------------------
