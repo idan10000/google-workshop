@@ -5,11 +5,14 @@ import { AR_styles } from "./Report_style";
 import ReportTemplate from "./report_template";
 import {Button} from "react-native-paper";
 export default function ReportPage({ route, navigation }) {
+
   const editButtonPressHandler = () => {
     console.log("opening report screen");
+    console.log(route.params.ref)
     navigation.navigate("ReportCreation", {
       report: route.params.report,
       edit: true,
+      ref: route.params.ref
     });
   };
 

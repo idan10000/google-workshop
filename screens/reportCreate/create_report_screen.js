@@ -4,12 +4,16 @@ import {View, StyleSheet, Image, Text} from 'react-native'
 import Report, {reportConverter} from '../../data_classes/report'
 import {stylesPoster} from "../posterCreate/stylePosterCreate";
 import {Nofar_styles} from "../utils/Nofar_style";
-import {addDoc, arrayUnion, collection, doc, getFirestore, updateDoc} from "firebase/firestore";
-import {posterConverter} from "../../data_classes/poster";
+import {addDoc, arrayUnion, collection, doc, getFirestore, setDoc, updateDoc} from "firebase/firestore";
 import {useContext} from "react";
 import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
+import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
 
 
+// Expected input from previous screen is:
+// edit - if the report is being edited (TRUE) or it is a new report (FALSE)
+// report - if the report is being edited this is the values it had, null otherwise
+// ref - the DB page reference to where the report was written to
 const ReportCreationScreen = ({route, navigation}) => {
 
     console.log("opened report screen")
@@ -27,8 +31,8 @@ const ReportCreationScreen = ({route, navigation}) => {
     ];
 
 
+    // init tags with previous values if reached this page from an edit report
     const initSelectedTagList = route.params.edit ? report.tagList.map(({tag}) => ({tag: tag, state: false})) : []
-    console.log(initSelectedTagList)
     const initModalTagList = route.params.edit ?
         tagList.filter((item) => !initSelectedTagList.some(e => e.tag === item.tag)) : tagList
     const [modalTags, setModalTags] = React.useState(initModalTagList);
@@ -75,13 +79,39 @@ const ReportCreationScreen = ({route, navigation}) => {
         const yyyy = date.getFullYear();
 
         let today = route.params.edit ? report.date : dd + '/' + mm + '/' + yyyy;
-        const newReport = new Report(image, location, today, selectedTags, descriptionText, user)
+        const plainTags = selectedTags.map((function (tag) {
+            return tag.tag
+        }))
+
+        const dbReport = new Report(image, location, today, plainTags, descriptionText, user.uid) // report to upload to DB
+        const sendReport = new Report(image, location, today, selectedTags, descriptionText, user.uid) // report to send to the report page
+
         const db = getFirestore();
-        const docRef = await addDoc(collection(db, "Reports").withConverter(reportConverter), newReport)
-        await updateDoc(doc(db, "Users", user.uid), {reports: arrayUnion(docRef)}).then(() => {
-            navigation.pop()
-            navigation.navigate("ReportPage", {report: newReport, ref: docRef})
-        });
+
+        // if we reached from an edit report
+        if (route.params.edit) {
+            // if the report was changed, update the report page
+            console.log("ref = " + route.params.ref)
+            console.log("ref id = " + route.params.ref.id)
+            if (deepDiffer(sendReport, report)) {
+                const docRef = await setDoc(doc(db,"Reports",route.params.ref).withConverter(reportConverter), dbReport).then(() => {
+                    console.log("updated report page")
+                }).catch(error => {
+                    console.log(error)
+                });
+            }
+                console.log("after upload")
+                navigation.pop()
+                navigation.navigate("ReportPage", {report: sendReport, ref: route.params.ref})
+        } else {
+            const docRef = await addDoc(collection(db, "Reports").withConverter(reportConverter), dbReport)
+            await updateDoc(doc(db, "Users", user.uid), {reports: arrayUnion(docRef)}).then(() => {
+                navigation.pop()
+                navigation.navigate("ReportPage", {report: sendReport, ref: docRef.id})
+            }).catch(error => {
+                console.log(error)
+            });
+        }
     }
 
     //---------------------- Create / Edit setup ----------------------
@@ -100,7 +130,7 @@ const ReportCreationScreen = ({route, navigation}) => {
                 >
 
                     <View>
-                        <Text style={{...Nofar_styles.SmallTitle,paddingBottom:"3%"}}>בחר תגיות:</Text>
+                        <Text style={{...Nofar_styles.SmallTitle, paddingBottom: "3%"}}>בחר תגיות:</Text>
                     </View>
                     <View style={stylesPoster.chips}>
                         {modalTags.map((item, index) => (
@@ -114,7 +144,7 @@ const ReportCreationScreen = ({route, navigation}) => {
                             </Chip>
                         ))}
                     </View>
-                    <View style={{...stylesPoster.modalButtonContainer, paddingTop:"3%"}}>
+                    <View style={{...stylesPoster.modalButtonContainer, paddingTop: "3%"}}>
                         <Button
                             comapct={false}
                             style={Nofar_styles.TinyButton}
@@ -148,14 +178,14 @@ const ReportCreationScreen = ({route, navigation}) => {
                             <Text style={Nofar_styles.TinyButtonTitle}>עדכון מיקום</Text>
                         </Button>
                     </View>
-                    <View style={{flexDirection:"row", alignSelf:"center"}}>
-                    <Button
-                        comapct={false}
-                        style={Nofar_styles.SmallButton}
-                        onPress={hideDescriptionModal}
-                    >
-                        <Text style={Nofar_styles.SmallButtonTitle}>אישור</Text>
-                    </Button>
+                    <View style={{flexDirection: "row", alignSelf: "center"}}>
+                        <Button
+                            comapct={false}
+                            style={Nofar_styles.SmallButton}
+                            onPress={hideDescriptionModal}
+                        >
+                            <Text style={Nofar_styles.SmallButtonTitle}>אישור</Text>
+                        </Button>
                     </View>
 
                 </Modal>
@@ -185,19 +215,19 @@ const ReportCreationScreen = ({route, navigation}) => {
                     </Button>
                 </View>
 
-                <View style={{...stylesPoster.chips,marginLeft:"2.8%"}}>
+                <View style={{...stylesPoster.chips, marginLeft: "2.8%"}}>
                     {
                         selectedTags.map((item, index) => (
                             <Chip key={index}
                                   icon={"close"}
                                   selected={false}
-                                  style={{...Nofar_styles.chips, marginTop:"5%"}}
+                                  style={{...Nofar_styles.chips, marginTop: "5%"}}
                                   onPress={() => selectedTagPressHandler(item.tag)}>{item.tag}</Chip>
                         ))
                     }
                 </View>
 
-                <View style={{...stylesPoster.confirmBTContainer,paddingTop: "5%"}}>
+                <View style={{...stylesPoster.confirmBTContainer, paddingTop: "5%"}}>
                     <Button mode={"contained"} style={Nofar_styles.BigButton} onPress={reportConfirmHandler}>
                         <Text style={Nofar_styles.BigButtonText}>אישור</Text>
                     </Button>
