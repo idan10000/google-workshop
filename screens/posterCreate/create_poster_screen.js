@@ -15,9 +15,12 @@ import * as ImagePicker from "expo-image-picker";
 import Poster, {posterConverter} from "../../data_classes/poster";
 import {useContext} from "react";
 import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
-import {collection, doc, updateDoc, getFirestore, addDoc, arrayUnion} from "firebase/firestore";
+import {collection, doc, updateDoc, getFirestore, addDoc, arrayUnion, setDoc} from "firebase/firestore";
+import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
 
-export default function PosterPostingComponent({navigation}) {
+export default function PosterPostingComponent({route, navigation}) {
+
+    let prevPoster = route.params.poster
     //---------------------- Modal ----------------------
     const [visibleTag, setVisibleTag] = React.useState(false);
     const showTagModal = () => setVisibleTag(true);
@@ -30,8 +33,12 @@ export default function PosterPostingComponent({navigation}) {
         {tag: "אגרסיבי", state: false},
     ];
 
-    const [modalTags, setModalTags] = React.useState(tagList);
-    const [selectedTags, setSelectedTags] = React.useState([]);
+
+    const initSelectedTagList = route.params.edit ? prevPoster.tagList.map(({tag}) => ({tag: tag, state: false})) : []
+    const initModalTagList = route.params.edit ?
+        tagList.filter((item) => !initSelectedTagList.some(e => e.tag === item.tag)) : tagList
+    const [modalTags, setModalTags] = React.useState(initModalTagList);
+    const [selectedTags, setSelectedTags] = React.useState(initSelectedTagList);
 
     const modalChipHandler = (index) => {
         setModalTags((prevStates) => {
@@ -61,7 +68,8 @@ export default function PosterPostingComponent({navigation}) {
     };
 
     //---------------------- Image Picker ----------------------
-    const [selectedImage, setSelectedImage] = React.useState(null);
+    const initImage = route.params.edit ? prevPoster.image : null
+    const [selectedImage, setSelectedImage] = React.useState(initImage);
     let openImagePickerAsync = async () => {
         let permissionResult =
             await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -113,8 +121,12 @@ export default function PosterPostingComponent({navigation}) {
     }
 
     const [text, setText] = React.useState("");
-    const [descriptionText, setDescription] = React.useState("");
-    const [nameText, setName] = React.useState("");
+
+    const initDescription = route.params.edit ? prevPoster.description : ''
+    const [descriptionText, setDescription] = React.useState(initDescription);
+
+    const initName = route.params.edit ? prevPoster.dogName : ''
+    const [nameText, setName] = React.useState(initName);
 
     const onChangeText = (text) => setText(text);
 
@@ -134,18 +146,41 @@ export default function PosterPostingComponent({navigation}) {
         const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
         const yyyy = date.getFullYear();
 
-        let today = dd + '/' + mm + '/' + yyyy;
+        let today = route.params.edit ? prevPoster.date : dd + '/' + mm + '/' + yyyy;
+
+        const plainTags = selectedTags.map((function (tag) {
+            return tag.tag
+        }))
 
         // create poster
-        const poster = new Poster(selectedImage, "", today, selectedTags, descriptionText, nameText, user.uid)
-        const db = getFirestore();
-        const docRef = await addDoc(collection(db, "Posters").withConverter(posterConverter), poster)
+        const dbPoster = new Poster(selectedImage, "", today, plainTags, descriptionText, nameText, user.uid)
+        const sendPoster = new Poster(selectedImage, "", today, selectedTags, descriptionText, nameText, user.uid)
 
-        //update user posters
-        await updateDoc(doc(db, "Users", user.uid), {posters: arrayUnion(docRef)}).then(() => {
+        const db = getFirestore();
+
+        if (route.params.edit) {
+            // if the prevPoster was changed, update the prevPoster page
+            if (deepDiffer(sendPoster, prevPoster)) {
+                const docRef = await setDoc(doc(db,"Posters",route.params.ref).withConverter(posterConverter), dbPoster).then(() => {
+                    console.log("updated Poster page")
+                }).catch(error => {
+                    console.log(error)
+                });
+            }
+            console.log("after upload")
             navigation.pop()
-            navigation.navigate("AdPage", {poster: poster, ref:docRef})
-        });
+            navigation.navigate("AdPage", {poster: sendPoster, ref: route.params.ref})
+        } else {
+            const docRef = await addDoc(collection(db, "prevPosters").withConverter(posterConverter), dbPoster)
+
+            // add poster page id to user posters
+            await updateDoc(doc(db, "Users", user.uid), {prevPosters: arrayUnion(docRef)}).then(() => {
+                navigation.pop()
+                navigation.navigate("AdPage", {poster: sendPoster, ref: docRef.id})
+            }).catch(error => {
+                console.log(error)
+            });
+        }
     }
 
     return (

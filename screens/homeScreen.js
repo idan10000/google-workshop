@@ -25,6 +25,10 @@ export default function HomeScreen({navigation}) {
         }
     }
 
+    const createPosterPressHandler = () => {
+        navigation.navigate('CreateAd',{edit:false})
+    }
+
     console.log("homescreen")
     console.log(user)
 
@@ -59,7 +63,7 @@ export default function HomeScreen({navigation}) {
                     <Button
                         mode='outlined'
                         style={styles.SmallButton}
-                        onPress={() => navigation.navigate("CreateAd")}
+                        onPress={createPosterPressHandler}
                         labelStyle={styles.SmallButtonTitle}>
                         יצירת מודעה
                     </Button>

@@ -6,7 +6,18 @@ import { AR_styles } from "./Ad_style";
 import AdTemplate from "./ad_template";
 import {Button} from "react-native-paper";
 export default function AdPage({navigation, route}) {
-  console.log(route.params.poster)
+
+  const editButtonPressHandler = () => {
+    console.log("opening report screen");
+    console.log(route.params.ref)
+    navigation.navigate("CreateAd", {
+      poster: route.params.poster,
+      edit: true,
+      ref: route.params.ref
+    });
+  };
+
+
   return (
     <View style={Nofar_styles.container}>
       <ScrollView style={AR_styles.content}>
@@ -25,9 +36,7 @@ export default function AdPage({navigation, route}) {
           <Button
             mode={"contained"}
             style={Nofar_styles.BigButton}
-            onPress={() => {
-              navigation.replace("CreateAd");
-            }}
+            onPress={editButtonPressHandler}
           >
             <Text style={Nofar_styles.BigButtonText}>עדכן את המודעה</Text>
           </Button>
