@@ -7,6 +7,8 @@ import * as yup from 'yup';
 import {fireAuth} from "../shared_components/firebase";
 import {signInWithEmailAndPassword} from "firebase/auth";
 import {user} from "./SignUp";
+import {Nofar_styles} from "./utils/Nofar_style";
+import {signUpStyles} from "../styles/signUpStyles";
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
@@ -101,60 +103,69 @@ export default function SignIn({navigation}) {
 
             <Formik
                 initialValues={{Email: '', Password: ''}}
-                validationSchema={reviewSchema}
-                onSubmit={(values) => {
-                    console.log(values);
-                }}
+                innerRef={formRef}
+                validationSchema={reviewSchema} onSubmit={(values) => {
+                console.log(values);
+            }}
             >
                 {props => (
 
                     <View>
 
 
-                        <Text
-                            style={AfterSignedStyle.errorText}>{props.touched.DateOfBirth && props.errors.DateOfBirth}</Text>
-                        <TextInput
-                            style={AfterSignedStyle.input}
-                            placeholder='Email'
-                            onBlur={props.handleBlur('Email')}
-
-                            onChangeText={props.handleChange('Email')}
-                            value={props.values.Email}
-                            keyboardType='numeric'
-                        />
-                        <Text style={AfterSignedStyle.errorText}>{props.touched.Email && props.errors.Email}</Text>
-                        <View style={AfterSignedStyle.inputContainer}>
-
+                        <View style={Nofar_styles.actionInput}>
                             <TextInput
-                                placeholder='Password'
-                                onBlur={props.handleBlur('Password')}
+                                placeholder="אימייל"
+                                // value={state.email}
+                                //
+                                // onChangeText={onChangeEmail}
+                                onChangeText={props.handleChange('Email')}
+                                value={props.values.Email}
+                                onBlur={props.handleBlur('Email')}
+                                error={hasErrors('email', props.values.Email, props.touched.Email)}
 
-                                onChangeText={props.handleChange('Password')}
-                                value={props.values.Password}
-                                keyboardType='numeric'
-
-                                style={AfterSignedStyle.input}
-                                name="password"
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                textContentType="newPassword"
-                                secureTextEntry={passwordVisibility}
-                                enablesReturnKeyAutomatically
+                                activeUnderlineColor="#000000"
+                                activeOutlineColor="#000000"
+                                left={<TextInput.Icon name="email"/>}
                             />
-                            <Pressable onPress={handlePasswordVisibility}>
-                                <MaterialCommunityIcons name={rightIcon} size={24} color="#232323"/>
-                            </Pressable>
-
-                            <Text
-                                style={AfterSignedStyle.errorText}>{props.touched.Password && props.errors.Password}</Text>
+                            <Text style={signUpStyles.errorText}>{props.touched.Email && props.errors.Email}</Text>
                         </View>
 
-                        <Button color='maroon' onPress={() => {handleSubmitPress(props.values.Email,props.values.Password)}}
-                                style={AfterSignedStyle.button}>התחבר</Button>
-                    </View>
 
+                        <View style={Nofar_styles.actionInput}>
+                            <TextInput
+                                placeholder="סיסמה"
+                                // value={state.password}
+                                // onChangeText={onChangePassword}
+                                onChangeText={props.handleChange('Password')}
+                                value={props.values.Password}
+                                secureTextEntry={passwordVisibility}
+                                error={hasErrors('password', props.values.Password, props.touched.Password)}
+                                onBlur={props.handleBlur('Password')}
+
+                                activeUnderlineColor="#000000"
+                                activeOutlineColor="#000000"
+                                right={<TextInput.Icon onPress={handlePasswordVisibility} name={rightIcon}/>}
+                                left={<TextInput.Icon name="lock"/>}
+
+                            />
+                            <Text
+                                style={signUpStyles.errorText}>{props.touched.Password && props.errors.Password}</Text>
+                        </View>
+
+                        <View style={signUpStyles.submitButton}>
+                            {/*<TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>*/}
+                            {/*    <Text style={Nofar_styles.BigButtonText}>עדכן פרטים</Text>*/}
+                            {/*</TouchableOpacity>*/}
+                            <TouchableOpacity style={Nofar_styles.SmallButton}
+                                              onPress={() => handleSubmitPress(props.values.Email, props.values.Password)}>
+                                <Text style={Nofar_styles.SmallButtonTitle}>תרשמו אותי!</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 )}
             </Formik>
+
 
 
         </View>
