@@ -1,5 +1,8 @@
-import {initializeApp} from "firebase/app";
+import {initializeApp,} from "firebase/app";
 import {getAuth,} from 'firebase/auth';
+import {getStorage, ref, uploadBytes, getDownloadURL,} from "firebase/storage";
+import uuid from 'react-native-uuid';
+
 const firebaseConfig = {
     apiKey: "AIzaSyAs3eewx9m6kipMfsQkz-37NWQgXF1_fnQ",
     authDomain: "findog-a0110.firebaseapp.com",
@@ -11,8 +14,35 @@ const firebaseConfig = {
 };
 
 
-let Firebase = initializeApp(firebaseConfig);
-
+export let Firebase = initializeApp(firebaseConfig);
 export const fireAuth = getAuth(Firebase)
+export const fireStorage = getStorage(Firebase)
 
-export default Firebase;
+// upload an image to firebase storage, inputs the URI of the image and the folder where it will be uploaded to.
+// returns an object containing the path and the link (download link of the image)
+export async function uploadImageAsync(uri, folder) {
+    const blob = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            resolve(xhr.response);
+        };
+        xhr.onerror = function (e) {
+            console.log(e);
+            reject(new TypeError("Network request failed"));
+        };
+        xhr.responseType = "blob";
+        xhr.open("GET", uri, true);
+        xhr.send(null);
+    });
+    const path = folder + "/" + uuid.v4()
+    const storageImageRef = ref(fireStorage, path);
+    const snapshot = await uploadBytes(storageImageRef, blob).then((snapshot) => {
+        console.log('Uploaded a blob or file!');
+    });
+
+
+    const downloadLink = await getDownloadURL(storageImageRef)
+    console.log(downloadLink)
+    blob.close();
+    return {path: path, link: downloadLink}
+}
