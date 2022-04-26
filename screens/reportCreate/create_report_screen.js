@@ -93,7 +93,7 @@ const ReportCreationScreen = ({route, navigation}) => {
         if (route.params.edit) {
             // if the report was changed, update the report page
             if (deepDiffer(sendReport, report)) {
-                const imageAndPath = await uploadImageAsync(image,"Posters")
+                const imageAndPath = await uploadImageAsync(image,"Reports")
                 dbReport.image = imageAndPath
                 const docRef = await setDoc(doc(db,"Reports",route.params.ref).withConverter(reportConverter), dbReport).then(() => {
                     console.log("updated report page")

@@ -179,7 +179,7 @@ export default function PosterPostingComponent({route, navigation}) {
             navigation.pop()
             navigation.navigate("AdPage", {poster: sendPoster, ref: route.params.ref})
         } else {
-            const image = await uploadImageAsync(selectedImage,"Reports")
+            const image = await uploadImageAsync(selectedImage,"Posters")
             dbPoster.image = image
             const docRef = await addDoc(collection(db, "Posters").withConverter(posterConverter), dbPoster)
 
