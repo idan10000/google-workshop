@@ -17,6 +17,9 @@ import {useContext} from "react";
 import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
 import {collection, doc, updateDoc, getFirestore, addDoc, arrayUnion, setDoc} from "firebase/firestore";
 import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
+import {fireStorage, uploadImageAsync} from "../../shared_components/firebase";
+import {ref,uploadBytes} from "firebase/storage";
+
 
 export default function PosterPostingComponent({route, navigation}) {
 
@@ -120,6 +123,10 @@ export default function PosterPostingComponent({route, navigation}) {
         );
     }
 
+    //
+
+    //---------------------- Texts ----------------------
+
     const [text, setText] = React.useState("");
 
     const initDescription = route.params.edit ? prevPoster.description : ''
@@ -161,20 +168,23 @@ export default function PosterPostingComponent({route, navigation}) {
         if (route.params.edit) {
             // if the prevPoster was changed, update the prevPoster page
             if (deepDiffer(sendPoster, prevPoster)) {
+                const image = await uploadImageAsync(selectedImage,"Posters")
+                dbPoster.image = image
                 const docRef = await setDoc(doc(db,"Posters",route.params.ref).withConverter(posterConverter), dbPoster).then(() => {
                     console.log("updated Poster page")
                 }).catch(error => {
                     console.log(error)
                 });
             }
-            console.log("after upload")
             navigation.pop()
             navigation.navigate("AdPage", {poster: sendPoster, ref: route.params.ref})
         } else {
-            const docRef = await addDoc(collection(db, "prevPosters").withConverter(posterConverter), dbPoster)
+            const image = await uploadImageAsync(selectedImage,"Reports")
+            dbPoster.image = image
+            const docRef = await addDoc(collection(db, "Posters").withConverter(posterConverter), dbPoster)
 
             // add poster page id to user posters
-            await updateDoc(doc(db, "Users", user.uid), {prevPosters: arrayUnion(docRef)}).then(() => {
+            await updateDoc(doc(db, "Users", user.uid), {posters: arrayUnion(docRef)}).then(() => {
                 navigation.pop()
                 navigation.navigate("AdPage", {poster: sendPoster, ref: docRef.id})
             }).catch(error => {

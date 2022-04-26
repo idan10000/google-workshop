@@ -8,6 +8,7 @@ import {addDoc, arrayUnion, collection, doc, getFirestore, setDoc, updateDoc} fr
 import {useContext} from "react";
 import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
 import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
+import {uploadImageAsync} from "../../shared_components/firebase";
 
 
 // Expected input from previous screen is:
@@ -91,19 +92,20 @@ const ReportCreationScreen = ({route, navigation}) => {
         // if we reached from an edit report
         if (route.params.edit) {
             // if the report was changed, update the report page
-            console.log("ref = " + route.params.ref)
-            console.log("ref id = " + route.params.ref.id)
             if (deepDiffer(sendReport, report)) {
+                const imageAndPath = await uploadImageAsync(image,"Posters")
+                dbReport.image = imageAndPath
                 const docRef = await setDoc(doc(db,"Reports",route.params.ref).withConverter(reportConverter), dbReport).then(() => {
                     console.log("updated report page")
                 }).catch(error => {
                     console.log(error)
                 });
             }
-                console.log("after upload")
                 navigation.pop()
                 navigation.navigate("ReportPage", {report: sendReport, ref: route.params.ref})
         } else {
+            const imageAndPath = await uploadImageAsync(image,"Posters")
+            dbReport.image = imageAndPath
             const docRef = await addDoc(collection(db, "Reports").withConverter(reportConverter), dbReport)
             await updateDoc(doc(db, "Users", user.uid), {reports: arrayUnion(docRef)}).then(() => {
                 navigation.pop()
