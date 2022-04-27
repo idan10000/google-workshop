@@ -172,7 +172,7 @@ export default function SignUp({navigation}) {
                                 // onChangeText={props.handleChange('Name')}
                                 // value={props.values.Name}
                                 // onBlur={props.handleBlur('Name')}
-
+                                error={hasErrors('name', props.values.Name, props.touched.Name)}
                                 activeUnderlineColor="#000000"
                                 activeOutlineColor="#000000"
                                 left={<TextInput.Icon name="face"/>}
