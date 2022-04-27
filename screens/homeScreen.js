@@ -1,7 +1,7 @@
 import {StyleSheet, View, ImageBackground, Dimensions, ScrollView} from 'react-native';
 import {Button} from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
-import {user} from "./SignUp";
+import {getAuth, signOut} from "firebase/auth";
 
 export default function HomeScreen({navigation}) {
 
@@ -29,8 +29,6 @@ export default function HomeScreen({navigation}) {
         navigation.navigate('CreateAd',{edit:false})
     }
 
-    console.log("homescreen")
-    console.log(user)
 
     return (
         // <ScrollView style={styles.container}>
@@ -53,7 +51,7 @@ export default function HomeScreen({navigation}) {
                         mode='outlined'
                         icon='image'
                         style={styles.SmallButton}
-                        onPress={() => console.log('upload from gallery')}
+                        onPress={() => {signOut(getAuth()).then(() => {})}}
                         labelStyle={styles.SmallButtonTitle}>
                         העלאה מגלריה
                     </Button>
