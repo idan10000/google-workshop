@@ -118,7 +118,7 @@ export default function SignUp({navigation}) {
     function handleSubmitPress (props)  {
         console.log(props.Email)
         console.log(props.Password)
-        createUserWithEmailAndPassword(fireAuth, email, password)
+        createUserWithEmailAndPassword(fireAuth, props.Email, props.Password)
             .then(() => {
                 getAuth().currentUser.sendEmailVerification()
             })
