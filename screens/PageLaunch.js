@@ -10,61 +10,6 @@ import {signInWithEmailAndPassword} from "firebase/auth";
 
 export default function PageLaunch({navigation}) {
 
-    const auth = fireAuth
-
-    // // source : https://medium.com/nerd-for-tech/apple-google-authentication-in-expo-apps-using-firebase-997125440032
-    // const signInWithGoogle = () =>
-    //     GoogleAuthentication.logInAsync({
-    //         androidStandaloneAppClientId: Constants.manifest.extra.ANDROID_KEY,
-    //         iosStandaloneAppClientId: 'IOS_STANDALONE_APP_CLIENT_ID',
-    //         scopes: ['profile', 'email']
-    //     })
-    //         .then((logInResult) => {
-    //             if (logInResult.type === 'success') {
-    //                 const { idToken, accessToken } = logInResult;
-    //                 const credential = auth.GoogleAuthProvider.credential(
-    //                     idToken,
-    //                     accessToken
-    //                 );
-    //
-    //                 return auth.signInWithCredential(credential);
-    //                 // Successful sign in is handled by firebase.auth().onAuthStateChanged
-    //             }
-    //             return Promise.reject(); // Or handle user cancelation separatedly
-    //         })
-    //         .catch((error) => {
-    //             console.log(error)
-    //             // ...
-    //         });
-
-//
-// // Listen for authentication state to change.
-//     onAuthStateChanged(auth, user => {
-//         if (user != null) {
-//             console.log('We are authenticated now!');
-//         }
-//
-//         // Do other things
-//     });
-//
-//     async function loginWithFacebook() {
-//         await Facebook.initializeAsync('<FACEBOOK_APP_ID>');
-//
-//         const { type, token } = await Facebook.logInWithReadPermissionsAsync({
-//             permissions: ['public_profile'],
-//         });
-//
-//         if (type === 'success') {
-//             // Build Firebase credential with the Facebook access token.
-//             const facebookAuthProvider = new FacebookAuthProvider();
-//             const credential = facebookAuthProvider.credential(token);
-//
-//             // Sign in with credential from the Facebook user.
-//             signInWithCredential(auth, credential).catch(error => {
-//                 // Handle Errors here.
-//             });
-//         }
-//     }
     const tempDebugLoginHandler = (email, password) => {
         console.log(email)
         console.log(password)

@@ -54,7 +54,7 @@ export default function SignIn({navigation}) {
     const handleSubmitPress = (email, password) => {
         console.log(email)
         console.log(password)
-        signInWithEmailAndPassword(fireAuth,email,password)
+        signInWithEmailAndPassword(fireAuth, email, password)
             .then(() => {
                 console.log('User account created & signed in!');
                 navigation.popToTop();
@@ -72,7 +72,6 @@ export default function SignIn({navigation}) {
                 console.error(error);
             });
     }
-
 
 
     const reviewSchema = yup.object({
@@ -98,12 +97,11 @@ export default function SignIn({navigation}) {
                                           style={AfterSignedStyle.image}/></TouchableOpacity>
             </View>
 
-            <View style={AfterSignedStyle.welcome}> <Text style={AfterSignedStyle.welcome}> Welcome Back!</Text> </View>
+            <View style={AfterSignedStyle.welcome}><Text style={AfterSignedStyle.welcome}> Welcome Back!</Text></View>
 
 
             <Formik
                 initialValues={{Email: '', Password: ''}}
-                innerRef={formRef}
                 validationSchema={reviewSchema} onSubmit={(values) => {
                 console.log(values);
             }}
@@ -165,7 +163,6 @@ export default function SignIn({navigation}) {
                     </View>
                 )}
             </Formik>
-
 
 
         </View>

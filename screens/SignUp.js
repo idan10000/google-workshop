@@ -5,9 +5,10 @@ import {Formik} from 'formik';
 import * as yup from 'yup';
 import {signUpStyles} from "../styles/signUpStyles";
 import {Nofar_styles} from "./utils/Nofar_style";
-import {fireAuth} from "../shared_components/firebase";
+import {fireAuth, fireStoreDB} from "../shared_components/firebase";
 import {createUserWithEmailAndPassword, getAuth,} from 'firebase/auth';
 import { getFirestore, setDoc, doc } from 'firebase/firestore';
+import { getDatabase, ref, set } from "firebase/database";
 
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -91,23 +92,25 @@ export default function SignUp({navigation}) {
 
     // Handle user state changes
     async function onAuthStateChanged(newUser) {
-        console.log(newUser)
+        console.log("on auth changed")
         if (initializing) setInitializing(false);
-        const db = getFirestore();
-
-        await setDoc(doc(db,"Users",newUser.uid), {
-            name: formRef.current.values.Name,
-            email: formRef.current.values.Email,
-            phone: formRef.current.values.PhoneNumber,
+        // const db = getFirestore();
+        console.log(formRef)
+        // const database = getDatabase();
+        // await set(ref(database, 'users/' + newUser.uid), {
+        //     username: "test",
+        // });
+        await setDoc(doc(fireStoreDB,"Users",newUser.uid), {
+            // name: formRef.current.values.Name,
+            // email: formRef.current.values.Email,
+            // phone: formRef.current.values.PhoneNumber,
             reports: [],
             posters: []
         }).then(() => {
-            navigation.popToTop();
-            navigation.replace("App")
         }).catch(error => {
             console.log(error)
         })
-        newUser.sendEmailVerification()
+        // newUser.sendEmailVerification()
 
     }
 
@@ -116,11 +119,15 @@ export default function SignUp({navigation}) {
     }, []);
 
     function handleSubmitPress (props)  {
+        console.log("handle submit press")
+        console.log("formref")
+        console.log(formRef)
+        console.log(props)
         console.log(props.Email)
         console.log(props.Password)
         createUserWithEmailAndPassword(fireAuth, props.Email, props.Password)
             .then(() => {
-                getAuth().currentUser.sendEmailVerification()
+                // getAuth().currentUser.sendEmailVerification()
             })
             .catch(error => {
                 if (error.code === 'auth/email-already-in-use') {
@@ -135,9 +142,9 @@ export default function SignUp({navigation}) {
             });
     }
 
-    //const formRef = useRef();
+    const formRef = useRef();
 
-
+    console.log(formRef)
     return (
         <View style={Nofar_styles.container}>
             <View style={signUpStyles.logoHeaderContainer}>
@@ -156,7 +163,7 @@ export default function SignUp({navigation}) {
 
             <Formik
                 initialValues={{ Name: '', Email: '',Password:'', PhoneNumber: '' }}
-                //innerRef={formRef}
+                innerRef={formRef}
                 validationSchema={reviewSchema}
                 onSubmit={values =>
                 handleSubmitPress(values)}>
@@ -174,7 +181,8 @@ export default function SignUp({navigation}) {
                                 // error={hasErrors('name', props.values.Name,props.touched.Name)}
                                 // value={state.fname}
                                 // onChangeText={onChangeName}
-                                onChangeText={props.handleChange('Name')}
+                                onChangeText={(text) => {props.handleChange('Name')(text)
+                                    console.log(formRef)}}
                                 value={props.values.Name}
                                 onBlur={props.handleBlur('Name')}
 

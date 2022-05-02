@@ -1,11 +1,8 @@
 import "react-native-gesture-handler";
 import React from "react";
 
-import {Provider as PaperProvider} from "react-native-paper";
 import {I18nManager} from "react-native";
-import {NavigationContainer} from "@react-navigation/native";
-import LaunchStack from "./navigation/launchStack";
-
+import Routes from "./navigation";
 
 
 export default function App() {
@@ -13,10 +10,16 @@ export default function App() {
     I18nManager.allowRTL(true);
     I18nManager.forceRTL(true);
     return (
-        <PaperProvider>
-            <NavigationContainer>
-                <LaunchStack/>
-            </NavigationContainer>
-        </PaperProvider>
+        <Routes/>
     );
+
+// return (
+//
+//     <PaperProvider>
+//         // <NavigationContainer>
+//         // {stack}
+//         // </NavigationContainer>
+//         // </PaperProvider>
+// );
+
 }

@@ -1,37 +1,27 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Provider,
     Searchbar,
     IconButton,
     Menu,
-
-
 } from 'react-native-paper';
 import {View, StyleSheet, FlatList, Dimensions} from 'react-native'
-import PostListItem from '../shared_components/postListItem'
-import Report from "../data_classes/report";
+import PostListItem from '../../shared_components/postListItem'
+import Report from "../../data_classes/report";
+import {addDoc, arrayUnion, collection, doc, getFirestore, setDoc, updateDoc} from "firebase/firestore";
+import {getDocuments, getInitialData, getNextData} from "./infiniteScroll"
 
-
-const BrowseReports = ({navigation}) => {
-
-    var tempPosters = [
-        {poster: new Report('https://www.rd.com/wp-content/uploads/2019/01/shutterstock_673465372.jpg?fit=700,467', 100, "10/10/2022", [{tag: "ביישן", state: false},{tag: "חברותי", state: false}], "תיאור לכלב",), key: '1'},
-        {poster: new Report('https://i.pinimg.com/736x/b4/fd/0b/b4fd0bf7276d1f98064862b160459f01.jpg', 100, "10/10/2022", [{tag: "ביישן", state: false}], "",), key: '4'},
-        {poster: new Report('https://lh3.googleusercontent.com/xCGq6z8ttJPLImoEYYChE57se-Lu2yVwQolx5HbAmaiOLfMf3wJjzz690LA4O402IyfTPuFaErY4lEBe93T9LU7LiMM=w640-h400-e365-rj-sc0x00ffffff', 100, "10/10/2022", [], "",), key: '3'},
-        {poster: new Report('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVNU5QHQISeoWAO7EKcueW7X9JykV7vCF2iQ&usqp=CAU', 100, "10/10/2022", [], "",), key: '2'},
-
-
-    ]
-    const [posters, setPosters] = React.useState(tempPosters);
+const BrowsePage = ({navigation, route}) => {
+    const {collectionPath} = route.params
 
     const sortByDate = () => (
-        setPosters((prevPosters) => (
-                prevPosters.sort((a, b) => a.key.localeCompare(b.key))
+        setData((prevData) => (
+                prevData.sort((a, b) => a.date.localeCompare(b.date))
             )
         )
     )
 
-    const [visibleSortMenu, setVisibleSortMenu] = React.useState(false);
+    const [visibleSortMenu, setVisibleSortMenu] = useState(false);
 
     const openSortMenu = () => setVisibleSortMenu(true);
     const closeSortMenu = () => setVisibleSortMenu(false);
@@ -46,6 +36,34 @@ const BrowseReports = ({navigation}) => {
                 }}
             />
         );
+    }
+
+
+    //---------------------- Infinite Scrolling ----------------------
+
+    const [data,setData] = useState({
+        docs:[],error:null,lastDocId:null,
+        initialBatchStatus:"",
+        nextBatchStatus:"",
+    })
+
+
+    useEffect(() => {
+        // Load initial batch documents when main component mounted.
+        getInitialData(setData, collectionPath);
+    }, []);
+
+
+    const renderLoadingIndicator = ()=>{
+        return (
+
+            <View style={{flex:1,alignItems:"center",justifyContent:'center'}}>
+
+
+                <ActivityIndicator color="#000" size="large"/>
+
+            </View>
+        )
     }
 
     return (
@@ -77,15 +95,20 @@ const BrowseReports = ({navigation}) => {
             </View>
             <View style={styles.listContainer}>
                 {/* List */}
-                <FlatList data={posters} ItemSeparatorComponent={FlatListItemSeparator} keyExtractor={(item) => item.key} numColumns={2} renderItem={({item}) => {
-                    console.log(item.key)
+                <FlatList data={data.docs}
+                          ItemSeparatorComponent={FlatListItemSeparator}
+                          keyExtractor={(item) => item.image.path}
+                          onEndReached={() => getNextData(data,setData,collectionPath)}
+                          onEndReachedThreshold={0.5}
+                          numColumns={2}
+                          renderItem={({item}) => {
                     return (
                         <View style={{paddingVertical:5}}>
                         <PostListItem
-                            image={item.poster.image}
-                            date={item.poster.date}
-                            distance={item.poster.location}
-                            report={item.poster}
+                            image={item.image.link}
+                            date={item.date}
+                            distance={item.location}
+                            report={item}
                             navigation={navigation}
                         /></View>
                     )
@@ -138,4 +161,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default BrowseReports;
+export default BrowsePage;

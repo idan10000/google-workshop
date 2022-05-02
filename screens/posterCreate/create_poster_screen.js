@@ -17,7 +17,7 @@ import {useContext} from "react";
 import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
 import {collection, doc, updateDoc, getFirestore, addDoc, arrayUnion, setDoc} from "firebase/firestore";
 import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
-import {fireStorage, uploadImageAsync} from "../../shared_components/firebase";
+import {fireStorage, fireStoreDB, uploadImageAsync} from "../../shared_components/firebase";
 import {ref,uploadBytes} from "firebase/storage";
 
 
@@ -163,7 +163,7 @@ export default function PosterPostingComponent({route, navigation}) {
         const dbPoster = new Poster(selectedImage, "", today, plainTags, descriptionText, nameText, user.uid)
         const sendPoster = new Poster(selectedImage, "", today, selectedTags, descriptionText, nameText, user.uid)
 
-        const db = getFirestore();
+        const db = fireStoreDB;
 
         if (route.params.edit) {
             // if the prevPoster was changed, update the prevPoster page

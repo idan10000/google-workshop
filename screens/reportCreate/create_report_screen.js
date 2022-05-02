@@ -8,7 +8,7 @@ import {addDoc, arrayUnion, collection, doc, getFirestore, setDoc, updateDoc} fr
 import {useContext} from "react";
 import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
 import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
-import {uploadImageAsync} from "../../shared_components/firebase";
+import {fireStoreDB, uploadImageAsync} from "../../shared_components/firebase";
 
 
 // Expected input from previous screen is:
@@ -87,7 +87,7 @@ const ReportCreationScreen = ({route, navigation}) => {
         const dbReport = new Report(image, location, today, plainTags, descriptionText, user.uid) // report to upload to DB
         const sendReport = new Report(image, location, today, selectedTags, descriptionText, user.uid) // report to send to the report page
 
-        const db = getFirestore();
+        const db = fireStoreDB;
 
         // if we reached from an edit report
         if (route.params.edit) {
@@ -107,6 +107,7 @@ const ReportCreationScreen = ({route, navigation}) => {
             const imageAndPath = await uploadImageAsync(image,"Reports")
             dbReport.image = imageAndPath
             const docRef = await addDoc(collection(db, "Reports").withConverter(reportConverter), dbReport)
+            console.log("uploaded report")
             await updateDoc(doc(db, "Users", user.uid), {reports: arrayUnion(docRef)}).then(() => {
                 navigation.pop()
                 navigation.navigate("ReportPage", {report: sendReport, ref: docRef.id})

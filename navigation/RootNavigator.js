@@ -5,7 +5,6 @@ import { View, ActivityIndicator } from 'react-native';
 import { AuthenticatedUserContext } from './AuthenticatedUserProvider';
 import AuthStack from './AuthStack';
 import HomeStack from './homeStack';
-import fireAuth from "../shared_components/firebase";
 import {getAuth} from "firebase/auth";
 
 export default function RootNavigator() {
