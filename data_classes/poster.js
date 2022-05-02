@@ -1,7 +1,8 @@
 class Poster {
 
-    constructor(image, location, date, tagList, description, dogName, user) {
+    constructor(image, imagePath, location, date, tagList, description, dogName, user) {
         this.image = image;
+        this.imagePath = imagePath;
         this.location = location;
         this.date = date;
         this.tagList = tagList;
@@ -18,6 +19,7 @@ export const posterConverter = {
     toFirestore: (poster) => {
         return {
             image: poster.image,
+            imagePath:poster.imagePath,
             location: poster.location,
             date: poster.date,
             tagList: poster.tagList,
@@ -28,7 +30,7 @@ export const posterConverter = {
     },
     fromFirestore: (snapshot, options) => {
         const data = snapshot.data(options);
-        return new Poster(data.image, data.location, data.date, data.tagList, data.description, data.dogName, data.user);
+        return new Poster(data.image, data.imagePath, data.location, data.date, data.tagList, data.description, data.dogName, data.user);
     }
 };
 

@@ -160,8 +160,8 @@ export default function PosterPostingComponent({route, navigation}) {
         }))
 
         // create poster
-        const dbPoster = new Poster(selectedImage, "", today, plainTags, descriptionText, nameText, user.uid)
-        const sendPoster = new Poster(selectedImage, "", today, selectedTags, descriptionText, nameText, user.uid)
+        const dbPoster = new Poster(selectedImage,"", "", today, plainTags, descriptionText, nameText, user.uid)
+        const sendPoster = new Poster(selectedImage,"", "", today, plainTags, descriptionText, nameText, user.uid)
 
         const db = fireStoreDB;
 
@@ -169,7 +169,8 @@ export default function PosterPostingComponent({route, navigation}) {
             // if the prevPoster was changed, update the prevPoster page
             if (deepDiffer(sendPoster, prevPoster)) {
                 const image = await uploadImageAsync(selectedImage,"Posters")
-                dbPoster.image = image
+                dbPoster.image = image.link
+                dbPoster.imagePath = image.path
                 const docRef = await setDoc(doc(db,"Posters",route.params.ref).withConverter(posterConverter), dbPoster).then(() => {
                     console.log("updated Poster page")
                 }).catch(error => {
@@ -177,16 +178,17 @@ export default function PosterPostingComponent({route, navigation}) {
                 });
             }
             navigation.pop()
-            navigation.navigate("AdPage", {poster: sendPoster, ref: route.params.ref})
+            navigation.navigate("AdPage", {data: sendPoster, ref: route.params.ref})
         } else {
             const image = await uploadImageAsync(selectedImage,"Posters")
-            dbPoster.image = image
+            dbPoster.image = image.link
+            dbPoster.imagePath = image.path
             const docRef = await addDoc(collection(db, "Posters").withConverter(posterConverter), dbPoster)
 
             // add poster page id to user posters
             await updateDoc(doc(db, "Users", user.uid), {posters: arrayUnion(docRef)}).then(() => {
                 navigation.pop()
-                navigation.navigate("AdPage", {poster: sendPoster, ref: docRef.id})
+                navigation.navigate("AdPage", {data: sendPoster, ref: docRef.id})
             }).catch(error => {
                 console.log(error)
             });

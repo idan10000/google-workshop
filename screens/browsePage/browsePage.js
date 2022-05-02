@@ -12,7 +12,7 @@ import {addDoc, arrayUnion, collection, doc, getFirestore, setDoc, updateDoc} fr
 import {getDocuments, getInitialData, getNextData} from "./infiniteScroll"
 
 const BrowsePage = ({navigation, route}) => {
-    const {collectionPath} = route.params
+    const {collectionPath, destination} = route.params
 
     const sortByDate = () => (
         setData((prevData) => (
@@ -65,7 +65,8 @@ const BrowsePage = ({navigation, route}) => {
             </View>
         )
     }
-
+    console.log(collectionPath)
+    console.log(data.docs)
     return (
         <Provider>
             <View style={styles.searchBarContainer}>
@@ -97,19 +98,21 @@ const BrowsePage = ({navigation, route}) => {
                 {/* List */}
                 <FlatList data={data.docs}
                           ItemSeparatorComponent={FlatListItemSeparator}
-                          keyExtractor={(item) => item.image.path}
+                          keyExtractor={(item) => item.image}
                           onEndReached={() => getNextData(data,setData,collectionPath)}
                           onEndReachedThreshold={0.5}
                           numColumns={2}
                           renderItem={({item}) => {
+                              console.log(item.image)
                     return (
                         <View style={{paddingVertical:5}}>
                         <PostListItem
-                            image={item.image.link}
+                            image={item.image}
                             date={item.date}
                             distance={item.location}
-                            report={item}
+                            data={item}
                             navigation={navigation}
+                            destination={destination}
                         /></View>
                     )
                 }}/>

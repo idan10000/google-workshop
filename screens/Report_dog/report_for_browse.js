@@ -19,7 +19,7 @@ export default function ReportForBrowse({route}) {
   return (
     <View style={Nofar_styles.container}>
       <ScrollView style={AR_styles.content}>
-        <ReportTemplate report={route.params.report}/>
+        <ReportTemplate data={route.params.data}/>
 
         <View style={AR_styles.confirmBTContainer}>
           <Button

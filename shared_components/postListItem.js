@@ -11,9 +11,9 @@ import {
   TouchableOpacity
 } from "react-native";
 
-const postListItem = ({ image, date, distance, report, navigation}) => {
+const postListItem = ({ image, date, distance, data, destination, navigation}) => {
   return (
-    <TouchableOpacity onPress={() => {navigation.navigate("ReportForBrowse", {report: report})}}>
+    <TouchableOpacity onPress={() => {navigation.navigate(destination, {data: data})}}>
       <Provider>
         <View style={styles.itemContainer}>
           {/*<View style={styles.imageContainer}>*/}

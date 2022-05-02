@@ -10,17 +10,18 @@ export default function ReportPage({ route, navigation }) {
     console.log("opening report screen");
     console.log(route.params.ref)
     navigation.navigate("ReportCreation", {
-      report: route.params.report,
+      report: route.params.data,
       edit: true,
       ref: route.params.ref
     });
   };
 
+  console.log(route.params.data)
 
   return (
     <View style={Nofar_styles.container}>
       <ScrollView style={AR_styles.content}>
-        <ReportTemplate report={route.params.report} />
+        <ReportTemplate data={route.params.data} />
         <View style={AR_styles.confirmBTContainer}>
           <Button
             mode={"contained"}

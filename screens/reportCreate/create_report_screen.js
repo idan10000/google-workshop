@@ -33,7 +33,7 @@ const ReportCreationScreen = ({route, navigation}) => {
 
 
     // init tags with previous values if reached this page from an edit report
-    const initSelectedTagList = route.params.edit ? report.tagList.map(({tag}) => ({tag: tag, state: false})) : []
+    const initSelectedTagList = route.params.edit ? report.tagList.map((tag) => ({tag: tag, state: false})) : []
     const initModalTagList = route.params.edit ?
         tagList.filter((item) => !initSelectedTagList.some(e => e.tag === item.tag)) : tagList
     const [modalTags, setModalTags] = React.useState(initModalTagList);
@@ -84,8 +84,8 @@ const ReportCreationScreen = ({route, navigation}) => {
             return tag.tag
         }))
 
-        const dbReport = new Report(image, location, today, plainTags, descriptionText, user.uid) // report to upload to DB
-        const sendReport = new Report(image, location, today, selectedTags, descriptionText, user.uid) // report to send to the report page
+        const dbReport = new Report(image, "", location, today, plainTags, descriptionText, user.uid) // report to upload to DB
+        const sendReport = new Report(image, "", location, today, plainTags, descriptionText, user.uid) // report to send to the report page
 
         const db = fireStoreDB;
 
@@ -94,7 +94,8 @@ const ReportCreationScreen = ({route, navigation}) => {
             // if the report was changed, update the report page
             if (deepDiffer(sendReport, report)) {
                 const imageAndPath = await uploadImageAsync(image,"Reports")
-                dbReport.image = imageAndPath
+                dbReport.image = imageAndPath.link
+                dbReport.imagePath = imageAndPath.path
                 const docRef = await setDoc(doc(db,"Reports",route.params.ref).withConverter(reportConverter), dbReport).then(() => {
                     console.log("updated report page")
                 }).catch(error => {
@@ -102,15 +103,16 @@ const ReportCreationScreen = ({route, navigation}) => {
                 });
             }
                 navigation.pop()
-                navigation.navigate("ReportPage", {report: sendReport, ref: route.params.ref})
+                navigation.navigate("ReportPage", {data: sendReport, ref: route.params.ref})
         } else {
             const imageAndPath = await uploadImageAsync(image,"Reports")
-            dbReport.image = imageAndPath
+            dbReport.image = imageAndPath.link
+            dbReport.imagePath = imageAndPath.path
             const docRef = await addDoc(collection(db, "Reports").withConverter(reportConverter), dbReport)
             console.log("uploaded report")
             await updateDoc(doc(db, "Users", user.uid), {reports: arrayUnion(docRef)}).then(() => {
                 navigation.pop()
-                navigation.navigate("ReportPage", {report: sendReport, ref: docRef.id})
+                navigation.navigate("ReportPage", {data: sendReport, ref: docRef.id})
             }).catch(error => {
                 console.log(error)
             });

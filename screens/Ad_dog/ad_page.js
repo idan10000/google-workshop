@@ -7,21 +7,22 @@ import AdTemplate from "./ad_template";
 import {Button} from "react-native-paper";
 export default function AdPage({navigation, route}) {
 
+  console.log("opening report screen");
+
   const editButtonPressHandler = () => {
-    console.log("opening report screen");
     console.log(route.params.ref)
     navigation.navigate("CreateAd", {
-      poster: route.params.poster,
+      poster: route.params.data,
       edit: true,
       ref: route.params.ref
     });
   };
 
-
+  console.log(route.params.data)
   return (
     <View style={Nofar_styles.container}>
       <ScrollView style={AR_styles.content}>
-        <AdTemplate poster={route.params.poster}/>
+        <AdTemplate data={route.params.data}/>
         <View style={AR_styles.confirmBTContainer}>
           <Button
               mode={"contained"}
