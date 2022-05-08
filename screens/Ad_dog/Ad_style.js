@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import {Dimensions, StyleSheet} from "react-native";
 
 export const AR_styles = StyleSheet.create({
   confirmBTContainer: {
@@ -53,7 +53,8 @@ export const AR_styles = StyleSheet.create({
   lastSeen: {
     flexDirection:"row",
     alignItems:"center",
-    marginHorizontal: "5%"
+    marginHorizontal: "5%",
+    justifyContent:"center",
   },
   verticalLine:{
     height: 16,
@@ -61,6 +62,44 @@ export const AR_styles = StyleSheet.create({
     backgroundColor: '#000',
     color:"000",
     marginHorizontal: "4%"
-  }
+  },
+  contact: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 7,
+    elevation: 6,
+    width:Dimensions.get('window').width * 0.2,
+    height: Dimensions.get('window').height * 0.04,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 11.111,
+    backgroundColor: "#DCA277",
+  },
+  contactTitle: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    textAlign: "center",
+    fontWeight: "500",
+  },
+  myCard: {
+      borderRadius: 15,
+      marginTop:"4%",
+      shadowColor: "#00000021",
+      shadowOffset: {
+        width: 20,
+        height: 10,
+  },
+    shadowOpacity: 0.5,
+    shadowRadius: 7.49,
+    elevation: 12,
+    marginVertical: 5,
+    backgroundColor: "#F5F5DC",
+    marginHorizontal: 5,
+}
 
 });
