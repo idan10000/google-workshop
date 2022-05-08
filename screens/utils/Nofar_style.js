@@ -1,10 +1,10 @@
-import {Dimensions, StyleSheet} from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 
 export const Nofar_styles = StyleSheet.create({
   // background:
   container: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: "1%",
     backgroundColor: "#BBB988",
   },
   text: { fontSize: 20 },
@@ -60,7 +60,6 @@ export const Nofar_styles = StyleSheet.create({
     flexDirection: "row",
     overflow: "hidden",
     flexWrap: "wrap",
-
   },
   chips: {
     marginRight: "1.5%",
@@ -80,11 +79,11 @@ export const Nofar_styles = StyleSheet.create({
     fontWeight: "700",
   },
   mainImage: {
-    width: Dimensions.get('window').width / 1.2,
-    height: Dimensions.get('window').height / 2.2,
+    width: Dimensions.get("window").width / 1.2,
+    height: Dimensions.get("window").height / 2.2,
     justifyContent: "center",
     alignItems: "center",
-    resizeMode: "cover"
+    resizeMode: "cover",
   },
 
   //   the white card I have
@@ -99,7 +98,7 @@ export const Nofar_styles = StyleSheet.create({
     shadowRadius: 7.49,
     elevation: 12,
     marginVertical: 5,
-    backgroundColor: "white",
+    backgroundColor: "#F5F5DC",
     marginHorizontal: 5,
   },
 

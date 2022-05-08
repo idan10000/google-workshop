@@ -1,6 +1,7 @@
 import {StyleSheet, View, ImageBackground, Dimensions, ScrollView} from 'react-native';
 import {Button} from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
+import {getAuth, signOut} from "firebase/auth";
 
 export default function HomeScreen({navigation}) {
 
@@ -24,6 +25,11 @@ export default function HomeScreen({navigation}) {
         }
     }
 
+    const createPosterPressHandler = () => {
+        navigation.navigate('CreateAd',{edit:false})
+    }
+
+
     return (
         // <ScrollView style={styles.container}>
             <ImageBackground
@@ -45,17 +51,17 @@ export default function HomeScreen({navigation}) {
                         mode='outlined'
                         icon='image'
                         style={styles.SmallButton}
-                        onPress={() => console.log('upload from gallery')}
+                        onPress={() => {signOut(getAuth()).then(() => {})}}
                         labelStyle={styles.SmallButtonTitle}>
                         העלאה מגלריה
                     </Button>
                 </View>
-                
+
                 <View style={styles.SmallButtonView}>
                     <Button
                         mode='outlined'
                         style={styles.SmallButton}
-                        onPress={() => navigation.navigate("CreateAd")}
+                        onPress={createPosterPressHandler}
                         labelStyle={styles.SmallButtonTitle}>
                         יצירת מודעה
                     </Button>
@@ -71,8 +77,8 @@ const styles = StyleSheet.create({
         // backgroundColor: "#BBB988",
         backgroundColor:"white"
     },
-    
-    
+
+
     //   small button
     SmallButtonsView: {
         marginTop:"25%",

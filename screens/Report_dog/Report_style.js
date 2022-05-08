@@ -1,10 +1,13 @@
 import { StyleSheet } from "react-native";
 
 export const AR_styles = StyleSheet.create({
+  confirmBTContainer: {
+    alignSelf: "center",
+    paddingVertical: "5%",
+  },
   content: {
     marginLeft: 10,
     marginRight: 10,
-    marginTop: 20,
   },
   header: {
     flexDirection: "row",

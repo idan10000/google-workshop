@@ -1,6 +1,6 @@
 import React from "react";
 import { View, SafeAreaView, TouchableOpacity } from "react-native";
-import { Title, Text } from "react-native-paper";
+import {Title, Text, Button} from "react-native-paper";
 import { user_styles } from "./User_profile_style";
 import Avatar from "avataaars";
 import { generateRandomAvatarOptions } from "../utils/avatar";
@@ -49,37 +49,52 @@ export default function ProfileScreen() {
           </View>
 
           <View style={{ flexDirection: "row", marginTop: 15 }}>
-            <Icon name="email" color="#777777" size={20} />
+            <Icon name="phone" color="#777777" size={20} />
             <Text style={{ color: "#777777", marginLeft: 20 }}>
-              {userDetalies.email}
+              {userDetalies.phone}
             </Text>
           </View>
         </View>
       </View>
 
-      <View style={{ flexDirection: "row", marginTop: 15, marginLeft: 40 }}>
-        <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
-          <Icon name="heart-outline" color="#FFFFFF" size={25} />
+      <View style={user_styles.confirmBTContainer}>
+        <Button
+          mode={"contained"}
+          style={Nofar_styles.BigButton}
+          onPress={() => {}}
+        >
           <Text style={Nofar_styles.BigButtonText}>הצגת מודעות ודיווחים</Text>
-        </TouchableOpacity>
+        </Button>
       </View>
-      <View style={{ flexDirection: "row", marginTop: 15, marginLeft: 40 }}>
-        <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
-          <Icon name="account-edit" color="#FFFFFF" size={25} />
+
+      <View style={user_styles.confirmBTContainer}>
+        <Button
+          mode={"contained"}
+          style={Nofar_styles.BigButton}
+          onPress={() => {}}
+        >
           <Text style={Nofar_styles.BigButtonText}>עדכון פרטים</Text>
-        </TouchableOpacity>
+        </Button>
       </View>
-      <View style={{ flexDirection: "row", marginTop: 15, marginLeft: 40 }}>
-        <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
-          <Icon name="share-outline" color="#FFFFFF" size={25} />
+
+      <View style={user_styles.confirmBTContainer}>
+        <Button
+          mode={"contained"}
+          style={Nofar_styles.BigButton}
+          onPress={() => {}}
+        >
           <Text style={Nofar_styles.BigButtonText}>שיתוף אפליקציה</Text>
-        </TouchableOpacity>
+        </Button>
       </View>
-      <View style={{ flexDirection: "row", marginTop: 15, marginLeft: 40 }}>
-        <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
-          <Icon name="account-check-outline" color="#FFFFFF" size={25} />
+
+      <View style={user_styles.confirmBTContainer}>
+        <Button
+          mode={"contained"}
+          style={Nofar_styles.BigButton}
+          onPress={() => {}}
+        >
           <Text style={Nofar_styles.BigButtonText}>תמיכה טכנית</Text>
-        </TouchableOpacity>
+        </Button>
       </View>
     </SafeAreaView>
   );

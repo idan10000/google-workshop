@@ -1,11 +1,20 @@
 import * as React from 'react';
 import {Modal, Portal, Button, Provider, Chip, Headline, TextInput} from 'react-native-paper';
 import {View, StyleSheet, Image, Text} from 'react-native'
-import Report from '../../data_classes/report'
+import Report, {reportConverter} from '../../data_classes/report'
 import {stylesPoster} from "../posterCreate/stylePosterCreate";
 import {Nofar_styles} from "../utils/Nofar_style";
+import {addDoc, arrayUnion, collection, doc, getFirestore, setDoc, updateDoc} from "firebase/firestore";
+import {useContext} from "react";
+import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
+import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
+import {fireStoreDB, uploadImageAsync} from "../../shared_components/firebase";
 
 
+// Expected input from previous screen is:
+// edit - if the report is being edited (TRUE) or it is a new report (FALSE)
+// report - if the report is being edited this is the values it had, null otherwise
+// ref - the DB page reference to where the report was written to
 const ReportCreationScreen = ({route, navigation}) => {
 
     console.log("opened report screen")
@@ -17,13 +26,14 @@ const ReportCreationScreen = ({route, navigation}) => {
     const hideTagModal = () => setVisibleTag(false);
 
     const tagList = [
-        {tag: "Shy", state: false},
-        {tag: "Friendly", state: false},
-        {tag: "Aggressive", state: false}]
+        {tag: "ביישן", state: false},
+        {tag: "חברותי", state: false},
+        {tag: "אגרסיבי", state: false},
+    ];
 
 
-    const initSelectedTagList = route.params.edit ? report.tagList.map(({tag}) => ({tag: tag, state: false})) : []
-    console.log(initSelectedTagList)
+    // init tags with previous values if reached this page from an edit report
+    const initSelectedTagList = route.params.edit ? report.tagList.map((tag) => ({tag: tag, state: false})) : []
     const initModalTagList = route.params.edit ?
         tagList.filter((item) => !initSelectedTagList.some(e => e.tag === item.tag)) : tagList
     const [modalTags, setModalTags] = React.useState(initModalTagList);
@@ -62,13 +72,51 @@ const ReportCreationScreen = ({route, navigation}) => {
 
     const [location, setLocation] = React.useState('');
 
-    const reportConfirmHandler = () => {
-        // let date = new Date();
-        // let newReport = new Report(image, location, date, selectedTags, descriptionText)
-        // console.log(newReport)
-        let date = route.params.edit ? report.date : new Date().getDate()
-        navigation.pop()
-        navigation.navigate("ReportPage", {report: new Report(image, location, date, selectedTags, descriptionText)})
+    const {user} = useContext(AuthenticatedUserContext);
+    const reportConfirmHandler = async () => {
+        let date = new Date()
+        const dd = String(date.getDate()).padStart(2, '0');
+        const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+        const yyyy = date.getFullYear();
+
+        let today = route.params.edit ? report.date : dd + '/' + mm + '/' + yyyy;
+        const plainTags = selectedTags.map((function (tag) {
+            return tag.tag
+        }))
+
+        const dbReport = new Report(image, "", location, today, plainTags, descriptionText, user.uid) // report to upload to DB
+        const sendReport = new Report(image, "", location, today, plainTags, descriptionText, user.uid) // report to send to the report page
+
+        const db = fireStoreDB;
+
+        // if we reached from an edit report
+        if (route.params.edit) {
+            // if the report was changed, update the report page
+            if (deepDiffer(sendReport, report)) {
+                const imageAndPath = await uploadImageAsync(image,"Reports")
+                dbReport.image = imageAndPath.link
+                dbReport.imagePath = imageAndPath.path
+                const docRef = await setDoc(doc(db,"Reports",route.params.ref).withConverter(reportConverter), dbReport).then(() => {
+                    console.log("updated report page")
+                }).catch(error => {
+                    console.log(error)
+                });
+            }
+                navigation.pop()
+                navigation.navigate("ReportPage", {data: sendReport, ref: route.params.ref})
+        } else {
+            const imageAndPath = await uploadImageAsync(image,"Reports")
+            dbReport.image = imageAndPath.link
+            dbReport.imagePath = imageAndPath.path
+            const docRef = await addDoc(collection(db, "Reports").withConverter(reportConverter), dbReport)
+            console.log("uploaded report")
+            await updateDoc(doc(db, "Users", user.uid), {reports: arrayUnion(docRef)}).then(() => {
+                navigation.pop()
+                navigation.navigate("ReportPage", {data: sendReport, ref: docRef.id})
+            }).catch(error => {
+                console.log(error)
+            });
+        }
     }
 
     //---------------------- Create / Edit setup ----------------------
@@ -87,7 +135,7 @@ const ReportCreationScreen = ({route, navigation}) => {
                 >
 
                     <View>
-                        <Text style={Nofar_styles.SmallTitle}>בחר תגיות:</Text>
+                        <Text style={{...Nofar_styles.SmallTitle, paddingBottom: "3%"}}>בחר תגיות:</Text>
                     </View>
                     <View style={stylesPoster.chips}>
                         {modalTags.map((item, index) => (
@@ -101,13 +149,13 @@ const ReportCreationScreen = ({route, navigation}) => {
                             </Chip>
                         ))}
                     </View>
-                    <View style={stylesPoster.modalButtonContainer}>
+                    <View style={{...stylesPoster.modalButtonContainer, paddingTop: "3%"}}>
                         <Button
-                            compact={true}
-                            style={stylesPoster.modalButton}
+                            comapct={false}
+                            style={Nofar_styles.TinyButton}
                             onPress={modalConfirmPressHandler}
                         >
-                            Confirm
+                            <Text style={Nofar_styles.TinyButtonTitle}>אישור</Text>
                         </Button>
                     </View>
                 </Modal>
@@ -126,8 +174,7 @@ const ReportCreationScreen = ({route, navigation}) => {
                             multiline={true}
                         />
                     </View>
-                    <View style={{paddingVertical: 16}}>
-                        <View><Text style={Nofar_styles.SmallTitle}>מיקום:</Text></View>
+                    <View style={{paddingVertical: "5%"}}>
 
                         <Button
                             comapct={false}
@@ -136,14 +183,15 @@ const ReportCreationScreen = ({route, navigation}) => {
                             <Text style={Nofar_styles.TinyButtonTitle}>עדכון מיקום</Text>
                         </Button>
                     </View>
-
-                    <Button
-                        comapct={false}
-                        style={Nofar_styles.SmallButton}
-                        onPress={hideDescriptionModal}
-                    >
-                        <Text style={Nofar_styles.SmallButtonTitle}>אישור</Text>
-                    </Button>
+                    <View style={{flexDirection: "row", alignSelf: "center"}}>
+                        <Button
+                            comapct={false}
+                            style={Nofar_styles.SmallButton}
+                            onPress={hideDescriptionModal}
+                        >
+                            <Text style={Nofar_styles.SmallButtonTitle}>אישור</Text>
+                        </Button>
+                    </View>
 
                 </Modal>
             </Portal>
@@ -172,19 +220,19 @@ const ReportCreationScreen = ({route, navigation}) => {
                     </Button>
                 </View>
 
-                <View style={stylesPoster.chips}>
+                <View style={{...stylesPoster.chips, marginLeft: "2.8%"}}>
                     {
                         selectedTags.map((item, index) => (
                             <Chip key={index}
                                   icon={"close"}
                                   selected={false}
-                                  style={Nofar_styles.chips}
+                                  style={{...Nofar_styles.chips, marginTop: "5%"}}
                                   onPress={() => selectedTagPressHandler(item.tag)}>{item.tag}</Chip>
                         ))
                     }
                 </View>
 
-                <View style={stylesPoster.confirmBTContainer}>
+                <View style={{...stylesPoster.confirmBTContainer, paddingTop: "5%"}}>
                     <Button mode={"contained"} style={Nofar_styles.BigButton} onPress={reportConfirmHandler}>
                         <Text style={Nofar_styles.BigButtonText}>אישור</Text>
                     </Button>

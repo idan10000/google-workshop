@@ -6,8 +6,6 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import { Nofar_styles } from "../utils/Nofar_style";
-// import BottomSheet from "reanimated-bottom-sheet";
-// import Animated from "react-native-reanimated";
 
 // import ImagePicker from "react-native-image-crop-picker";
 

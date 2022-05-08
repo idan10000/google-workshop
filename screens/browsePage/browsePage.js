@@ -1,47 +1,27 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-    Modal,
-    Portal,
-    Text,
-    Button,
     Provider,
-    Card,
-    Chip,
     Searchbar,
-    Divider,
     IconButton,
     Menu,
-    
-
 } from 'react-native-paper';
 import {View, StyleSheet, FlatList, Dimensions} from 'react-native'
-import NewReportFAB from '../shared_components/newReportFAB';
-import Poster from '../data_classes/poster'
-import PostListItem from '../shared_components/postListItem'
-import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+import PostListItem from '../../shared_components/postListItem'
+import Report from "../../data_classes/report";
+import {addDoc, arrayUnion, collection, doc, getFirestore, setDoc, updateDoc} from "firebase/firestore";
+import {getDocuments, getInitialData, getNextData} from "./infiniteScroll"
 
-
-const BrowseReports = ({navigation}) => {
-
-    var tempPosters = [
-        {poster: new Poster('https://picsum.photos/700/500', 100, "10/10/2022", "", "", ""), key: '1'},
-        {poster: new Poster('https://picsum.photos/500/400', 100, "10/10/2022", "", "", ""), key: '4'},
-        {poster: new Poster('https://picsum.photos/700/800', 100, "10/10/2022", "", "", ""), key: '3'},
-        {poster: new Poster('https://picsum.photos/900/600', 100, "10/10/2022", "", "", ""), key: '2'},
-        {poster: new Poster('https://picsum.photos/600/500', 100, "10/10/2022", "", "", ""), key: '5'},
-        {poster: new Poster('https://picsum.photos/300/500', 100, "10/10/2022", "", "", ""), key: '6'},
-
-    ]
-    const [posters, setPosters] = React.useState(tempPosters);
+const BrowsePage = ({navigation, route}) => {
+    const {collectionPath, destination} = route.params
 
     const sortByDate = () => (
-        setPosters((prevPosters) => (
-                prevPosters.sort((a, b) => a.key.localeCompare(b.key))
+        setData((prevData) => (
+                prevData.sort((a, b) => a.date.localeCompare(b.date))
             )
         )
     )
 
-    const [visibleSortMenu, setVisibleSortMenu] = React.useState(false);
+    const [visibleSortMenu, setVisibleSortMenu] = useState(false);
 
     const openSortMenu = () => setVisibleSortMenu(true);
     const closeSortMenu = () => setVisibleSortMenu(false);
@@ -58,6 +38,35 @@ const BrowseReports = ({navigation}) => {
         );
     }
 
+
+    //---------------------- Infinite Scrolling ----------------------
+
+    const [data,setData] = useState({
+        docs:[],error:null,lastDocId:null,
+        initialBatchStatus:"",
+        nextBatchStatus:"",
+    })
+
+
+    useEffect(() => {
+        // Load initial batch documents when main component mounted.
+        getInitialData(setData, collectionPath);
+    }, []);
+
+
+    const renderLoadingIndicator = ()=>{
+        return (
+
+            <View style={{flex:1,alignItems:"center",justifyContent:'center'}}>
+
+
+                <ActivityIndicator color="#000" size="large"/>
+
+            </View>
+        )
+    }
+    console.log(collectionPath)
+    console.log(data.docs)
     return (
         <Provider>
             <View style={styles.searchBarContainer}>
@@ -70,11 +79,6 @@ const BrowseReports = ({navigation}) => {
                         icon={"sort"}
                         onPress={openSortMenu}/>}>
                     <Menu.Item onPress={() => {sortByDate()}} title="תאריך"/>
-                    <Menu.Item onPress={() => {
-                    }} title="Item 2"/>
-                    <Divider/>
-                    <Menu.Item onPress={() => {
-                    }} title="Item 3"/>
                 </Menu>
 
                 <View style={styles.Search}>
@@ -92,21 +96,24 @@ const BrowseReports = ({navigation}) => {
             </View>
             <View style={styles.listContainer}>
                 {/* List */}
-                <FlatList data={posters} ItemSeparatorComponent={FlatListItemSeparator} keyExtractor={(item) => item.key} numColumns={2} renderItem={({item}) => {
-                    console.log(item.key)
+                <FlatList data={data.docs}
+                          ItemSeparatorComponent={FlatListItemSeparator}
+                          keyExtractor={(item) => item.image}
+                          onEndReached={() => getNextData(data,setData,collectionPath)}
+                          onEndReachedThreshold={0.5}
+                          numColumns={2}
+                          renderItem={({item}) => {
+                              console.log(item.image)
                     return (
                         <View style={{paddingVertical:5}}>
                         <PostListItem
-                            image={item.poster.image}
-                            date={item.poster.date}
-                            distance={item.poster.location}
-                            report={item.poster}
+                            image={item.image}
+                            date={item.date}
+                            distance={item.location}
+                            data={item}
                             navigation={navigation}
+                            destination={destination}
                         /></View>
-                        // <Image
-                        //     source={{uri: item.poster.image}}
-                        //     style={styles.image}
-                        // />
                     )
                 }}/>
 
@@ -121,29 +128,32 @@ const styles = StyleSheet.create({
     tabContainer: {
         paddingTop: 30,
         flexDirection: "row",
-        justifyContent: "space-evenly"
+        justifyContent: "space-evenly",
+
     },
     searchBarContainer: {
-        paddingTop: 10,
+        paddingVertical: 10,
         flexDirection: 'row',
-        backgroundColor: "#BBB988"
+        backgroundColor: "#BBB988",
     },
     filterButton: {
         position: "absolute",
         right: 16,
         top:10,
-        zIndex: 2
+        zIndex: 2,
     },
     Search: {
         flex: 1,
         paddingRight: 16,
-        zIndex: 1
+        zIndex: 1,
+
     },
     listContainer: {
         flex: 1,
         alignItems:'center',
         justifyContent:'center',
-        backgroundColor: "#BBB988"
+        backgroundColor: "#BBB988",
+
     },
     image: {
         width:Dimensions.get('window').width / 2,
@@ -154,4 +164,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default BrowseReports;
+export default BrowsePage;

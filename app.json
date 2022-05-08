@@ -23,10 +23,14 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.example.findog"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "ANDROID_KEY": "692765980591-6fogaevtphdce97vsq55d8gbu1snfsrg.apps.googleusercontent.com"
     }
   }
 }

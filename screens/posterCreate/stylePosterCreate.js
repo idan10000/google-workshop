@@ -6,7 +6,6 @@ export const stylesPoster = StyleSheet.create({
     overflow: "hidden",
     flexWrap: "wrap",
     paddingHorizontal:"5%",
-    paddingTop:"3%"
   },
   modal: {
     backgroundColor:"#BBB988",
@@ -50,15 +49,10 @@ export const stylesPoster = StyleSheet.create({
   },
   descriptionContainer: {},
   addTagsBTContainer: {
-    paddingVertical:"5%",
+    paddingTop:"5%",
     flexDirection:"row",
     paddingHorizontal:"5%",
     justifyContent:"space-around"
-  },
-  locationBTContainer: {
-    paddingBottom:"5%",
-    flexDirection:"row",
-    paddingHorizontal:"5%"
   },
   confirmBTContainer:{
     alignSelf:"center",

@@ -1,8 +1,8 @@
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { IconButton } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
-
-import HomeStack from './homeStack';
+import HomeScreen from '../screens/homeScreen';
+//import HomeStack from './homeStack';
 import ProfileStack from '../screens/Profile_user/profileStack';
 import BrowsePageNavigation from '../navigation/browsePageNavigation';
 import Map from '../screens/map';
@@ -10,23 +10,23 @@ import Map from '../screens/map';
 const Tab = createMaterialBottomTabNavigator();
 
 export default function NavigationBar() {
-  
+
   return (
-      <Tab.Navigator 
-        initialRouteName='בית' 
-        screenOptions={{headerShown: false}} 
+      <Tab.Navigator
+        initialRouteName='בית'
+        screenOptions={{headerShown: false}}
         barStyle={styles.bar}
         activeColor={"white"}
         inactiveColor={"#1B1209"}>
           <Tab.Screen name="פרופיל" component={ProfileStack} options={{tabBarIcon: getIcon('account')}}/>
-          <Tab.Screen name="בית" component={HomeStack} options={{tabBarIcon: getIcon('home')}}/>
+          <Tab.Screen name="בית" component={HomeScreen} options={{tabBarIcon: getIcon('home')}}/>
           <Tab.Screen name="חפש" component={BrowsePageNavigation} options={{tabBarIcon: getIcon('magnify')}}/>
           <Tab.Screen name="מפה" component={Map} options={{tabBarIcon: getIcon('map-outline')}}/>
       </Tab.Navigator>
   );
 }
 
-const getIcon = (iconName) => { 
+const getIcon = (iconName) => {
   return (tabBarInfo) => {
     return (<IconButton
       icon={iconName}
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     bottom:"70%"
   },
   bar:{
-    backgroundColor: '#9E846C'
+    // backgroundColor: '#9E846C'
+      backgroundColor: "D4B282"
   }
 });
