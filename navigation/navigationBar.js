@@ -10,11 +10,11 @@ import Map from '../screens/map';
 const Tab = createMaterialBottomTabNavigator();
 
 export default function NavigationBar() {
-  
+
   return (
-      <Tab.Navigator 
-        initialRouteName='בית' 
-        screenOptions={{headerShown: false}} 
+      <Tab.Navigator
+        initialRouteName='בית'
+        screenOptions={{headerShown: false}}
         barStyle={styles.bar}
         activeColor={"white"}
         inactiveColor={"#1B1209"}>
@@ -26,7 +26,7 @@ export default function NavigationBar() {
   );
 }
 
-const getIcon = (iconName) => { 
+const getIcon = (iconName) => {
   return (tabBarInfo) => {
     return (<IconButton
       icon={iconName}
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     bottom:"70%"
   },
   bar:{
-    backgroundColor: '#9E846C'
+    // backgroundColor: '#9E846C'
+      backgroundColor: "D4B282"
   }
 });

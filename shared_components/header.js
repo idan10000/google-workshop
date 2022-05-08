@@ -18,7 +18,8 @@ export default function Header({ navigation, back }) {
 
 const styles = StyleSheet.create({
     header: {
-      backgroundColor: "#9E846C"
+      // backgroundColor: "#9E846C"
+        backgroundColor: "#F4F2E3"
     },
     content: {
       marginLeft: 0,

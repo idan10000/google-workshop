@@ -1,0 +1,47 @@
+import React, { Component } from "react";
+import { Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
+import { Nofar_styles } from "../utils/Nofar_style";
+
+import { AR_styles } from "./Ad_style";
+import AdTemplate from "./ad_template";
+import {Button} from "react-native-paper";
+export default function NewAdPage({navigation, route}) {
+
+    const editButtonPressHandler = () => {
+        console.log("opening report screen");
+        console.log(route.params.ref)
+        navigation.navigate("CreateAd", {
+            poster: route.params.poster,
+            edit: true,
+            ref: route.params.ref
+        });
+    };
+
+
+    return (
+        <View style={Nofar_styles.container}>
+            <ScrollView style={AR_styles.content}>
+                <AdTemplate poster={route.params.poster}/>
+                <View style={AR_styles.confirmBTContainer}>
+                    <Button
+                        mode={"contained"}
+                        style={Nofar_styles.BigButton}
+                        onPress={() => {}}
+                    >
+                        <Text style={Nofar_styles.BigButtonText}>פתח מיקום במפה</Text>
+                    </Button>
+                </View>
+
+                <View style={AR_styles.confirmBTContainer}>
+                    <Button
+                        mode={"contained"}
+                        style={Nofar_styles.BigButton}
+                        onPress={editButtonPressHandler}
+                    >
+                        <Text style={Nofar_styles.BigButtonText}>עדכן את המודעה</Text>
+                    </Button>
+                </View>
+            </ScrollView>
+        </View>
+    );
+}
