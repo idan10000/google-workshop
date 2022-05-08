@@ -50,4 +50,17 @@ export const AR_styles = StyleSheet.create({
     borderBottomLeftRadius: 1,
     borderBottomRightRadius: 1,
   },
+  lastSeen: {
+    flexDirection:"row",
+    alignItems:"center",
+    marginHorizontal: "5%"
+  },
+  verticalLine:{
+    height: 16,
+    width: 1,
+    backgroundColor: '#000',
+    color:"000",
+    marginHorizontal: "4%"
+  }
+
 });

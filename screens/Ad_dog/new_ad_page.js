@@ -5,6 +5,7 @@ import { Nofar_styles } from "../utils/Nofar_style";
 import { AR_styles } from "./Ad_style";
 import AdTemplate from "./ad_template";
 import {Button} from "react-native-paper";
+import NewAdTemplate from "./newAdTemplate";
 export default function NewAdPage({navigation, route}) {
 
     const editButtonPressHandler = () => {
@@ -21,27 +22,8 @@ export default function NewAdPage({navigation, route}) {
     return (
         <View style={Nofar_styles.container}>
             <ScrollView style={AR_styles.content}>
-                <AdTemplate poster={route.params.poster}/>
-                <View style={AR_styles.confirmBTContainer}>
-                    <Button
-                        mode={"contained"}
-                        style={Nofar_styles.BigButton}
-                        onPress={() => {}}
-                    >
-                        <Text style={Nofar_styles.BigButtonText}>פתח מיקום במפה</Text>
-                    </Button>
-                </View>
-
-                <View style={AR_styles.confirmBTContainer}>
-                    <Button
-                        mode={"contained"}
-                        style={Nofar_styles.BigButton}
-                        onPress={editButtonPressHandler}
-                    >
-                        <Text style={Nofar_styles.BigButtonText}>עדכן את המודעה</Text>
-                    </Button>
-                </View>
-            </ScrollView>
+                <NewAdTemplate />
+                            </ScrollView>
         </View>
     );
 }
