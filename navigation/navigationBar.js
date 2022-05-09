@@ -3,7 +3,7 @@ import { IconButton } from "react-native-paper";
 import { StyleSheet } from "react-native";
 import HomeScreen from "../screens/homeScreen";
 //import HomeStack from './homeStack';
-import profileStack from "../screens/Profile_user/profileStack";
+import profileStack from "../navigation/profileStack";
 import BrowsePageNavigation from "../navigation/browsePageNavigation";
 import Map from "../screens/map";
 
