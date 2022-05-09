@@ -1,13 +1,11 @@
 import React from "react";
 import { View, SafeAreaView, TouchableOpacity } from "react-native";
-import {Title, Text, Button} from "react-native-paper";
+import { Title, Text, Button } from "react-native-paper";
 import { user_styles } from "./User_profile_style";
-import Avatar from "avataaars";
-import { generateRandomAvatarOptions } from "../utils/avatar";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Nofar_styles } from "../utils/Nofar_style";
 
-export default function ProfileScreen() {
+export default function ProfileScreen({ navigation }) {
   const userDetalies = {
     name: "אמיר כהן",
     userName: "queenOfEngland18",
@@ -16,9 +14,9 @@ export default function ProfileScreen() {
     phone: "052-1111111",
     email: "abc@gmail.com",
   };
-  // const pressHandler = () => {
-  //   navigation.push("Edit");
-  // };
+  const pressHandler = () => {
+    navigation.push("EditProfileScreen");
+  };
   return (
     <SafeAreaView style={Nofar_styles.container}>
       <View style={user_styles.ProfileCard}>
@@ -71,7 +69,7 @@ export default function ProfileScreen() {
         <Button
           mode={"contained"}
           style={Nofar_styles.BigButton}
-          onPress={() => {}}
+          onPress={pressHandler}
         >
           <Text style={Nofar_styles.BigButtonText}>עדכון פרטים</Text>
         </Button>

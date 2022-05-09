@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { edit_styles } from "./Edit_style";
 import { HelperText, TextInput } from "react-native-paper";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Feather from "react-native-vector-icons/Feather";
 import { Nofar_styles } from "../utils/Nofar_style";
 
 // import ImagePicker from "react-native-image-crop-picker";
+// import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+// import FontAwesome from "react-native-vector-icons/FontAwesome";
+// import Feather from "react-native-vector-icons/Feather";
 
-export default function EditProfileScreen() {
+export default function EditProfileScreen({ navigation }) {
   const [state, setState] = useState({
     fname: "",
     phone: "",
@@ -17,6 +17,10 @@ export default function EditProfileScreen() {
     city: "",
     country: "",
   });
+
+  const pressHandler = () => {
+    navigation.goBack();
+  };
 
   // const handleChange = (event) => {
   //   const { name, value } = event.target;
@@ -42,7 +46,7 @@ export default function EditProfileScreen() {
     <View style={Nofar_styles.container}>
       <View style={Nofar_styles.actionInput}>
         <TextInput
-            placeholder="שם"
+          placeholder="שם"
           value={state.fname}
           // onChangeText={handleChange}
           activeUnderlineColor="#000000"
@@ -58,7 +62,7 @@ export default function EditProfileScreen() {
 
       <View style={Nofar_styles.actionInput}>
         <TextInput
-            placeholder="אימייל"
+          placeholder="אימייל"
           value={state.email}
           // onChangeText={handleChange("email")}
           activeUnderlineColor="#000000"
@@ -72,7 +76,7 @@ export default function EditProfileScreen() {
 
       <View style={Nofar_styles.actionInput}>
         <TextInput
-            placeholder="טלפון"
+          placeholder="טלפון"
           value={state.phone}
           // onChangeText={handleChange("phone")}
           activeUnderlineColor="#000000"
@@ -86,7 +90,7 @@ export default function EditProfileScreen() {
 
       <View style={Nofar_styles.actionInput}>
         <TextInput
-            placeholder="עיר"
+          placeholder="עיר"
           value={state.city}
           // onChangeText={handleChange("city")}
           activeUnderlineColor="#000000"
@@ -121,6 +125,8 @@ export default function EditProfileScreen() {
           <Text style={Nofar_styles.BigButtonText}>עדכן פרטים</Text>
         </TouchableOpacity>
       </View>
+
+      <Button title="back to profile screen" onPress={pressHandler} />
     </View>
   );
 }
