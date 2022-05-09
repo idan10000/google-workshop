@@ -3,11 +3,20 @@ import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import MapView, { Callout, Circle, Marker } from "react-native-maps";
 
+// ------------ TO DO LIST: --------------
+// 1) Add two red pins of reports.
+// 2) Clicking on a red pin will open a small tab with details about the report, and push the entire map up.
+// 3) Add a gray shadow to the "My Location" radius.
+// 4) Add two red pins of reports.
+// 5) Navigation from the navigationBar
+
 export default function Map() {
+  //user location
   const [pin, setPin] = React.useState({
     latitude: 37.78825,
     longitude: -122.4324,
   });
+  // search location
   const [region, setRegion] = React.useState({
     latitude: 37.78825,
     longitude: -122.4324,
