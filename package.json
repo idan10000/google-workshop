@@ -37,7 +37,7 @@
     "expo-splash-screen": "~0.14.1",
     "expo-status-bar": "~1.2.0",
     "expo-updates": "~0.11.7",
-    "firebase": "^9.6.11",
+    "firebase": "^9.7.0",
     "formik": "^2.2.9",
     "install": "^0.13.0",
     "npm": "^8.6.0",

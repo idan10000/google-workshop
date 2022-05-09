@@ -60,7 +60,7 @@ export const AR_styles = StyleSheet.create({
     height: 16,
     width: 1,
     backgroundColor: '#000',
-    color:"000",
+    color:"#000",
     marginHorizontal: "4%"
   },
   contact: {
