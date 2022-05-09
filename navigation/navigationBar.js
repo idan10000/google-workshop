@@ -3,7 +3,7 @@ import { IconButton } from "react-native-paper";
 import { StyleSheet } from "react-native";
 import HomeScreen from "../screens/homeScreen";
 //import HomeStack from './homeStack';
-import ProfileStack from "../screens/Profile_user/profileStack";
+import profileStack from "../screens/Profile_user/profileStack";
 import BrowsePageNavigation from "../navigation/browsePageNavigation";
 import Map from "../screens/map";
 
@@ -20,7 +20,7 @@ export default function NavigationBar() {
     >
       <Tab.Screen
         name="פרופיל"
-        component={ProfileStack}
+        component={profileStack}
         options={{ tabBarIcon: getIcon("account") }}
       />
       <Tab.Screen
