@@ -5,7 +5,7 @@ import OldhomeScreen from "../screens/homeScreen";
 //import HomeStack from './homeStack';
 import ProfileStack from "../navigation/profileStack";
 import BrowsePageNavigation from "../navigation/browsePageNavigation";
-import Map from "../screens/map";
+import Map from "../screens/Map/Map";
 
 const Tab = createMaterialBottomTabNavigator();
 

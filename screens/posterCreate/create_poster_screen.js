@@ -136,6 +136,9 @@ export default function PosterPostingComponent({route, navigation}) {
     const initName = route.params.edit ? prevPoster.dogName : ''
     const [nameText, setName] = React.useState(initName);
 
+    const initDogBreed = route.params.edit ? prevPoster.dogBreed : ''
+    const [breed, setDogBreed] = React.useState(initName);
+
     const onChangeText = (text) => setText(text);
 
     const hasErrors = () => {
@@ -161,8 +164,8 @@ export default function PosterPostingComponent({route, navigation}) {
         }))
 
         // create poster
-        const dbPoster = new Poster(selectedImage,"", "", today, plainTags, descriptionText, nameText, user.uid)
-        const sendPoster = new Poster(selectedImage,"", "", today, plainTags, descriptionText, nameText, user.uid)
+        const dbPoster = new Poster(selectedImage,"", "", today, plainTags, descriptionText, nameText, breed, user.uid)
+        const sendPoster = new Poster(selectedImage,"", "", today, plainTags, descriptionText, nameText, breed, user.uid)
 
         const db = fireStoreDB;
 

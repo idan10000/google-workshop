@@ -8,8 +8,8 @@ class Poster {
         this.tagList = tagList;
         this.description = description;
         this.dogName = dogName;
-        this.user = user;
         this.dogBreed = dogBreed
+        this.user = user;
     }
 
 
