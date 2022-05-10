@@ -6,8 +6,8 @@ import MapView, { Callout, Circle, Marker } from "react-native-maps";
 // ------------ TO DO LIST: --------------
 // 1) Add two red pins of reports.
 // 2) Clicking on a red pin will open a small tab with details about the report, and push the entire map up.
-// 4) Navigation from the navigationBar
-// 5) FOR POSTER\REPORT : Clicking the "Open Location" button will open the location of the POSTER\REPORT on Google Maps App.
+// 3) Navigation from the navigationBar
+// 4) Navigation from the create poster\ report
 export default function Map() {
   //user location
   const [pin, setPin] = React.useState({
