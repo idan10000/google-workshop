@@ -53,9 +53,9 @@ export const AR_styles = StyleSheet.create({
   },
   lastSeen: {
     flexDirection:"row",
-    // alignItems:"center",
+    alignItems:"center",
     // marginHorizontal: "5%",
-    // justifyContent:"center",
+    justifyContent:"center",
 
   },
   ownerData: {
