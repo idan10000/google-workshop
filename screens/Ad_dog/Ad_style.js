@@ -49,12 +49,22 @@ export const AR_styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderBottomLeftRadius: 1,
     borderBottomRightRadius: 1,
+    marginBottom:"4%",
   },
   lastSeen: {
     flexDirection:"row",
     alignItems:"center",
     // marginHorizontal: "5%",
     justifyContent:"center",
+
+  },
+  ownerData: {
+    flexDirection:"row",
+    alignItems:"center",
+    // marginHorizontal: "5%",
+    justifyContent:"center",
+    height:"6%",
+    marginBottom:"4%",
   },
   verticalLine:{
     height: 16,
@@ -88,18 +98,22 @@ export const AR_styles = StyleSheet.create({
   },
   myCard: {
       borderRadius: 15,
-      marginTop:"4%",
+      marginTop:"2%",
       shadowColor: "#00000021",
       shadowOffset: {
         width: 20,
         height: 10,
   },
+    width: Dimensions.get("window").width / 1.2,
+
     shadowOpacity: 0.5,
     shadowRadius: 7.49,
     elevation: 12,
     marginVertical: 5,
     backgroundColor: "#F9F8F0",
     marginHorizontal: 5,
-}
+    marginBottom:"5%",
+
+  }
 
 });
