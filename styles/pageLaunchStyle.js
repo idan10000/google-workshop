@@ -10,7 +10,7 @@ export const pageLaunchStyle = StyleSheet.create({
         fontSize:70,
         alignItems: 'center',
         justifyContent: 'center',
-        margin:8,
+        marginTop:"4%",
 
     },
     slogenContainer:{
@@ -50,7 +50,7 @@ export const pageLaunchStyle = StyleSheet.create({
 
 
     containerForRegisterClick:{
-        marginTop:"8%",
+        marginVertical: "5%",
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: "row",
@@ -58,7 +58,7 @@ export const pageLaunchStyle = StyleSheet.create({
     },
     sellingText:{
         textAlign: 'center',
-        marginTop:40,
+        marginBottom:"10%",
         justifyContent: 'center',
         alignItems: 'center',
     }, bottomText: {
