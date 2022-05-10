@@ -40,7 +40,7 @@ export default function NewAdPage({navigation, route}) {
                                 <View style = {styles.centerVertical}>
                                     <Text style={styles.dotName}>·</Text></View>
                                 <View style = {styles.centerVerticalDot}>
-                                    <Text style={styles.dogsName}>{route.params.data.dogBreed}</Text></View>
+                                    <Text style={styles.dogsName}>{route.params.data.date}</Text></View>
                             </View>
                         </View>
 
@@ -53,7 +53,9 @@ export default function NewAdPage({navigation, route}) {
                             <Icon name="location-pin" size={22} color ="#000"  />
                             <TouchableOpacity><Text fontSize="16" lineHeight="20" fontWeight= "500" textAlign= "center">{route.params.data.location}</Text></TouchableOpacity>
                         </View>
-                        <Text style = {styles.whenText}>בתאריך: {route.params.data.date}</Text>
+
+
+                                    {/*} <Text style = {styles.whenText}>בתאריך: {route.params.data.date}</Text>*/}
 
                     </View >
                     <View style = {AR_styles.ownerData}>
@@ -96,8 +98,6 @@ export default function NewAdPage({navigation, route}) {
                     {/*<View style={styles.dogOwner}>*/}
                     {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
                     {/*</View>*/}
-
-
 
                 </View>
             </ScrollView>

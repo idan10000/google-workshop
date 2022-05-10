@@ -58,7 +58,6 @@ export const AR_styles = StyleSheet.create({
 
   },
   ownerData: {
-    marginBottom:"10%",
     flexDirection:"row",
     alignItems:"center",
     // marginHorizontal: "5%",
@@ -109,6 +108,8 @@ export const AR_styles = StyleSheet.create({
     marginVertical: 5,
     backgroundColor: "#F9F8F0",
     marginHorizontal: 5,
-}
+    marginBottom:"5%",
+
+  }
 
 });
