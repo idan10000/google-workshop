@@ -1,12 +1,18 @@
 import * as React from "react";
-import { Dimensions, StyleSheet, Text, View, Image, Button } from "react-native";
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Button,
+} from "react-native";
 import * as Location from "expo-location";
 import MapView, { Callout, Circle, Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
 import * as React from "react";
 import Animated from "react-native-reanimated";
 import BottomSheet from "reanimated-bottom-sheet";
-
 
 // ------------ TO DO LIST: --------------
 // 1) Add two red pins of reports + BottomSheets
@@ -23,7 +29,7 @@ export default function Map() {
         height: 450,
       }}
     >
-      <Image source={{ uri: data.image }}></Image>
+      <Image source={{}}></Image>
     </View>
   );
 
