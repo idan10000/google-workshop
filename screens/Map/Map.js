@@ -1,8 +1,12 @@
 import * as React from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View, Image, Button } from "react-native";
 import * as Location from "expo-location";
 import MapView, { Callout, Circle, Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
+import * as React from "react";
+import Animated from "react-native-reanimated";
+import BottomSheet from "reanimated-bottom-sheet";
+
 
 // ------------ TO DO LIST: --------------
 // 1) Add two red pins of reports + BottomSheets
@@ -19,7 +23,7 @@ export default function Map() {
         height: 450,
       }}
     >
-      <Text>SHOULD ADD IMG</Text>
+      <Image source={{ uri: data.image }}></Image>
     </View>
   );
 
@@ -36,12 +40,8 @@ export default function Map() {
         return;
       }
       console.log(status);
-
-      console.log("before location");
       let location = await Location.getCurrentPositionAsync({});
-      console.log("after location");
       setLocation(location);
-      console.log(location);
     })();
   }, []);
 
@@ -56,20 +56,20 @@ export default function Map() {
 
   //user location
   const [pin, setPin] = React.useState({
-    latitude: location.coords.latitude,
-    longitude: location.coords.longitude,
+    latitude: 37.78825,
+    longitude: -122.4324,
   });
   const [reportOne, setReportOne] = React.useState({
-    latitude: location.coords.latitude,
-    longitude: location.coords.longitude,
+    latitude: 37.78825,
+    longitude: -122.4324,
   });
   return (
     <View style={{ marginTop: 50, flex: 1 }}>
       <MapView
         style={styles.map}
         initialRegion={{
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
+          latitude: 37.78825,
+          longitude: -122.4324,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
