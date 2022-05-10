@@ -63,6 +63,7 @@ export const AR_styles = StyleSheet.create({
     // marginHorizontal: "5%",
     justifyContent:"center",
     height:"6%",
+    marginVertical:"3%",
   },
   verticalLine:{
     height: 16,
