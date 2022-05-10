@@ -5,7 +5,7 @@ import SupportScreen from "../screens/Profile_user/Technical_support";
 
 const Stack = createStackNavigator();
 
-export default function profileStack() {
+export default function ProfileStack() {
   const options = { headerShown: false };
 
   return (
