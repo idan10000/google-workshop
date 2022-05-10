@@ -1,5 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Button, TextInput, View, Text, TouchableOpacity, Image, Pressable} from 'react-native';
+import {
+    StyleSheet,
+    Button,
+    TextInput,
+    View,
+    Text,
+    TouchableOpacity,
+    Image,
+    Pressable,
+    ImageBackground,
+    ImageBackgroundComponent
+} from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {Formik} from 'formik';
 import {AfterSignedStyle} from '../styles/after_signed_style';
@@ -88,6 +99,9 @@ export default function SignIn({navigation}) {
     const [password, setPassword] = useState('');
 
     return (
+        <ImageBackground
+            style={{flex: 1}}
+            source={require('../assets/new_background.png')}>
         <View style={AfterSignedStyle.container}>
             <View style={AfterSignedStyle.logoheaderContainer}>
                 <View style={AfterSignedStyle.header}>
@@ -166,5 +180,6 @@ export default function SignIn({navigation}) {
 
 
         </View>
+            </ImageBackground>
     );
 }

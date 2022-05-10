@@ -35,7 +35,7 @@ export default function PageLaunch({navigation}) {
     return (
         <ImageBackground
             style={{flex: 1}}
-            source={require('../assets/background_design.png')}>
+            source={require('../assets/new_background.png')}>
 
             <View style={pageLaunchStyle.appNameHeader}>
                 <Text style={pageLaunchStyle.appNameHeader}> FinDog</Text>
@@ -90,9 +90,4 @@ export default function PageLaunch({navigation}) {
 
             </View>
         </ImageBackground>
-
-
-    );
-}
-
-
+    );}

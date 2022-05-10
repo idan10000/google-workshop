@@ -8,7 +8,7 @@ export default function BrowseTabs() {
     return (
         <Tab.Navigator screenOptions={{
             tabBarIndicatorStyle: {backgroundColor: "#1B1209"},
-            tabBarStyle: {backgroundColor: "#BBB988"},
+            tabBarStyle: {backgroundColor: "#F9F8F0"},
             tabBarLabelStyle: {color: "#1B1209", fontSize: 16, fontWeight: "bold"}
         }}>
             <Tab.Screen name="נמצאו" component={BrowsePage} initialParams={{collectionPath:"Reports", destination:"Report"}}/>
@@ -21,6 +21,6 @@ export default function BrowseTabs() {
 
 const styles = StyleSheet.create({
     tab: {
-        color: "#BBB988"
+        color: "#F9F8F0"
     }
 })

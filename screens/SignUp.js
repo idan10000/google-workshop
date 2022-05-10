@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View, ImageBackground} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {Formik} from 'formik';
 import * as yup from 'yup';
@@ -146,6 +146,9 @@ export default function SignUp({navigation}) {
 
     console.log(formRef)
     return (
+        <ImageBackground
+            style={{flex: 1}}
+            source={require('../assets/new_background.png')}>
         <View style={Nofar_styles.container}>
             <View style={signUpStyles.logoHeaderContainer}>
 
@@ -265,11 +268,7 @@ export default function SignUp({navigation}) {
                     </View>
                 )}
             </Formik>
-
-
-
-
-
         </View>
+            </ImageBackground>
     );
 }

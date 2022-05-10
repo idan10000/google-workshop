@@ -2,7 +2,7 @@ import {
   Text,
   View,
   ScrollView,
-  Linking,
+  Linking, ImageBackground
 } from "react-native";
 import { Nofar_styles } from "../utils/Nofar_style";
 import { AR_styles } from "./Report_style";
@@ -17,6 +17,9 @@ export default function ReportForBrowse({route}) {
   };
 
   return (
+      <ImageBackground
+          style={{flex: 1}}
+          source={require('../../assets/new_background.png')}>
     <View style={Nofar_styles.container}>
       <ScrollView style={AR_styles.content}>
         <ReportTemplate data={route.params.data}/>
@@ -33,5 +36,7 @@ export default function ReportForBrowse({route}) {
         </View>
       </ScrollView>
     </View>
-  );
+</ImageBackground>
+
+);
 }

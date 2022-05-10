@@ -3,9 +3,9 @@ import { Dimensions, StyleSheet } from "react-native";
 export const Nofar_styles = StyleSheet.create({
   // background:
   container: {
+    backgroundColor:"#F4F2E3",
     flex: 1,
     paddingTop: "1%",
-    backgroundColor: "#BBB988",
   },
   text: { fontSize: 20 },
   BigTitle: {
@@ -39,7 +39,7 @@ export const Nofar_styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
-    backgroundColor: "#816A55",
+    backgroundColor: "#DCA277",
     shadowColor: "#00000021",
     shadowOffset: {
       width: 5,
@@ -98,7 +98,7 @@ export const Nofar_styles = StyleSheet.create({
     shadowRadius: 7.49,
     elevation: 12,
     marginVertical: 5,
-    backgroundColor: "#F5F5DC",
+    backgroundColor: "#F9F8F0",
     marginHorizontal: 5,
   },
 
@@ -120,7 +120,7 @@ export const Nofar_styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
-    backgroundColor: "#816A55",
+    backgroundColor: "#DCA277",
   },
 
   //   small button
@@ -147,7 +147,7 @@ export const Nofar_styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
-    backgroundColor: "#816A55",
+    backgroundColor: "#DCA277",
   },
   cardContent: {
     paddingVertical: 12.5,

@@ -2,6 +2,8 @@ import {StyleSheet, View, ImageBackground, Dimensions, ScrollView} from 'react-n
 import {Button} from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import {getAuth, signOut} from "firebase/auth";
+import {Text, TouchableOpacity} from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function HomeScreen({navigation}) {
 
@@ -32,42 +34,45 @@ export default function HomeScreen({navigation}) {
 
     return (
         // <ScrollView style={styles.container}>
-            <ImageBackground
-                style={styles.image}
-                source={require('../assets/background_design.png')}>
+        <ImageBackground
+            style={{flex: 1}}
+            source={require('../assets/new_background.png')}>
             <View style={styles.BigButtonView}>
-                <Button
-                    mode='contained'
-                    icon='camera'
+                <Text style = {styles.foundDog}>מצאתי כלב!</Text>
+                <TouchableOpacity
+                    // mode='contained'
+                    // icon='camera'
                     style={styles.BigButton}
-                    onPress={openCamera}
-                    labelStyle={styles.BigButtonText}>
-                    מצאתי כלב!
-                </Button>
+                    onPress={openCamera}>
+                    {/*labelStyle={styles.BigButtonText}>*/}
+                    <View         justifyContent= "center" alignItems= "center"  marginRight="8%">
+                    <Icon name="camera" size={24} color ="#FFFFFF"  /></View>
+                    <Text style={styles.BigButtonText}>מצאתי כלב!</Text>
+                </TouchableOpacity>
             </View>
-            <View style={styles.SmallButtonsView}>
                 <View style={styles.SmallButtonView}>
-                    <Button
-                        mode='outlined'
-                        icon='image'
+                    <TouchableOpacity
                         style={styles.SmallButton}
-                        onPress={() => {signOut(getAuth()).then(() => {})}}
-                        labelStyle={styles.SmallButtonTitle}>
-                        העלאה מגלריה
-                    </Button>
-                </View>
+                        onPress={() => {signOut(getAuth()).then(() => {})}}>
+                        <View  justifyContent= "center" alignItems= "center" flexDirection = "row" marginRight="4%">
+                        <Icon name="image" size={24} color ="#DCA277"  /></View>
+                        <Text style={styles.SmallButtonTitle}>העלאת תמונה מגלריה</Text>
+                    </TouchableOpacity>
 
-                <View style={styles.SmallButtonView}>
-                    <Button
-                        mode='outlined'
-                        style={styles.SmallButton}
-                        onPress={createPosterPressHandler}
-                        labelStyle={styles.SmallButtonTitle}>
-                        יצירת מודעה
-                    </Button>
                 </View>
-            </View>
-            </ImageBackground>
+                <View style={styles.SmallButtonView}>
+                    <Text style={styles.lostDog}>איבדתי כלב!</Text>
+
+                    <TouchableOpacity
+                        style={styles.MidButton}
+                        onPress={createPosterPressHandler}>
+                        <View  justifyContent= "center" alignItems= "center" flexDirection = "row" marginRight="4%">
+                            <Icon name="pencil" size={24} color ="#FFFFFF"  /></View>
+                        <Text style={styles.MidButtonTitle}>יצירת מודעה על כלב שאבד</Text>
+
+                    </TouchableOpacity>
+                </View>
+        </ImageBackground>
         // </ScrollView>
     );
 }
@@ -80,48 +85,119 @@ const styles = StyleSheet.create({
 
 
     //   small button
-    SmallButtonsView: {
-        marginTop:"25%",
-    },
+
     SmallButtonView: {
         alignSelf:"center",
+        marginTop:"5%"
+
+
     },
     SmallButtonTitle: {
-        color: "#FFFFFF",
+        lineHeight:23,
+        color: "#DCA277",
         fontSize: 16,
         textAlign: "center",
         fontWeight: "500",
     },
     SmallButton: {
-        width:Dimensions.get('window').width * 0.65,
-        height: Dimensions.get('window').height * 0.05,
-        marginTop: "10%",
+        flexDirection : "row",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 7,
+        elevation: 6,
         justifyContent: "center",
         alignItems: "center",
-        borderRadius: 20,
-        backgroundColor: "#816A55",
+        width:Dimensions.get('window').width * 0.75,
+        height: Dimensions.get('window').height * 0.07,
+        backgroundColor: "#FFFFFF",
+        borderColor: "#DCA277",
+        borderStyle: "solid",
+        borderRadius: 11,
+        borderWidth:2
+
     },
     BigButtonView: {
         alignSelf:"center",
+
+
     },
     BigButton: {
-        width:Dimensions.get('window').width * 0.80,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 7,
+        elevation: 6,
+        width:Dimensions.get('window').width * 0.75,
         height: Dimensions.get('window').height * 0.15,
-        marginTop: "60%",
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        borderRadius: 50,
-        backgroundColor: "#816A55",
-      },
+        borderRadius: 11.111,
+        backgroundColor: "#DCA277",
+    },
     BigButtonText: {
-    color: "#FFFFFF",
-    fontSize: 25,
-    textAlign: "center",
-    fontWeight: "700",
+        lineHeight:32,
+        color: "#FFFFFF",
+        fontSize: 24,
+        textAlign: "center",
+        fontWeight: "700",
     },
 
     image: {
         flex: 1,
     },
+    foundDog:{
+        marginTop: "14%",
+        marginBottom:"3%",
+        lineHeight:35,
+        color: "#9E6C6C",
+        fontSize: 24,
+        textAlign: "center",
+        fontWeight: "700",
+    },
+    lostDog:{
+        marginTop: "25%",
+        marginBottom:"3%",
+        lineHeight:35,
+        color: "#9E6C6C",
+        fontSize: 24,
+        textAlign: "center",
+        fontWeight: "700",
+
+
+    },
+    MidButton: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 7,
+        elevation: 6,
+        width:Dimensions.get('window').width * 0.75,
+        height: Dimensions.get('window').height * 0.08,
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 11.111,
+        backgroundColor: "#DCA277",
+    },
+    MidButtonTitle:{
+        color: "#FFFFFF",
+        fontSize: 16,
+        textAlign: "center",
+        fontWeight: "500",
+    },
+    smallIconContainer: {
+        backgroundColor: "#DCA277",
+        width:100,
+    }
 });

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Modal, Portal, Button, Provider, Chip, Headline, TextInput} from 'react-native-paper';
-import {View, StyleSheet, Image, Text} from 'react-native'
+import {View, StyleSheet, Image, Text, ImageBackground, ImageBackgroundComponent} from 'react-native'
 import Report, {reportConverter} from '../../data_classes/report'
 import {stylesPoster} from "../posterCreate/stylePosterCreate";
 import {Nofar_styles} from "../utils/Nofar_style";
@@ -124,6 +124,9 @@ const ReportCreationScreen = ({route, navigation}) => {
     let image = route.params.edit ? report.image : route.params.image
 
     return (
+        <ImageBackground
+            style={{flex: 1}}
+            source={require('../../assets/new_background.png')}>
         <Provider>
             {/*Modal (pop up screen) for selecting the tags describing the dog*/}
             <Portal>
@@ -239,6 +242,7 @@ const ReportCreationScreen = ({route, navigation}) => {
                 </View>
             </View>
         </Provider>
+            </ImageBackground>
     );
 };
 

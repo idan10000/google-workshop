@@ -25,7 +25,8 @@ export default function NewAdTemplate({data}) {
                       source={{uri:data.image}}></Image>
                 </View>
             </View>
-            <View  flexDirection="column" justifyContent= "center"     marginVertical="4%"
+            <View  flexDirection="column" justifyContent= "flex-start"                              
+            marginVertical="4%"
             >
             <View style = {AR_styles.lastSeen}>
 

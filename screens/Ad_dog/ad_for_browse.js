@@ -2,7 +2,7 @@ import {
   Text,
   View,
   ScrollView,
-  Linking,
+  Linking, ImageBackground, ImageBackgroundComponent
 } from "react-native";
 import { Nofar_styles } from "../utils/Nofar_style";
 import { AR_styles } from "./Ad_style";
@@ -17,6 +17,9 @@ export default function AdForBrowse({route}) {
   };
 
   return (
+      <ImageBackground
+          style={{flex: 1}}
+          source={require('../../assets/new_background.png')}>
     <View style={Nofar_styles.container}>
       <ScrollView style={AR_styles.content}>
         <AdTemplate data={route.params.data}/>
@@ -24,14 +27,15 @@ export default function AdForBrowse({route}) {
         <View style={AR_styles.confirmBTContainer}>
           <Button
             mode={"contained"}
-            style={Nofar_styles.BigButton}
+            style={Nofar_styles.SmallButton}
             onPress={makeCall}
             activeOpacity={0.7}
           >
-            <Text style={Nofar_styles.BigButtonText}>צור קשר עם הבעלים</Text>
+            <Text style={Nofar_styles.SmallButtonTitle}>צור קשר עם הבעלים</Text>
           </Button>
         </View>
       </ScrollView>
     </View>
+        </ImageBackground>
   );
 }

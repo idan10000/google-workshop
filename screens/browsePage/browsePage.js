@@ -5,7 +5,7 @@ import {
     IconButton,
     Menu,
 } from 'react-native-paper';
-import {View, StyleSheet, FlatList, Dimensions} from 'react-native'
+import {View, StyleSheet, FlatList, Dimensions, ImageBackground} from 'react-native'
 import PostListItem from '../../shared_components/postListItem'
 import Report from "../../data_classes/report";
 import {addDoc, arrayUnion, collection, doc, getFirestore, setDoc, updateDoc} from "firebase/firestore";
@@ -68,6 +68,9 @@ const BrowsePage = ({navigation, route}) => {
     console.log(collectionPath)
     console.log(data.docs)
     return (
+        <ImageBackground
+            style={{flex: 1}}
+            source={require('../../assets/new_background.png')}>
         <Provider>
             <View style={styles.searchBarContainer}>
                 {/* search bar + sort + filter*/}
@@ -105,6 +108,7 @@ const BrowsePage = ({navigation, route}) => {
                           renderItem={({item}) => {
                               console.log(item.image)
                     return (
+
                         <View style={{paddingVertical:5}}>
                         <PostListItem
                             image={item.image}
@@ -120,6 +124,7 @@ const BrowsePage = ({navigation, route}) => {
             </View>
             {/* <NewReportFAB/> */}
         </Provider>
+            </ImageBackground>
     )
 
 };
@@ -134,7 +139,7 @@ const styles = StyleSheet.create({
     searchBarContainer: {
         paddingVertical: 10,
         flexDirection: 'row',
-        backgroundColor: "#BBB988",
+        backgroundColor: "#F9F8F0",
     },
     filterButton: {
         position: "absolute",
@@ -152,7 +157,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems:'center',
         justifyContent:'center',
-        backgroundColor: "#BBB988",
 
     },
     image: {
