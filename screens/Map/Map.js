@@ -75,7 +75,7 @@ export default function Map() {
           }}
         >
           <Callout>
-            <Text>Match !</Text>
+            <Text>Match!</Text>
           </Callout>
         </Marker>
 
