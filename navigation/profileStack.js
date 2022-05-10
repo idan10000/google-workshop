@@ -1,18 +1,18 @@
-import { createStackNavigator } from "react-navigation-stack";
-import { createAppContainer } from "react-navigation";
-import ProfileScreen from "../screens/Profile_user/User_profile";
+import { createStackNavigator } from "@react-navigation/stack";
 import EditProfileScreen from "../screens/Profile_user/Edit_profile";
+import ProfileScreen from "../screens/Profile_user/User_profile";
+import SupportScreen from "../screens/Profile_user/Technical_support";
 
-const screens = {
-  ProfileScreen: {
-    screen: ProfileScreen,
-  },
-  EditProfileScreen: {
-    screen: EditProfileScreen,
-  },
-};
+const Stack = createStackNavigator();
 
-// profile stack navigator screens
-const profileStack = createStackNavigator(screens);
+export default function profileStack() {
+  const options = { headerShown: false };
 
-export default createAppContainer(profileStack);
+  return (
+    <Stack.Navigator screenOptions={options}>
+      <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+      <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
+      <Stack.Screen name="SupportScreen" component={SupportScreen} />
+    </Stack.Navigator>
+  );
+}

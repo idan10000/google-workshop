@@ -19,18 +19,8 @@ export default function EditProfileScreen({ navigation }) {
   });
 
   const pressHandler = () => {
-    navigation.goBack();
+    navigation.navigate("ProfileScreen");
   };
-
-  // const handleChange = (event) => {
-  //   const { name, value } = event.target;
-  //   console.log(value);
-  //   console.log(name);
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     [name]: value,
-  //   }));
-  // };
   const hasErrors = (det) => {
     if (det == "email") {
       return !state.email.includes("@");

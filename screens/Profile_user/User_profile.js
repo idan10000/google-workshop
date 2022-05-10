@@ -15,8 +15,12 @@ export default function ProfileScreen({ navigation }) {
     email: "abc@gmail.com",
   };
   const pressHandler = () => {
-    navigation.push("EditProfileScreen");
+    navigation.navigate("EditProfileScreen");
   };
+  const pressHandler_supp = () => {
+    navigation.navigate("SupportScreen");
+  };
+
   return (
     <SafeAreaView style={Nofar_styles.container}>
       <View style={user_styles.ProfileCard}>
@@ -89,7 +93,7 @@ export default function ProfileScreen({ navigation }) {
         <Button
           mode={"contained"}
           style={Nofar_styles.BigButton}
-          onPress={() => {}}
+          onPress={pressHandler_supp}
         >
           <Text style={Nofar_styles.BigButtonText}>תמיכה טכנית</Text>
         </Button>
