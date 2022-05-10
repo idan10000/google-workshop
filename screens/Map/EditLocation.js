@@ -28,12 +28,16 @@ export default function EditLocation() {
             console.log("Drag start", e.nativeEvent.coordinates);
           }}
           onDragEnd={(e) => {
-            Alert.alert("Hi user!", "You're changing the Location pin.", [
-              {
-                text: "Understood",
-                onPress: () => console.log("alert closed"),
-              },
-            ]);
+            Alert.alert(
+              "הודעה חשובה למשתמש",
+              "שים לב, אתה משנה את מיקום המודעה או הדיווח",
+              [
+                {
+                  text: "Understood",
+                  onPress: () => console.log("alert closed"),
+                },
+              ]
+            );
 
             setPin({
               latitude: e.nativeEvent.coordinate.latitude,

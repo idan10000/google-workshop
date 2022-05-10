@@ -44,7 +44,10 @@ export default function Map() {
     latitude: location.coords.latitude,
     longitude: location.coords.longitude,
   });
-
+  const [reportOne, setReportOne] = React.useState({
+    latitude: location.coords.latitude,
+    longitude: location.coords.longitude,
+  });
   return (
     <View style={{ marginTop: 50, flex: 1 }}>
       <MapView
@@ -57,6 +60,25 @@ export default function Map() {
         }}
         provider="google"
       >
+        <Marker
+          coordinate={reportOne}
+          pinColor="blue"
+          draggable={true}
+          onDragStart={(e) => {
+            console.log("Drag start", e.nativeEvent.coordinates);
+          }}
+          onDragEnd={(e) => {
+            setReportOne({
+              latitude: e.nativeEvent.coordinate.latitude,
+              longitude: e.nativeEvent.coordinate.longitude,
+            });
+          }}
+        >
+          <Callout>
+            <Text>Match !</Text>
+          </Callout>
+        </Marker>
+
         <Marker
           coordinate={pin}
           pinColor="red"
