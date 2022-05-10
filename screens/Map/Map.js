@@ -10,6 +10,21 @@ import { useEffect, useState } from "react";
 // 3) Navigation from the create poster\ report
 
 export default function Map() {
+  // buttom sheet:
+  const renderContent = () => (
+    <View
+      style={{
+        backgroundColor: "lightgrey",
+        padding: 20,
+        height: 450,
+      }}
+    >
+      <Text>SHOULD ADD IMG</Text>
+    </View>
+  );
+
+  const sheetRef = React.useRef(null);
+
   // user live location :
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -73,6 +88,7 @@ export default function Map() {
               longitude: e.nativeEvent.coordinate.longitude,
             });
           }}
+          onPress={() => sheetRef.current.snapTo(0)}
         >
           <Callout>
             <Text>Match!</Text>
@@ -104,6 +120,14 @@ export default function Map() {
           strokeColor={"red"}
         />
       </MapView>
+      <BottomSheet
+        ref={sheetRef}
+        snapPoints={["25%", "10%", "0%"]}
+        borderRadius={30}
+        initialSnap={2}
+        enabledGestureInteraction={true}
+        renderContent={renderContent}
+      />
     </View>
   );
 }
@@ -120,38 +144,3 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height,
   },
 });
-
-// export default function App() {
-//   const renderContent = () => (
-//     <View
-//       style={{
-//         backgroundColor: "lightgrey",
-//         padding: 20,
-//         height: 450,
-//       }}
-//     >
-//       <Text>Swipe down to close</Text>
-//     </View>
-//   );
-
-//   const sheetRef = React.useRef(null);
-
-//   return (
-//     <>
-//       <View>
-//         <Button
-//           title="Open Bottom Sheet"
-//           onPress={() => sheetRef.current.snapTo(0)}
-//         />
-//       </View>
-//       <BottomSheet
-//         ref={sheetRef}
-//         snapPoints={["25%", "10%", "0%"]}
-//         borderRadius={30}
-//         initialSnap={2}
-//         enabledGestureInteraction={true}
-//         renderContent={renderContent}
-//       />
-//     </>
-//   );
-// }
