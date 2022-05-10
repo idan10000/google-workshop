@@ -10,7 +10,7 @@ import {
 import * as Location from "expo-location";
 import MapView, { Callout, Circle, Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
-import BottomSheet from "reanimated-bottom-sheet";
+// import BottomSheet from "reanimated-bottom-sheet";
 
 // ------------ TO DO LIST: --------------
 // 1) Add two red pins of reports + BottomSheets
@@ -19,19 +19,19 @@ import BottomSheet from "reanimated-bottom-sheet";
 
 export default function Map() {
   // buttom sheet:
-  const renderContent = () => (
-    <View
-      style={{
-        backgroundColor: "lightgrey",
-        padding: 20,
-        height: 450,
-      }}
-    >
-      <Image source={{}}></Image>
-    </View>
-  );
+  // const renderContent = () => (
+  //   <View
+  //     style={{
+  //       backgroundColor: "lightgrey",
+  //       padding: 20,
+  //       height: 450,
+  //     }}
+  //   >
+  //     <Image source={{}}></Image>
+  //   </View>
+  // );
 
-  const sheetRef = React.useRef(null);
+  // const sheetRef = React.useRef(null);
 
   // user live location :
   const [location, setLocation] = useState(null);
@@ -124,14 +124,14 @@ export default function Map() {
           strokeColor={"red"}
         />
       </MapView>
-      <BottomSheet
+      {/* <BottomSheet
         ref={sheetRef}
         snapPoints={["25%", "10%", "0%"]}
         borderRadius={30}
         initialSnap={2}
         enabledGestureInteraction={true}
         renderContent={renderContent}
-      />
+      /> */}
     </View>
   );
 }
