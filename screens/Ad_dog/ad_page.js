@@ -40,7 +40,7 @@ export default function NewAdPage({navigation, route}) {
                                 {/*<View style = {styles.centerVertical}>*/}
                                 {/*    <Text style={styles.dotName}>·</Text></View>*/}
                                 <View style = {styles.centerVerticalDot}>
-                                    <Text style={styles.dogsName}>{route.params.data.date}</Text></View>
+                                    <Text style={styles.dogsName2}>{route.params.data.date}</Text></View>
                             </View>
                         </View>
 
@@ -129,6 +129,11 @@ const styles = StyleSheet.create({
         borderRadius:2,
     },
     dogsName: {
+        fontSize:16,
+        color:"#FFFFFF",
+    },
+    dogsName2: {
+        marginRight:"18%",
         fontSize:16,
         color:"#FFFFFF",
     },
