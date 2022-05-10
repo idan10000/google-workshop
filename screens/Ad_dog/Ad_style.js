@@ -53,9 +53,9 @@ export const AR_styles = StyleSheet.create({
   },
   lastSeen: {
     flexDirection:"row",
-    alignItems:"center",
+    // alignItems:"center",
     // marginHorizontal: "5%",
-    justifyContent:"center",
+    // justifyContent:"center",
 
   },
   ownerData: {
@@ -111,7 +111,6 @@ export const AR_styles = StyleSheet.create({
     elevation: 12,
     marginVertical: 5,
     backgroundColor: "#F9F8F0",
-    marginHorizontal: 5,
     marginBottom:"5%",
     justifyContent: "center",
     alignItems: "center",
