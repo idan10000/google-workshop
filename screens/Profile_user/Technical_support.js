@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, SafeAreaView, TouchableOpacity } from "react-native";
-import { TextInput } from "react-native-paper";
+import { TextInput, Button } from "react-native-paper";
 import { Nofar_styles } from "../utils/Nofar_style";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
