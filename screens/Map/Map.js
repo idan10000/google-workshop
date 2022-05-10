@@ -34,8 +34,8 @@ export default function Map() {
 
   //user location
   const [pin, setPin] = React.useState({
-    latitude: text.latitude,
-    longitude: text.longitude,
+    latitude: text.coords.latitude,
+    longitude: text.coords.longitude,
   });
 
   return (
@@ -43,8 +43,8 @@ export default function Map() {
       <MapView
         style={styles.map}
         initialRegion={{
-          latitude: text.latitude,
-          longitude: text.longitude,
+          latitude: text.coords.latitude,
+          longitude: text.coords.longitude,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
