@@ -92,7 +92,7 @@ export default function Map() {
               longitude: e.nativeEvent.coordinate.longitude,
             });
           }}
-          onPress={() => sheetRef.current.snapTo(0)}
+          // onPress={() => sheetRef.current.snapTo(0)}
         >
           <Callout>
             <Text>Match!</Text>
