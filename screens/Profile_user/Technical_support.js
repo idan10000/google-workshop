@@ -4,7 +4,11 @@ import { TextInput } from "react-native-paper";
 import { Nofar_styles } from "../utils/Nofar_style";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-export default function SupportScreen() {
+export default function SupportScreen({ navigation }) {
+  const pressHandler = () => {
+    navigation.navigate("ProfileScreen");
+  };
+
   return (
     <SafeAreaView style={Nofar_styles.container}>
       <View style={{ marginTop: 50, marginLeft: 40, marginBottom: 5 }}>
@@ -37,6 +41,7 @@ export default function SupportScreen() {
           <Text style={Nofar_styles.BigButtonText}>שלח</Text>
         </TouchableOpacity>
       </View>
+      <Button title="back to profile screen" onPress={pressHandler} />
     </SafeAreaView>
   );
 }
