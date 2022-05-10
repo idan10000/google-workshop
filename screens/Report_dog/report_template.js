@@ -3,6 +3,7 @@ import { Text, View, Image } from "react-native";
 import { Chip } from "react-native-paper";
 import { Nofar_styles } from "../utils/Nofar_style";
 import { AR_styles } from "./Report_style";
+import {ImageBackground} from "react-native-web";
 export default function ReportTemplate({ data }) {
   const report_data = {
     desc: "נמצא בפארק העירוני בסביבות השעה ארבע ביום ראשון .",
@@ -13,6 +14,8 @@ export default function ReportTemplate({ data }) {
   };
     console.log(data)
   return (
+
+
     <View style={Nofar_styles.container}>
 
       <View style={{alignSelf: "center" }}>

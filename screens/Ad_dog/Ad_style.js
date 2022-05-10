@@ -53,7 +53,7 @@ export const AR_styles = StyleSheet.create({
   lastSeen: {
     flexDirection:"row",
     alignItems:"center",
-    marginHorizontal: "5%",
+    // marginHorizontal: "5%",
     justifyContent:"center",
   },
   verticalLine:{

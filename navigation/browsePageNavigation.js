@@ -1,7 +1,6 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import BrowseReportStack from './browseReportStack';
 import {StyleSheet} from 'react-native';
-import BrowsePosterStack from "./browsePosterStack";
+import BrowsePage from '../screens/browsePage/browsePage';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -9,12 +8,12 @@ export default function BrowseTabs() {
     return (
         <Tab.Navigator screenOptions={{
             tabBarIndicatorStyle: {backgroundColor: "#1B1209"},
-            tabBarStyle: {backgroundColor: "#BBB988"},
+            tabBarStyle: {backgroundColor: "#F9F8F0"},
             tabBarLabelStyle: {color: "#1B1209", fontSize: 16, fontWeight: "bold"}
         }}>
-            <Tab.Screen name="נמצאו" component={BrowseReportStack}/>
+            <Tab.Screen name="נמצאו" component={BrowsePage} initialParams={{collectionPath:"Reports", destination:"Report"}}/>
 
-            <Tab.Screen name="אבדו" component={BrowsePosterStack}/>
+            <Tab.Screen name="אבדו" component={BrowsePage} initialParams={{collectionPath:"Posters", destination:"Poster"}}/>
 
         </Tab.Navigator>
     );
@@ -22,6 +21,6 @@ export default function BrowseTabs() {
 
 const styles = StyleSheet.create({
     tab: {
-        color: "#BBB988"
+        color: "#F9F8F0"
     }
 })

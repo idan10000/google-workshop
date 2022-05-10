@@ -4,7 +4,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
-  FlatList,
+  FlatList, ImageBackground
 } from 'react-native';
 import NewReportFAB from '../shared_components/newReportFAB';
 
@@ -25,9 +25,12 @@ export default function NotificationsScreen(){
 
 
     return (
+        <ImageBackground
+            style={{flex: 1}}
+            source={require('../assets/new_background.png')}>
         <View style={styles.container}>
-          <FlatList 
-            style={styles.notificationList} 
+          <FlatList
+            style={styles.notificationList}
             enableEmptySections={true}
             data={notifications}
             keyExtractor= {(item) => {
@@ -35,8 +38,10 @@ export default function NotificationsScreen(){
             }}
             renderItem={({item}) => {
               return (
+
                 <TouchableOpacity onPress={() => {console.log("open notification")}}>
                     <List.Item
+                        style={styles.listItem}
                         title={item.title}
                         description={item.description}
                         left={props => <List.Icon {...props} icon="bell" />}
@@ -50,6 +55,7 @@ export default function NotificationsScreen(){
               )}}/>
           {/* <NewReportFAB/> */}
         </View>
+            </ImageBackground>
       );
 
 }
@@ -61,8 +67,10 @@ const styles = StyleSheet.create({
       padding:0,
     },
     container:{
-      backgroundColor: "#BBB988",
+      backgroundColor: "#F9F8F0",
       flex:1
+    },
+    listItem: {
+        backgroundColor:"#F9F8F0",
     }
-  });
-  
+});

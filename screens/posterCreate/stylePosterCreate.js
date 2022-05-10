@@ -8,7 +8,7 @@ export const stylesPoster = StyleSheet.create({
     paddingHorizontal:"5%",
   },
   modal: {
-    backgroundColor:"#BBB988",
+    backgroundColor:"#F4F2E3",
     padding: 20,
   },
   addImageContainer: {
@@ -49,14 +49,14 @@ export const stylesPoster = StyleSheet.create({
   },
   descriptionContainer: {},
   addTagsBTContainer: {
-    paddingTop:"5%",
+    paddingTop:"2%",
     flexDirection:"row",
-    paddingHorizontal:"5%",
+    marginHorizontal:"2%",
     justifyContent:"space-around"
   },
   confirmBTContainer:{
     alignSelf:"center",
-    paddingBottom:"5%"
+    paddingBottom:"18%"
   }
 
 });

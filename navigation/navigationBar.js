@@ -1,7 +1,7 @@
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { IconButton } from "react-native-paper";
 import { StyleSheet } from "react-native";
-import HomeScreen from "../screens/homeScreen";
+import OldhomeScreen from "../screens/homeScreen";
 //import HomeStack from './homeStack';
 import profileStack from "../navigation/profileStack";
 import BrowsePageNavigation from "../navigation/browsePageNavigation";
@@ -25,7 +25,7 @@ export default function NavigationBar() {
       />
       <Tab.Screen
         name="בית"
-        component={HomeScreen}
+        component={OldhomeScreen}
         options={{ tabBarIcon: getIcon("home") }}
       />
       <Tab.Screen

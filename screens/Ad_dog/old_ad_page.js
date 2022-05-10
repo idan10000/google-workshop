@@ -1,34 +1,35 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity, ScrollView,ImageBackground } from "react-native";
+import { Text, View, Image, TouchableOpacity, ScrollView,ImageBackground } from "react-native";
 import { Nofar_styles } from "../utils/Nofar_style";
-import { AR_styles } from "./Report_style";
-import ReportTemplate from "./report_template";
+
+import { AR_styles } from "./Ad_style";
+import AdTemplate from "./ad_template";
 import {Button} from "react-native-paper";
-export default function ReportPage({ route, navigation }) {
+export default function AdPage({navigation, route}) {
+
+  console.log("opening report screen");
 
   const editButtonPressHandler = () => {
-    console.log("opening report screen");
     console.log(route.params.ref)
-    navigation.navigate("ReportCreation", {
-      report: route.params.data,
+    navigation.navigate("CreateAd", {
+      poster: route.params.data,
       edit: true,
       ref: route.params.ref
     });
   };
 
   console.log(route.params.data)
-
-  return (<ImageBackground
-          style={{flex: 1}}
-          source={require('../../assets/new_background.png')}>
+  return (
+      // <ImageBackground flex= "1"
+      //                  source={require('../assets/new_background.png')}>
     <View style={Nofar_styles.container}>
       <ScrollView style={AR_styles.content}>
-        <ReportTemplate data={route.params.data} />
+        <AdTemplate data={route.params.data}/>
         <View style={AR_styles.confirmBTContainer}>
           <Button
-            mode={"contained"}
-            style={Nofar_styles.BigButton}
-            onPress={() => {}}
+              mode={"contained"}
+              style={Nofar_styles.BigButton}
+              onPress={() => {}}
           >
             <Text style={Nofar_styles.BigButtonText}>פתח מיקום במפה</Text>
           </Button>
@@ -40,11 +41,11 @@ export default function ReportPage({ route, navigation }) {
             style={Nofar_styles.BigButton}
             onPress={editButtonPressHandler}
           >
-            <Text style={Nofar_styles.BigButtonText}>עדכן את הדיווח</Text>
+            <Text style={Nofar_styles.BigButtonText}>עדכן את המודעה</Text>
           </Button>
         </View>
       </ScrollView>
     </View>
-        </ImageBackground>
+        // </ImageBackground>
   );
 }

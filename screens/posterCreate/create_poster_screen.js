@@ -8,7 +8,7 @@ import {
     TextInput,
     Text, Provider,
 } from "react-native-paper";
-import {View, ScrollView, TouchableOpacity, Image} from "react-native";
+import {View, ScrollView, TouchableOpacity, Image, ImageBackground} from "react-native";
 import {Nofar_styles} from "../utils/Nofar_style";
 import {stylesPoster} from "./stylePosterCreate";
 import * as ImagePicker from "expo-image-picker";
@@ -196,6 +196,9 @@ export default function PosterPostingComponent({route, navigation}) {
     }
 
     return (
+        <ImageBackground
+            style={{flex: 1}}
+            source={require('../../assets/new_background.png')}>
         <Provider>
             {/*Modal (pop up screen) for selecting the tags describing the dog*/}
             <Portal>
@@ -275,7 +278,7 @@ export default function PosterPostingComponent({route, navigation}) {
                                 activeUnderlineColor="#000000"
                                 activeOutlineColor="#000000"
                                 multiline={true}
-                                style={{backgroundColor: "#D3D3D3"}}
+                                style={{backgroundColor: "#F9F8F0"}}
                             />
                         </View>
 
@@ -292,7 +295,7 @@ export default function PosterPostingComponent({route, navigation}) {
                                 activeUnderlineColor="#000000"
                                 activeOutlineColor="#000000"
                                 multiline={true}
-                                style={{backgroundColor: "#D3D3D3"}}
+                                style={{backgroundColor: "#F9F8F0"}}
                             />
                         </View>
                         {/* <HelperText type="error" visible={hasErrors("name")}>
@@ -309,6 +312,7 @@ export default function PosterPostingComponent({route, navigation}) {
                 </ScrollView>
             </View>
         </Provider>
+            </ImageBackground>
     )
         ;
 }
