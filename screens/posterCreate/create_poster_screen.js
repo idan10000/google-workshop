@@ -8,7 +8,7 @@ import {
     TextInput,
     Text, Provider,
 } from "react-native-paper";
-import {View, ScrollView, TouchableOpacity, Image, ImageBackground} from "react-native";
+import {View, ScrollView, StyleSheet, TouchableOpacity, Image, ImageBackground} from "react-native";
 import {Nofar_styles} from "../utils/Nofar_style";
 import {stylesPoster} from "./stylePosterCreate";
 import * as ImagePicker from "expo-image-picker";
@@ -19,6 +19,7 @@ import {collection, doc, updateDoc, getFirestore, addDoc, arrayUnion, setDoc} fr
 import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
 import {fireStorage, fireStoreDB, uploadImageAsync} from "../../shared_components/firebase";
 import {ref,uploadBytes} from "firebase/storage";
+import Icon from 'react-native-vector-icons/Entypo';
 
 
 export default function PosterPostingComponent({route, navigation}) {
@@ -239,6 +240,11 @@ export default function PosterPostingComponent({route, navigation}) {
             <View style={Nofar_styles.container}>
                 <ScrollView>
                     {imagePicker}
+                    <View style = {styles.lastSeen}>
+                        <Text style={{color:"#5C4C3D", fontSize:16}} lineHeight="20" fontWeight= "500" textAlign= "center">נצפה לאחרונה ב: </Text>
+                        <Icon name="location-pin" size={24} color ="#5C4C3D"  />
+                        <TouchableOpacity><Text  style={{color:"#5C4C3D", fontSize:16}} lineHeight="20" fontWeight= "500" textAlign= "center">החלוצים 43, תל אביב</Text></TouchableOpacity>
+                    </View>
 
                     <View style={stylesPoster.addTagsBTContainer}>
                         <Button
@@ -316,3 +322,12 @@ export default function PosterPostingComponent({route, navigation}) {
     )
         ;
 }
+
+const styles = StyleSheet.create({
+    lastSeen: {
+        flexDirection:"row",
+        alignItems:"center",
+        // marginHorizontal: "5%",
+        justifyContent:"center",
+        margin:"3%"
+      }})

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Modal, Portal, Button, Provider, Chip, Headline, TextInput} from 'react-native-paper';
-import {View, StyleSheet, Image, Text, ImageBackground, ImageBackgroundComponent} from 'react-native'
+import {TouchableOpacity, View, StyleSheet, Image, Text, ImageBackground, ImageBackgroundComponent} from 'react-native'
 import Report, {reportConverter} from '../../data_classes/report'
 import {stylesPoster} from "../posterCreate/stylePosterCreate";
 import {Nofar_styles} from "../utils/Nofar_style";
@@ -9,6 +9,7 @@ import {useContext} from "react";
 import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
 import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
 import {fireStoreDB, uploadImageAsync} from "../../shared_components/firebase";
+import Icon from 'react-native-vector-icons/Entypo';
 
 
 // Expected input from previous screen is:
@@ -207,6 +208,11 @@ const ReportCreationScreen = ({route, navigation}) => {
                         style={styles.card}/>
                 </View>
 
+                <View style = {styles.lastSeen}>
+                    <Icon name="location-pin" size={24} color ="#5C4C3D"  />
+                    <TouchableOpacity><Text  style={{color:"#5C4C3D", fontSize:16}} lineHeight="20" fontWeight= "500" textAlign= "center">החלוצים 43, תל אביב</Text></TouchableOpacity>
+                </View>
+
                 <View style={stylesPoster.addTagsBTContainer}>
                     <Button
                         comapct={false}
@@ -247,6 +253,13 @@ const ReportCreationScreen = ({route, navigation}) => {
 };
 
 const styles = StyleSheet.create({
+    lastSeen: {
+        flexDirection:"row",
+        alignItems:"center",
+        // marginHorizontal: "5%",
+        justifyContent:"center",
+        margin:"3%"
+      },
     container: {
         padding: 4,
         flex: 1,
