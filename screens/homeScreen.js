@@ -47,7 +47,7 @@ export default function HomeScreen({navigation}) {
                     {/*labelStyle={styles.BigButtonText}>*/}
                     <View         justifyContent= "center" alignItems= "center"  marginRight="8%">
                     <Icon name="camera" size={24} color ="#FFFFFF"  /></View>
-                    <Text style={styles.BigButtonText}>מצאתי כלב!</Text>
+                    <Text style={styles.BigButtonText}>פתח מצלמה</Text>
                 </TouchableOpacity>
             </View>
                 <View style={styles.SmallButtonView}>

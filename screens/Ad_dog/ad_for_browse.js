@@ -27,11 +27,11 @@ export default function AdForBrowse({route}) {
         <View style={AR_styles.confirmBTContainer}>
           <Button
             mode={"contained"}
-            style={Nofar_styles.SmallButton}
+            style={Nofar_styles.BigButton}
             onPress={makeCall}
             activeOpacity={0.7}
           >
-            <Text style={Nofar_styles.SmallButtonTitle}>צור קשר עם הבעלים</Text>
+            <Text style={Nofar_styles.BigButtonText}>צור קשר עם הבעלים</Text>
           </Button>
         </View>
       </ScrollView>

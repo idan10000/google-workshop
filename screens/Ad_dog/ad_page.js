@@ -21,14 +21,11 @@ export default function NewAdPage({navigation, route}) {
 
 
     return (
-        <ImageBackground
-            style={{flex: 1}}
-            source={require('../../assets/new_background.png')}>
         <View style={Nofar_styles.container}>
+
             <ScrollView style={AR_styles.content}>
                 <NewAdTemplate data={route.params.data}/>
             </ScrollView>
-        </View>
-             </ImageBackground>
+            </View>
     );
 }

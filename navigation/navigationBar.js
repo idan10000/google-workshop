@@ -61,6 +61,6 @@ const styles = StyleSheet.create({
   },
   bar: {
     // backgroundColor: '#9E846C'
-    backgroundColor: "#D4B282",
+    backgroundColor: "#DCA277",
   },
 });

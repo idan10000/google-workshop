@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Text, View, Image,TouchableOpacity } from "react-native";
+import { Text, View, Image,TouchableOpacity, ImageBackground } from "react-native";
 import {Avatar, Chip} from "react-native-paper";
 import { Nofar_styles } from "../utils/Nofar_style";
 import { AR_styles } from "./Ad_style";
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Entypo';
 import {Touchable} from "react-native-web";
 
 export default function NewAdTemplate({data}) {
@@ -16,7 +16,8 @@ export default function NewAdTemplate({data}) {
         date: "04/04/2022",
     };
     return (
-        <View style={Nofar_styles.container}>
+
+        <View>
             <View>
                 <Text style={{...Nofar_styles.BigTitle, paddingBottom:"3%"}}>{data.dogName}</Text>
                 <View style={{ alignSelf: "center" }}>
@@ -25,16 +26,16 @@ export default function NewAdTemplate({data}) {
                       source={{uri:data.image}}></Image>
                 </View>
             </View>
-            <View  flexDirection="column" justifyContent= "flex-start"                              
+            <View  flexDirection="column" justifyContent= "flex-start"
             marginVertical="4%"
             >
             <View style = {AR_styles.lastSeen}>
 
-            <Text fontSize="16" lineHeight="20" fontWeight= "500" textAlign= "center">נצפה לאחרונה ב:  </Text>
+            <Text fontSize="16" lineHeight="20" fontWeight= "500" textAlign= "center">נצפה לאחרונה ב: </Text>
             <Icon name="location-pin" size={16} color ="#000"  />
             <TouchableOpacity><Text fontSize="16" lineHeight="20" fontWeight= "500" textAlign= "center">{data.location}</Text></TouchableOpacity>
             </View>
-            <Text fontSize="16" lineHeight="20" fontWeight= "500" textAlign= "center">{data.date}בתאריך:</Text>
+            <Text fontSize="16" lineHeight="20" fontWeight= "500" textAlign= "center">בתאריך: {data.date}</Text>
         </View>
             <View style={{ ...Nofar_styles.Viewchips, marginTop: "3%" }}>
                 {data.tagList.map((item, index) => (
@@ -47,9 +48,9 @@ export default function NewAdTemplate({data}) {
                     </Chip>
                 ))}
             </View>
-        <View marginRight="10%">
-            <Text fontSize="16" lineHeight="20" fontWeight= "500" >בעל הכלב</Text>
-        </View>
+        {/*<View justifyContent= "center" alignItems ="center" marginBottom="5%">*/}
+        {/*    <Text fontSize="16" lineHeight="20" fontWeight= "500" >בעל הכלב</Text>*/}
+        {/*</View>*/}
 
             <View style = {AR_styles.lastSeen}>
 
@@ -62,7 +63,7 @@ export default function NewAdTemplate({data}) {
                 </TouchableOpacity>
 
                 <View style={AR_styles.verticalLine}></View>
-                <Icon name="price" size={16} color ="#000"  m/>
+                <Icon name="price-tag" size={16} color ="#000"  />
                 <View marginLeft="4%">
                 <Text fontSize="16" lineHeight="20" fontWeight= "500" textAlign= "center">600 ש"ח</Text>
                 </View>
@@ -75,5 +76,6 @@ export default function NewAdTemplate({data}) {
             </View>
 
         </View>
+
     );
 }
