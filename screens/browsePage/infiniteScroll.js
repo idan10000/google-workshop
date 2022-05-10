@@ -43,14 +43,14 @@ export const getDocuments = async ({lastDocId, lim = 10, path}) => {
              *  Read more about Firestore paginated query here
              *  https://firebase.google.com/docs/firestore/query-data/query-cursors#paginate_a_query
              */
-            batch = query(reportsRef, orderBy("date"), startAfter(lastDoc), limit(lim));
+            batch = query(reportsRef, orderBy("date", "desc"), startAfter(lastDoc), limit(lim));
 
         } else {
 
             /**
              *  The {lastDocId} not provided. Start on first document in collection
              */
-            batch = query(reportsRef, orderBy("date"), limit(lim));
+            batch = query(reportsRef, orderBy("date", "desc"), limit(lim));
         }
 
         status = "pending";
@@ -126,7 +126,7 @@ export const getNextData = async (data, setData, path) => {
         error,
         lastDocId,
         status: nextBatchStatus,
-    } = await getDocuments({lim: 4, lastDocId: data.lastDocId, path: path});
+    } = await getDocuments({lim: 6, lastDocId: data.lastDocId, path: path});
     console.log("after getting docs")
 
     if (error) {
