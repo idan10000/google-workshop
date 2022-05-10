@@ -2,7 +2,7 @@ import * as React from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import * as Location from "expo-location";
 import MapView, { Callout, Circle, Marker } from "react-native-maps";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 // ------------ TO DO LIST: --------------
 // 1) Add two red pins of reports + BottomSheets
@@ -20,23 +20,23 @@ export default function Map() {
         setErrorMsg("Permission to access location was denied");
         return;
       }
-      console.log(status)
+      console.log(status);
 
-      console.log("before location")
+      console.log("before location");
       let location = await Location.getCurrentPositionAsync({});
-      console.log("after location")
+      console.log("after location");
       setLocation(location);
-      console.log(location)
+      console.log(location);
     })();
   }, []);
 
   let text = "Waiting..";
   if (errorMsg) {
     text = errorMsg;
-    console.log(text)
+    console.log(text);
   } else if (location) {
     text = JSON.stringify(location);
-    console.log(text)
+    console.log(text);
   }
 
   //user location
@@ -78,7 +78,7 @@ export default function Map() {
         <Circle
           center={pin}
           radius={3000}
-          strokeWidth={5}
+          strokeWidth={8}
           strokeColor={"red"}
         />
       </MapView>
