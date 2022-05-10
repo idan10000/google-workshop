@@ -7,9 +7,9 @@ const Tab = createMaterialTopTabNavigator();
 export default function BrowseTabs() {
     return (
         <Tab.Navigator screenOptions={{
-            tabBarIndicatorStyle: {backgroundColor: "#1B1209"},
+            tabBarIndicatorStyle: {backgroundColor: "#5C4C3D"},
             tabBarStyle: {backgroundColor: "#F4F2E3"},
-            tabBarLabelStyle: {color: "#1B1209", fontSize: 16, fontWeight: "bold"}
+            tabBarLabelStyle: {color: "#5C4C3D", fontSize: 16, fontWeight: "bold"}
         }}>
             <Tab.Screen name="נמצאו" component={BrowsePage} initialParams={{collectionPath:"Reports", destination:"Report"}}/>
 

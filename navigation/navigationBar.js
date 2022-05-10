@@ -16,7 +16,7 @@ export default function NavigationBar() {
       screenOptions={{ headerShown: false }}
       barStyle={styles.bar}
       activeColor={"white"}
-      inactiveColor={"#1B1209"}
+      inactiveColor={"#5C4C3D"}
     >
       <Tab.Screen
         name="פרופיל"
@@ -47,7 +47,7 @@ const getIcon = (iconName) => {
     return (
       <IconButton
         icon={iconName}
-        color={tabBarInfo.focused ? "white" : "#1B1209"}
+        color={tabBarInfo.focused ? "white" : "#5C4C3D"}
         size={30}
         style={styles.icon}
       />

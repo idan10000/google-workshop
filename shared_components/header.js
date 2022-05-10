@@ -7,9 +7,9 @@ export default function Header({ navigation, back }) {
   return (
     <Appbar.Header style={styles.header}>
 
-      {back ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
+      {back ? <Appbar.BackAction onPress={navigation.goBack} color ='#5C4C3D'/> : null }
       <Appbar.Content title="FinDog" style={styles.content} titleStyle={styles.title}/>
-      {back ? null : <Appbar.Action style={styles.action} icon="bell" color='#1B1209' onPress={() => {navigation.navigate('התראות')}} />}
+      {back ? null : <Appbar.Action style={styles.action} icon="bell" color='#5C4C3D' onPress={() => {navigation.navigate('התראות')}} />}
 
     </Appbar.Header>
   );
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     },
     title :{
       alignSelf: 'center',
-      color: "#1B1209"
+      color: "#5C4C3D"
     },
     action: {
       marginLeft: 0,
