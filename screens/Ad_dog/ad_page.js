@@ -37,8 +37,8 @@ export default function NewAdPage({navigation, route}) {
                             <View style = {styles.textOnComponent}>
                                 <View style = {styles.centerVertical}>
                                     <Text style={styles.dogsName}>{route.params.data.dogName}</Text></View>
-                                <View style = {styles.centerVertical}>
-                                    <Text style={styles.dotName}>·</Text></View>
+                                {/*<View style = {styles.centerVertical}>*/}
+                                {/*    <Text style={styles.dotName}>·</Text></View>*/}
                                 <View style = {styles.centerVerticalDot}>
                                     <Text style={styles.dogsName}>{route.params.data.date}</Text></View>
                             </View>
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
         alignSelf:"center",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor :"#CBAA8F",
+        backgroundColor :"#DCA277",
         flexDirection: "row",
         marginBottom:"3%"
     },
