@@ -9,6 +9,7 @@ import { AR_styles } from "./Report_style";
 
 import ReportTemplate from "./report_template";
 import {Button} from "react-native-paper";
+import NewAdPage from "../Ad_dog/ad_page";
 export default function ReportForBrowse({route}) {
   const makeCall = () => {
     console.log("Its calling");
@@ -22,7 +23,7 @@ export default function ReportForBrowse({route}) {
           source={require('../../assets/new_background.png')}>
     <View style={Nofar_styles.container}>
       <ScrollView style={AR_styles.content}>
-        <ReportTemplate data={route.params.data}/>
+        <NewAdPage route={route}/>
 
         <View style={AR_styles.confirmBTContainer}>
           <Button

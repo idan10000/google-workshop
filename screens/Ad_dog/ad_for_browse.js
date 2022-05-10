@@ -8,6 +8,7 @@ import { Nofar_styles } from "../utils/Nofar_style";
 import { AR_styles } from "./Ad_style";
 import AdTemplate from "./ad_template";
 import {Button} from "react-native-paper";
+import NewAdPage from "./ad_page";
 
 export default function AdForBrowse({route}) {
   const makeCall = () => {
@@ -22,7 +23,7 @@ export default function AdForBrowse({route}) {
           source={require('../../assets/new_background.png')}>
     <View style={Nofar_styles.container}>
       <ScrollView style={AR_styles.content}>
-        <AdTemplate data={route.params.data}/>
+        <NewAdPage route={route}/>
 
         <View style={AR_styles.confirmBTContainer}>
           <Button
