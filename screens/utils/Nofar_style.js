@@ -66,7 +66,7 @@ export const Nofar_styles = StyleSheet.create({
     alignSelf:"center",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor :"#CBAA8F",
+    backgroundColor :"#DCA277",
     marginBottom:"4%",
     borderColor:"#000",
     flexDirection: "row",

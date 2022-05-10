@@ -40,7 +40,7 @@ export default function NewAdPage({navigation, route}) {
                                 <View style = {styles.centerVertical}>
                                     <Text style={styles.dotName}>·</Text></View>
                                 <View style = {styles.centerVerticalDot}>
-                                    <Text style={styles.dogsName}>{route.params.data.dogName}</Text></View>
+                                    <Text style={styles.dogsName}>{route.params.data.dogBreed}</Text></View>
                             </View>
                         </View>
 
@@ -56,6 +56,16 @@ export default function NewAdPage({navigation, route}) {
                         <Text style = {styles.whenText}>בתאריך: {route.params.data.date}</Text>
 
                     </View >
+                    <View style = {AR_styles.ownerData}>
+
+                        <Text style = {styles.whenText}> דוד דוד</Text>
+                        <View style={AR_styles.verticalLine}></View>
+                        <TouchableOpacity
+                            style={AR_styles.contact}>
+                            <Text style={AR_styles.contactTitle}>צור קשר</Text>
+
+                        </TouchableOpacity>
+                    </View>
                     <View style={{ ...Nofar_styles.Viewchips }}>
                         <View style={styles.containerChips}>
                             {route.params.data.tagList.map((item, index) => (
@@ -83,20 +93,11 @@ export default function NewAdPage({navigation, route}) {
                             <Text>{route.params.data.description}</Text>
                         </View>
                     </View>
-                    <View style={styles.dogOwner}>
-                        <Text style={styles.descriptionText} >בעל הכלב:</Text>
-                    </View>
+                    {/*<View style={styles.dogOwner}>*/}
+                    {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
+                    {/*</View>*/}
 
-                    <View style = {AR_styles.ownerData}>
 
-                        <Text style = {styles.whenText}> דוד דוד</Text>
-                        <View style={AR_styles.verticalLine}></View>
-                        <TouchableOpacity
-                            style={AR_styles.contact}>
-                            <Text style={AR_styles.contactTitle}>צור קשר</Text>
-
-                        </TouchableOpacity>
-                    </View>
 
                 </View>
             </ScrollView>
