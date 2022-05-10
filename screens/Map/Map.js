@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import * as Location from "expo-location";
+// import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import MapView, { Callout, Circle, Marker } from "react-native-maps";
 
 // ------------ TO DO LIST: --------------
@@ -15,16 +16,16 @@ export default function Map() {
     longitude: -122.4324,
   });
   // search location
-  const [region, setRegion] = React.useState({
-    latitude: 37.78825,
-    longitude: -122.4324,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  });
+  // const [region, setRegion] = React.useState({
+  //   latitude: 37.78825,
+  //   longitude: -122.4324,
+  //   latitudeDelta: 0.0922,
+  //   longitudeDelta: 0.0421,
+  // });
 
   return (
     <View style={{ marginTop: 50, flex: 1 }}>
-      <GooglePlacesAutocomplete
+      {/* <GooglePlacesAutocomplete
         placeholder="Search"
         fetchDetails={true}
         GooglePlacesSearchQuery={{
@@ -57,7 +58,7 @@ export default function Map() {
           },
           listView: { backgroundColor: "white" },
         }}
-      />
+      /> */}
       <MapView
         style={styles.map}
         initialRegion={{
@@ -68,15 +69,15 @@ export default function Map() {
         }}
         provider="google"
       >
-        <Marker
+        {/* <Marker
           coordinate={{
             latitude: region.latitude,
             longitude: region.longitude,
           }}
-        />
+        /> */}
         <Marker
           coordinate={pin}
-          pinColor="black"
+          pinColor="red"
           draggable={true}
           onDragStart={(e) => {
             console.log("Drag start", e.nativeEvent.coordinates);
@@ -92,7 +93,12 @@ export default function Map() {
             <Text>I'm here</Text>
           </Callout>
         </Marker>
-        <Circle center={pin} radius={1000} />
+        <Circle
+          center={pin}
+          radius={3000}
+          strokeWidth={5}
+          strokeColor={"red"}
+        />
       </MapView>
     </View>
   );
