@@ -98,7 +98,7 @@ export const AR_styles = StyleSheet.create({
     shadowRadius: 7.49,
     elevation: 12,
     marginVertical: 5,
-    backgroundColor: "#F5F5DC",
+    backgroundColor: "#F9F8F0",
     marginHorizontal: 5,
 }
 
