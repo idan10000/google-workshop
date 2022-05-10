@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.17.9",
+    "@eliav2/react-native-collapsible-view": "^1.4.0",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.5.1",
@@ -63,7 +64,8 @@
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "uuid": "^8.3.2",
     "yup": "^0.32.11",
-    "react-native-reanimated": "~2.3.1"
+    "react-native-reanimated": "~2.3.1",
+    "expo-location": "~14.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
