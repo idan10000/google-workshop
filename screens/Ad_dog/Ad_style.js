@@ -55,6 +55,15 @@ export const AR_styles = StyleSheet.create({
     alignItems:"center",
     // marginHorizontal: "5%",
     justifyContent:"center",
+
+  },
+  ownerData: {
+    marginBottom:"10%",
+    flexDirection:"row",
+    alignItems:"center",
+    // marginHorizontal: "5%",
+    justifyContent:"center",
+    height:"6%",
   },
   verticalLine:{
     height: 16,
@@ -88,7 +97,7 @@ export const AR_styles = StyleSheet.create({
   },
   myCard: {
       borderRadius: 15,
-      marginTop:"4%",
+      marginTop:"2%",
       shadowColor: "#00000021",
       shadowOffset: {
         width: 20,

@@ -57,18 +57,31 @@ export const Nofar_styles = StyleSheet.create({
 
   //   chips:
   Viewchips: {
+    shadowColor: "#000",
+
+    shadowOpacity: 0.01,
+    shadowRadius: 100,
+    elevation: 8,
+    width: Dimensions.get("window").width / 1.2,
+    alignSelf:"center",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor :"#CBAA8F",
+    marginBottom:"4%",
+    borderColor:"#000",
     flexDirection: "row",
     overflow: "hidden",
     flexWrap: "wrap",
+
+    borderRadius:20,
+
   },
   chips: {
     marginRight: "1.5%",
     paddingRight: 3,
     paddingLeft: 3,
     height: 35,
-
     justifyContent: "center",
-    alignItems: "center",
     borderRadius: 25,
     backgroundColor: "#EADDCA",
   },
@@ -84,6 +97,7 @@ export const Nofar_styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     resizeMode: "cover",
+    borderRadius:2,
   },
 
   //   the white card I have
