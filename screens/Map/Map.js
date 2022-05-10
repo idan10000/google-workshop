@@ -4,10 +4,10 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import MapView, { Callout, Circle, Marker } from "react-native-maps";
 
 // ------------ TO DO LIST: --------------
-// 1) Add two red pins of reports.
-// 2) Clicking on a red pin will open a small tab with details about the report, and push the entire map up.
-// 3) Navigation from the navigationBar
-// 4) Navigation from the create poster\ report
+// 1) Add two red pins of reports + BottomSheets
+// 2) Navigation from the navigationBar
+// 3) Navigation from the create poster\ report
+
 export default function Map() {
   //user location
   const [pin, setPin] = React.useState({
@@ -110,3 +110,38 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height,
   },
 });
+
+// export default function App() {
+//   const renderContent = () => (
+//     <View
+//       style={{
+//         backgroundColor: "lightgrey",
+//         padding: 20,
+//         height: 450,
+//       }}
+//     >
+//       <Text>Swipe down to close</Text>
+//     </View>
+//   );
+
+//   const sheetRef = React.useRef(null);
+
+//   return (
+//     <>
+//       <View>
+//         <Button
+//           title="Open Bottom Sheet"
+//           onPress={() => sheetRef.current.snapTo(0)}
+//         />
+//       </View>
+//       <BottomSheet
+//         ref={sheetRef}
+//         snapPoints={["25%", "10%", "0%"]}
+//         borderRadius={30}
+//         initialSnap={2}
+//         enabledGestureInteraction={true}
+//         renderContent={renderContent}
+//       />
+//     </>
+//   );
+// }
