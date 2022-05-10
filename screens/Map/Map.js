@@ -10,7 +10,6 @@ import {
 import * as Location from "expo-location";
 import MapView, { Callout, Circle, Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
-import Animated from "react-native-reanimated";
 import BottomSheet from "reanimated-bottom-sheet";
 
 // ------------ TO DO LIST: --------------
