@@ -104,7 +104,6 @@ export const AR_styles = StyleSheet.create({
         width: 20,
         height: 10,
   },
-    width: Dimensions.get("window").width / 1.2,
 
     shadowOpacity: 0.5,
     shadowRadius: 7.49,
