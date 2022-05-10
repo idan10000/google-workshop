@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity,ImageBackground } from "react-native";
+import { View, Text, TouchableOpacity, ImageBackground } from "react-native";
 import { edit_styles } from "./Edit_style";
-import { HelperText, TextInput } from "react-native-paper";
+import { HelperText, TextInput, Button } from "react-native-paper";
 import { Nofar_styles } from "../utils/Nofar_style";
 
 // import ImagePicker from "react-native-image-crop-picker";
@@ -33,8 +33,8 @@ export default function EditProfileScreen({ navigation }) {
     }
   };
   return (
-      // <ImageBackground flex= "1"
-      //                  source={require('../assets/new_background.png')}>
+    // <ImageBackground flex= "1"
+    //                  source={require('../assets/new_background.png')}>
     <View style={Nofar_styles.container}>
       <View style={Nofar_styles.actionInput}>
         <TextInput
@@ -120,6 +120,6 @@ export default function EditProfileScreen({ navigation }) {
 
       <Button title="back to profile screen" onPress={pressHandler} />
     </View>
-          // </ImageBackground>
+    // </ImageBackground>
   );
 }
