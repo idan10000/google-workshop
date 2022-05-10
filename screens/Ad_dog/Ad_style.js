@@ -113,6 +113,8 @@ export const AR_styles = StyleSheet.create({
     backgroundColor: "#F9F8F0",
     marginHorizontal: 5,
     marginBottom:"5%",
+    justifyContent: "center",
+    alignItems: "center",
 
   }
 
