@@ -49,6 +49,7 @@ export const AR_styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderBottomLeftRadius: 1,
     borderBottomRightRadius: 1,
+    marginBottom:"4%",
   },
   lastSeen: {
     flexDirection:"row",
@@ -103,6 +104,8 @@ export const AR_styles = StyleSheet.create({
         width: 20,
         height: 10,
   },
+    width: Dimensions.get("window").width / 1.2,
+
     shadowOpacity: 0.5,
     shadowRadius: 7.49,
     elevation: 12,
