@@ -99,7 +99,7 @@ export const getInitialData = async (setData, path) => {
         error,
         lastDocId,
         status: initialBatchStatus,
-    } = await getDocuments({lim: 4, path: path});
+    } = await getDocuments({lim: 10, path: path});
     if (error) {
         console.log("error retrieving initial data: " + error)
         return setData({initialBatchStatus, error});
@@ -126,7 +126,7 @@ export const getNextData = async (data, setData, path) => {
         error,
         lastDocId,
         status: nextBatchStatus,
-    } = await getDocuments({lim: 3, lastDocId: data.lastDocId, path: path});
+    } = await getDocuments({lim: 4, lastDocId: data.lastDocId, path: path});
     console.log("after getting docs")
 
     if (error) {
