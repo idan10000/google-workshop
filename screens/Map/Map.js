@@ -8,7 +8,7 @@ import {useEffect, useState} from "react";
 // ------------ TO DO LIST: --------------
 // 1) Add two red pins of reports + BottomSheets
 // 2) Navigation from the navigationBar
-// 3) Navigation from the create poster\ report
+// 3) Navigation from the create poster\ Report
 
 export default function Map() {
     const renderContent = () => (

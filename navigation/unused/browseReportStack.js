@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import ReportForBrowser from '../screens/Report_dog/report_for_browse';
-import BrowsePage from "../screens/browsePage/browsePage";
+import ReportForBrowser from '../screens/Report/report_for_browse';
+import BrowsePage from "../screens/BrowsePage/BrowsePage";
 
 const Stack = createStackNavigator();
 

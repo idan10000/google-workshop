@@ -3,9 +3,9 @@ import {Image, Text, TouchableOpacity, View, ImageBackground} from 'react-native
 import {TextInput} from 'react-native-paper';
 import {Formik} from 'formik';
 import * as yup from 'yup';
-import {signUpStyles} from "../styles/signUpStyles";
-import {Nofar_styles} from "./utils/Nofar_style";
-import {fireAuth, fireStoreDB} from "../shared_components/firebase";
+import {signUpStyle} from "../styles/SignUpStyle";
+import {Nofar_styles} from "../styles/NofarStyle";
+import {fireAuth, fireStoreDB} from "../shared_components/Firebase";
 import {createUserWithEmailAndPassword, getAuth,} from 'firebase/auth';
 import {getFirestore, setDoc, doc} from 'firebase/firestore';
 import {getDatabase, ref, set} from "firebase/database";
@@ -146,17 +146,17 @@ export default function SignUp({navigation}) {
             style={{flex: 1}}
             source={require('../assets/new_background.png')}>
             <View style={Nofar_styles.container}>
-                <View style={signUpStyles.logoHeaderContainer}>
+                <View style={signUpStyle.logoHeaderContainer}>
 
                     <TouchableOpacity><Image source={require('../assets/Find_my_dog_logo.png')}
-                                             style={signUpStyles.appLogo}/></TouchableOpacity>
+                                             style={signUpStyle.appLogo}/></TouchableOpacity>
                     <View style={Nofar_styles.BigTitle}>
                         <Text style={Nofar_styles.BigTitle}>Welcome{'\n'}To FinDog</Text>
                     </View>
                 </View>
 
-                <View style={signUpStyles.welcomeText}>
-                    <Text style={signUpStyles.welcomeText}>קודם כל... בוא נכיר אותך...</Text>
+                <View style={signUpStyle.welcomeText}>
+                    <Text style={signUpStyle.welcomeText}>קודם כל... בוא נכיר אותך...</Text>
                 </View>
 
 
@@ -193,7 +193,7 @@ export default function SignUp({navigation}) {
                                     activeOutlineColor="#000000"
                                     left={<TextInput.Icon name="face"/>}
                                 />
-                                <Text style={signUpStyles.errorText}>{props.touched.Name && props.errors.Name}</Text>
+                                <Text style={signUpStyle.errorText}>{props.touched.Name && props.errors.Name}</Text>
                             </View>
 
 
@@ -216,7 +216,7 @@ export default function SignUp({navigation}) {
                                     activeOutlineColor="#000000"
                                     left={<TextInput.Icon name="email"/>}
                                 />
-                                <Text style={signUpStyles.errorText}>{props.touched.Email && props.errors.Email}</Text>
+                                <Text style={signUpStyle.errorText}>{props.touched.Email && props.errors.Email}</Text>
                             </View>
 
 
@@ -238,7 +238,7 @@ export default function SignUp({navigation}) {
 
                                 />
                                 <Text
-                                    style={signUpStyles.errorText}>{props.touched.Password && props.errors.Password}</Text>
+                                    style={signUpStyle.errorText}>{props.touched.Password && props.errors.Password}</Text>
                             </View>
 
 
@@ -259,10 +259,10 @@ export default function SignUp({navigation}) {
                                     left={<TextInput.Icon name="phone"/>}
                                 />
                                 <Text
-                                    style={signUpStyles.errorText}>{props.touched.PhoneNumber && props.errors.PhoneNumber}</Text>
+                                    style={signUpStyle.errorText}>{props.touched.PhoneNumber && props.errors.PhoneNumber}</Text>
                             </View>
 
-                            <View style={signUpStyles.submitButton}>
+                            <View style={signUpStyle.submitButton}>
                                 {/*<TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>*/}
                                 {/*    <Text style={Nofar_styles.BigButtonText}>עדכן פרטים</Text>*/}
                                 {/*</TouchableOpacity>*/}

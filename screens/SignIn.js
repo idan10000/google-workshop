@@ -13,13 +13,13 @@ import {
 } from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {Formik} from 'formik';
-import {AfterSignedStyle} from '../styles/after_signed_style';
+import {AfterSignedStyle} from '../styles/AfterSignedStyle';
 import * as yup from 'yup';
-import {fireAuth} from "../shared_components/firebase";
+import {fireAuth} from "../shared_components/Firebase";
 import {signInWithEmailAndPassword} from "firebase/auth";
 import {user} from "./SignUp";
-import {Nofar_styles} from "./utils/Nofar_style";
-import {signUpStyles} from "../styles/signUpStyles";
+import {Nofar_styles} from "../styles/NofarStyle";
+import {signUpStyle} from "../styles/SignUpStyle";
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
@@ -140,7 +140,7 @@ export default function SignIn({navigation}) {
                                 activeOutlineColor="#000000"
                                 left={<TextInput.Icon name="email"/>}
                             />
-                            <Text style={signUpStyles.errorText}>{props.touched.Email && props.errors.Email}</Text>
+                            <Text style={signUpStyle.errorText}>{props.touched.Email && props.errors.Email}</Text>
                         </View>
 
 
@@ -162,10 +162,10 @@ export default function SignIn({navigation}) {
 
                             />
                             <Text
-                                style={signUpStyles.errorText}>{props.touched.Password && props.errors.Password}</Text>
+                                style={signUpStyle.errorText}>{props.touched.Password && props.errors.Password}</Text>
                         </View>
 
-                        <View style={signUpStyles.submitButton}>
+                        <View style={signUpStyle.submitButton}>
                             {/*<TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>*/}
                             {/*    <Text style={Nofar_styles.BigButtonText}>עדכן פרטים</Text>*/}
                             {/*</TouchableOpacity>*/}

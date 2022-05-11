@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import AdForBrowse from "../screens/Ad_dog/ad_for_browse";
-import BrowsePage from "../screens/browsePage/browsePage";
+import AdForBrowse from "../screens/Poster/ad_for_browse";
+import BrowsePage from "../screens/BrowsePage/BrowsePage";
 
 const Stack = createStackNavigator();
 
