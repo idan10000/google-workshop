@@ -31,10 +31,11 @@ export const Nofar_styles = StyleSheet.create({
   },
 
   BigButton: {
-    width: 330,
-    height: 60,
+    width: Dimensions.get('window').width * 0.85,
+    height: Dimensions.get('window').height * 0.08,
     // marginTop: 5,
     // marginBottom: 0,
+    marginBottom:"2%",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -47,10 +48,11 @@ export const Nofar_styles = StyleSheet.create({
     },
     shadowOpacity: 0.9,
     shadowRadius: 7.49,
+
   },
   BigButtonText: {
     color: "#FFFFFF",
-    fontSize: 25,
+    fontSize: 22,
     textAlign: "center",
     fontWeight: "700",
   },

@@ -24,35 +24,33 @@ export default function ProfilePage({ navigation }) {
   return (
     <SafeAreaView style={Nofar_styles.container}>
       <View style={user_styles.ProfileCard}>
-        <View style={{ flexDirection: "row", marginTop: 15, marginLeft: 20 }}>
+        <View style={{ flexDirection: "row", marginTop: "5%", marginLeft: "10%" }}>
           {/* <Avatar
             style={{ width: "100px", height: "100px" }}
             avatarStyle="Circle"
             {...generateRandomAvatarOptions()}
           /> */}
-          <View style={{ marginTop: 30, marginRight: 10 }}>
             <Title style={Nofar_styles.BigTitle}>{userDetalies.name}</Title>
-          </View>
         </View>
 
-        <View style={{ marginTop: 5, marginLeft: 40, marginBottom: 10 }}>
-          <View style={{ flexDirection: "row", marginTop: 15 }}>
-            <Icon name="map-marker-radius" color="#777777" size={20} />
-            <Text style={{ color: "#777777", marginLeft: 20 }}>
+        <View style={{ marginTop: 5, marginLeft: "15%", marginBottom: "5%" }}>
+          <View style={{ flexDirection: "row", marginTop: "5%" }}>
+            <Icon name="map-marker-radius" color="#777777" size={30} />
+            <Text style={{ color: "#777777", marginLeft: "3%", fontSize:20}}>
               {userDetalies.city}, {userDetalies.country}
             </Text>
           </View>
 
-          <View style={{ flexDirection: "row", marginTop: 15 }}>
-            <Icon name="email" color="#777777" size={20} />
-            <Text style={{ color: "#777777", marginLeft: 20 }}>
+          <View style={{ flexDirection: "row", marginTop: "5%" }}>
+            <Icon name="email" color="#777777" size={30} />
+            <Text style={{ color: "#777777", marginLeft: "3%", fontSize:20}}>
               {userDetalies.email}
             </Text>
           </View>
 
-          <View style={{ flexDirection: "row", marginTop: 15 }}>
-            <Icon name="phone" color="#777777" size={20} />
-            <Text style={{ color: "#777777", marginLeft: 20 }}>
+          <View style={{ flexDirection: "row", marginTop: "5%" }}>
+            <Icon name="phone" color="#777777" size={30} />
+            <Text style={{ color: "#777777", marginLeft: "3%", fontSize:20}}>
               {userDetalies.phone}
             </Text>
           </View>
@@ -60,44 +58,40 @@ export default function ProfilePage({ navigation }) {
       </View>
 
       <View style={user_styles.confirmBTContainer}>
-        <Button
-          mode={"contained"}
-          style={Nofar_styles.BigButton}
+        <TouchableOpacity
+          style={user_styles.profileButton}
           onPress={() => {}}
         >
-          <Text style={Nofar_styles.BigButtonText}>הצגת מודעות ודיווחים</Text>
-        </Button>
+          <Text style={user_styles.BigButtonText}>הצגת מודעות ודיווחים</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={user_styles.confirmBTContainer}>
-        <Button
-          mode={"contained"}
-          style={Nofar_styles.BigButton}
+        <TouchableOpacity
+          style={user_styles.profileButton}
           onPress={pressHandler}
         >
-          <Text style={Nofar_styles.BigButtonText}>עדכון פרטים</Text>
-        </Button>
+          <Text style={user_styles.BigButtonText}>עדכון פרטים</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={user_styles.confirmBTContainer}>
-        <Button
-          mode={"contained"}
-          style={Nofar_styles.BigButton}
+        <TouchableOpacity
+          style={user_styles.profileButton}
           onPress={() => {}}
         >
-          <Text style={Nofar_styles.BigButtonText}>שיתוף אפליקציה</Text>
-        </Button>
+          <Text style={user_styles.BigButtonText}>שיתוף אפליקציה</Text>
+        </TouchableOpacity>
       </View>
 
-      <View style={user_styles.confirmBTContainer}>
-        <Button
-          mode={"contained"}
-          style={Nofar_styles.BigButton}
-          onPress={pressHandler_supp}
-        >
-          <Text style={Nofar_styles.BigButtonText}>תמיכה טכנית</Text>
-        </Button>
-      </View>
+      {/*<View style={user_styles.confirmBTContainer}>*/}
+      {/*  <TouchableOpacity*/}
+      {/*    style={user_styles.profileButton}*/}
+      {/*    onPress={pressHandler_supp}*/}
+      {/*  >*/}
+      {/*    <Text style={user_styles.BigButtonText}>תמיכה טכנית</Text>*/}
+      {/*  </TouchableOpacity>*/}
+      {/*</View>*/}
     </SafeAreaView>
   );
 }

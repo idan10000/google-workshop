@@ -41,7 +41,7 @@ export default function SupportPage({ navigation }) {
           <Text style={Nofar_styles.BigButtonText}>שלח</Text>
         </TouchableOpacity>
       </View>
-      <Button title="back to profile screen" onPress={pressHandler} />
+      <TouchableOpacity title="back to profile screen" onPress={pressHandler} />
     </SafeAreaView>
   );
 }

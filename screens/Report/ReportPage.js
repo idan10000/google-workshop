@@ -25,23 +25,21 @@ export default function ReportPage({ route, navigation }) {
       <ScrollView style={AR_styles.content}>
         <ReportTemplate data={route.params.data} />
         <View style={AR_styles.confirmBTContainer}>
-          <Button
-            mode={"contained"}
+          <TouchableOpacity
             style={Nofar_styles.BigButton}
             onPress={() => {}}
           >
             <Text style={Nofar_styles.BigButtonText}>פתח מיקום במפה</Text>
-          </Button>
+          </TouchableOpacity>
         </View>
 
         <View style={AR_styles.confirmBTContainer}>
-          <Button
-            mode={"contained"}
+          <TouchableOpacity
             style={Nofar_styles.BigButton}
             onPress={editButtonPressHandler}
           >
             <Text style={Nofar_styles.BigButtonText}>עדכן את הדיווח</Text>
-          </Button>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>

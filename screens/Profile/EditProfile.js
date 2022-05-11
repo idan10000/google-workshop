@@ -96,29 +96,29 @@ export default function EditProfile({ navigation }) {
         </Text>
       </HelperText>
 
-      <View style={Nofar_styles.actionInput}>
-        <TextInput
-          placeholder="מדינה"
-          value={state.country}
-          // onChangeText={handleChange("country")}
-          activeUnderlineColor="#000000"
-          activeOutlineColor="#000000"
-          left={<TextInput.Icon name="map" />}
-        />
-      </View>
-      <HelperText type="error" visible={hasErrors("country")}>
-        <Text style={Nofar_styles.error}>
-          {"אותיות בעברית בלבד, ללא תווים מיוחדים"}
-        </Text>
-      </HelperText>
+      {/*<View style={Nofar_styles.actionInput}>*/}
+      {/*  <TextInput*/}
+      {/*    placeholder="מדינה"*/}
+      {/*    value={state.country}*/}
+      {/*    // onChangeText={handleChange("country")}*/}
+      {/*    activeUnderlineColor="#000000"*/}
+      {/*    activeOutlineColor="#000000"*/}
+      {/*    left={<TextInput.Icon name="map" />}*/}
+      {/*  />*/}
+      {/*</View>*/}
+      {/*<HelperText type="error" visible={hasErrors("country")}>*/}
+      {/*  <Text style={Nofar_styles.error}>*/}
+      {/*    {"אותיות בעברית בלבד, ללא תווים מיוחדים"}*/}
+      {/*  </Text>*/}
+      {/*</HelperText>*/}
 
-      <View style={{ marginLeft: 50, marginTop: 20 }}>
+      <View style={{ justifyContent:"center", alignSelf:"center", marginTop:"10%" }}>
         <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
           <Text style={Nofar_styles.BigButtonText}>עדכן פרטים</Text>
         </TouchableOpacity>
       </View>
 
-      <Button title="back to profile screen" onPress={pressHandler} />
+      <TouchableOpacity title="back to profile screen" onPress={pressHandler} />
     </View>
     // </ImageBackground>
   );

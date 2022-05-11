@@ -8,7 +8,15 @@ import {
     TextInput,
     Text, Provider,
 } from "react-native-paper";
-import {View, ScrollView, StyleSheet, TouchableOpacity, Image, ImageBackground} from "react-native";
+import {
+    View,
+    ScrollView,
+    StyleSheet,
+    TouchableOpacity,
+    Image,
+    ImageBackground,
+    TouchableOpacityComponent
+} from "react-native";
 import {Nofar_styles} from "../../styles/NofarStyle";
 import {stylesPoster} from "./CreatePosterStyle";
 import * as ImagePicker from "expo-image-picker";
@@ -229,13 +237,12 @@ export default function PosterPostingComponent({route, navigation}) {
                         ))}
                     </View>
                     <View style={{...stylesPoster.modalButtonContainer, paddingTop: "3%"}}>
-                        <Button
-                            comapct={false}
+                        <TouchableOpacity
                             style={Nofar_styles.TinyButton}
                             onPress={modalConfirmPressHandler}
                         >
                             <Text style={Nofar_styles.TinyButtonTitle}>אישור</Text>
-                        </Button>
+                        </TouchableOpacity>
                     </View>
                 </Modal>
             </Portal>
@@ -250,16 +257,15 @@ export default function PosterPostingComponent({route, navigation}) {
                     </View>
 
                     <View style={stylesPoster.addTagsBTContainer}>
-                        <Button
-                            comapct={false}
+                        <TouchableOpacity
                             style={Nofar_styles.TinyButton}
                             onPress={showTagModal}
                         >
                             <Text style={Nofar_styles.TinyButtonTitle}>הוסף תגיות</Text>
-                        </Button>
-                        <Button mode={"contained"} style={Nofar_styles.TinyButton}>
+                        </TouchableOpacity>
+                        <TouchableOpacity  style={Nofar_styles.TinyButton}>
                             <Text style={Nofar_styles.TinyButtonTitle}>עדכון מיקום</Text>
-                        </Button>
+                        </TouchableOpacity>
                     </View>
 
                     <View style={{...stylesPoster.chips, marginLeft: "2.8%"}}>
@@ -314,9 +320,9 @@ export default function PosterPostingComponent({route, navigation}) {
                     </View>
 
                     <View style={stylesPoster.confirmBTContainer}>
-                        <Button mode={"contained"} style={Nofar_styles.BigButton} onPress={posterConfirmHandler}>
+                        <TouchableOpacity  style={Nofar_styles.BigButton} onPress={posterConfirmHandler}>
                             <Text style={Nofar_styles.BigButtonText}>אישור</Text>
-                        </Button>
+                        </TouchableOpacity>
                     </View>
                 </ScrollView>
             </View>

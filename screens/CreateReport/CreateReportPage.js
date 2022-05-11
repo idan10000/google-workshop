@@ -154,13 +154,12 @@ const ReportCreationScreen = ({route, navigation}) => {
                         ))}
                     </View>
                     <View style={{...stylesPoster.modalButtonContainer, paddingTop: "3%"}}>
-                        <Button
-                            comapct={false}
+                        <TouchableOpacity
                             style={Nofar_styles.TinyButton}
                             onPress={modalConfirmPressHandler}
                         >
                             <Text style={Nofar_styles.TinyButtonTitle}>אישור</Text>
-                        </Button>
+                        </TouchableOpacity>
                     </View>
                 </Modal>
 
@@ -180,21 +179,19 @@ const ReportCreationScreen = ({route, navigation}) => {
                     </View>
                     <View style={{paddingVertical: "5%"}}>
 
-                        <Button
-                            comapct={false}
+                        <TouchableOpacity
                             style={Nofar_styles.TinyButton}
                         >
                             <Text style={Nofar_styles.TinyButtonTitle}>עדכון מיקום</Text>
-                        </Button>
+                        </TouchableOpacity>
                     </View>
                     <View style={{flexDirection: "row", alignSelf: "center"}}>
-                        <Button
-                            comapct={false}
+                        <TouchableOpacity
                             style={Nofar_styles.SmallButton}
                             onPress={hideDescriptionModal}
                         >
                             <Text style={Nofar_styles.SmallButtonTitle}>אישור</Text>
-                        </Button>
+                        </TouchableOpacity>
                     </View>
 
                 </Modal>
@@ -214,19 +211,19 @@ const ReportCreationScreen = ({route, navigation}) => {
                 </View>
 
                 <View style={stylesPoster.addTagsBTContainer}>
-                    <Button
-                        comapct={false}
+                    <TouchableOpacity
+                        // comapct={false}
                         style={Nofar_styles.TinyButton}
                         onPress={showTagModal}
                     >
                         <Text style={Nofar_styles.TinyButtonTitle}>הוסף תגיות</Text>
-                    </Button>
-                    <Button mode={"contained"}
+                    </TouchableOpacity>
+                    <TouchableOpacity
                             style={Nofar_styles.TinyButton}
                             onPress={showDescriptionModal}
                     >
                         <Text style={Nofar_styles.TinyButtonTitle}>עדכון פרטים</Text>
-                    </Button>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={{...stylesPoster.chips, marginLeft: "2.8%"}}>
@@ -242,9 +239,9 @@ const ReportCreationScreen = ({route, navigation}) => {
                 </View>
 
                 <View style={{...stylesPoster.confirmBTContainer, paddingTop: "5%"}}>
-                    <Button mode={"contained"} style={Nofar_styles.BigButton} onPress={reportConfirmHandler}>
+                    <TouchableOpacity  style={Nofar_styles.BigButton} onPress={reportConfirmHandler}>
                         <Text style={Nofar_styles.BigButtonText}>אישור</Text>
-                    </Button>
+                    </TouchableOpacity>
                 </View>
             </View>
         </Provider>
