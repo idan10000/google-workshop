@@ -5,7 +5,7 @@ import { user_styles } from "./ProfileStyle";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Nofar_styles } from "../../styles/NofarStyle";
 
-export default function ProfileScreen({ navigation }) {
+export default function ProfilePage({ navigation }) {
   const userDetalies = {
     name: "אמיר כהן",
     userName: "queenOfEngland18",

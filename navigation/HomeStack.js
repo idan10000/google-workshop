@@ -8,7 +8,7 @@ import AdPage from '../screens/Poster/PosterPage';
 import NotificationsPage from '../screens/NotificationsPage';
 import NavigationBar from './NavigationBar';
 import ReportForBrowser from '../screens/Report/ReportBrowse';
-import AdForBrowse from '../screens/Poster/PosterBrowse';
+import PosterBrowse from '../screens/Poster/PosterBrowse';
 
 const Stack = createStackNavigator();
 
@@ -26,7 +26,7 @@ export default function HomeStack() {
             <Stack.Screen name="התראות" component={NotificationsPage} />
             {/* <Stack.Screen name="ReportForBrowse" component={ReportForBrowse}/> */}
             <Stack.Screen name="Report" component={ReportForBrowser} />
-            <Stack.Screen name="Poster" component={AdForBrowse} />
+            <Stack.Screen name="Poster" component={PosterBrowse} />
 
         </Stack.Navigator>
     );

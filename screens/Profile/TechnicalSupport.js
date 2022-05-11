@@ -4,7 +4,7 @@ import { TextInput, Button } from "react-native-paper";
 import { Nofar_styles } from "../../styles/NofarStyle";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-export default function SupportScreen({ navigation }) {
+export default function SupportPage({ navigation }) {
   const pressHandler = () => {
     navigation.navigate("ProfileScreen");
   };

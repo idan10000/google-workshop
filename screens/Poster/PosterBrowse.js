@@ -9,7 +9,7 @@ import { AR_styles } from "./PosterStyle";
 import {Button} from "react-native-paper";
 import PosterPage from "./PosterPage";
 
-export default function AdForBrowse({route}) {
+export default function PosterBrowse({route}) {
   const makeCall = () => {
     console.log("Its calling");
     let phoneNumber = "tel://+1234567890";

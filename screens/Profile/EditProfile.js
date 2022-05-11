@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, ImageBackground } from "react-native";
-import { edit_styles } from "./EditProfileStyle";
+import { edit_styles } from "../unused/EditProfileStyle";
 import { HelperText, TextInput, Button } from "react-native-paper";
 import { Nofar_styles } from "../../styles/NofarStyle";
 
@@ -9,7 +9,7 @@ import { Nofar_styles } from "../../styles/NofarStyle";
 // import FontAwesome from "react-native-vector-icons/FontAwesome";
 // import Feather from "react-native-vector-icons/Feather";
 
-export default function EditProfileScreen({ navigation }) {
+export default function EditProfile({ navigation }) {
   const [state, setState] = useState({
     fname: "",
     phone: "",
