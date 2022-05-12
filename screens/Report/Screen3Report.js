@@ -71,9 +71,9 @@ export default function Screen3Report() {
                     labels={labels}
                     stepCount={3}
                 /></View>
-            <View marginHorizontal = "7.5%" marginVertical ="5%">
+            <View marginHorizontal = "7.5%" marginTop ="5%" marginBottom ="2.5%">
 
-            <Text style = {styles.textFound}>תיאור הכלב שנמצא</Text></View>
+            <Text style = {styles.textFound}>תיאור הכלב שנמצא:</Text></View>
             <View style={styles.chips}>
                 {modalTags.map((item, index) => (
                     <Chip
