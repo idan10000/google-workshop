@@ -70,6 +70,8 @@ const styles = StyleSheet.create({
       flex:1
     },
     listItem: {
+        borderWidth:0.18,
+        borderColor:"#000",
         backgroundColor:"#F9F8F0",
     }
 });

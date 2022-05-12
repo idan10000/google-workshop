@@ -81,7 +81,7 @@ export const AR_styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 7,
-    elevation: 6,
+    // elevation: 6,
     width:Dimensions.get('window').width * 0.2,
     height: Dimensions.get('window').height * 0.04,
     flexDirection: "row",
@@ -99,15 +99,15 @@ export const AR_styles = StyleSheet.create({
   myCard: {
       borderRadius: 15,
       marginTop:"2%",
-      shadowColor: "#00000021",
-      shadowOffset: {
-        width: 20,
-        height: 10,
-  },
+  //     shadowColor: "#00000021",
+  //     shadowOffset: {
+  //       width: 20,
+  //       height: 10,
+  // },
 
-    shadowOpacity: 0.5,
-    shadowRadius: 7.49,
-    elevation: 12,
+    // shadowOpacity: 0.5,
+    // shadowRadius: 7.49,
+    // elevation: 12,
     marginVertical: 5,
     backgroundColor: "#F9F8F0",
     marginBottom:"5%",

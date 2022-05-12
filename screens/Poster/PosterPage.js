@@ -7,7 +7,7 @@ import {Button, Chip} from "react-native-paper";
 import PosterTemplate from "./PosterTemplate";
 import Icon from "react-native-vector-icons/Entypo";
 
-export default function PosterPage({navigation, route}) {
+export default function PosterPage({navigation, route, typeOfPage}) {
 
     const editButtonPressHandler = () => {
         console.log("opening Report screen");
@@ -18,8 +18,11 @@ export default function PosterPage({navigation, route}) {
             ref: route.params.ref
         });
     };
-
-
+    // let dotText = ""
+    // if(!report){
+    //     dotText = "·";
+    // }
+    if(typeOfPage=="ReportForBrowse"){
     return (
         <View style={Nofar_styles.container}>
 
@@ -32,12 +35,8 @@ export default function PosterPage({navigation, route}) {
                             <Image
                                 style={Nofar_styles.mainImage}
                                 source={{uri:route.params.data.image}}></Image>
-
                             <View style = {styles.textOnComponent}>
-                                <View style = {styles.centerVertical}>
-                                    <Text style={styles.dogsName}>{route.params.data.dogName}</Text></View>
-                                {/*<View style = {styles.centerVertical}>*/}
-                                {/*    <Text style={styles.dotName}>·</Text></View>*/}
+
                                 <View style = {styles.centerVerticalDot}>
                                     <Text style={styles.dogsName2}>{route.params.data.date}</Text></View>
                             </View>
@@ -57,16 +56,6 @@ export default function PosterPage({navigation, route}) {
                                     {/*} <Text style = {styles.whenText}>בתאריך: {route.params.data.date}</Text>*/}
 
                     </View >
-                    <View style = {AR_styles.ownerData}>
-
-                        <Text style = {styles.whenText}> דוד דוד</Text>
-                        <View style={AR_styles.verticalLine}></View>
-                        <TouchableOpacity
-                            style={AR_styles.contact}>
-                            <Text style={AR_styles.contactTitle}>צור קשר</Text>
-
-                        </TouchableOpacity>
-                    </View>
                     <View style={{ ...Nofar_styles.Viewchips }}>
                         <View style={styles.containerChips}>
                             {route.params.data.tagList.map((item, index) => (
@@ -94,6 +83,17 @@ export default function PosterPage({navigation, route}) {
                             <Text>{route.params.data.description}</Text>
                         </View>
                     </View>
+
+                    <View style = {AR_styles.ownerData}>
+
+                        <Text style = {styles.whenText}>המדווח:   דוד דוד</Text>
+                        <View style={AR_styles.verticalLine}></View>
+                        <TouchableOpacity
+                            style={AR_styles.contact}>
+                            <Text style={AR_styles.contactTitle}>צור קשר</Text>
+
+                        </TouchableOpacity>
+                    </View>
                     {/*<View style={styles.dogOwner}>*/}
                     {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
                     {/*</View>*/}
@@ -104,6 +104,179 @@ export default function PosterPage({navigation, route}) {
         </View>
     );
 }
+else if(typeOfPage=="PosterForBrowse"){
+        return (
+            <View style={Nofar_styles.container}>
+
+                <ScrollView style={AR_styles.content}>
+
+                    <View>
+                        <View>
+                            <View style={{ alignSelf: "center" }}>
+
+                                <Image
+                                    style={Nofar_styles.mainImage}
+                                    source={{uri:route.params.data.image}}></Image>
+
+                                <View style = {styles.textOnComponent}>
+                                    <View style = {styles.centerVertical}>
+                                        <Text style={styles.dogsName}>{route.params.data.dogName}</Text></View>
+                                    <View style = {styles.centerVertical}>
+                                        <Text style={styles.dotName}>·</Text></View>
+                                    <View style = {styles.centerVerticalDot}>
+                                        <Text style={styles.dogsName2}>{route.params.data.date}</Text></View>
+                                </View>
+                            </View>
+
+                        </View>
+                        <View
+                            marginVertical="4%">
+                            <View style = {AR_styles.lastSeen}>
+
+                                <Text style = {styles.whenText}>נצפה לאחרונה ב:</Text>
+                                <Icon name="location-pin" size={22} color ="#000"  />
+                                <TouchableOpacity><Text fontSize="16" lineHeight="20" fontWeight= "500" textAlign= "center">{route.params.data.location}</Text></TouchableOpacity>
+                            </View>
+
+
+                            {/*} <Text style = {styles.whenText}>בתאריך: {route.params.data.date}</Text>*/}
+
+                        </View >
+                        <View style={{ ...Nofar_styles.Viewchips }}>
+                            <View style={styles.containerChips}>
+                                {route.params.data.tagList.map((item, index) => (
+
+                                    <Chip
+                                        key={index}
+                                        selected={false}
+                                        style={Nofar_styles.chips}
+                                    >
+                                        {item}
+                                    </Chip>
+                                ))}
+                            </View>
+                            <View>
+                                <TouchableOpacity>
+                                    <Icon name="chevron-down" size={32} color ="#000" ></Icon></TouchableOpacity>
+                            </View>
+                        </View>
+
+                        {/*<View marginTop="3%" ><Text style = {styles.descriptionText}>תיאור</Text></View>*/}
+
+
+                        <View style={AR_styles.myCard}>
+                            <View style={AR_styles.cardHeader}>
+                                <Text>{route.params.data.description}</Text>
+                            </View>
+                        </View>
+
+                        <View style = {AR_styles.ownerData}>
+
+                            <Text style = {styles.whenText}>הבעלים:   דוד דוד</Text>
+                            <View style={AR_styles.verticalLine}></View>
+                            <TouchableOpacity
+                                style={AR_styles.contact}>
+                                <Text style={AR_styles.contactTitle}>צור קשר</Text>
+
+                            </TouchableOpacity>
+                        </View>
+                        {/*<View style={styles.dogOwner}>*/}
+                        {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
+                        {/*</View>*/}
+
+                    </View>
+                </ScrollView>
+
+            </View>
+        );
+    }
+    else{
+        return (
+            <View style={Nofar_styles.container}>
+
+                <ScrollView style={AR_styles.content}>
+
+                    <View>
+                        <View>
+                            <View style={{ alignSelf: "center" }}>
+
+                                <Image
+                                    style={Nofar_styles.mainImage}
+                                    source={{uri:route.params.data.image}}></Image>
+
+                                <View style = {styles.textOnComponent}>
+                                    <View style = {styles.centerVertical}>
+                                        <Text style={styles.dogsName}>{route.params.data.dogName}</Text></View>
+                                    <View style = {styles.centerVertical}>
+                                        <Text style={styles.dotName}>·</Text></View>
+                                    <View style = {styles.centerVerticalDot}>
+                                        <Text style={styles.dogsName2}>{route.params.data.date}</Text></View>
+                                </View>
+                            </View>
+
+                        </View>
+                        <View
+                            marginVertical="4%">
+                            <View style = {AR_styles.lastSeen}>
+
+                                <Text style = {styles.whenText}>נצפה לאחרונה ב:</Text>
+                                <Icon name="location-pin" size={22} color ="#000"  />
+                                <TouchableOpacity><Text fontSize="16" lineHeight="20" fontWeight= "500" textAlign= "center">{route.params.data.location}</Text></TouchableOpacity>
+                            </View>
+
+
+                            {/*} <Text style = {styles.whenText}>בתאריך: {route.params.data.date}</Text>*/}
+
+                        </View >
+                        <View style={{ ...Nofar_styles.Viewchips }}>
+                            <View style={styles.containerChips}>
+                                {route.params.data.tagList.map((item, index) => (
+
+                                    <Chip
+                                        key={index}
+                                        selected={false}
+                                        style={Nofar_styles.chips}
+                                    >
+                                        {item}
+                                    </Chip>
+                                ))}
+                            </View>
+                            <View>
+                                <TouchableOpacity>
+                                    <Icon name="chevron-down" size={32} color ="#000" ></Icon></TouchableOpacity>
+                            </View>
+                        </View>
+
+                        {/*<View marginTop="3%" ><Text style = {styles.descriptionText}>תיאור</Text></View>*/}
+
+
+                        <View style={AR_styles.myCard}>
+                            <View style={AR_styles.cardHeader}>
+                                <Text>{route.params.data.description}</Text>
+                            </View>
+                        </View>
+
+                        <View style = {AR_styles.ownerData}>
+
+                            <Text style = {styles.whenText}>הבעלים:   דוד דוד</Text>
+                            <View style={AR_styles.verticalLine}></View>
+                            <TouchableOpacity
+                                style={AR_styles.contact}>
+                                <Text style={AR_styles.contactTitle}>צור קשר</Text>
+
+                            </TouchableOpacity>
+                        </View>
+                        {/*<View style={styles.dogOwner}>*/}
+                        {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
+                        {/*</View>*/}
+
+                    </View>
+                </ScrollView>
+
+            </View>
+        );
+    }
+    }
 const styles = StyleSheet.create({
     descriptionText: {
         fontSize:16,
@@ -132,7 +305,6 @@ const styles = StyleSheet.create({
         color:"#FFFFFF",
     },
     dogsName2: {
-        marginRight:"18%",
         fontSize:16,
         color:"#FFFFFF",
     },

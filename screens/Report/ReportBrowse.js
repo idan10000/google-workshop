@@ -23,7 +23,7 @@ export default function ReportForBrowse({route}) {
           source={require('../../assets/new_background.png')}>
     <View style={Nofar_styles.container}>
       <ScrollView style={AR_styles.content}>
-        <PosterPage route={route}/>
+        <PosterPage route={route} typeOfPage={"ReportForBrowse"}/>
 
         {/*<View style={AR_styles.confirmBTContainer}>*/}
         {/*  <Button*/}
