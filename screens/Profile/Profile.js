@@ -4,6 +4,7 @@ import { Title, Text, Button } from "react-native-paper";
 import { user_styles } from "./ProfileStyle";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Nofar_styles } from "../../styles/NofarStyle";
+import {getAuth, signOut} from "firebase/auth";
 
 export default function ProfilePage({ navigation }) {
   const userDetalies = {
@@ -78,9 +79,9 @@ export default function ProfilePage({ navigation }) {
       <View style={user_styles.confirmBTContainer}>
         <TouchableOpacity
           style={user_styles.profileButton}
-          onPress={() => {}}
+          onPress={() => {signOut(getAuth()).then(() => {})}}>
         >
-          <Text style={user_styles.BigButtonText}>שיתוף אפליקציה</Text>
+          <Text style={user_styles.BigButtonText}>התנתקות מהאפליקציה</Text>
         </TouchableOpacity>
       </View>
 

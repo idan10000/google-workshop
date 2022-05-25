@@ -8,7 +8,7 @@ import React from "react";
 import {Nofar_styles} from "../../styles/NofarStyle";
 import StepIndicator from 'react-native-step-indicator';
 
-export default function Screen2Report() {
+export default function Screen2Report({route, navigation}) {
     const labels = ["Image","Location","Description"];
     const customStyles = {
         stepIndicatorSize: 25,
@@ -33,9 +33,15 @@ export default function Screen2Report() {
         labelSize: 13,
         currentStepLabelColor: '#fe7013'
     }
+    const nextScreen = async () => {
+        // navigation.pop()
+
+        navigation.navigate("ReportCreation3")
+
+    }
     return (
         <View style = {Nofar_styles.container}>
-            <View         marginTop="20%">
+            <View         marginTop="2.5%">
                 <StepIndicator
                     customStyles={customStyles}
                     currentPosition={1}
@@ -49,6 +55,7 @@ export default function Screen2Report() {
             {/*nofar should had here map indicating*/}
 
             <TouchableOpacity
+                onPress={nextScreen}
                 style={styles.proceedButton}>
                 <Text style={Nofar_styles.TinyButtonTitle}>הוספה והמשך</Text>
 
@@ -75,7 +82,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 20,
         backgroundColor: "#DCA277",
-        marginTop:"7%",
+        marginTop:"5%",
         width: Dimensions.get("window").width / 2.2,
         marginLeft: (Dimensions.get("window").width - Dimensions.get("window").width / 1.2)/2
 

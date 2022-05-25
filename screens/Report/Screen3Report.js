@@ -9,7 +9,7 @@ import {Nofar_styles} from "../../styles/NofarStyle";
 import StepIndicator from 'react-native-step-indicator';
 import {stylesPoster} from "../CreatePoster/CreatePosterStyle";
 
-export default function Screen3Report() {
+export default function Screen3Report({route, navigation}) {
     const tagList = [
         {tag: "ביישן", state: false},
         {tag: "חברותי", state: false},
@@ -59,12 +59,17 @@ export default function Screen3Report() {
         labelSize: 13,
         currentStepLabelColor: '#fe7013'
     }
+    const nextScreen = async () => {
+        navigation.pop()
+        navigation.navigate("ReportPage")
+
+    }
     // const initDescription = route.params.edit ? report.description : ''
     const initDescription =''
     const [descriptionText, setDescription] = React.useState(initDescription);
     return (
         <View style = {Nofar_styles.container}>
-            <View  marginTop="20%">
+            <View  marginTop="2.5%">
                 <StepIndicator
                     customStyles={customStyles}
                     currentPosition={2}
@@ -80,7 +85,7 @@ export default function Screen3Report() {
                         key={index}
                         selected={modalTags[index].state}
                         onPress={() => modalChipHandler(index)}
-                        style={Nofar_styles.chips}
+                        style={styles.chip}
                     >
                         {item.tag}
                     </Chip>
@@ -100,6 +105,8 @@ export default function Screen3Report() {
         </View>
         </View>
             <TouchableOpacity
+                onPress={nextScreen}
+
                 style={styles.proceedButton}>
                 <Text style={Nofar_styles.TinyButtonTitle}>יצירת דיווח</Text>
 
@@ -127,7 +134,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 10,
         backgroundColor: "#DCA277",
-        marginTop:"7%",
+        marginTop:"5%",
         width: Dimensions.get("window").width / 2.2,
 
     },
@@ -152,6 +159,16 @@ const styles = StyleSheet.create({
         fontSize:16,
         lineHeight:20,
         fontWeight: "700",
-    }
+    },
+    chip: {
+        // tp be changed to left
+        marginRight: "5%",
+        marginVertical: "1.5%",
+        paddingHorizontal:"2%",
+        height: 35,
+        justifyContent: "center",
+        borderRadius: 25,
+        backgroundColor: "#EADDCA",
+    },
 
 });

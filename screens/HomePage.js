@@ -7,6 +7,11 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function HomePage({navigation}) {
 
+    const arielNavigation= async () => {
+        navigation.navigate('ReportCreation')
+
+    }
+
 
     const openCamera = async () => {
         // Ask the user for the permission to access the camera
@@ -43,7 +48,8 @@ export default function HomePage({navigation}) {
                     // mode='contained'
                     // icon='camera'
                     style={styles.BigButton}
-                    onPress={openCamera}>
+                    // onPress={openCamera}>
+                    onPress={arielNavigation}>
                     {/*labelStyle={styles.BigButtonText}>*/}
                     <View         justifyContent= "center" alignItems= "center"  marginRight="8%">
                     <Icon name="camera" size={24} color ="#FFFFFF"  /></View>
