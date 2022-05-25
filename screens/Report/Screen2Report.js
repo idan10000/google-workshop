@@ -9,7 +9,7 @@ import {Nofar_styles} from "../../styles/NofarStyle";
 import StepIndicator from 'react-native-step-indicator';
 
 export default function Screen2Report({route, navigation}) {
-    const labels = ["Image","Location","Description"];
+    const labels = ["תמונה","מיקום","פרטים"];
     const customStyles = {
         stepIndicatorSize: 25,
         currentStepIndicatorSize:30,
@@ -40,6 +40,8 @@ export default function Screen2Report({route, navigation}) {
 
     }
     return (
+        <ScrollView  style = {Nofar_styles.container} >
+
         <View style = {Nofar_styles.container}>
             <View         marginTop="2.5%">
                 <StepIndicator
@@ -61,6 +63,8 @@ export default function Screen2Report({route, navigation}) {
 
             </TouchableOpacity>
         </View>
+        </ScrollView >
+
     );
 }
 

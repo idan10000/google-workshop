@@ -80,7 +80,6 @@ export default function ProfilePage({ navigation }) {
         <TouchableOpacity
           style={user_styles.profileButton}
           onPress={() => {signOut(getAuth()).then(() => {})}}>
-        >
           <Text style={user_styles.BigButtonText}>התנתקות מהאפליקציה</Text>
         </TouchableOpacity>
       </View>

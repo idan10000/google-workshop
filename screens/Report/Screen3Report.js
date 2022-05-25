@@ -8,6 +8,7 @@ import React from "react";
 import {Nofar_styles} from "../../styles/NofarStyle";
 import StepIndicator from 'react-native-step-indicator';
 import {stylesPoster} from "../CreatePoster/CreatePosterStyle";
+import {AR_styles} from "./ReportStyle";
 
 export default function Screen3Report({route, navigation}) {
     const tagList = [
@@ -35,7 +36,7 @@ export default function Screen3Report({route, navigation}) {
 
 
     const [modalTags, setModalTags] = React.useState(initModalTagList);
-    const labels = ["Image","Location","Description"];
+    const labels = ["תמונה","מיקום","פרטים"];
     const customStyles = {
         stepIndicatorSize: 25,
         currentStepIndicatorSize:30,
@@ -68,6 +69,8 @@ export default function Screen3Report({route, navigation}) {
     const initDescription =''
     const [descriptionText, setDescription] = React.useState(initDescription);
     return (
+        <ScrollView  style = {Nofar_styles.container} >
+
         <View style = {Nofar_styles.container}>
             <View  marginTop="2.5%">
                 <StepIndicator
@@ -112,7 +115,9 @@ export default function Screen3Report({route, navigation}) {
 
             </TouchableOpacity>
         </View>
-    );
+            </ScrollView >
+
+            );
 }
 
 const styles = StyleSheet.create({
@@ -150,9 +155,13 @@ const styles = StyleSheet.create({
 
     },
     chips: {
+
+        // borderWidth:0.18,
+        // borderRadius:10,
         flexDirection: "row",
         overflow: "hidden",
         flexWrap: "wrap",
+
         paddingHorizontal:"7.5%",
     }, textFound: {
 

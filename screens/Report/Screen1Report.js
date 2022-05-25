@@ -10,7 +10,7 @@ import StepIndicator from 'react-native-step-indicator';
 
 export default function Screen1Report({route, navigation}) {
 
-    const labels = ["Image","Location","Description"];
+    const labels = ["תמונה","מיקום","פרטים"];
 
 const openCamera = async () => {
     // Ask the user for the permission to access the camera
@@ -64,6 +64,7 @@ const openCamera = async () => {
 
     }
     return (
+        <ScrollView  style = {Nofar_styles.container} >
 
         <View style = {Nofar_styles.container}>
             <View         marginTop="2.5%">
@@ -101,7 +102,9 @@ const openCamera = async () => {
             </TouchableOpacity>
 
         </View>
-);
+        </ScrollView >
+
+    );
 }
 const styles = StyleSheet.create({
     backgroundCamera:{
