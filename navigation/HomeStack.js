@@ -12,10 +12,60 @@ import PosterBrowse from '../screens/Poster/PosterBrowse';
 import Screen1Report from "../screens/Report/Screen1Report";
 import Screen2Report from "../screens/Report/Screen2Report";
 import Screen3Report from "../screens/Report/Screen3Report";
+import {registerForPushNotificationsAsync} from '../shared_components/NotificationsUtils'
+import * as Notifications from 'expo-notifications';
+import {fireStoreDB} from "../shared_components/Firebase";
+import {doc, setDoc, updateDoc} from "firebase/firestore";
+import {useContext, useEffect, useRef, useState} from "react";
+import {AuthenticatedUserContext} from "./AuthenticatedUserProvider";
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: true,
+    }),
+});
 
 const Stack = createStackNavigator();
 
 export default function HomeStack() {
+    const [expoPushToken, setExpoPushToken] = useState('');
+    const [notification, setNotification] = useState(false);
+    const notificationListener = useRef();
+    const responseListener = useRef();
+    const {user} = useContext(AuthenticatedUserContext);
+
+    useEffect(() => {
+        registerForPushNotificationsAsync().then(async (token) => {
+            setExpoPushToken(token)
+            // update user document in firestore with the notifications token
+            const userRef = doc(fireStoreDB, "Users", user.uid);
+            await updateDoc(userRef, {
+                notificationsToken: token
+            }).then(() => {
+            }).catch(error => {
+                console.log(error)
+            })
+        });
+
+        // This listener is fired whenever a notification is received while the app is foregrounded
+        notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+            setNotification(notification);
+        });
+
+        // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+            console.log(response);
+        });
+
+        return () => {
+            Notifications.removeNotificationSubscription(notificationListener.current);
+            Notifications.removeNotificationSubscription(responseListener.current);
+        };
+    }, []);
+
+
     const options = {header: (props) => <Header {...props}/>}
 
     return (
