@@ -167,7 +167,6 @@ export default function Screen1Report({route, navigation}) {
                             labels={labels}
                             stepCount={3} /></View>
                 <View style={styles.pictureContainer}>
-
                         <Image
                             source={{uri: image}}
                             style={styles.card}/>

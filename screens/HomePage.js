@@ -12,7 +12,6 @@ export default function HomePage({navigation}) {
 
     }
 
-
     const openCamera = async () => {
         // Ask the user for the permission to access the camera
         const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
