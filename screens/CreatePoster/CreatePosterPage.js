@@ -96,7 +96,7 @@ export default function PosterPostingComponent({route, navigation}) {
         if (pickerResult.cancelled === true) {
             return;
         }
-
+        console.log(pickerResult)
         setSelectedImage(pickerResult.uri);
     };
 

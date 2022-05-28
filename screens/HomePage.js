@@ -7,6 +7,68 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function HomePage({navigation}) {
 
+//     const filename = "C:\\Users\\idanp\\OneDrive\\Documents\\University\\google\\workshop-app\\screens\\Map\\dog1.png";
+//     const endpointId = "4709947173578473472";
+//     const project = "findog-a0110";
+//     const location = "us-central1";
+//     const aiplatform = require('@google-cloud/aiplatform');
+//     const {instance, params, prediction} =
+//         aiplatform.protos.google.cloud.aiplatform.v1.schema.predict;
+//
+// // Imports the Google Cloud Prediction Service Client library
+//     const {PredictionServiceClient} = aiplatform.v1;
+//
+// // Specifies the location of the api endpoint
+//     const clientOptions = {
+//         apiEndpoint: 'us-central1-aiplatform.googleapis.com',
+//     };
+//
+// // Instantiates a client
+//     const predictionServiceClient = new PredictionServiceClient(clientOptions);
+
+    async function predictImageClassification() {
+        // Configure the endpoint resource
+        // const endpoint = `projects/${project}/locations/${location}/endpoints/${endpointId}`;
+        //
+        // const parametersObj = new params.ImageClassificationPredictionParams({
+        //     confidenceThreshold: 0.5,
+        //     maxPredictions: 5,
+        // });
+        // const parameters = parametersObj.toValue();
+        //
+        // const fs = require('fs');
+        // const image = fs.readFileSync(filename, 'base64');
+        // const instanceObj = new instance.ImageClassificationPredictionInstance({
+        //     content: image,
+        // });
+        // const instanceValue = instanceObj.toValue();
+        //
+        // const instances = [instanceValue];
+        // const request = {
+        //     endpoint,
+        //     instances,
+        //     parameters,
+        // };
+        //
+        // // Predict request
+        // const [response] = await predictionServiceClient.predict(request);
+        //
+        // console.log('Predict image classification response');
+        // console.log(`\tDeployed model id : ${response.deployedModelId}`);
+        // const predictions = response.predictions;
+        // console.log('\tPredictions :');
+        // for (const predictionValue of predictions) {
+        //     const predictionResultObj =
+        //         prediction.ClassificationPredictionResult.fromValue(predictionValue);
+        //     for (const [i, label] of predictionResultObj.displayNames.entries()) {
+        //         console.log(`\tDisplay name: ${label}`);
+        //         console.log(`\tConfidences: ${predictionResultObj.confidences[i]}`);
+        //         console.log(`\tIDs: ${predictionResultObj.ids[i]}\n\n`);
+        //     }
+        // }
+    }
+
+
 
     const openCamera = async () => {
         // Ask the user for the permission to access the camera
@@ -53,7 +115,7 @@ export default function HomePage({navigation}) {
                 <View style={styles.SmallButtonView}>
                     <TouchableOpacity
                         style={styles.SmallButton}
-                        onPress={() => {signOut(getAuth()).then(() => {})}}>
+                        onPress={predictImageClassification}>
                         <View  justifyContent= "center" alignItems= "center" flexDirection = "row" marginRight="4%">
                         <Icon name="image" size={24} color ="#DCA277"  /></View>
                         <Text style={styles.SmallButtonTitle}>העלאת תמונה מגלריה</Text>
