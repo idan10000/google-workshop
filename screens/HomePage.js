@@ -48,8 +48,7 @@ export default function HomePage({navigation}) {
                     // mode='contained'
                     // icon='camera'
                     style={styles.BigButton}
-                    // onPress={openCamera}>
-                    onPress={arielNavigation}>
+                    onPress={openCamera}>
                     {/*labelStyle={styles.BigButtonText}>*/}
                     <View         justifyContent= "center" alignItems= "center"  marginRight="8%">
                     <Icon name="camera" size={24} color ="#FFFFFF"  /></View>
