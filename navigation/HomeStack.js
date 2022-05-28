@@ -9,6 +9,9 @@ import NotificationsPage from '../screens/NotificationsPage';
 import NavigationBar from './NavigationBar';
 import ReportForBrowser from '../screens/Report/ReportBrowse';
 import PosterBrowse from '../screens/Poster/PosterBrowse';
+import Screen1Report from "../screens/Report/Screen1Report";
+import Screen2Report from "../screens/Report/Screen2Report";
+import Screen3Report from "../screens/Report/Screen3Report";
 
 const Stack = createStackNavigator();
 
@@ -19,7 +22,11 @@ export default function HomeStack() {
         <Stack.Navigator screenOptions={options}>
             <Stack.Screen name="Main" component={NavigationBar} />
             <Stack.Screen name="Home" component={OldhomeScreen}/>
-            <Stack.Screen name="ReportCreation" component={ReportCreationScreen}/>
+            <Stack.Screen name="ReportCreation" component={Screen1Report}/>
+            <Stack.Screen name="ReportCreation2" component={Screen2Report}/>
+            <Stack.Screen name="ReportCreation3" component={Screen3Report}/>
+
+
             <Stack.Screen name="ReportPage" component={ReportPage}/>
             <Stack.Screen name="CreateAd" component={PosterPostingComponent}/>
             <Stack.Screen name="AdPage" component={AdPage}/>
