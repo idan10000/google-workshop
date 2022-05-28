@@ -12,7 +12,6 @@ export default function HomePage({navigation}) {
 
     }
 
-
     const openCamera = async () => {
         // Ask the user for the permission to access the camera
         const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
@@ -48,8 +47,7 @@ export default function HomePage({navigation}) {
                     // mode='contained'
                     // icon='camera'
                     style={styles.BigButton}
-                    // onPress={openCamera}>
-                    onPress={arielNavigation}>
+                    onPress={openCamera}>
                     {/*labelStyle={styles.BigButtonText}>*/}
                     <View         justifyContent= "center" alignItems= "center"  marginRight="8%">
                     <Icon name="camera" size={24} color ="#FFFFFF"  /></View>

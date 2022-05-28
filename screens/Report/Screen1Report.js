@@ -1,38 +1,131 @@
-import {StyleSheet, View, ImageBackground, Dimensions, ScrollView} from 'react-native';
-import {Button} from 'react-native-paper';
-import * as ImagePicker from 'expo-image-picker';
-import {getAuth, signOut} from "firebase/auth";
-import {Text, TouchableOpacity, Image} from "react-native";
-import Icon from "react-native-vector-icons/Entypo";
-import React from "react";
+import * as React from 'react';
+import {Modal, Portal, Button, Provider, Chip, Headline, TextInput} from 'react-native-paper';
+import {TouchableOpacity, View, StyleSheet, Image, Text, ImageBackground, ImageBackgroundComponent, Dimensions,ScrollView} from 'react-native'
+import Report, {reportConverter} from '../../data_classes/Report'
+import {stylesPoster} from "../CreatePoster/CreatePosterStyle";
 import {Nofar_styles} from "../../styles/NofarStyle";
+import {addDoc, arrayUnion, collection, doc, getFirestore, setDoc, updateDoc} from "firebase/firestore";
+import {useContext} from "react";
+import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
+import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
+import {fireStoreDB, uploadImageAsync} from "../../shared_components/Firebase";
+import Icon from 'react-native-vector-icons/Entypo';
 import StepIndicator from 'react-native-step-indicator';
 
+// Expected input from previous screen is:
+// edit - if the Report is being edited (TRUE) or it is a new Report (FALSE)
+// Report - if the Report is being edited this is the values it had, null otherwise
+// ref - the DB page reference to where the Report was written to
 export default function Screen1Report({route, navigation}) {
 
     const labels = ["תמונה","מיקום","פרטים"];
+    console.log("opened Report screen")
+    let report = route.params.report
 
-const openCamera = async () => {
-    // Ask the user for the permission to access the camera
-    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+    //---------------------- Tag Selection Modal ----------------------
+    const [visibleTag, setVisibleTag] = React.useState(false);
+    const showTagModal = () => setVisibleTag(true);
+    const hideTagModal = () => setVisibleTag(false);
 
-    if (permissionResult.granted === false) {
-        alert("You've refused to allow this app to access your camera!");
-        return;
+    const tagList = [
+        {tag: "ביישן", state: false},
+        {tag: "חברותי", state: false},
+        {tag: "אגרסיבי", state: false},
+    ];
+
+
+    // init tags with previous values if reached this page from an edit Report
+    const initSelectedTagList = route.params.edit ? report.tagList.map((tag) => ({tag: tag, state: false})) : []
+    const initModalTagList = route.params.edit ?
+        tagList.filter((item) => !initSelectedTagList.some(e => e.tag === item.tag)) : tagList
+    const [modalTags, setModalTags] = React.useState(initModalTagList);
+    const [selectedTags, setSelectedTags] = React.useState(initSelectedTagList);
+
+    const modalChipHandler = (index) => {
+        setModalTags(prevStates => {
+            var temp = [...prevStates]
+            temp[index].state = !temp[index].state
+            return temp
+        });
     }
 
-
-
-
-        const result = await ImagePicker.launchCameraAsync();
-
-    // Explore the result
-    console.log(result);
-
-    if (!result.cancelled) {
-        navigation.navigate('ReportCreation',{image:result.uri, edit:false})
+    const modalConfirmPressHandler = () => {
+        setSelectedTags((prevSelected) => {
+            return prevSelected.concat(modalTags.filter(modalTags => modalTags.state));
+        });
+        setModalTags((prevTags) => {
+            return prevTags.filter(prevTags => !prevTags.state)
+        });
+        hideTagModal();
     }
-}
+
+    const selectedTagPressHandler = (tag) => {
+        setModalTags(prevTags => ([...prevTags, {tag: tag, state: false}]))
+        setSelectedTags(prevSelected => (prevSelected.filter((prevSelected) => prevSelected.tag !== tag)))
+    }
+
+    //---------------------- Details Modal ----------------------
+    const nextScreen = async () => {
+        // navigation.pop()
+
+        navigation.navigate("ReportCreation2")
+
+    }
+    const [visibleDetails, setVisibleDetails] = React.useState(false);
+    const showDescriptionModal = () => setVisibleDetails(true);
+    const hideDescriptionModal = () => setVisibleDetails(false);
+
+    const initDescription = route.params.edit ? report.description : ''
+    const [descriptionText, setDescription] = React.useState(initDescription);
+
+    const [location, setLocation] = React.useState('');
+
+    const {user} = useContext(AuthenticatedUserContext);
+    const reportConfirmHandler = async () => {;
+        let date = new Date()
+        const dd = String(date.getDate()).padStart(2, '0');
+        const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+        const yyyy = date.getFullYear();
+
+        let today = route.params.edit ? report.date : dd + '/' + mm + '/' + yyyy;
+        const plainTags = selectedTags.map((function (tag) {
+            return tag.tag
+        }))
+
+        const dbReport = new Report(image, "", location, today, plainTags, descriptionText, user.uid) // Report to upload to DB
+        const sendReport = new Report(image, "", location, today, plainTags, descriptionText, user.uid) // Report to send to the Report page
+
+        const db = fireStoreDB;
+
+        // if we reached from an edit Report
+        if (route.params.edit) {
+            // if the Report was changed, update the Report page
+            if (deepDiffer(sendReport, report)) {
+                const imageAndPath = await uploadImageAsync(image,"Reports")
+                dbReport.image = imageAndPath.link
+                dbReport.imagePath = imageAndPath.path
+                const docRef = await setDoc(doc(db,"Reports",route.params.ref).withConverter(reportConverter), dbReport).then(() => {
+                    console.log("updated Report page")
+                }).catch(error => {
+                    console.log(error)
+                });
+            }
+            navigation.pop()
+            navigation.navigate("ReportPage", {data: sendReport, ref: route.params.ref})
+        } else {
+            const imageAndPath = await uploadImageAsync(image,"Reports")
+            dbReport.image = imageAndPath.link
+            dbReport.imagePath = imageAndPath.path
+            const docRef = await addDoc(collection(db, "Reports").withConverter(reportConverter), dbReport)
+            console.log("uploaded Report")
+            await updateDoc(doc(db, "Users", user.uid), {reports: arrayUnion(docRef)}).then(() => {
+                navigation.pop()
+                navigation.navigate("ReportPage", {data: sendReport, ref: docRef.id})
+            }).catch(error => {
+                console.log(error)
+            });
+        }
+    }
     const customStyles = {
         stepIndicatorSize: 25,
         currentStepIndicatorSize:30,
@@ -56,56 +149,41 @@ const openCamera = async () => {
         labelSize: 13,
         currentStepLabelColor: '#fe7013'
     }
-    // let image = route.params.edit ? report.image : route.params.image
-    const nextScreen = async () => {
-        // navigation.pop()
+    //---------------------- Create / Edit setup ----------------------
 
-        navigation.navigate("ReportCreation2")
+    let image = route.params.edit ? report.image : route.params.image
 
-    }
     return (
-        <ScrollView  style = {Nofar_styles.container} >
 
-        <View style = {Nofar_styles.container}>
-            <View         marginTop="2.5%">
-                <StepIndicator
-                    customStyles={customStyles}
-                    currentPosition={0}
-                    labels={labels}
-                    stepCount={3}
-
-                /></View>
-            <View style={{ alignSelf: "center" }}>
-            <Image style = {styles.backgroundCamera}
-                   source={require('../../assets/emptyPictureFixed.png')}>
-
-            </Image>
-                <View  style = {styles.textOnComponent}>
-
-            <TouchableOpacity
-                // mode='contained'
-                // icon='camera'
-                style={styles.camButton}
-                onPress={openCamera}>
-                {/*labelStyle={styles.BigButtonText}>*/}
-                <Icon name="camera" size={60} color ="#FFFFFF" />
-            </TouchableOpacity>
-            </View>
-            </View>
+            <Provider>
+                {/*Modal (pop up screen) for selecting the tags describing the dog*/}
 
 
-            <TouchableOpacity
-                onPress={nextScreen}
-                style={styles.proceedButton}>
-                <Text style={Nofar_styles.TinyButtonTitle}>הוספה והמשך</Text>
-
-            </TouchableOpacity>
-
-        </View>
-        </ScrollView >
+                <View style = {Nofar_styles.container}>
+                    <View         marginTop="2.5%">
+                        <StepIndicator
+                            customStyles={customStyles}
+                            currentPosition={0}
+                            labels={labels}
+                            stepCount={3} /></View>
+                <View style={styles.pictureContainer}>
+                        <Image
+                            source={{uri: image}}
+                            style={styles.card}/>
+                    </View>
+                    <View >
+                        <TouchableOpacity
+                            onPress={nextScreen}
+                            style={styles.proceedButton}>
+                            <Text style={Nofar_styles.TinyButtonTitle}>הוספה והמשך</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Provider>
 
     );
-}
+};
+
 const styles = StyleSheet.create({
     backgroundCamera:{
         marginTop :"5%",
@@ -150,4 +228,19 @@ const styles = StyleSheet.create({
 
     },
 
-});
+    pictureContainer: {
+        width: Dimensions.get("window").width / 1.2,
+        height: Dimensions.get("window").height / 1.5,
+        justifyContent: "center",
+        alignContent: "center",
+        alignSelf: "center"
+
+    },
+    card: {
+        resizeMode: "contain",
+        flex: 1}
+
+
+    });
+
+
