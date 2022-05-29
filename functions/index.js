@@ -42,15 +42,13 @@ const predictionServiceClient = new PredictionServiceClient(clientOptions);
 exports.classifyPoster = functions.firestore
     .document("Posters/{posterID}")
     .onCreate((snap, context) => {
-      // Get an object representing the document
-      // e.g. {"name": "Marie", "age": 66}
       console.log("onCreate");
       const newValue = snap.data();
       // access a particular field as you would any JS property
       console.log("image path: " + newValue.imagePath);
       const bucket = storage.bucket("findog-a0110.appspot.com");
 
-      return bucket.file("poodle.jpeg").download().then((data) => {
+      return bucket.file("poodle.jpg").download().then((data) => {
         console.log("download output:");
         console.log(data);
         console.log(data[0]);
@@ -61,11 +59,11 @@ exports.classifyPoster = functions.firestore
             `${location}/endpoints/${endpointId}`;
         console.log(endpoint);
         const parametersObj = new params.ImageClassificationPredictionParams({
-          confidenceThreshold: 0.5,
+          confidenceThreshold: 0.01,
           maxPredictions: 5,
         });
         const parameters = parametersObj.toValue();
-        const instanceObj= new instance.ImageClassificationPredictionInstance({
+        const instanceObj = new instance.ImageClassificationPredictionInstance({
           content: image,
         });
         const instanceValue = instanceObj.toValue();
@@ -77,13 +75,12 @@ exports.classifyPoster = functions.firestore
           parameters,
         };
         console.log("before predict");
+        console.log(request);
         // Predict request
         return predictionServiceClient.predict(request).then((result) =>{
           console.log("Predict image classification response");
-          console.log(result);
-          console.log(result.predictions);
-          console.log(result.predictions[0]);
-          const predictions = result.response.predictions;
+          const response = result[0];
+          const predictions = response.predictions;
           console.log("\tPredictions :");
           for (const predictionValue of predictions) {
             const predictionResultObj =
