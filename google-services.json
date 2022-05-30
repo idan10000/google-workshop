@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "324712450952",
+    "firebase_url": "https://findog-a0110-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "findog-a0110",
+    "storage_bucket": "findog-a0110.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324712450952:android:0d5a35f8aac35de448883d",
+        "android_client_info": {
+          "package_name": "com.example.findog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324712450952-u0rhoekjh76flk9rr6sni3h51kif0reu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKBEIdU41AVL9aPezMuLAN8B6-6Je1JuA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324712450952-u0rhoekjh76flk9rr6sni3h51kif0reu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
