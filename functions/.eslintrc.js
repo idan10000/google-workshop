@@ -10,7 +10,11 @@ module.exports = {
   ],
   rules: {
     "quotes": ["error", "double"],
-    "linebreak-style": 0,
-    "max-len": 0,
+    "linebreak-style": ["off"],
+    "max-len": ["off"],
+    "indent": ["off"],
+    "semi": ["off"],
+    "comma-spacing": ["off"],
+    "spaced-comment": ["off"],
   },
 };
