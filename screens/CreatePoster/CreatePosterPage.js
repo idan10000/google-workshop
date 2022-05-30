@@ -26,7 +26,7 @@ import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvid
 import {collection, doc, updateDoc, getFirestore, addDoc, arrayUnion, setDoc} from "firebase/firestore";
 import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
 import {fireStorage, fireStoreDB, uploadImageAsync} from "../../shared_components/Firebase";
-import {ref,uploadBytes} from "firebase/storage";
+import {getStorage, ref, getBytes} from "firebase/storage";
 import Icon from 'react-native-vector-icons/Entypo';
 
 
@@ -172,18 +172,18 @@ export default function PosterPostingComponent({route, navigation}) {
         }))
 
         // create poster
-        const dbPoster = new Poster(selectedImage,"", "", today, plainTags, descriptionText, nameText, breed, user.uid)
-        const sendPoster = new Poster(selectedImage,"", "", today, plainTags, descriptionText, nameText, breed, user.uid)
+        const dbPoster = new Poster(selectedImage, "", "", today, plainTags, descriptionText, nameText, breed, user.uid)
+        const sendPoster = new Poster(selectedImage, "", "", today, plainTags, descriptionText, nameText, breed, user.uid)
 
         const db = fireStoreDB;
 
         if (route.params.edit) {
             // if the prevPoster was changed, update the prevPoster page
             if (deepDiffer(sendPoster, prevPoster)) {
-                const image = await uploadImageAsync(selectedImage,"Posters")
+                const image = await uploadImageAsync(selectedImage, "Posters")
                 dbPoster.image = image.link
                 dbPoster.imagePath = image.path
-                const docRef = await setDoc(doc(db,"Posters",route.params.ref).withConverter(posterConverter), dbPoster).then(() => {
+                const docRef = await setDoc(doc(db, "Posters", route.params.ref).withConverter(posterConverter), dbPoster).then(() => {
                     console.log("updated Poster page")
                 }).catch(error => {
                     console.log(error)
@@ -192,7 +192,7 @@ export default function PosterPostingComponent({route, navigation}) {
             navigation.pop()
             navigation.navigate("AdPage", {data: sendPoster, ref: route.params.ref})
         } else {
-            const image = await uploadImageAsync(selectedImage,"Posters")
+            const image = await uploadImageAsync(selectedImage, "Posters")
             dbPoster.image = image.link
             dbPoster.imagePath = image.path
             const docRef = await addDoc(collection(db, "Posters").withConverter(posterConverter), dbPoster)
@@ -211,132 +211,136 @@ export default function PosterPostingComponent({route, navigation}) {
         <ImageBackground
             style={{flex: 1}}
             source={require('../../assets/new_background.png')}>
-        <Provider>
-            {/*Modal (pop up screen) for selecting the tags describing the dog*/}
-            <Portal>
-                {/*Tags*/}
-                <Modal
-                    visible={visibleTag}
-                    onDismiss={modalConfirmPressHandler}
-                    contentContainerStyle={stylesPoster.modal}
-                >
+            <Provider>
+                {/*Modal (pop up screen) for selecting the tags describing the dog*/}
+                <Portal>
+                    {/*Tags*/}
+                    <Modal
+                        visible={visibleTag}
+                        onDismiss={modalConfirmPressHandler}
+                        contentContainerStyle={stylesPoster.modal}
+                    >
 
-                    <View>
-                        <Text style={{...Nofar_styles.SmallTitle, paddingBottom: "3%"}}>בחר תגיות:</Text>
-                    </View>
-                    <View style={stylesPoster.chips}>
-                        {modalTags.map((item, index) => (
-                            <Chip
-                                key={index}
-                                selected={modalTags[index].state}
-                                onPress={() => modalChipHandler(index)}
-                                style={Nofar_styles.chips}
+                        <View>
+                            <Text style={{...Nofar_styles.SmallTitle, paddingBottom: "3%"}}>בחר תגיות:</Text>
+                        </View>
+                        <View style={stylesPoster.chips}>
+                            {modalTags.map((item, index) => (
+                                <Chip
+                                    key={index}
+                                    selected={modalTags[index].state}
+                                    onPress={() => modalChipHandler(index)}
+                                    style={Nofar_styles.chips}
+                                >
+                                    {item.tag}
+                                </Chip>
+                            ))}
+                        </View>
+                        <View style={{...stylesPoster.modalButtonContainer, paddingTop: "3%"}}>
+                            <TouchableOpacity
+                                style={Nofar_styles.TinyButton}
+                                onPress={modalConfirmPressHandler}
                             >
-                                {item.tag}
-                            </Chip>
-                        ))}
-                    </View>
-                    <View style={{...stylesPoster.modalButtonContainer, paddingTop: "3%"}}>
-                        <TouchableOpacity
-                            style={Nofar_styles.TinyButton}
-                            onPress={modalConfirmPressHandler}
-                        >
-                            <Text style={Nofar_styles.TinyButtonTitle}>אישור</Text>
-                        </TouchableOpacity>
-                    </View>
-                </Modal>
-            </Portal>
+                                <Text style={Nofar_styles.TinyButtonTitle}>אישור</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </Modal>
+                </Portal>
 
-            <View style={Nofar_styles.container}>
-                <ScrollView>
-                    {imagePicker}
-                    <View style = {styles.lastSeen}>
-                        <Text style={{color:"#5C4C3D", fontSize:16}} lineHeight="20" fontWeight= "500" textAlign= "center">נצפה לאחרונה ב: </Text>
-                        <Icon name="location-pin" size={24} color ="#5C4C3D"  />
-                        <TouchableOpacity><Text  style={{color:"#5C4C3D", fontSize:16}} lineHeight="20" fontWeight= "500" textAlign= "center">החלוצים 43, תל אביב</Text></TouchableOpacity>
-                    </View>
-
-                    <View style={stylesPoster.addTagsBTContainer}>
-                        <TouchableOpacity
-                            style={Nofar_styles.TinyButton}
-                            onPress={showTagModal}
-                        >
-                            <Text style={Nofar_styles.TinyButtonTitle}>הוסף תגיות</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity  style={Nofar_styles.TinyButton}>
-                            <Text style={Nofar_styles.TinyButtonTitle}>עדכון מיקום</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={{...stylesPoster.chips, marginLeft: "2.8%"}}>
-                        {selectedTags.map((item, index) => (
-                            <Chip
-                                key={index}
-                                icon={"close"}
-                                selected={false}
-                                onPress={() => selectedTagPressHandler(item.tag)}
-                                style={{...Nofar_styles.chips, marginTop: "5%"}}
-                            >
-                                {item.tag}
-                            </Chip>
-                        ))}
-                    </View>
-
-                    <View style={stylesPoster.detailsContainer}>
-                        <View style={{...Nofar_styles.actionInput, paddingVertical: "5%"}}>
-                            <TextInput
-                                dense={false}
-                                placeholder={"שם הכלב"}
-                                value={nameText}
-                                onChangeText={setName}
-                                mode="outlined"
-                                activeUnderlineColor="#000000"
-                                activeOutlineColor="#000000"
-                                multiline={true}
-                                style={{backgroundColor: "#F9F8F0"}}
-                            />
+                <View style={Nofar_styles.container}>
+                    <ScrollView>
+                        {imagePicker}
+                        <View style={styles.lastSeen}>
+                            <Text style={{color: "#5C4C3D", fontSize: 16}} lineHeight="20" fontWeight="500"
+                                  textAlign="center">נצפה לאחרונה ב: </Text>
+                            <Icon name="location-pin" size={24} color="#5C4C3D"/>
+                            <TouchableOpacity><Text style={{color: "#5C4C3D", fontSize: 16}} lineHeight="20"
+                                                    fontWeight="500" textAlign="center">החלוצים 43, תל
+                                אביב</Text></TouchableOpacity>
                         </View>
 
-                        {/* <HelperText type="error" visible={hasErrors("name")}>
-              <Text style={edit_styles.error}>טעות בתיאור הטקסט</Text>
-            </HelperText> */}
-                        <View style={{...Nofar_styles.actionInput, paddingBottom: "5%"}}>
-                            <TextInput
-                                dense={false}
-                                placeholder={"תיאור"}
-                                value={descriptionText}
-                                onChangeText={setDescription}
-                                mode="outlined"
-                                activeUnderlineColor="#000000"
-                                activeOutlineColor="#000000"
-                                multiline={true}
-                                style={{backgroundColor: "#F9F8F0"}}
-                            />
+                        <View style={stylesPoster.addTagsBTContainer}>
+                            <TouchableOpacity
+                                style={Nofar_styles.TinyButton}
+                                onPress={showTagModal}
+                            >
+                                <Text style={Nofar_styles.TinyButtonTitle}>הוסף תגיות</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={Nofar_styles.TinyButton}>
+                                <Text style={Nofar_styles.TinyButtonTitle}>עדכון מיקום</Text>
+                            </TouchableOpacity>
                         </View>
-                        {/* <HelperText type="error" visible={hasErrors("name")}>
+
+                        <View style={{...stylesPoster.chips, marginLeft: "2.8%"}}>
+                            {selectedTags.map((item, index) => (
+                                <Chip
+                                    key={index}
+                                    icon={"close"}
+                                    selected={false}
+                                    onPress={() => selectedTagPressHandler(item.tag)}
+                                    style={{...Nofar_styles.chips, marginTop: "5%"}}
+                                >
+                                    {item.tag}
+                                </Chip>
+                            ))}
+                        </View>
+
+                        <View style={stylesPoster.detailsContainer}>
+                            <View style={{...Nofar_styles.actionInput, paddingVertical: "5%"}}>
+                                <TextInput
+                                    dense={false}
+                                    placeholder={"שם הכלב"}
+                                    value={nameText}
+                                    onChangeText={setName}
+                                    mode="outlined"
+                                    activeUnderlineColor="#000000"
+                                    activeOutlineColor="#000000"
+                                    multiline={true}
+                                    style={{backgroundColor: "#F9F8F0"}}
+                                />
+                            </View>
+
+                            {/* <HelperText type="error" visible={hasErrors("name")}>
+              <Text style={edit_styles.error}>טעות בתיאור הטקסט</Text>
+            </HelperText> */}
+                            <View style={{...Nofar_styles.actionInput, paddingBottom: "5%"}}>
+                                <TextInput
+                                    dense={false}
+                                    placeholder={"תיאור"}
+                                    value={descriptionText}
+                                    onChangeText={setDescription}
+                                    mode="outlined"
+                                    activeUnderlineColor="#000000"
+                                    activeOutlineColor="#000000"
+                                    multiline={true}
+                                    style={{backgroundColor: "#F9F8F0"}}
+                                />
+                            </View>
+                            {/* <HelperText type="error" visible={hasErrors("name")}>
               <Text style={edit_styles.error}>טעות בתיאור הטקסט</Text>
             </HelperText> */}
 
-                    </View>
+                        </View>
 
-                    <View style={stylesPoster.confirmBTContainer}>
-                        <TouchableOpacity  style={Nofar_styles.BigButton} onPress={posterConfirmHandler}>
-                            <Text style={Nofar_styles.BigButtonText}>אישור</Text>
-                        </TouchableOpacity>
-                    </View>
-                </ScrollView>
-            </View>
-        </Provider>
-            </ImageBackground>
+                        <View style={stylesPoster.confirmBTContainer}>
+                            <TouchableOpacity style={Nofar_styles.BigButton} onPress={posterConfirmHandler}>
+                                <Text style={Nofar_styles.BigButtonText}>אישור</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView>
+                </View>
+            </Provider>
+        </ImageBackground>
     )
         ;
 }
 
 const styles = StyleSheet.create({
     lastSeen: {
-        flexDirection:"row",
-        alignItems:"center",
+        flexDirection: "row",
+        alignItems: "center",
         // marginHorizontal: "5%",
-        justifyContent:"center",
-        margin:"3%"
-      }})
+        justifyContent: "center",
+        margin: "3%"
+    }
+})
