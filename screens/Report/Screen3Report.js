@@ -172,6 +172,10 @@ export default function Screen3Report({route, navigation}) {
             console.log("uploaded Report")
             await updateDoc(doc(db, "Users", user.uid), {reports: arrayUnion(docRef)}).then(() => {
                 // navigation.pop()
+                navigation.pop()
+                navigation.pop()
+                navigation.pop()
+
                 navigation.navigate("ReportPage", {data: sendReport, ref: docRef.id})
             }).catch(error => {
                 console.log(error)
