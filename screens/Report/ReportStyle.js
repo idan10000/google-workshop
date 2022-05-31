@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export const AR_styles = StyleSheet.create({
   confirmBTContainer: {
     alignSelf: "center",
-    paddingVertical: "5%",
+    paddingVertical: "2%",
   },
   content: {
     marginLeft: 10,
@@ -46,7 +46,7 @@ export const AR_styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingTop: 12.5,
     paddingBottom: 10,
-    paddingHorizontal: 16,
+    paddingHorizontal: "7.5%",
     borderBottomLeftRadius: 1,
     borderBottomRightRadius: 1,
   },

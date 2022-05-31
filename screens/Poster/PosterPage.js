@@ -97,7 +97,14 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                     {/*<View style={styles.dogOwner}>*/}
                     {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
                     {/*</View>*/}
-
+                    <View style={AR_styles.confirmBTContainer}>
+                        <TouchableOpacity
+                            style={Nofar_styles.BigButton}
+                            onPress={() => {}}
+                        >
+                            <Text style={Nofar_styles.BigButtonText}>פתח מיקום במפה</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </ScrollView>
 
@@ -183,7 +190,104 @@ else if(typeOfPage=="PosterForBrowse"){
                         {/*<View style={styles.dogOwner}>*/}
                         {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
                         {/*</View>*/}
+                        <View style={AR_styles.confirmBTContainer}>
+                            <TouchableOpacity
+                                style={Nofar_styles.BigButton}
+                                onPress={() => {}}
+                            >
+                                <Text style={Nofar_styles.BigButtonText}>פתח מיקום במפה</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </ScrollView>
 
+            </View>
+        );
+    }
+else if(typeOfPage=="report"){
+        return (
+            <View style={Nofar_styles.container}>
+
+                <ScrollView style={AR_styles.content}>
+
+                    <View>
+                        <View>
+                            <View style={{ alignSelf: "center" }}>
+
+                                <Image
+                                    style={Nofar_styles.mainImage}
+                                    source={{uri:route.params.data.image}}></Image>
+
+                                <View style = {styles.textOnComponent}>
+
+                                    <View style = {styles.centerVerticalDot}>
+                                        <Text style={styles.dogsName2}>{route.params.data.date}</Text></View>
+                                </View>
+                            </View>
+
+                        </View>
+                        <View
+                            marginVertical="4%">
+                            <View style = {AR_styles.lastSeen}>
+
+                                <Text style = {styles.whenText}>נצפה לאחרונה ב:</Text>
+                                <Icon name="location-pin" size={22} color ="#000"  />
+                                <TouchableOpacity><Text fontSize="16" lineHeight="20" fontWeight= "500" textAlign= "center">{route.params.data.location}</Text></TouchableOpacity>
+                            </View>
+
+
+                            {/*} <Text style = {styles.whenText}>בתאריך: {route.params.data.date}</Text>*/}
+
+                        </View >
+                        <View style={{ ...Nofar_styles.Viewchips }}>
+                            <View style={styles.containerChips}>
+                                {route.params.data.tagList.map((item, index) => (
+
+                                    <Chip
+                                        key={index}
+                                        selected={false}
+                                        style={Nofar_styles.chips}
+                                    >
+                                        {item}
+                                    </Chip>
+                                ))}
+                            </View>
+                            <View>
+                                <TouchableOpacity>
+                                    <Icon name="chevron-down" size={32} color ="#000" ></Icon></TouchableOpacity>
+                            </View>
+                        </View>
+
+                        {/*<View marginTop="3%" ><Text style = {styles.descriptionText}>תיאור</Text></View>*/}
+
+
+                        <View style={AR_styles.myCard}>
+                            <View style={AR_styles.cardHeader}>
+                                <Text>{route.params.data.description}</Text>
+                            </View>
+                        </View>
+
+                        <View style = {AR_styles.ownerData}>
+
+                            <Text style = {styles.whenText}>המדווח:   יוסף יוסף</Text>
+                            <View style={AR_styles.verticalLine}></View>
+                            <TouchableOpacity
+                                style={AR_styles.contact}>
+                                <Text style={AR_styles.contactTitle}>צור קשר</Text>
+
+                            </TouchableOpacity>
+                        </View>
+                        {/*<View style={styles.dogOwner}>*/}
+                        {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
+                        {/*</View>*/}
+                        <View style={AR_styles.confirmBTContainer}>
+                            <TouchableOpacity
+                                style={Nofar_styles.BigButton}
+                                onPress={() => {}}
+                            >
+                                <Text style={Nofar_styles.BigButtonText}>פתח מיקום במפה</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </ScrollView>
 
@@ -241,9 +345,9 @@ else if(typeOfPage=="PosterForBrowse"){
                                     </Chip>
                                 ))}
                             </View>
-                            <View>
+                            <View justifyContent="center" alignSelf = "center" alignItems = "center">
                                 <TouchableOpacity>
-                                    <Icon name="chevron-down" size={32} color ="#000" ></Icon></TouchableOpacity>
+                                    <Icon name="chevron-down" size={34} color ="#000" justifyContent="center" alignSelf = "center" alignItems = "center"></Icon></TouchableOpacity>
                             </View>
                         </View>
 
@@ -269,7 +373,14 @@ else if(typeOfPage=="PosterForBrowse"){
                         {/*<View style={styles.dogOwner}>*/}
                         {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
                         {/*</View>*/}
-
+                        <View style={AR_styles.confirmBTContainer}>
+                            <TouchableOpacity
+                                style={Nofar_styles.BigButton}
+                                onPress={() => {}}
+                            >
+                                <Text style={Nofar_styles.BigButtonText}>פתח מיקום במפה</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </ScrollView>
 
@@ -327,8 +438,7 @@ const styles = StyleSheet.create({
     containerChips: {
         width: Dimensions.get("window").width / 1.2,
         alignSelf:"center",
-        justifyContent: "center",
-        alignItems: "center",
+
         backgroundColor :"#DCA277",
         flexDirection: "row",
         marginBottom:"3%"

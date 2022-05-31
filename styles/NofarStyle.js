@@ -59,15 +59,13 @@ export const Nofar_styles = StyleSheet.create({
 
   //   chips:
   Viewchips: {
+    padding:"1%",
     shadowColor: "#000",
-
     shadowOpacity: 0.01,
     shadowRadius: 100,
     elevation: 8,
     width: Dimensions.get("window").width / 1.2,
     alignSelf:"center",
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor :"#DCA277",
     marginBottom:"4%",
     borderColor:"#000",

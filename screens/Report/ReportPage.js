@@ -4,6 +4,7 @@ import { Nofar_styles } from "../../styles/NofarStyle";
 import { AR_styles } from "./ReportStyle";
 import ReportTemplate from "./ReportTemplate";
 import {Button} from "react-native-paper";
+import PosterPage from "../Poster/PosterPage";
 export default function ReportPage({ route, navigation }) {
 
   const editButtonPressHandler = () => {
@@ -23,15 +24,8 @@ export default function ReportPage({ route, navigation }) {
           source={require('../../assets/new_background.png')}>
     <View style={Nofar_styles.container}>
       <ScrollView style={AR_styles.content}>
-        <ReportTemplate data={route.params.data} />
-        <View style={AR_styles.confirmBTContainer}>
-          <TouchableOpacity
-            style={Nofar_styles.BigButton}
-            onPress={() => {}}
-          >
-            <Text style={Nofar_styles.BigButtonText}>פתח מיקום במפה</Text>
-          </TouchableOpacity>
-        </View>
+        <PosterPage route = { route} navigation={navigation} typeOfPage={ "report"} />
+
 
         <View style={AR_styles.confirmBTContainer}>
           <TouchableOpacity
