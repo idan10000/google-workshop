@@ -178,14 +178,14 @@ const sendMatchNotification = (uids, reports) => {
                     console.error(`Push token ${pushToken} is not a valid Expo push token`);
                     continue;
                 }
-
+                const reportID = report.id
                 // Construct a message (see https://docs.expo.io/push-notifications/sending-notifications/)
                 messages.push({
                     to: pushToken,
                     sound: "default",
                     title: "מצאנו כלב! יכול להיות שהוא שלכם?",
                     body: "היכנסו לדיווח לפרטים נוספים",
-                    data: {report: report},
+                    data: {report: reportID},
                 });
             }
         }
