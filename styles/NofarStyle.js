@@ -79,10 +79,10 @@ export const Nofar_styles = StyleSheet.create({
 
   },
   chips: {
-    // tp be changed to left
-    marginRight: "5%",
-    marginVertical: "1.5%",
-    paddingHorizontal:"2%",
+    // tp be changed to left or
+    marginRight: "1%",
+    marginVertical: "1%",
+    paddingHorizontal:"1%",
     height: 35,
     justifyContent: "center",
     borderRadius: 25,
