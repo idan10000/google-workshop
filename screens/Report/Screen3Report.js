@@ -4,13 +4,20 @@ import * as ImagePicker from 'expo-image-picker';
 import {getAuth, signOut} from "firebase/auth";
 import {Text, TouchableOpacity, Image} from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
-import React from "react";
+import React, {useContext} from "react";
 import {Nofar_styles} from "../../styles/NofarStyle";
 import StepIndicator from 'react-native-step-indicator';
 import {stylesPoster} from "../CreatePoster/CreatePosterStyle";
 import {AR_styles} from "./ReportStyle";
+import Report, {reportConverter} from "../../data_classes/Report";
+import {fireStoreDB, uploadImageAsync} from "../../shared_components/Firebase";
+import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
+import {addDoc, arrayUnion, collection, doc, setDoc, updateDoc} from "firebase/firestore";
+import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
 
 export default function Screen3Report({route, navigation}) {
+    let report = route.params.report
+
     const tagList = [
         {tag: "ביישן", state: false},
         {tag: "חברותי", state: false},
@@ -25,6 +32,9 @@ export default function Screen3Report({route, navigation}) {
         {tag: "עצוב", state: false},
         {tag: "בודד", state: false},
     ];
+
+
+
     const modalChipHandler = (index) => {
         setModalTags(prevStates => {
             var temp = [...prevStates]
@@ -32,10 +42,7 @@ export default function Screen3Report({route, navigation}) {
             return temp
         });
     }
-    const initModalTagList = tagList
 
-
-    const [modalTags, setModalTags] = React.useState(initModalTagList);
     const labels = ["תמונה","מיקום","פרטים"];
     const customStyles = {
         stepIndicatorSize: 25,
@@ -56,13 +63,79 @@ export default function Screen3Report({route, navigation}) {
         stepIndicatorLabelCurrentColor: '#fe7013',
         stepIndicatorLabelFinishedColor: '#ffffff',
         stepIndicatorLabelUnFinishedColor: '#aaaaaa',
-        labelColor: '#999999',
+        labelColor: '#000',
         labelSize: 13,
         currentStepLabelColor: '#fe7013'
     }
+    const {user} = useContext(AuthenticatedUserContext);
+    console.log(route.params)
+
+
+    // init tags with previous values if reached this page from an edit Report
+
+    const initSelectedTagList = route.params.edit ? report.tagList.map((tag) => ({tag: tag, state: false})) : []
+    const initModalTagList = route.params.edit ?
+        tagList.filter((item) => !initSelectedTagList.some(e => e.tag === item.tag)) : tagList
+    const [modalTags, setModalTags] = React.useState(initModalTagList);
+    const [selectedTags, setSelectedTags] = React.useState(initSelectedTagList);
+
+
     const nextScreen = async () => {
-        navigation.pop()
-        navigation.navigate("ReportPage")
+
+        //first confirming the tags
+        setSelectedTags((prevSelected) => {
+            return prevSelected.concat(modalTags.filter(modalTags => modalTags.state));
+        });
+        // setModalTags((prevTags) => {
+        //     return prevTags.filter(prevTags => !prevTags.state)
+        // });
+
+        let date = new Date()
+        const dd = String(date.getDate()).padStart(2, '0');
+        const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+        const yyyy = date.getFullYear();
+
+        const plainTags = selectedTags.map((function (tag) {
+            return tag.tag
+        }))
+
+        console.log(plainTags)
+        let image = route.params.edit ? report.image : route.params.image
+
+        let today = route.params.edit ? report.date : dd + '/' + mm + '/' + yyyy;
+        const dbReport = new Report(image,"", route.params.location, today, plainTags, descriptionText, user.uid) // Report to upload to DB
+        const sendReport = new Report(image, "", route.params.location, today, plainTags, descriptionText, user.uid) // Report to send to the Report page
+        const db = fireStoreDB;
+
+        // if we reached from an edit Report
+        if (route.params.edit) {
+            // if the Report was changed, update the Report page
+            if (deepDiffer(sendReport, report)) {
+                const imageAndPath = await uploadImageAsync(image,"Reports")
+                dbReport.image = imageAndPath.link
+                dbReport.imagePath = imageAndPath.path
+                const docRef = await setDoc(doc(db,"Reports",route.params.ref).withConverter(reportConverter), dbReport).then(() => {
+                    console.log("updated Report page")
+                }).catch(error => {
+                    console.log(error)
+                });
+            }
+            navigation.pop()
+            navigation.navigate("ReportPage")
+        } else {
+            const imageAndPath = await uploadImageAsync(image,"Reports")
+            dbReport.image = imageAndPath.link
+            dbReport.imagePath = imageAndPath.path
+            const docRef = await addDoc(collection(db, "Reports").withConverter(reportConverter), dbReport)
+            console.log("uploaded Report")
+            await updateDoc(doc(db, "Users", user.uid), {reports: arrayUnion(docRef)}).then(() => {
+                navigation.pop()
+                navigation.navigate("ReportPage", {data: sendReport, ref: docRef.id})
+            }).catch(error => {
+                console.log(error)
+            });
+        }
+        navigation.navigate("ReportPage", {data: sendReport})
 
     }
     // const initDescription = route.params.edit ? report.description : ''
@@ -139,7 +212,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 10,
         backgroundColor: "#DCA277",
-        marginTop:"5%",
+        marginVertical:"5%",
         width: Dimensions.get("window").width / 2.2,
 
     },

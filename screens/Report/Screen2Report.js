@@ -9,6 +9,8 @@ import {Nofar_styles} from "../../styles/NofarStyle";
 import StepIndicator from 'react-native-step-indicator';
 
 export default function Screen2Report({route, navigation}) {
+    // console.log(route.params.data)
+
     const labels = ["תמונה","מיקום","פרטים"];
     const customStyles = {
         stepIndicatorSize: 25,
@@ -35,8 +37,8 @@ export default function Screen2Report({route, navigation}) {
     }
     const nextScreen = async () => {
         // navigation.pop()
-
-        navigation.navigate("ReportCreation3")
+        location = "2"
+        navigation.navigate("ReportCreation3", {report : "none",location: 2, image: route.params.image ,edit : route.params.edit, ref: route.params.ref})
 
     }
     return (
@@ -59,7 +61,7 @@ export default function Screen2Report({route, navigation}) {
             <TouchableOpacity
                 onPress={nextScreen}
                 style={styles.proceedButton}>
-                <Text style={Nofar_styles.TinyButtonTitle}>הוספה והמשך</Text>
+                <Text style={Nofar_styles.TinyButtonTitle}>המשך</Text>
 
             </TouchableOpacity>
         </View>

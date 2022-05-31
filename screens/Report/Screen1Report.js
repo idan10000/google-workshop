@@ -65,10 +65,12 @@ export default function Screen1Report({route, navigation}) {
     }
 
     //---------------------- Details Modal ----------------------
+
     const nextScreen = async () => {
         // navigation.pop()
 
-        navigation.navigate("ReportCreation2")
+
+        navigation.navigate("ReportCreation2", {image: route.params.image,edit: false, ref: route.params.ref})
 
     }
     const [visibleDetails, setVisibleDetails] = React.useState(false);
@@ -80,7 +82,7 @@ export default function Screen1Report({route, navigation}) {
 
     const [location, setLocation] = React.useState('');
 
-    const {user} = useContext(AuthenticatedUserContext);
+    // console.log(route.params)
     const reportConfirmHandler = async () => {;
         let date = new Date()
         const dd = String(date.getDate()).padStart(2, '0');
