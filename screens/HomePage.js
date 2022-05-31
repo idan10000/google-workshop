@@ -4,6 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import {getAuth, signOut} from "firebase/auth";
 import {Text, TouchableOpacity} from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import * as React from "react";
 
 export default function HomePage({navigation}) {
 
@@ -11,6 +12,26 @@ export default function HomePage({navigation}) {
         navigation.navigate('ReportCreation')
 
     }
+
+    let openImagePickerAsync = async () => {
+        let permissionResult =
+            await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+        if (permissionResult.granted === false) {
+            alert("Permission to access camera roll is required!");
+            return;
+        }
+
+        let pickerResult = await ImagePicker.launchImageLibraryAsync();
+
+        if (pickerResult.cancelled === true) {
+            return;
+        }
+        console.log(pickerResult)
+        if (!pickerResult.cancelled) {
+            navigation.navigate('ReportCreation',{image:pickerResult.uri, edit:false})
+        }
+    };
 
     const openCamera = async () => {
         // Ask the user for the permission to access the camera
@@ -57,7 +78,7 @@ export default function HomePage({navigation}) {
                 <View style={styles.SmallButtonView}>
                     <TouchableOpacity
                         style={styles.SmallButton}
-                        onPress={() => {signOut(getAuth()).then(() => {})}}>
+                        onPress={openImagePickerAsync}>
                         <View  justifyContent= "center" alignItems= "center" flexDirection = "row" marginRight="4%">
                         <Icon name="image" size={24} color ="#DCA277"  /></View>
                         <Text style={styles.SmallButtonTitle}>העלאת תמונה מגלריה</Text>
