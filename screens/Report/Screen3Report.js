@@ -103,8 +103,8 @@ export default function Screen3Report({route, navigation}) {
         let image = route.params.edit ? report.image : route.params.image
 
         let today = route.params.edit ? report.date : dd + '/' + mm + '/' + yyyy;
-        const dbReport = new Report(image,"", route.params.location, today, plainTags, descriptionText, user.uid) // Report to upload to DB
-        const sendReport = new Report(image, "", route.params.location, today, plainTags, descriptionText, user.uid) // Report to send to the Report page
+        const dbReport = new Report(image,"", route.params.location, today, plainTags, descriptionText,"", user.uid) // Report to upload to DB
+        const sendReport = new Report(image, "", route.params.location, today, plainTags, descriptionText, "", user.uid) // Report to send to the Report page
         const db = fireStoreDB;
 
         // if we reached from an edit Report

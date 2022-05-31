@@ -39,16 +39,18 @@ const clientOptions = {
 const predictionServiceClient = new PredictionServiceClient(clientOptions);
 
 const handlePosterPrediction = (predictions, uid, posterID) => {
+    console.log("handling poster prediction")
     const predictionResultObj =
         prediction.ClassificationPredictionResult.fromValue(predictions[0]);
     const labels = [];
     for (const [, label] of predictionResultObj.displayNames.entries()) {
         labels.push(label.split("-")[1]);
     }
+    console.log(posterID)
     // TODO: add distance filter to the query
     return db.collection("Reports").where("dogBreed", "array-contains-any", labels).get()
         .then((querySnapshot) => {
-            return sendMatchNotification(uid, querySnapshot.docs).then(() => {
+            return sendMatchNotification([uid], querySnapshot.docs).then(() => {
                 return db.collection("Posters").doc(posterID).update({"dogBreed": labels});
             });
         });
@@ -56,6 +58,7 @@ const handlePosterPrediction = (predictions, uid, posterID) => {
 
 //TODO: add UID for notifications
 const handleReportPrediction = (predictions, uid, reportID) => {
+    console.log("handling report prediction")
     const predictionResultObj =
         prediction.ClassificationPredictionResult.fromValue(predictions[0]);
     const labels = [];
@@ -68,13 +71,17 @@ const handleReportPrediction = (predictions, uid, reportID) => {
             const uids = [];
             // get all user ids from the relevant posters
             querySnapshot.forEach((snapshot) => {
-                uids.push(snapshot.data().uid);
+                uids.push(snapshot.data().user);
             });
 
             console.log(`sending notifications from report of user ${uid}`);
-            return sendMatchNotification(uids, querySnapshot.docs).then(() => {
+            if (uids.length > 0) {
+                return sendMatchNotification(uids, querySnapshot.docs).then(() => {
+                    return db.collection("Posters").doc(reportID).update({"dogBreed": labels});
+                });
+            } else {
                 return db.collection("Posters").doc(reportID).update({"dogBreed": labels});
-            });
+            }
         });
 };
 
@@ -84,8 +91,8 @@ const getPrediction = (docID, image, uid, handlePrediction) => {
         `${location}/endpoints/${endpointId}`;
     console.log(endpoint);
     const parametersObj = new params.ImageClassificationPredictionParams({
-        confidenceThreshold: 0.01,
-        maxPredictions: 5,
+        confidenceThreshold: 0.4,
+        maxPredictions: 1,
     });
     const parameters = parametersObj.toValue();
     const instanceObj = new instance.ImageClassificationPredictionInstance({
@@ -99,57 +106,49 @@ const getPrediction = (docID, image, uid, handlePrediction) => {
         instances,
         parameters,
     };
-    console.log("before predict");
-    console.log(request);
     // Predict request
     return predictionServiceClient.predict(request).then((result) => {
         console.log("Predict image classification response");
         const response = result[0];
-        return handlePrediction(response.predictions, docID);
+        return handlePrediction(response.predictions, uid, docID);
     });
 }
 
 exports.classifyPoster = functions.firestore
     .document("Posters/{posterID}")
     .onCreate((snap, context) => {
-        console.log("onCreate");
         const newValue = snap.data();
         // access a particular field as you would any JS property
         console.log("image path: " + newValue.imagePath);
         const bucket = storage.bucket("findog-a0110.appspot.com");
-        return bucket.file("poodle.jpg").download().then((data) => {
+        return bucket.file(newValue.imagePath).download().then((data) => {
             console.log("download output:");
-            console.log(data);
-            console.log(data[0]);
             const image = data[0].toString("base64");
-            console.log(image);
             // Configure the endpoint resource
-            return getPrediction(snap.id, image, snap.data().user, handlePosterPrediction);
+            return getPrediction(snap.ref.id, image, snap.data().user, handlePosterPrediction);
         });
     });
 
 exports.classifyReport = functions.firestore
     .document("Reports/{reportID}")
     .onCreate((snap, context) => {
-        console.log("onCreate");
         const newValue = snap.data();
         // access a particular field as you would any JS property
         console.log("image path: " + newValue.imagePath);
         const bucket = storage.bucket("findog-a0110.appspot.com");
-        return bucket.file("poodle.jpg").download().then((data) => {
-            console.log("download output:");
-            console.log(data);
-            console.log(data[0]);
+        return bucket.file(newValue.imagePath).download().then((data) => {
             const image = data[0].toString("base64");
-            console.log(image);
             // Configure the endpoint resource
-            return getPrediction(snap.id, image, snap.data().user, handleReportPrediction);
+            return getPrediction(snap.ref.id, image, snap.data().user, handleReportPrediction);
         });
     });
 
 const sendMatchNotification = (uids, reports) => {
+    console.log("sending notification")
+    console.log(uids)
     const promises = []
     for (const uid of uids) {
+        console.log(uid)
         const promise = db.doc("Users/" + uid).get();
         promises.push(promise);
     }
@@ -168,6 +167,8 @@ const sendMatchNotification = (uids, reports) => {
 
         // Create the messages that you want to send to clients
         const messages = [];
+        const docUpdates = [];
+
         for (const snapshot of snapshots) {
             const pushToken = snapshot.get("notificationsToken");
             const notificationsPerUser = [];
@@ -189,37 +190,38 @@ const sendMatchNotification = (uids, reports) => {
                 messages.push(message);
                 notificationsPerUser.push(message)
             }
-            snapshot.update({"notifications": notificationsPerUser})
+            docUpdates.push(snapshot.ref.update({"notifications": notificationsPerUser}))
         }
-
-        // The Expo push notification service accepts batches of notifications so
-        // that you don"t need to send 1000 requests to send 1000 notifications. We
-        // recommend you batch your notifications to reduce the number of requests
-        // and to compress them (notifications with similar content will get
-        // compressed).
-        const chunks = expo.chunkPushNotifications(messages);
-        const tickets = [];
-        (() => {
-            // Send the chunks to the Expo push notification service. There are
-            // different strategies you could use. A simple one is to send one chunk at a
-            // time, which nicely spreads the load out over time:
-            for (const chunk of chunks) {
-                try {
-                    return expo.sendPushNotificationsAsync(chunk).then((ticketChunk) => {
-                        console.log(ticketChunk);
-                        tickets.push(...ticketChunk);
-                        // NOTE: If a ticket contains an error code in ticket.details.error, you
-                        // must handle it appropriately. The error codes are listed in the Expo
-                        // documentation:
-                        // https://docs.expo.io/push-notifications/sending-notifications/#individual-errors
-                    });
-                } catch (error) {
-                    console.error(error);
+        Promise.all(docUpdates).then(() => {
+            // The Expo push notification service accepts batches of notifications so
+            // that you don"t need to send 1000 requests to send 1000 notifications. We
+            // recommend you batch your notifications to reduce the number of requests
+            // and to compress them (notifications with similar content will get
+            // compressed).
+            const chunks = expo.chunkPushNotifications(messages);
+            const tickets = [];
+            (() => {
+                // Send the chunks to the Expo push notification service. There are
+                // different strategies you could use. A simple one is to send one chunk at a
+                // time, which nicely spreads the load out over time:
+                for (const chunk of chunks) {
+                    try {
+                        return expo.sendPushNotificationsAsync(chunk).then((ticketChunk) => {
+                            console.log(ticketChunk);
+                            tickets.push(...ticketChunk);
+                            // NOTE: If a ticket contains an error code in ticket.details.error, you
+                            // must handle it appropriately. The error codes are listed in the Expo
+                            // documentation:
+                            // https://docs.expo.io/push-notifications/sending-notifications/#individual-errors
+                        });
+                    } catch (error) {
+                        console.error(error);
+                    }
                 }
-            }
-        })();
-        return tickets;
-    });
+            })();
+            return tickets;
+        });
+    })
 }
 
 //
