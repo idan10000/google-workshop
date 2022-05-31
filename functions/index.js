@@ -20,7 +20,7 @@ const storage = admin.storage();
  * (Not necessary if passing values as arguments)
  */
 
-const endpointId = "4709947173578473472";
+const endpointId = "5577875264265781248";
 const project = "findog-a0110";
 const location = "us-central1";
 const aiplatform = require("@google-cloud/aiplatform");
@@ -38,6 +38,78 @@ const clientOptions = {
 // Instantiates a client
 const predictionServiceClient = new PredictionServiceClient(clientOptions);
 
+//TODO: add UID for notifications
+const handlePosterPrediction = (predictions, posterID) => {
+    for (const predictionValue of predictions) {
+        const predictionResultObj =
+            prediction.ClassificationPredictionResult.
+            fromValue(predictionValue);
+        for (const [,label] of predictionResultObj. // changed from [i, label] might cause problems !!!!
+        displayNames.entries()) {
+            const savedLabel = label.split("-")[1];
+            // TODO: add distance filter to the query
+            db.collection("Reports").where("dogBreed","==",savedLabel).get().then((querySnapshot) => {
+                querySnapshot.forEach((documentSnapshot) => {
+                    //TODO: add handle send notification with image
+                    console.log(`Found document at ${documentSnapshot.ref.path}`);
+                });
+            });
+            db.collection("Posters").doc(posterID).update({"dogBreed": savedLabel});
+        }
+    }
+}
+
+//TODO: add UID for notifications
+const handleReportPrediction = (predictions, reportID) => {
+    for (const predictionValue of predictions) {
+        const predictionResultObj =
+            prediction.ClassificationPredictionResult.
+            fromValue(predictionValue);
+        for (const [,label] of predictionResultObj. // changed from [i, label] might cause problems !!!!
+            displayNames.entries()) {
+            const savedLabel = label.split("-")[1];
+            // TODO: add distance filter to the query
+            db.collection("Posters").where("dogBreed","==",savedLabel).get().then((querySnapshot) => {
+                querySnapshot.forEach((documentSnapshot) => {
+                    //TODO: add handle send notification with image
+                    console.log(`Found document at ${documentSnapshot.ref.path}`);
+                });
+            });
+            db.collection("Reports").doc(reportID).update({"dogBreed": savedLabel});
+        }
+    }
+};
+
+//TODO: add UID for notifications
+const getPrediction = (docID, image, handlePrediction) => {
+    const endpoint = `projects/${project}/locations/` +
+        `${location}/endpoints/${endpointId}`;
+    console.log(endpoint);
+    const parametersObj = new params.ImageClassificationPredictionParams({
+        confidenceThreshold: 0.01,
+        maxPredictions: 5,
+    });
+    const parameters = parametersObj.toValue();
+    const instanceObj = new instance.ImageClassificationPredictionInstance({
+        content: image,
+    });
+    const instanceValue = instanceObj.toValue();
+    console.log(instanceValue);
+    const instances = [instanceValue];
+    const request = {
+        endpoint,
+        instances,
+        parameters,
+    };
+    console.log("before predict");
+    console.log(request);
+    // Predict request
+    return predictionServiceClient.predict(request).then((result) =>{
+        console.log("Predict image classification response");
+        const response = result[0];
+        return handlePrediction(response.predictions, docID);
+    });
+}
 
 exports.classifyPoster = functions.firestore
     .document("Posters/{posterID}")
@@ -47,7 +119,6 @@ exports.classifyPoster = functions.firestore
       // access a particular field as you would any JS property
       console.log("image path: " + newValue.imagePath);
       const bucket = storage.bucket("findog-a0110.appspot.com");
-
       return bucket.file("poodle.jpg").download().then((data) => {
         console.log("download output:");
         console.log(data);
@@ -55,48 +126,27 @@ exports.classifyPoster = functions.firestore
         const image = data[0].toString("base64");
         console.log(image);
         // Configure the endpoint resource
-        const endpoint = `projects/${project}/locations/` +
-            `${location}/endpoints/${endpointId}`;
-        console.log(endpoint);
-        const parametersObj = new params.ImageClassificationPredictionParams({
-          confidenceThreshold: 0.01,
-          maxPredictions: 5,
-        });
-        const parameters = parametersObj.toValue();
-        const instanceObj = new instance.ImageClassificationPredictionInstance({
-          content: image,
-        });
-        const instanceValue = instanceObj.toValue();
-        console.log(instanceValue);
-        const instances = [instanceValue];
-        const request = {
-          endpoint,
-          instances,
-          parameters,
-        };
-        console.log("before predict");
-        console.log(request);
-        // Predict request
-        return predictionServiceClient.predict(request).then((result) =>{
-          console.log("Predict image classification response");
-          const response = result[0];
-          const predictions = response.predictions;
-          console.log("\tPredictions :");
-          for (const predictionValue of predictions) {
-            const predictionResultObj =
-                      prediction.ClassificationPredictionResult.
-                          fromValue(predictionValue);
-            for (const [i, label] of predictionResultObj.
-                displayNames.entries()) {
-              console.log(`\tDisplay name: ${label}`);
-              console.log(`\tConfidences: ${predictionResultObj.
-                  confidences[i]}`);
-              console.log(`\tIDs: ${predictionResultObj.ids[i]}\n\n`);
-            }
-          }
-        });
+        return getPrediction(snap.id,image,handlePosterPrediction);
       });
-      // perform desired operations ...
+    });
+
+exports.classifyReport = functions.firestore
+    .document("Reports/{reportID}")
+    .onCreate((snap, context) => {
+        console.log("onCreate");
+        const newValue = snap.data();
+        // access a particular field as you would any JS property
+        console.log("image path: " + newValue.imagePath);
+        const bucket = storage.bucket("findog-a0110.appspot.com");
+        return bucket.file("poodle.jpg").download().then((data) => {
+            console.log("download output:");
+            console.log(data);
+            console.log(data[0]);
+            const image = data[0].toString("base64");
+            console.log(image);
+            // Configure the endpoint resource
+            return getPrediction(snap.id,image,handleReportPrediction);
+        });
     });
 
 exports.sendNotifications = functions.firestore
