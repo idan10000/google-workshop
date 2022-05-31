@@ -155,12 +155,12 @@ const sendMatchNotification = (uids, reports) => {
     }
 
     return Promise.all(promises).then((snapshots) => {
-        const pushTokens = [];
-        for (const snapshot of snapshots) {
-            // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
-            const token = snapshot.get("notificationsToken");
-            pushTokens.push(token);
-        }
+        // const pushTokens = [];
+        // for (const snapshot of snapshots) {
+        //     // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
+        //     const token = snapshot.get("notificationsToken");
+        //     pushTokens.push(token);
+        // }
 
         // Create a new Expo SDK client
         // optionally providing an access token if you have enabled push security
@@ -168,7 +168,9 @@ const sendMatchNotification = (uids, reports) => {
 
         // Create the messages that you want to send to clients
         const messages = [];
-        for (const pushToken of pushTokens) {
+        for (const snapshot of snapshots) {
+            const pushToken = snapshot.get("notificationsToken");
+            const notificationsPerUser = [];
             for (const report of reports) {
                 // Check that all your push tokens appear to be valid Expo push tokens
                 if (!Expo.isExpoPushToken(pushToken)) {
@@ -177,14 +179,17 @@ const sendMatchNotification = (uids, reports) => {
                 }
                 const reportID = report.id
                 // Construct a message (see https://docs.expo.io/push-notifications/sending-notifications/)
-                messages.push({
+                const message = {
                     to: pushToken,
                     sound: "default",
                     title: "מצאנו כלב! יכול להיות שהוא שלכם?",
                     body: "היכנסו לדיווח לפרטים נוספים",
                     data: {report: reportID},
-                });
+                }
+                messages.push(message);
+                notificationsPerUser.push(message)
             }
+            snapshot.update({"notifications": notificationsPerUser})
         }
 
         // The Expo push notification service accepts batches of notifications so
