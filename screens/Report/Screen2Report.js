@@ -7,6 +7,7 @@ import Icon from "react-native-vector-icons/Entypo";
 import React from "react";
 import {Nofar_styles} from "../../styles/NofarStyle";
 import StepIndicator from 'react-native-step-indicator';
+import Map from "../Map/Map";
 
 export default function Screen2Report({route, navigation}) {
     // console.log(route.params.data)
@@ -33,12 +34,17 @@ export default function Screen2Report({route, navigation}) {
         stepIndicatorLabelUnFinishedColor: '#aaaaaa',
         // labelColor: '#000',
         labelSize: 13,
-        currentStepLabelColor: "#DCA277"
+        currentStepLabelColor: "#DCA277",
+
+
+
     }
+    const initLocation = route.params.edit ? route.params.data.location : 0
+
     const nextScreen = async () => {
         // navigation.pop()
-        location = "2"
-        navigation.navigate("ReportCreation3", {report : "none",location: 2, image: route.params.image ,edit : route.params.edit, ref: route.params.ref})
+
+        navigation.navigate("ReportCreation3", {report : "none",location: initLocation, image: route.params.image ,edit : route.params.edit, ref: route.params.ref})
 
     }
     return (
@@ -53,10 +59,8 @@ export default function Screen2Report({route, navigation}) {
                     stepCount={3}
                 /></View>
 
-                <Image style = {styles.backgroundCamera}
-                       source={require('../../assets/map.png')}>
-            </Image>
-            {/*nofar should had here map indicating*/}
+                <Map startLocation = {initLocation}>
+                </Map>
 
             <TouchableOpacity
                 onPress={nextScreen}
@@ -88,7 +92,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 20,
         backgroundColor: "#DCA277",
-        marginTop:"5%",
+        marginVertical:"5%",
         width: Dimensions.get("window").width / 2.2,
         marginLeft: (Dimensions.get("window").width - Dimensions.get("window").width / 1.2)/2
 
