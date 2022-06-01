@@ -17,23 +17,23 @@ export default function Screen2Report({route, navigation}) {
         currentStepIndicatorSize:30,
         separatorStrokeWidth: 2,
         currentStepStrokeWidth: 3,
-        stepStrokeCurrentColor: '#fe7013',
+        stepStrokeCurrentColor: "#DCA277",
         stepStrokeWidth: 3,
-        stepStrokeFinishedColor: '#fe7013',
+        stepStrokeFinishedColor: "#DCA277",
         stepStrokeUnFinishedColor: '#aaaaaa',
-        separatorFinishedColor: '#fe7013',
+        separatorFinishedColor: "#DCA277",
         separatorUnFinishedColor: '#aaaaaa',
-        stepIndicatorFinishedColor: '#fe7013',
+        stepIndicatorFinishedColor: "#DCA277",
         stepIndicatorUnFinishedColor: '#ffffff',
         stepIndicatorCurrentColor: '#ffffff',
         stepIndicatorLabelFontSize: 13,
         currentStepIndicatorLabelFontSize: 13,
-        stepIndicatorLabelCurrentColor: '#fe7013',
+        stepIndicatorLabelCurrentColor: "#DCA277",
         stepIndicatorLabelFinishedColor: '#ffffff',
         stepIndicatorLabelUnFinishedColor: '#aaaaaa',
-        labelColor: '#999999',
+        // labelColor: '#000',
         labelSize: 13,
-        currentStepLabelColor: '#fe7013'
+        currentStepLabelColor: "#DCA277"
     }
     const nextScreen = async () => {
         // navigation.pop()

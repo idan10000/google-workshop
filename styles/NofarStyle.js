@@ -73,7 +73,7 @@ export const Nofar_styles = StyleSheet.create({
     overflow: "hidden",
     flexWrap: "wrap",
 
-    borderRadius:20,
+    borderRadius:15,
 
   },
   chips: {

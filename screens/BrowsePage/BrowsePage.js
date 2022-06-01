@@ -5,7 +5,7 @@ import {
     IconButton,
     Menu,
 } from 'react-native-paper';
-import {View, StyleSheet, FlatList, Dimensions, ImageBackground} from 'react-native'
+import {View, StyleSheet, FlatList, Dimensions, ImageBackground, TouchableOpacity,Text} from 'react-native'
 import PostListItem from '../../shared_components/PostListItem'
 import Report from "../../data_classes/Report";
 import {addDoc, arrayUnion, collection, doc, getFirestore, setDoc, updateDoc} from "firebase/firestore";
@@ -72,7 +72,10 @@ const BrowsePage = ({navigation, route}) => {
             style={{flex: 1}}
             source={require('../../assets/new_background.png')}>
         <Provider>
-            <View style={styles.searchBarContainer}>
+            {/*<TouchableOpacity >*/}
+            <View  style={{flexWrap: "wrap", flexDirection: 'row',
+                // borderWidth:0.5,borderColor:"#000",
+                justifyContent: 'center', alignItems: 'center'}}>
                 {/* search bar + sort + filter*/}
 
                 <Menu
@@ -80,23 +83,28 @@ const BrowsePage = ({navigation, route}) => {
                     onDismiss={closeSortMenu}
                     anchor={<IconButton
                         icon={"sort"}
-                        onPress={openSortMenu}/>}>
+                        onPress={openSortMenu}
+                        />}>
                     <Menu.Item onPress={() => {sortByDate()}} title="תאריך"/>
                 </Menu>
 
-                <View style={styles.Search}>
-                    <Searchbar>
-                    </Searchbar>
-                </View>
+                {/*<View style={styles.Search}>*/}
+                {/*    <Searchbar>*/}
+                {/*    </Searchbar>*/}
+                {/*</View>*/}
 
-                <IconButton
-                    icon={"filter"}
-                    style={styles.filterButton}
-                    onPress={() => console.log("filter")}
-                />
+                <View style={styles.Search}>
+                    <Text style = {styles.textSort}>מיין לפי:</Text>
+                </View>
+                {/*<IconButton*/}
+                {/*    icon={"filter"}*/}
+                {/*    style={styles.filterButton}*/}
+                {/*    onPress={() => console.log("filter")}*/}
+                {/*/>*/}
 
 
             </View>
+            {/*</TouchableOpacity>*/}
             <View style={styles.listContainer}>
                 {/* List */}
                 <FlatList data={data.docs}
@@ -149,7 +157,6 @@ const styles = StyleSheet.create({
     },
     Search: {
         flex: 1,
-        paddingRight: 16,
         zIndex: 1,
 
     },
@@ -163,7 +170,11 @@ const styles = StyleSheet.create({
         width:Dimensions.get('window').width / 2,
         height: Dimensions.get('window').width / 2,
         resizeMode: "cover"
-    }
+    },
+    textSort: {
+
+        fontSize:16,
+        fontWeight: "700",}
 
 });
 

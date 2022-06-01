@@ -42,6 +42,7 @@ export const AR_styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   cardHeader: {
+
     flexDirection: "row",
     justifyContent: "space-between",
     paddingTop: 12.5,
@@ -97,7 +98,10 @@ export const AR_styles = StyleSheet.create({
     fontWeight: "500",
   },
   myCard: {
-      borderRadius: 15,
+    width: Dimensions.get("window").width / 1.2,
+    justifyContent:"center",
+    alignSelf:"center",
+    borderRadius: 15,
       marginTop:"2%",
   //     shadowColor: "#00000021",
   //     shadowOffset: {

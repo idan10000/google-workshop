@@ -8,6 +8,7 @@ import PosterTemplate from "./PosterTemplate";
 import Icon from "react-native-vector-icons/Entypo";
 
 export default function PosterPage({navigation, route, typeOfPage}) {
+    console.log(route.params.data.description.length == 0)
 
     const editButtonPressHandler = () => {
         console.log("opening Report screen");
@@ -68,10 +69,19 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                     {item}
                                 </Chip>
                             ))}
+                            {
+                                route.params.data.tagList.length == 0 &&
+                                <View justifyContent="center" alignSelf = "center" alignItems = "center" marginHorizontal = "5%">
+
+                                <Text style = {styles.newText}>לא נוספו תגיות</Text></View>
+
+                            }
                         </View>
                         <View>
+                            {
+                                route.params.data.tagList.length != 0 &&
                             <TouchableOpacity>
-                                <Icon name="chevron-down" size={32} color ="#000" ></Icon></TouchableOpacity>
+                                <Icon name="chevron-down" size={32} color ="#000" ></Icon></TouchableOpacity>}
                         </View>
                     </View>
 
@@ -80,19 +90,26 @@ export default function PosterPage({navigation, route, typeOfPage}) {
 
                     <View style={AR_styles.myCard}>
                         <View style={AR_styles.cardHeader}>
-                            <Text>{route.params.data.description}</Text>
+                            {route.params.data.description.length == 0 &&
+                                <Text style = {styles.noDescription}>לא נוסף תיאור</Text>
+
+                            }
+                                <Text>{route.params.data.description}</Text>
                         </View>
                     </View>
 
                     <View style = {AR_styles.ownerData}>
 
                         <Text style = {styles.whenText}>המדווח:   דוד דוד</Text>
-                        <View style={AR_styles.verticalLine}></View>
-                        <TouchableOpacity
+                        {route.params.contact &&
+                            <View style={AR_styles.verticalLine}></View>}
+                        {route.params.contact &&
+
+                            <TouchableOpacity
                             style={AR_styles.contact}>
                             <Text style={AR_styles.contactTitle}>צור קשר</Text>
 
-                        </TouchableOpacity>
+                        </TouchableOpacity>}
                     </View>
                     {/*<View style={styles.dogOwner}>*/}
                     {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
@@ -161,11 +178,20 @@ else if(typeOfPage=="PosterForBrowse"){
                                         {item}
                                     </Chip>
                                 ))}
+                                {
+                                    route.params.data.tagList.length == 0 &&
+                                    <View justifyContent="center" alignSelf = "center" alignItems = "center" marginHorizontal = "5%">
+
+                                        <Text style = {styles.newText}>לא נוספו תגיות</Text></View>
+
+                                }
                             </View>
+                            {
+                                route.params.data.tagList.length != 0 &&
                             <View>
                                 <TouchableOpacity>
                                     <Icon name="chevron-down" size={32} color ="#000" ></Icon></TouchableOpacity>
-                            </View>
+                            </View>}
                         </View>
 
                         {/*<View marginTop="3%" ><Text style = {styles.descriptionText}>תיאור</Text></View>*/}
@@ -173,6 +199,10 @@ else if(typeOfPage=="PosterForBrowse"){
 
                         <View style={AR_styles.myCard}>
                             <View style={AR_styles.cardHeader}>
+                                {route.params.data.description.length == 0 &&
+                                    <Text style = {styles.noDescription}>לא נוסף תיאור</Text>
+
+                                }
                                 <Text>{route.params.data.description}</Text>
                             </View>
                         </View>
@@ -241,6 +271,7 @@ else if(typeOfPage=="report"){
                         </View >
                         <View style={{ ...Nofar_styles.Viewchips }}>
                             <View style={styles.containerChips}>
+
                                 {route.params.data.tagList.map((item, index) => (
 
                                     <Chip
@@ -251,10 +282,19 @@ else if(typeOfPage=="report"){
                                         {item}
                                     </Chip>
                                 ))}
+                                {
+                                    <View justifyContent="center" alignSelf = "center" alignItems = "center" marginHorizontal = "5%">
+
+                                    route.params.data.tagList.length == 0 &&
+                                        <Text style = {styles.newText}>לא נוספו תגיות</Text></View>
+
+                                }
                             </View>
                             <View>
+                                {
+                                    route.params.data.tagList.length != 0 &&
                                 <TouchableOpacity>
-                                    <Icon name="chevron-down" size={32} color ="#000" ></Icon></TouchableOpacity>
+                                    <Icon name="chevron-down" size={32} color ="#000" ></Icon></TouchableOpacity>}
                             </View>
                         </View>
 
@@ -263,6 +303,10 @@ else if(typeOfPage=="report"){
 
                         <View style={AR_styles.myCard}>
                             <View style={AR_styles.cardHeader}>
+                                {route.params.data.description.length == 0 &&
+                                    <Text style = {styles.noDescription}>לא נוסף תיאור</Text>
+
+                                }
                                 <Text>{route.params.data.description}</Text>
                             </View>
                         </View>
@@ -270,12 +314,16 @@ else if(typeOfPage=="report"){
                         <View style = {AR_styles.ownerData}>
 
                             <Text style = {styles.whenText}>המדווח:   יוסף יוסף</Text>
-                            <View style={AR_styles.verticalLine}></View>
-                            <TouchableOpacity
+                            {route.params.contact &&
+                                <View style={AR_styles.verticalLine}>
+
+                                </View>}
+                            {route.params.contact &&
+                                <TouchableOpacity
                                 style={AR_styles.contact}>
                                 <Text style={AR_styles.contactTitle}>צור קשר</Text>
 
-                            </TouchableOpacity>
+                            </TouchableOpacity>}
                         </View>
                         {/*<View style={styles.dogOwner}>*/}
                         {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
@@ -345,10 +393,19 @@ else if(typeOfPage=="report"){
                                     </Chip>
                                 ))}
                             </View>
+                            {
+                                route.params.data.tagList.length == 0 &&
+                                <View justifyContent="center" alignSelf = "center" alignItems = "center" marginHorizontal = "5%">
+
+                                    <Text style = {styles.newText}>לא נוספו תגיות</Text></View>
+
+                            }
+                            {
+                                route.params.data.tagList.length != 0 &&
                             <View justifyContent="center" alignSelf = "center" alignItems = "center">
                                 <TouchableOpacity>
                                     <Icon name="chevron-down" size={34} color ="#000" justifyContent="center" alignSelf = "center" alignItems = "center"></Icon></TouchableOpacity>
-                            </View>
+                            </View>}
                         </View>
 
                         {/*<View marginTop="3%" ><Text style = {styles.descriptionText}>תיאור</Text></View>*/}
@@ -356,6 +413,10 @@ else if(typeOfPage=="report"){
 
                         <View style={AR_styles.myCard}>
                             <View style={AR_styles.cardHeader}>
+                                {route.params.data.description.length == 0 &&
+                                    <Text style = {styles.noDescription}>לא נוסף תיאור</Text>
+
+                                }
                                 <Text>{route.params.data.description}</Text>
                             </View>
                         </View>
@@ -446,6 +507,7 @@ const styles = StyleSheet.create({
     containerChips: {
         width: Dimensions.get("window").width / 1.2,
         alignSelf:"center",
+        borderRadius: 20,
 
         backgroundColor :"#DCA277",
         flexDirection: "row",
@@ -453,7 +515,17 @@ const styles = StyleSheet.create({
     },
     dogOwner: {
         marginHorizontal: "3%",
-    }
+    },
+    newText:{
+        fontSize:18,
+        color:"#FFFFFF",
+        fontWeight:"bold"
+    },
+    noDescription: {
+        fontSize:18,
+        fontWeight:"bold"
+    },
+
 });
 
 

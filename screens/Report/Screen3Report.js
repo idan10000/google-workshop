@@ -50,23 +50,23 @@ export default function Screen3Report({route, navigation}) {
         currentStepIndicatorSize:30,
         separatorStrokeWidth: 2,
         currentStepStrokeWidth: 3,
-        stepStrokeCurrentColor: '#fe7013',
+        stepStrokeCurrentColor: "#DCA277",
         stepStrokeWidth: 3,
-        stepStrokeFinishedColor: '#fe7013',
+        stepStrokeFinishedColor: "#DCA277",
         stepStrokeUnFinishedColor: '#aaaaaa',
-        separatorFinishedColor: '#fe7013',
+        separatorFinishedColor: "#DCA277",
         separatorUnFinishedColor: '#aaaaaa',
-        stepIndicatorFinishedColor: '#fe7013',
+        stepIndicatorFinishedColor: "#DCA277",
         stepIndicatorUnFinishedColor: '#ffffff',
         stepIndicatorCurrentColor: '#ffffff',
         stepIndicatorLabelFontSize: 13,
         currentStepIndicatorLabelFontSize: 13,
-        stepIndicatorLabelCurrentColor: '#fe7013',
+        stepIndicatorLabelCurrentColor: "#DCA277",
         stepIndicatorLabelFinishedColor: '#ffffff',
         stepIndicatorLabelUnFinishedColor: '#aaaaaa',
         // labelColor: '#000',
         labelSize: 13,
-        currentStepLabelColor: '#fe7013'
+        currentStepLabelColor: "#DCA277"
     }
     const {user} = useContext(AuthenticatedUserContext);
     console.log(route.params)
@@ -177,7 +177,7 @@ export default function Screen3Report({route, navigation}) {
                 navigation.pop()
                 navigation.pop()
 
-                navigation.navigate("ReportPage", {data: sendReport, ref: docRef.id})
+                navigation.navigate("ReportPage", {data: sendReport, ref: docRef.id, contact: checked})
             }).catch(error => {
                 console.log(error)
             });
@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 10,
         backgroundColor: "#DCA277",
-        marginVertical:"5%",
+        marginVertical:"7.5%",
         width: Dimensions.get("window").width / 2.2,
 
     },
@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
         marginTop:"5%",
     },
     inDescription:{
-        height: Dimensions.get("window").height*0.3
+        height: Dimensions.get("window").height*0.2
 
     },
     chips: {
