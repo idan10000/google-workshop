@@ -10,7 +10,7 @@ import * as Location from "expo-location";
 import MapView, { Callout, Circle, Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
 
-export default function Map() {
+export default function Map({startLocation}) {
   const sheetRef = React.useRef(null);
   // user live location :
   const [location, setLocation] = useState(null);

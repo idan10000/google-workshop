@@ -39,9 +39,10 @@ export default function Screen2Report({route, navigation}) {
 
 
     }
+    const initLocation = route.params.edit ? route.params.data.location : 0
+
     const nextScreen = async () => {
         // navigation.pop()
-        let initLocation = route.params.edit ? route.params.data.location : "2"
 
         navigation.navigate("ReportCreation3", {report : "none",location: initLocation, image: route.params.image ,edit : route.params.edit, ref: route.params.ref})
 
@@ -58,7 +59,7 @@ export default function Screen2Report({route, navigation}) {
                     stepCount={3}
                 /></View>
 
-                <Map >
+                <Map startLocation = {initLocation}>
                 </Map>
 
             <TouchableOpacity
