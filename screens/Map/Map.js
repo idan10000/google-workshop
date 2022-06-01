@@ -9,7 +9,6 @@ import {
 import * as Location from "expo-location";
 import MapView, { Callout, Circle, Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
-import { Nofar_styles } from "../utils/Nofar_style";
 
 export default function Map() {
   const sheetRef = React.useRef(null);
@@ -63,7 +62,7 @@ export default function Map() {
     );
 
   return (
-    <View style={{ marginTop: 50, flex: 1 }}>
+    <View >
       <MapView
         style={styles.map}
         initialRegion={{
@@ -94,7 +93,7 @@ export default function Map() {
         </Marker>
         <Circle
           center={pin}
-          radius={4000}
+          radius={1000}
           strokeWidth={8}
           strokeColor={"grey"}
         />
@@ -111,7 +110,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   map: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
-  },
+    marginVertical: "2.5%",
+    width: Dimensions.get("window").width/1.2,
+    justifyContent:"center",
+    alignSelf:"center",
+    height: Dimensions.get("window").height / 1.5,  },
 });

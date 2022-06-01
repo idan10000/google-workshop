@@ -287,6 +287,8 @@ export default function Screen3Report({route, navigation}) {
                 onChangeText={setDescription}
                 mode={'outlined'}
                 multiline={true}
+                activeUnderlineColor="#000000"
+                activeOutlineColor="#000000"
             />
         </View>
                 <View style = {styles.checkboxContainer}>
@@ -309,6 +311,8 @@ export default function Screen3Report({route, navigation}) {
                         value={phoneText}
                         onChangeText={setPhone}
                         mode={'outlined'}
+                        activeUnderlineColor="#000000"
+                        activeOutlineColor="#000000"
                     />
                 </View>}
         </View>

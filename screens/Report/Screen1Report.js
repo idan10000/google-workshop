@@ -179,6 +179,7 @@ export default function Screen1Report({route, navigation}) {
     let image = route.params.edit ? report.image : route.params.image
 
     return (
+        <ScrollView  style = {Nofar_styles.container} >
 
             <Provider>
                 {/*Modal (pop up screen) for selecting the tags describing the dog*/}
@@ -205,7 +206,7 @@ export default function Screen1Report({route, navigation}) {
                     </View>
                 </View>
             </Provider>
-
+        </ScrollView>
     );
 };
 
@@ -227,7 +228,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 20,
         backgroundColor: "#DCA277",
-        marginTop:"5%",
+        marginVertical:"5%",
         width: Dimensions.get("window").width / 2.2,
         marginLeft: (Dimensions.get("window").width - Dimensions.get("window").width / 1.2)/2
 
