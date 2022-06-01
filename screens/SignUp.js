@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import {signUpStyle} from "../styles/SignUpStyle";
 import {Nofar_styles} from "../styles/NofarStyle";
 import {fireAuth, fireStoreDB} from "../shared_components/Firebase";
-import {createUserWithEmailAndPassword, getAuth,} from 'firebase/auth';
+import {createUserWithEmailAndPassword, getAuth, updatePhoneNumber, updateProfile} from 'firebase/auth';
 import {getFirestore, setDoc, doc} from 'firebase/firestore';
 import {getDatabase, ref, set} from "firebase/database";
 
@@ -93,38 +93,27 @@ export default function SignUp({navigation}) {
     // Handle user state changes
     async function onAuthStateChanged(newUser) {
         console.log("on auth changed")
-        if (initializing) setInitializing(false);
-        // const db = getFirestore();
-        // const database = getDatabase();
-        // await set(ref(database, 'users/' + newUser.uid), {
-        //     username: "test",
-        // });
-        console.log(newUser)
         await setDoc(doc(fireStoreDB, "Users", newUser.uid), {
-            // name: name,
-            // email: email,
-            // phone: phone,
+            name: name,
+            email: email,
+            phone: phone,
             reports: [],
             posters: []
         }).then(() => {
         }).catch(error => {
             console.log(error)
         })
-        // newUser.sendEmailVerification()
-
     }
 
     useEffect(() => {
         return fireAuth.onAuthStateChanged(onAuthStateChanged); // unsubscribe on unmount
-    }, []);
+    }, [name, phone, email]);
 
-    function handleSubmitPress(props) {
+    async function handleSubmitPress(props) {
         console.log("handle submit press")
-        createUserWithEmailAndPassword(fireAuth, props.Email, props.Password)
+        await createUserWithEmailAndPassword(fireAuth, props.Email, props.Password)
             .then((result) => {
-                // getAuth().currentUser.sendEmailVerification()
-                // result.user.updatePhoneNumber(props.PhoneNumber)
-                // result.user.updateProfile({displayName:props.Name})
+
             })
             .catch(error => {
                 if (error.code === 'auth/email-already-in-use') {
@@ -250,6 +239,7 @@ export default function SignUp({navigation}) {
                                     onChangeText={(phone) => {
                                         props.handleChange('PhoneNumber')(phone)
                                         onChangePhone(phone)
+                                        console.log(phone)
                                     }}
                                     value={props.values.PhoneNumber}
                                     onBlur={props.handleBlur('PhoneNumber')}
