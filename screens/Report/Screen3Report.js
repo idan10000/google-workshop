@@ -1,5 +1,5 @@
 import {StyleSheet, View, ImageBackground, Dimensions, ScrollView} from 'react-native';
-import {Button, Chip, Modal, Portal, Provider, TextInput} from 'react-native-paper';
+import {Button, Chip, Modal, Portal, Provider, TextInput, Checkbox} from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import {getAuth, signOut} from "firebase/auth";
 import {Text, TouchableOpacity, Image} from "react-native";
@@ -14,6 +14,7 @@ import {fireStoreDB, uploadImageAsync} from "../../shared_components/Firebase";
 import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
 import {addDoc, arrayUnion, collection, doc, setDoc, updateDoc} from "firebase/firestore";
 import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
+import CheckBox from '@react-native-community/checkbox';
 
 export default function Screen3Report({route, navigation}) {
     let report = route.params.report
@@ -184,7 +185,15 @@ export default function Screen3Report({route, navigation}) {
     }
     // const initDescription = route.params.edit ? report.description : ''
     const initDescription =''
+    const initPhone = "0547323711"
+    // const initPhone = route.params.edit ? report.description : '' need to fix according to real data
+
     const [descriptionText, setDescription] = React.useState(initDescription);
+    const [phoneText, setPhone] = React.useState(initPhone);
+
+
+    const [checked, setChecked] = React.useState(true);
+
     return (
         <ScrollView  style = {Nofar_styles.container} >
             <Provider>
@@ -244,7 +253,6 @@ export default function Screen3Report({route, navigation}) {
                 >
                     <Text style={Nofar_styles.TinyButtonTitle}>הוסף תגיות</Text>
                 </TouchableOpacity>
-
             </View>
             {/*<View style={styles.chips}>*/}
             {/*    {modalTags.map((item, index) => (*/}
@@ -281,6 +289,28 @@ export default function Screen3Report({route, navigation}) {
                 multiline={true}
             />
         </View>
+                <View style = {styles.checkboxContainer}>
+                    <Checkbox
+                        color = "#DCA277"
+                        status={checked ? 'checked' : 'unchecked'}
+                        onPress={() => {
+                            setChecked(!checked);
+                        }}
+                    />
+                <View marginTop= "1.5%">
+                    <Text style = {Nofar_styles.TinyButtonTitleBlack}>אפשר יצירת קשר</Text>
+                </View>
+                </View>
+                {checked &&
+                    <View style={styles.phoneContainer}>
+                    <TextInput
+                        dense={false}
+                        placeholder={'הוסף טלפון'}
+                        value={phoneText}
+                        onChangeText={setPhone}
+                        mode={'outlined'}
+                    />
+                </View>}
         </View>
             <TouchableOpacity
                 onPress={nextScreen}
@@ -336,6 +366,20 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop:"5%",
         width: Dimensions.get("window").width*0.85,
+    },
+    phoneContainer:{
+        marginRight: "7.5%",
+        marginLeft: "7.5%",
+        marginTop:"2.5%",
+
+        justifyContent: "center",
+        width: Dimensions.get("window").width*0.85,
+    },
+    checkboxContainer:{
+        marginRight: "5%",
+        marginLeft: "5%",
+        flexDirection : "row",
+        marginTop:"5%",
     },
     inDescription:{
         height: Dimensions.get("window").height*0.3

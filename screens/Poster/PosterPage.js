@@ -381,6 +381,14 @@ else if(typeOfPage=="report"){
                                 <Text style={Nofar_styles.BigButtonText}>פתח מיקום במפה</Text>
                             </TouchableOpacity>
                         </View>
+                        <View style={AR_styles.confirmBTContainer}>
+                            <TouchableOpacity
+                                style={Nofar_styles.BigButton}
+                                onPress={editButtonPressHandler}
+                            >
+                                <Text style={Nofar_styles.BigButtonText}>עדכן את הדיווח</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </ScrollView>
 
