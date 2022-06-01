@@ -5,11 +5,21 @@ import {
     IconButton,
     Menu,
 } from 'react-native-paper';
-import {View, StyleSheet, FlatList, Dimensions, ImageBackground, TouchableOpacity,Text} from 'react-native'
+import {
+    View,
+    StyleSheet,
+    FlatList,
+    Dimensions,
+    ImageBackground,
+    TouchableOpacity,
+    Text,
+    RefreshControl
+} from 'react-native'
 import PostListItem from '../../shared_components/PostListItem'
 import Report from "../../data_classes/Report";
-import {addDoc, arrayUnion, collection, doc, getFirestore, setDoc, updateDoc} from "firebase/firestore";
+import {addDoc, arrayUnion, collection, doc, getDoc, getFirestore, setDoc, updateDoc} from "firebase/firestore";
 import {getDocuments, getInitialData, getNextData} from "./InfiniteScroll"
+import {fireStoreDB} from "../../shared_components/Firebase";
 
 const BrowsePage = ({navigation, route}) => {
     const {collectionPath, destination} = route.params
@@ -48,9 +58,10 @@ const BrowsePage = ({navigation, route}) => {
     })
 
 
-    useEffect(() => {
+    useEffect(async () => {
         // Load initial batch documents when main component mounted.
-        getInitialData(setData, collectionPath);
+        await getInitialData(setData, collectionPath);
+        setRefreshing(false);
     }, []);
 
 
@@ -65,6 +76,18 @@ const BrowsePage = ({navigation, route}) => {
             </View>
         )
     }
+
+    //---------------------- Refresh ----------------------
+    const [refreshing, setRefreshing] = useState(true);
+
+    const refreshItems = () => {
+        console.log("start refreshing")
+        getInitialData(setData, collectionPath).then(() =>{
+            setRefreshing(false);
+            console.log("Finished refreshing")
+        });
+    }
+
     console.log(collectionPath)
     console.log(data.docs)
     return (
@@ -112,6 +135,9 @@ const BrowsePage = ({navigation, route}) => {
                           keyExtractor={(item) => item.image}
                           onEndReached={() => getNextData(data,setData,collectionPath)}
                           onEndReachedThreshold={0.5}
+                          refreshControl={
+                              <RefreshControl refreshing={refreshing} onRefresh={refreshItems} />
+                          }
                           numColumns={2}
                           renderItem={({item}) => {
                               console.log(item.image)
