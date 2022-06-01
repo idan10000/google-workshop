@@ -8,7 +8,6 @@ import React, {useContext} from "react";
 import {Nofar_styles} from "../../styles/NofarStyle";
 import StepIndicator from 'react-native-step-indicator';
 import {stylesPoster} from "../CreatePoster/CreatePosterStyle";
-import {AR_styles} from "./ReportStyle";
 import Report, {reportConverter} from "../../data_classes/Report";
 import {fireStoreDB, uploadImageAsync} from "../../shared_components/Firebase";
 import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
@@ -16,7 +15,7 @@ import {addDoc, arrayUnion, collection, doc, setDoc, updateDoc} from "firebase/f
 import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
 import CheckBox from '@react-native-community/checkbox';
 
-export default function Screen3Report({route, navigation}) {
+export default function Screen3Poster({route, navigation}) {
     let report = route.params.report
 
     const tagList = [
@@ -197,137 +196,150 @@ export default function Screen3Report({route, navigation}) {
         <ScrollView  style = {Nofar_styles.container} >
             <Provider>
 
-        <View style = {Nofar_styles.container}>
-            <View  marginTop="2.5%">
-                <StepIndicator
-                    customStyles={customStyles}
-                    currentPosition={2}
-                    labels={labels}
-                    stepCount={3}
-                /></View>
-            <View marginHorizontal = "7.5%" marginTop ="2.5%" marginBottom ="2.5%">
+                <View style = {Nofar_styles.container}>
+                    <View  marginTop="2.5%">
+                        <StepIndicator
+                            customStyles={customStyles}
+                            currentPosition={2}
+                            labels={labels}
+                            stepCount={3}
+                        /></View>
+                    <View marginHorizontal = "7.5%" marginTop = "2.5%" >
 
-            <Text style = {styles.textFound}>תיאור הכלב שנמצא:</Text></View>
-            <Portal>
-                {/*Tags*/}
-                <Modal
-                    visible={visibleTag}
-                    onDismiss={modalConfirmPressHandler}
-                    contentContainerStyle={stylesPoster.modal}
-                >
+                        <Text style = {styles.textFound}>תיאור הכלב: </Text></View>
+                        <View style = {styles.dogNameContainer}>
 
-                    <View>
-                        <Text style={{...Nofar_styles.SmallTitle, paddingBottom: "3%"}}>בחר תגיות:</Text>
+                    <Text style = {Nofar_styles.TinyButtonTitleBlack}>שם הכלב: </Text></View>
+
+                <View style={styles.nameContainer}>
+                        <TextInput
+                            style={styles.nameOfDog}
+                            dense={false}
+                            placeholder={'הכנס שם...'}
+                            value={descriptionText}
+                            onChangeText={setDescription}
+                            mode={'outlined'}
+                            multiline={true}
+                            activeUnderlineColor="#000000"
+                            activeOutlineColor="#000000"
+                        />
                     </View>
-                    <View style={stylesPoster.chips}>
-                        {modalTags.map((item, index) => (
-                            <Chip
-                                key={index}
-                                selected={modalTags[index].state}
-                                onPress={() => modalChipHandler(index)}
-                                style={Nofar_styles.chips}
-                            >
-                                {item.tag}
-                            </Chip>
-                        ))}
-                    </View>
-                    <View style={{...stylesPoster.modalButtonContainer, paddingTop: "3%"}}>
-                        <TouchableOpacity
-                            style={Nofar_styles.TinyButton}
-                            onPress={modalConfirmPressHandler}
+                    <Portal>
+                        {/*Tags*/}
+                        <Modal
+                            visible={visibleTag}
+                            onDismiss={modalConfirmPressHandler}
+                            contentContainerStyle={stylesPoster.modal}
                         >
-                            <Text style={Nofar_styles.TinyButtonTitle}>אישור</Text>
+
+                            <View>
+                                <Text style={{...Nofar_styles.SmallTitle, paddingBottom: "3%"}}>בחר תגיות:</Text>
+                            </View>
+                            <View style={stylesPoster.chips}>
+                                {modalTags.map((item, index) => (
+                                    <Chip
+                                        key={index}
+                                        selected={modalTags[index].state}
+                                        onPress={() => modalChipHandler(index)}
+                                        style={Nofar_styles.chips}
+                                    >
+                                        {item.tag}
+                                    </Chip>
+                                ))}
+                            </View>
+                            <View style={{...stylesPoster.modalButtonContainer, paddingTop: "3%"}}>
+                                <TouchableOpacity
+                                    style={Nofar_styles.TinyButton}
+                                    onPress={modalConfirmPressHandler}
+                                >
+                                    <Text style={Nofar_styles.TinyButtonTitle}>אישור</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </Modal>
+
+                        {/*Details*/}
+
+                    </Portal>
+                    <View style={styles.addTagsBTContainer}>
+                        <TouchableOpacity
+                            // comapct={false}
+                            style={styles.button}
+                            onPress={showTagModal}
+                        >
+                            <Text style={Nofar_styles.TinyButtonTitle}> הוסף תגיות לתיאור הכלב:</Text>
                         </TouchableOpacity>
                     </View>
-                </Modal>
+                    {/*<View style={styles.chips}>*/}
+                    {/*    {modalTags.map((item, index) => (*/}
+                    {/*        <Chip*/}
+                    {/*            key={index}*/}
+                    {/*            selected={modalTags[index].state}*/}
+                    {/*            onPress={() => modalChipHandler(index)}*/}
+                    {/*            style={styles.chip}*/}
+                    {/*        >*/}
+                    {/*            {item.tag}*/}
+                    {/*        </Chip>*/}
+                    {/*    ))}*/}
+                    {/*</View>*/}
+                    <View style={{...stylesPoster.chips, marginLeft: "2%"}}>
+                        {
+                            selectedTags.map((item, index) => (
+                                <Chip key={index}
+                                      icon={"close"}
+                                      selected={false}
+                                      style={{...Nofar_styles.chips, marginTop: "2.5%"}}
+                                      onPress={() => selectedTagPressHandler(item.tag)}>{item.tag}</Chip>
+                            ))
+                        }
+                    </View>
+                    <View>
+                        <View style = {styles.dogNameContainer}>
 
-                {/*Details*/}
+                            <Text style = {Nofar_styles.TinyButtonTitleBlack}>תיאור: </Text></View>
+                        <View style={styles.descriptionContainer}>
 
-            </Portal>
-            <View style={styles.addTagsBTContainer}>
-                <TouchableOpacity
-                    // comapct={false}
-                    style={styles.button}
-                    onPress={showTagModal}
-                >
-                    <Text style={Nofar_styles.TinyButtonTitle}>הוסף תגיות לתיאור הכלב:</Text>
-                </TouchableOpacity>
-            </View>
-            {/*<View style={styles.chips}>*/}
-            {/*    {modalTags.map((item, index) => (*/}
-            {/*        <Chip*/}
-            {/*            key={index}*/}
-            {/*            selected={modalTags[index].state}*/}
-            {/*            onPress={() => modalChipHandler(index)}*/}
-            {/*            style={styles.chip}*/}
-            {/*        >*/}
-            {/*            {item.tag}*/}
-            {/*        </Chip>*/}
-            {/*    ))}*/}
-            {/*</View>*/}
-            <View style={{...stylesPoster.chips, marginLeft: "2%"}}>
-                {
-                    selectedTags.map((item, index) => (
-                        <Chip key={index}
-                              icon={"close"}
-                              selected={false}
-                              style={{...Nofar_styles.chips, marginTop: "2.5%"}}
-                              onPress={() => selectedTagPressHandler(item.tag)}>{item.tag}</Chip>
-                    ))
-                }
-            </View>
-            <View>
-            <View style={styles.descriptionContainer}>
-            <TextInput
-                style={styles.inDescription}
-                dense={false}
-                placeholder={'הוסף תיאור...'}
-                value={descriptionText}
-                onChangeText={setDescription}
-                mode={'outlined'}
-                multiline={true}
-                activeUnderlineColor="#000000"
-                activeOutlineColor="#000000"
-            />
-        </View>
-                <View style = {styles.checkboxContainer}>
-                    <Checkbox
-                        color = "#DCA277"
-                        status={checked ? 'checked' : 'unchecked'}
-                        onPress={() => {
-                            setChecked(!checked);
-                        }}
-                    />
-                <View >
-                    <Text style = {Nofar_styles.TinyButtonTitleBlack}>אפשר יצירת קשר</Text>
+                            <TextInput
+                                style={styles.inDescription}
+                                dense={false}
+                                placeholder={'הוסף תיאור...'}
+                                value={descriptionText}
+                                onChangeText={setDescription}
+                                mode={'outlined'}
+                                multiline={true}
+                                activeUnderlineColor="#000000"
+                                activeOutlineColor="#000000"
+                            />
+                        </View>
+                        <View style = {styles.checkboxContainer}>
+                            <View >
+                                <Text style = {Nofar_styles.TinyButtonTitleBlack}>פרטי יצירת קשר</Text>
+                            </View>
+                        </View>
+                            <View style={styles.phoneContainer}>
+                                <TextInput
+                                    dense={false}
+                                    placeholder={'הוסף טלפון'}
+                                    value={phoneText}
+                                    onChangeText={setPhone}
+                                    mode={'outlined'}
+                                    activeUnderlineColor="#000000"
+                                    activeOutlineColor="#000000"
+                                />
+                            </View>
+                    </View>
+                    <TouchableOpacity
+                        onPress={nextScreen}
+
+                        style={styles.proceedButton}>
+                        <Text style={Nofar_styles.TinyButtonTitle}>העלאת מודעה</Text>
+
+                    </TouchableOpacity>
                 </View>
-                </View>
-                {checked &&
-                    <View style={styles.phoneContainer}>
-                    <TextInput
-                        dense={false}
-                        placeholder={'הוסף טלפון'}
-                        value={phoneText}
-                        onChangeText={setPhone}
-                        mode={'outlined'}
-                        activeUnderlineColor="#000000"
-                        activeOutlineColor="#000000"
-                    />
-                </View>}
-        </View>
-            <TouchableOpacity
-                onPress={nextScreen}
-
-                style={styles.proceedButton}>
-                <Text style={Nofar_styles.TinyButtonTitle}>יצירת דיווח</Text>
-
-            </TouchableOpacity>
-        </View>
-                </Provider>
+            </Provider>
 
         </ScrollView >
 
-            );
+    );
 }
 
 const styles = StyleSheet.create({
@@ -367,7 +379,13 @@ const styles = StyleSheet.create({
         marginRight: "7.5%",
         marginLeft: "7.5%",
         justifyContent: "center",
-        marginTop:"5%",
+        width: Dimensions.get("window").width*0.85,
+    },
+    nameContainer:{
+        marginBottom: "5%",
+        marginRight: "7.5%",
+        marginLeft: "7.5%",
+        justifyContent: "center",
         width: Dimensions.get("window").width*0.85,
     },
     phoneContainer:{
@@ -378,8 +396,7 @@ const styles = StyleSheet.create({
         width: Dimensions.get("window").width*0.85,
     },
     checkboxContainer:{
-        marginRight: "5%",
-        marginLeft: "5%",
+        marginHorizontal: "7.5%",
         flexDirection : "row",
         marginTop:"5%",
     },
@@ -397,6 +414,7 @@ const styles = StyleSheet.create({
 
         paddingHorizontal:"7.5%",
     }, textFound: {
+        textDecorationLine: 'underline',
 
         fontSize:20,
         lineHeight:25,
@@ -415,6 +433,11 @@ const styles = StyleSheet.create({
     addTagsBTContainer: {
         paddingTop:"2%",
         flexDirection:"row",
-    },
+    }, dogNameContainer: {
+        marginTop:"2.5%",
+        marginHorizontal: "7.5%",
+        flexDirection : "row",
+    }
+
 
 });

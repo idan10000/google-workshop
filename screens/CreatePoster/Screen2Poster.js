@@ -9,7 +9,7 @@ import {Nofar_styles} from "../../styles/NofarStyle";
 import StepIndicator from 'react-native-step-indicator';
 import Map from "../Map/Map";
 
-export default function Screen2Report({route, navigation}) {
+export default function Screen2Poster({route, navigation}) {
     // console.log(route.params.data)
 
     const labels = ["תמונה","מיקום","פרטים"];
@@ -46,31 +46,31 @@ export default function Screen2Report({route, navigation}) {
     const nextScreen = async () => {
         // navigation.pop()
 
-        navigation.navigate("ReportCreation3", {report :report,location: initLocation, image: route.params.image ,edit : route.params.edit, ref: route.params.ref})
+        navigation.navigate("PosterCreation3", {report :report,location: initLocation, image: route.params.image ,edit : route.params.edit, ref: route.params.ref})
 
     }
     return (
         <ScrollView  style = {Nofar_styles.container} >
 
-        <View style = {Nofar_styles.container}>
-            <View         marginTop="2.5%">
-                <StepIndicator
-                    customStyles={customStyles}
-                    currentPosition={1}
-                    labels={labels}
-                    stepCount={3}
-                /></View>
+            <View style = {Nofar_styles.container}>
+                <View         marginTop="2.5%">
+                    <StepIndicator
+                        customStyles={customStyles}
+                        currentPosition={1}
+                        labels={labels}
+                        stepCount={3}
+                    /></View>
 
                 <Map startLocation = {initLocation}>
                 </Map>
 
-            <TouchableOpacity
-                onPress={nextScreen}
-                style={styles.proceedButton}>
-                <Text style={Nofar_styles.TinyButtonTitle}>המשך</Text>
+                <TouchableOpacity
+                    onPress={nextScreen}
+                    style={styles.proceedButton}>
+                    <Text style={Nofar_styles.TinyButtonTitle}>המשך</Text>
 
-            </TouchableOpacity>
-        </View>
+                </TouchableOpacity>
+            </View>
         </ScrollView >
 
     );

@@ -16,6 +16,7 @@ export default function ReportPage({ route, navigation }) {
       ref: route.params.ref
     });
   };
+  console.log(555555555)
 
   console.log(route.params.data)
 

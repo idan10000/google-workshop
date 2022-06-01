@@ -12,12 +12,15 @@ import PosterBrowse from '../screens/Poster/PosterBrowse';
 import Screen1Report from "../screens/Report/Screen1Report";
 import Screen2Report from "../screens/Report/Screen2Report";
 import Screen3Report from "../screens/Report/Screen3Report";
+import Screen2Poster from "../screens/CreatePoster/Screen2Poster";
+import Screen3Poster from "../screens/CreatePoster/Screen3Poster";
 import {registerForPushNotificationsAsync} from '../shared_components/NotificationsUtils'
 import * as Notifications from 'expo-notifications';
 import {fireStoreDB} from "../shared_components/Firebase";
 import {doc, setDoc, updateDoc} from "firebase/firestore";
 import {useContext, useEffect, useRef, useState} from "react";
 import {AuthenticatedUserContext} from "./AuthenticatedUserProvider";
+import Screen1Poster from "../screens/CreatePoster/Screen1Poster";
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -76,9 +79,11 @@ export default function HomeStack() {
             <Stack.Screen name="ReportCreation2" component={Screen2Report}/>
             <Stack.Screen name="ReportCreation3" component={Screen3Report}/>
 
-
+            <Stack.Screen name="PosterCreation" component={Screen1Poster}/>
+            <Stack.Screen name="PosterCreation2" component={Screen2Poster}/>
+            <Stack.Screen name="PosterCreation3" component={Screen3Poster}/>
             <Stack.Screen name="ReportPage" component={ReportPage}/>
-            <Stack.Screen name="CreateAd" component={PosterPostingComponent}/>
+            {/*<Stack.Screen name="CreateAd" component={PosterPostingComponent}/>*/}
             <Stack.Screen name="AdPage" component={AdPage}/>
             <Stack.Screen name="התראות" component={NotificationsPage} />
             {/* <Stack.Screen name="ReportForBrowse" component={ReportForBrowse}/> */}

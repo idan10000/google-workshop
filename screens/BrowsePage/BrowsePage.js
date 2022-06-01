@@ -94,7 +94,7 @@ const BrowsePage = ({navigation, route}) => {
                 {/*</View>*/}
 
                 <View style={styles.Search}>
-                    <Text style = {styles.textSort}>מיין לפי:</Text>
+                    <Text style = {styles.textSort}>מיון לפי:</Text>
                 </View>
                 {/*<IconButton*/}
                 {/*    icon={"filter"}*/}

@@ -53,7 +53,7 @@ export default function HomePage({navigation}) {
     }
 
     const createPosterPressHandler = () => {
-        navigation.navigate('CreateAd',{edit:false})
+        navigation.navigate('PosterCreation',{edit:false})
     }
 
 
