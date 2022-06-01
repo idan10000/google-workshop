@@ -266,7 +266,6 @@ else if(typeOfPage=="report"){
                             </View>
 
 
-                            {/*} <Text style = {styles.whenText}>בתאריך: {route.params.data.date}</Text>*/}
 
                         </View >
                         <View style={{ ...Nofar_styles.Viewchips }}>
@@ -282,10 +281,10 @@ else if(typeOfPage=="report"){
                                         {item}
                                     </Chip>
                                 ))}
-                                {
+                                {route.params.data.tagList.length == 0 &&
+
                                     <View justifyContent="center" alignSelf = "center" alignItems = "center" marginHorizontal = "5%">
 
-                                    route.params.data.tagList.length == 0 &&
                                         <Text style = {styles.newText}>לא נוספו תגיות</Text></View>
 
                                 }
