@@ -14,9 +14,10 @@ import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
 import {addDoc, arrayUnion, collection, doc, setDoc, updateDoc} from "firebase/firestore";
 import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
 import CheckBox from '@react-native-community/checkbox';
+import Poster, {posterConverter} from "../../data_classes/Poster";
 
 export default function Screen3Poster({route, navigation}) {
-    let report = route.params.report
+    let prevPoster = route.params.poster
 
     const tagList = [
         {tag: "ביישן", state: false},
@@ -94,7 +95,7 @@ export default function Screen3Poster({route, navigation}) {
 
 
     // init tags with previous values if reached this page from an edit Report
-    const initSelectedTagList = route.params.edit ? report.tagList.map((tag) => ({tag: tag, state: false})) : []
+    const initSelectedTagList = route.params.edit ? prevPoster.tagList.map(({tag}) => ({tag: tag, state: false})) : []
     const initModalTagList = route.params.edit ?
         tagList.filter((item) => !initSelectedTagList.some(e => e.tag === item.tag)) : tagList
     const [modalTags, setModalTags] = React.useState(initModalTagList);
@@ -122,7 +123,17 @@ export default function Screen3Poster({route, navigation}) {
         setModalTags(prevTags => ([...prevTags, {tag: tag, state: false}]))
         setSelectedTags(prevSelected => (prevSelected.filter((prevSelected) => prevSelected.tag !== tag)))
     }
+    const initDescription = route.params.edit ? prevPoster.description : ''
+    const initName = route.params.edit ? prevPoster.name : ''
+
+    const initPhone =  route.params.edit ?prevPoster.phoneNumber : '0547323711'
+
+    const [descriptionText, setDescription] = React.useState(initDescription);
+    const [nameText, setName] = React.useState(initName);
+
+    const [phoneText, setPhone] = React.useState(initPhone);
     const nextScreen = async () => {
+
 
         //first confirming the tags
         // setSelectedTags((prevSelected) => {
@@ -140,57 +151,56 @@ export default function Screen3Poster({route, navigation}) {
         const plainTags = selectedTags.map((function (tag) {
             return tag.tag
         }))
+        let today = route.params.edit ? prevPoster.date : dd + '/' + mm + '/' + yyyy;
 
-        console.log(plainTags)
-        let image = route.params.edit ? report.image : route.params.image
+        const selectedImage = route.params.edit ? prevPoster.image : route.params.image
+        console.log(5555555555555555)
 
-        let today = route.params.edit ? report.date : dd + '/' + mm + '/' + yyyy;
-        const dbReport = new Report(image,"", route.params.location, today, plainTags, descriptionText,"",phoneText, user.uid) // Report to upload to DB
-        const sendReport = new Report(image, "", route.params.location, today, plainTags, descriptionText, "",phoneText, user.uid) // Report to send to the Report page
+        console.log(selectedImage)
+        console.log(today)
+        console.log(descriptionText)
+        console.log(nameText)
+        console.log(phoneText)
+
+        const dbPoster = new Poster(selectedImage, "", "", today, today, descriptionText, nameText, '',phoneText, user.uid)
+        const sendPoster = new Poster(selectedImage, "", "", today, plainTags, descriptionText, nameText, '',phoneText, user.uid)
         const db = fireStoreDB;
 
         // if we reached from an edit Report
         if (route.params.edit) {
-            // if the Report was changed, update the Report page
-            if (deepDiffer(sendReport, report)) {
-                const imageAndPath = await uploadImageAsync(image,"Reports")
-                dbReport.image = imageAndPath.link
-                dbReport.imagePath = imageAndPath.path
-                const docRef = await setDoc(doc(db,"Reports",route.params.ref).withConverter(reportConverter), dbReport).then(() => {
-                    console.log("updated Report page")
+            // if the prevPoster was changed, update the prevPoster page
+            if (deepDiffer(sendPoster, prevPoster)) {
+                const image = await uploadImageAsync(selectedImage, "Posters")
+                dbPoster.image = image.link
+                dbPoster.imagePath = image.path
+                const docRef = await setDoc(doc(db, "Posters", route.params.ref).withConverter(posterConverter), dbPoster).then(() => {
+                    console.log("updated Poster page")
                 }).catch(error => {
                     console.log(error)
                 });
             }
             navigation.pop()
-            navigation.navigate("ReportPage")
+            navigation.pop()
+            navigation.pop()
+            navigation.navigate("AdPage", {data: sendPoster, ref: route.params.ref})
         } else {
-            const imageAndPath = await uploadImageAsync(image,"Reports")
-            dbReport.image = imageAndPath.link
-            dbReport.imagePath = imageAndPath.path
-            const docRef = await addDoc(collection(db, "Reports").withConverter(reportConverter), dbReport)
-            console.log("uploaded Report")
-            await updateDoc(doc(db, "Users", user.uid), {reports: arrayUnion(docRef)}).then(() => {
-                // navigation.pop()
-                navigation.pop()
-                navigation.pop()
-                navigation.pop()
+            const image = await uploadImageAsync(selectedImage, "Posters")
+            dbPoster.image = image.link
+            dbPoster.imagePath = image.path
+            const docRef = await addDoc(collection(db, "Posters").withConverter(posterConverter), dbPoster)
 
-                navigation.navigate("ReportPage", {data: sendReport, ref: docRef.id, contact: checked})
+            // add poster page id to user posters
+            await updateDoc(doc(db, "Users", user.uid), {posters: arrayUnion(docRef)}).then(() => {
+                navigation.pop()
+                navigation.navigate("AdPage", {data: sendPoster, ref: docRef.id})
             }).catch(error => {
                 console.log(error)
             });
         }
     }
-    const initDescription = route.params.edit ? report.description : ''
-    const initPhone =  route.params.edit ? report.phoneNumber : '0547323711'
-    // const initPhone = route.params.edit ? report.description : '' need to fix according to real data
-
-    const [descriptionText, setDescription] = React.useState(initDescription);
-    const [phoneText, setPhone] = React.useState(initPhone);
 
 
-    const [checked, setChecked] = React.useState(true);
+
 
     return (
         <ScrollView  style = {Nofar_styles.container} >
@@ -204,9 +214,9 @@ export default function Screen3Poster({route, navigation}) {
                             labels={labels}
                             stepCount={3}
                         /></View>
-                    <View marginHorizontal = "7.5%" marginTop = "2.5%" >
+                    {/*<View marginHorizontal = "7.5%" marginTop = "2.5%" >*/}
 
-                        <Text style = {styles.textFound}>תיאור הכלב: </Text></View>
+                    {/*    <Text style = {styles.textFound}>תיאור הכלב: </Text></View>*/}
                         <View style = {styles.dogNameContainer}>
 
                     <Text style = {Nofar_styles.TinyButtonTitleBlack}>שם הכלב: </Text></View>
@@ -216,8 +226,8 @@ export default function Screen3Poster({route, navigation}) {
                             style={styles.nameOfDog}
                             dense={false}
                             placeholder={'הכנס שם...'}
-                            value={descriptionText}
-                            onChangeText={setDescription}
+                            value={nameText}
+                            onChangeText={setName}
                             mode={'outlined'}
                             multiline={true}
                             activeUnderlineColor="#000000"

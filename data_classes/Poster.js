@@ -1,6 +1,6 @@
 class Poster {
 
-    constructor(image, imagePath, location, date, tagList, description, dogName, dogBreed, user) {
+    constructor(image, imagePath, location, date, tagList, description, dogName, dogBreed,phoneNumber, user) {
         this.image = image;
         this.imagePath = imagePath;
         this.location = location;
@@ -10,6 +10,7 @@ class Poster {
         this.dogName = dogName;
         this.dogBreed = dogBreed
         this.user = user;
+        this.phoneNumber = phoneNumber
     }
 
 
@@ -27,12 +28,13 @@ export const posterConverter = {
             description: poster.description,
             dogName: poster.dogName,
             dogBreed: poster.dogBreed,
+            phoneNumber: poster.phoneNumber,
             user: poster.user
         };
     },
     fromFirestore: (snapshot, options) => {
         const data = snapshot.data(options);
-        return new Poster(data.image, data.imagePath, data.location, data.date, data.tagList, data.description, data.dogName, data.dogBreed, data.user);
+        return new Poster(data.image, data.imagePath, data.location, data.date, data.tagList, data.description, data.dogName, data.dogBreed,data.phoneNumber, data.user);
     }
 };
 

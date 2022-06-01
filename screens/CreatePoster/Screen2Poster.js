@@ -39,14 +39,14 @@ export default function Screen2Poster({route, navigation}) {
 
 
     }
-    let report = route.params.report
+    let prevPoster = route.params.poster
 
-    const initLocation = route.params.edit ? report.location : 0
+    const initLocation = route.params.edit ? prevPoster.location : 0
 
     const nextScreen = async () => {
         // navigation.pop()
 
-        navigation.navigate("PosterCreation3", {report :report,location: initLocation, image: route.params.image ,edit : route.params.edit, ref: route.params.ref})
+        navigation.navigate("PosterCreation3", {poster :prevPoster,location: initLocation, image: route.params.image ,edit : route.params.edit, ref: route.params.ref})
 
     }
     return (

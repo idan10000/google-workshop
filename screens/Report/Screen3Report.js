@@ -382,6 +382,7 @@ const styles = StyleSheet.create({
         marginLeft: "5%",
         flexDirection : "row",
         marginTop:"5%",
+        alignItems:"center"
     },
     inDescription:{
         height: Dimensions.get("window").height*0.2

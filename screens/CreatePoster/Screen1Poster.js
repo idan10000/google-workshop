@@ -28,8 +28,8 @@ export default function Screen1Poster({route, navigation}) {
     const nextScreen = async () => {
         // navigation.pop()
 
-
-        navigation.navigate("PosterCreation2", {image: route.params.image,edit: false, ref: route.params.ref})
+        console.log(selectedImage)
+        navigation.navigate("PosterCreation2", {image: selectedImage,edit: false, ref: route.params.ref})
 
     }
 

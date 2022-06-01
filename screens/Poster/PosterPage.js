@@ -11,10 +11,10 @@ export default function PosterPage({navigation, route, typeOfPage}) {
     console.log(route.params.data.description.length == 0)
 
     const editButtonPressHandler = () => {
-        console.log("opening Report screen");
-        console.log(route.params.ref)
-        navigation.navigate("CreateAd", {
-            poster: route.params.poster,
+        console.log("55555555");
+        console.log(route.params.data)
+        navigation.navigate("PosterCreation2", {
+            poster: route.params.data,
             edit: true,
             ref: route.params.ref
         });
@@ -73,7 +73,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 route.params.data.tagList.length == 0 &&
                                 <View justifyContent="center" alignSelf = "center" alignItems = "center" marginHorizontal = "5%">
 
-                                <Text style = {styles.newText}>לא נוספו תגיות</Text></View>
+                                <Text style = {styles.newText}>אין תגיות</Text></View>
 
                             }
                         </View>
@@ -91,7 +91,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                     <View style={AR_styles.myCard}>
                         <View style={AR_styles.cardHeader}>
                             {route.params.data.description.length == 0 &&
-                                <Text style = {styles.noDescription}>לא נוסף תיאור</Text>
+                                <Text style = {styles.noDescription}>אין תיאור</Text>
 
                             }
                                 <Text>{route.params.data.description}</Text>
@@ -182,7 +182,7 @@ else if(typeOfPage=="PosterForBrowse"){
                                     route.params.data.tagList.length == 0 &&
                                     <View justifyContent="center" alignSelf = "center" alignItems = "center" marginHorizontal = "5%">
 
-                                        <Text style = {styles.newText}>לא נוספו תגיות</Text></View>
+                                        <Text style = {styles.newText}>אין תגיות</Text></View>
 
                                 }
                             </View>
@@ -200,7 +200,7 @@ else if(typeOfPage=="PosterForBrowse"){
                         <View style={AR_styles.myCard}>
                             <View style={AR_styles.cardHeader}>
                                 {route.params.data.description.length == 0 &&
-                                    <Text style = {styles.noDescription}>לא נוסף תיאור</Text>
+                                    <Text style = {styles.noDescription}>אין תיאור</Text>
 
                                 }
                                 <Text>{route.params.data.description}</Text>
@@ -285,7 +285,7 @@ else if(typeOfPage=="report"){
 
                                     <View justifyContent="center" alignSelf = "center" alignItems = "center" marginHorizontal = "5%">
 
-                                        <Text style = {styles.newText}>לא נוספו תגיות</Text></View>
+                                        <Text style = {styles.newText}>אין תגיות</Text></View>
 
                                 }
                             </View>
@@ -303,7 +303,7 @@ else if(typeOfPage=="report"){
                         <View style={AR_styles.myCard}>
                             <View style={AR_styles.cardHeader}>
                                 {route.params.data.description.length == 0 &&
-                                    <Text style = {styles.noDescription}>לא נוסף תיאור</Text>
+                                    <Text style = {styles.noDescription}>אין תיאור</Text>
 
                                 }
                                 <Text>{route.params.data.description}</Text>
@@ -396,7 +396,7 @@ else if(typeOfPage=="report"){
                                 route.params.data.tagList.length == 0 &&
                                 <View justifyContent="center" alignSelf = "center" alignItems = "center" marginHorizontal = "5%">
 
-                                    <Text style = {styles.newText}>לא נוספו תגיות</Text></View>
+                                    <Text style = {styles.newText}>אין תגיות</Text></View>
 
                             }
                             {
@@ -413,7 +413,7 @@ else if(typeOfPage=="report"){
                         <View style={AR_styles.myCard}>
                             <View style={AR_styles.cardHeader}>
                                 {route.params.data.description.length == 0 &&
-                                    <Text style = {styles.noDescription}>לא נוסף תיאור</Text>
+                                    <Text style = {styles.noDescription}>אין תיאור</Text>
 
                                 }
                                 <Text>{route.params.data.description}</Text>
@@ -516,13 +516,13 @@ const styles = StyleSheet.create({
         marginHorizontal: "3%",
     },
     newText:{
-        fontSize:18,
+        fontSize:16,
         color:"#FFFFFF",
-        fontWeight:"bold"
+        // fontWeight:"bold"
     },
     noDescription: {
-        fontSize:18,
-        fontWeight:"bold"
+        fontSize:16,
+        // fontWeight:"bold"
     },
 
 });
