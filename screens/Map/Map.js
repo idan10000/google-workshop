@@ -99,15 +99,6 @@ export default function Map() {
           strokeColor={"grey"}
         />
       </MapView>
-      <View>
-        <Button
-          mode={"contained"}
-          style={Nofar_styles.BigButton}
-          onPress={() => {}}
-        >
-          <Text style={Nofar_styles.BigButtonText}>המשך במילוי הפרטים</Text>
-        </Button>
-      </View>
     </View>
   );
 }
