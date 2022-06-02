@@ -37,8 +37,11 @@ const clientOptions = {
 
 // Instantiates a client
 const predictionServiceClient = new PredictionServiceClient(clientOptions);
+// Create a new Expo SDK client
+// optionally providing an access token if you have enabled push security
+const expo = new Expo({accessToken: process.env.EXPO_ACCESS_TOKEN});
 
-const handlePosterPrediction = (predictions, uid, posterID) => {
+const handlePosterPrediction = (predictions, uid, poster) => {
     console.log("handling poster prediction")
     const predictionResultObj =
         prediction.ClassificationPredictionResult.fromValue(predictions[0]);
@@ -46,18 +49,19 @@ const handlePosterPrediction = (predictions, uid, posterID) => {
     for (const [, label] of predictionResultObj.displayNames.entries()) {
         labels.push(label.split("-")[1]);
     }
-    console.log(posterID)
     // TODO: add distance filter to the query
-    return db.collection("Reports").where("dogBreed", "array-contains-any", labels).get()
-        .then((querySnapshot) => {
-            return sendMatchNotification([uid], querySnapshot.docs).then(() => {
-                return db.collection("Posters").doc(posterID).update({"dogBreed": labels});
+    if (labels.length !== 0) {
+        return db.collection("Reports").where("dogBreed", "array-contains-any", labels).get()
+            .then((querySnapshot) => {
+                return sendMatchNotification([uid], querySnapshot.docs).then(() => {
+                    return poster.update({"dogBreed": labels});
+                });
             });
-        });
+    }
 }
 
 //TODO: add UID for notifications
-const handleReportPrediction = (predictions, uid, reportID) => {
+const handleReportPrediction = (predictions, uid, report) => {
     console.log("handling report prediction")
     const predictionResultObj =
         prediction.ClassificationPredictionResult.fromValue(predictions[0]);
@@ -66,27 +70,29 @@ const handleReportPrediction = (predictions, uid, reportID) => {
         labels.push(label.split("-")[1]);
     }
     // TODO: add distance filter to the query
-    return db.collection("Posters").where("dogBreed", "array-contains-any", labels).get()
-        .then((querySnapshot) => {
-            const uids = [];
-            // get all user ids from the relevant posters
-            querySnapshot.forEach((snapshot) => {
-                uids.push(snapshot.data().user);
-            });
-
-            console.log(`sending notifications from report of user ${uid}`);
-            if (uids.length > 0) {
-                return sendMatchNotification(uids, querySnapshot.docs).then(() => {
-                    return db.collection("Posters").doc(reportID).update({"dogBreed": labels});
+    if (labels.length !== 0) {
+        return db.collection("Posters").where("dogBreed", "array-contains-any", labels).get()
+            .then((querySnapshot) => {
+                const uids = [];
+                // get all user ids from the relevant posters
+                querySnapshot.forEach((snapshot) => {
+                    uids.push(snapshot.data().user);
                 });
-            } else {
-                return db.collection("Posters").doc(reportID).update({"dogBreed": labels});
-            }
-        });
+
+                console.log(`sending notifications from report of user ${uid}`);
+                if (uids.length > 0) {
+                    return sendMatchNotification(uids, [report]).then(() => {
+                        return report.update({"dogBreed": labels});
+                    });
+                } else {
+                    return report.update({"dogBreed": labels});
+                }
+            });
+    }
 };
 
 //TODO: add UID for notifications
-const getPrediction = (docID, image, uid, handlePrediction) => {
+const getPrediction = (doc, image, uid, handlePrediction) => {
     const endpoint = `projects/${project}/locations/` +
         `${location}/endpoints/${endpointId}`;
     console.log(endpoint);
@@ -110,7 +116,7 @@ const getPrediction = (docID, image, uid, handlePrediction) => {
     return predictionServiceClient.predict(request).then((result) => {
         console.log("Predict image classification response");
         const response = result[0];
-        return handlePrediction(response.predictions, uid, docID);
+        return handlePrediction(response.predictions, uid, doc);
     });
 }
 
@@ -125,7 +131,7 @@ exports.classifyPoster = functions.firestore
             console.log("download output:");
             const image = data[0].toString("base64");
             // Configure the endpoint resource
-            return getPrediction(snap.ref.id, image, snap.data().user, handlePosterPrediction);
+            return getPrediction(snap.ref, image, snap.data().user, handlePosterPrediction);
         });
     });
 
@@ -139,7 +145,7 @@ exports.classifyReport = functions.firestore
         return bucket.file(newValue.imagePath).download().then((data) => {
             const image = data[0].toString("base64");
             // Configure the endpoint resource
-            return getPrediction(snap.ref.id, image, snap.data().user, handleReportPrediction);
+            return getPrediction(snap.ref, image, snap.data().user, handleReportPrediction);
         });
     });
 
@@ -148,7 +154,6 @@ const sendMatchNotification = (uids, reports) => {
     console.log(uids)
     const promises = []
     for (const uid of uids) {
-        console.log(uid)
         const promise = db.doc("Users/" + uid).get();
         promises.push(promise);
     }
@@ -161,17 +166,15 @@ const sendMatchNotification = (uids, reports) => {
         //     pushTokens.push(token);
         // }
 
-        // Create a new Expo SDK client
-        // optionally providing an access token if you have enabled push security
-        const expo = new Expo({accessToken: process.env.EXPO_ACCESS_TOKEN});
 
-        // Create the messages that you want to send to clients
-        const messages = [];
-        const docUpdates = [];
+        //const docUpdates = [];
+        const tickets = [];
 
         for (const snapshot of snapshots) {
             const pushToken = snapshot.get("notificationsToken");
-            const notificationsPerUser = [];
+            //const notificationsPerUser = [];
+            // Create the messages that you want to send to clients
+            const messages = [];
             for (const report of reports) {
                 // Check that all your push tokens appear to be valid Expo push tokens
                 if (!Expo.isExpoPushToken(pushToken)) {
@@ -188,18 +191,10 @@ const sendMatchNotification = (uids, reports) => {
                     data: {report: reportID},
                 }
                 messages.push(message);
-                notificationsPerUser.push(message)
+                // notificationsPerUser.push(message)
             }
-            docUpdates.push(snapshot.ref.update({"notifications": notificationsPerUser}))
-        }
-        Promise.all(docUpdates).then(() => {
-            // The Expo push notification service accepts batches of notifications so
-            // that you don"t need to send 1000 requests to send 1000 notifications. We
-            // recommend you batch your notifications to reduce the number of requests
-            // and to compress them (notifications with similar content will get
-            // compressed).
+            //docUpdates.push(snapshot.ref.update({"notifications": notificationsPerUser}))
             const chunks = expo.chunkPushNotifications(messages);
-            const tickets = [];
             (() => {
                 // Send the chunks to the Expo push notification service. There are
                 // different strategies you could use. A simple one is to send one chunk at a
@@ -207,6 +202,7 @@ const sendMatchNotification = (uids, reports) => {
                 for (const chunk of chunks) {
                     try {
                         return expo.sendPushNotificationsAsync(chunk).then((ticketChunk) => {
+                            console.log("TICKET CHUNK:");
                             console.log(ticketChunk);
                             tickets.push(...ticketChunk);
                             // NOTE: If a ticket contains an error code in ticket.details.error, you
@@ -216,11 +212,21 @@ const sendMatchNotification = (uids, reports) => {
                         });
                     } catch (error) {
                         console.error(error);
+                        console.error(error.details)
                     }
                 }
             })();
-            return tickets;
-        });
+        }
+        return tickets;
+
+        //Promise.all(docUpdates).then(() => {
+        // The Expo push notification service accepts batches of notifications so
+        // that you don"t need to send 1000 requests to send 1000 notifications. We
+        // recommend you batch your notifications to reduce the number of requests
+        // and to compress them (notifications with similar content will get
+        // compressed).
+
+        //});
     })
 }
 

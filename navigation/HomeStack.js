@@ -17,8 +17,8 @@ import Screen3Poster from "../screens/CreatePoster/Screen3Poster";
 import {registerForPushNotificationsAsync} from '../shared_components/NotificationsUtils'
 import * as Notifications from 'expo-notifications';
 import {fireStoreDB} from "../shared_components/Firebase";
-import {doc, setDoc, updateDoc} from "firebase/firestore";
-import {useContext, useEffect, useRef, useState} from "react";
+import {arrayUnion, doc, getDoc, setDoc, updateDoc} from "firebase/firestore";
+import {createContext, useContext, useEffect, useRef, useState} from "react";
 import {AuthenticatedUserContext} from "./AuthenticatedUserProvider";
 import Screen1Poster from "../screens/CreatePoster/Screen1Poster";
 
@@ -29,6 +29,7 @@ Notifications.setNotificationHandler({
         shouldSetBadge: true,
     }),
 });
+// export const NotificationsListContext = createContext({});
 
 const Stack = createStackNavigator();
 
@@ -37,11 +38,13 @@ export default function HomeStack() {
     const [notification, setNotification] = useState(false);
     const notificationListener = useRef();
     const responseListener = useRef();
+    const [responseReport, setResponseReport] = useState({})
     const {user} = useContext(AuthenticatedUserContext);
 
     useEffect(() => {
         registerForPushNotificationsAsync().then(async (token) => {
             setExpoPushToken(token)
+            console.log("UID: " + user.uid)
             // update user document in firestore with the notifications token
             const userRef = doc(fireStoreDB, "Users", user.uid);
             await updateDoc(userRef, {
@@ -53,13 +56,33 @@ export default function HomeStack() {
         });
 
         // This listener is fired whenever a notification is received while the app is foregrounded
-        notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-            setNotification(notification);
+        notificationListener.current = Notifications.addNotificationReceivedListener(async (notification) => {
+            const userRef = doc(fireStoreDB, "Users", user.uid);
+            await updateDoc(userRef, {
+                notifications: arrayUnion(notification)
+            }).then(() => {
+            }).catch(error => {
+                console.log(error)
+            })
         });
 
         // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
         responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-            console.log(response);
+            const reportID = response.notification.request.content.data.report;
+            console.log(reportID);
+            const reportRef = doc(fireStoreDB, "Reports", reportID);
+            return getDoc(reportRef).then((reportSnap) => {
+                if (reportSnap.exists()) {
+                    //console.log("Document data:", userSnap.data());
+                    const report = reportSnap.data();
+                    //setResponseReport(report);
+                    console.log(report)
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such report!");
+                }
+            })
+            // navigation.navigate(destination, {data: data})
         });
 
         return () => {
@@ -72,7 +95,7 @@ export default function HomeStack() {
     const options = {header: (props) => <Header {...props}/>}
 
     return (
-        <Stack.Navigator screenOptions={options}>
+        <Stack.Navigator screenOptions={options} /*initialRouteName={responseReport === {} ? "התראות" : "Main"}*/>
             <Stack.Screen name="Main" component={NavigationBar} />
             <Stack.Screen name="Home" component={OldhomeScreen}/>
             <Stack.Screen name="ReportCreation" component={Screen1Report}/>
