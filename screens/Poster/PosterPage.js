@@ -9,11 +9,10 @@ import Icon from "react-native-vector-icons/Entypo";
 import {stylesPoster} from "../CreatePoster/CreatePosterStyle";
 
 export default function PosterPage({navigation, route, typeOfPage}) {
-    console.log(route.params.data.description.length == 0)
-
+    console.log("55555555");
+    console.log(route.params.data.contact)
     const editButtonPressHandler = () => {
-        console.log("55555555");
-        console.log(route.params.data)
+
         navigation.navigate("PosterCreation2", {
             poster: route.params.data,
             edit: true,
@@ -150,9 +149,9 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                     <View style = {AR_styles.ownerData}>
 
                         <Text style = {styles.whenText}>המדווח:   דוד דוד</Text>
-                        {route.params.contact &&
+                        {route.params.data.contact &&
                             <View style={AR_styles.verticalLine}></View>}
-                        {route.params.contact &&
+                        {route.params.data.contact &&
 
                             <TouchableOpacity
                             style={AR_styles.contact}>
@@ -454,11 +453,11 @@ else if(typeOfPage=="report"){
                         <View style = {AR_styles.ownerData}>
 
                             <Text style = {styles.whenText}>המדווח:   יוסף יוסף</Text>
-                            {route.params.contact &&
+                            {route.params.data.contact &&
                                 <View style={AR_styles.verticalLine}>
 
                                 </View>}
-                            {route.params.contact &&
+                            {route.params.data.contact &&
                                 <TouchableOpacity
                                 style={AR_styles.contact}>
                                 <Text style={AR_styles.contactTitle}>צור קשר</Text>

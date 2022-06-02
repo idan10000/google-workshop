@@ -7,8 +7,7 @@ import {
 import { Nofar_styles } from "../../styles/NofarStyle";
 import { AR_styles } from "./ReportStyle";
 
-import ReportTemplate from "./ReportTemplate";
-import {Button} from "react-native-paper";
+
 import PosterPage from "../Poster/PosterPage";
 export default function ReportForBrowse({route}) {
   const makeCall = () => {
