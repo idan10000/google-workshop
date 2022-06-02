@@ -82,7 +82,7 @@ export default function Screen1Poster({route, navigation}) {
         <View style={{...styles.pictureContainer, borderWidth: 1, alignSelf: 'center'}}>
             <TouchableOpacity
                 onPress={openImagePickerAsync}
-                style={Nofar_styles.SmallButton}
+                style={styles.pickButton}
             >
                 <Text style={Nofar_styles.SmallButtonTitle}>בחר תמונה</Text>
             </TouchableOpacity>
@@ -92,7 +92,7 @@ export default function Screen1Poster({route, navigation}) {
     if (selectedImage !== null) {
         imagePicker = (
             <View>
-                <View style={{...Nofar_styles.mainImage, alignSelf: 'center'}}>
+                <View style={{...styles.pictureContainer, alignSelf: 'center'}}>
                     <Image
                         style={styles.pictureContainer}
                         source={{uri: selectedImage}}
@@ -186,7 +186,17 @@ const styles = StyleSheet.create({
     },
     card: {
         resizeMode: "contain",
-        flex: 1}
+        flex: 1},
+    pickButton: {
+        paddingVertical:"3%",
+    alignSelf:"center",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 20,
+        backgroundColor: "#DCA277",
+        marginVertical:"5%",
+        width: Dimensions.get("window").width / 2.2,
+    }
 
 
 });

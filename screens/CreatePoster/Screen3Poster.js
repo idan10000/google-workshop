@@ -192,6 +192,8 @@ export default function Screen3Poster({route, navigation}) {
             // add poster page id to user posters
             await updateDoc(doc(db, "Users", user.uid), {posters: arrayUnion(docRef)}).then(() => {
                 navigation.pop()
+                navigation.pop()
+                navigation.pop()
                 navigation.navigate("AdPage", {data: sendPoster, ref: docRef.id})
             }).catch(error => {
                 console.log(error)

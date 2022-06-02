@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Modal, Portal, Button, Provider, Chip, Headline, TextInput} from 'react-native-paper';
+import {Modal, Portal, Button, Provider, Chip, Headline, TextInput, FAB} from 'react-native-paper';
 import {TouchableOpacity, View, StyleSheet, Image, Text, ImageBackground, ImageBackgroundComponent, Dimensions,ScrollView} from 'react-native'
 import Report, {reportConverter} from '../../data_classes/Report'
 import {stylesPoster} from "../CreatePoster/CreatePosterStyle";
@@ -11,6 +11,7 @@ import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
 import {fireStoreDB, uploadImageAsync} from "../../shared_components/Firebase";
 import Icon from 'react-native-vector-icons/Entypo';
 import StepIndicator from 'react-native-step-indicator';
+import * as ImagePicker from "expo-image-picker";
 
 // Expected input from previous screen is:
 // edit - if the Report is being edited (TRUE) or it is a new Report (FALSE)
@@ -175,9 +176,25 @@ export default function Screen1Report({route, navigation}) {
         currentStepLabelColor: "#DCA277"
     }
     //---------------------- Create / Edit setup ----------------------
+    const initImage = route.params.edit ? report.image : route.params.image
+    const [selectedImage, setSelectedImage] = React.useState(initImage);
+    let openImagePickerAsync = async () => {
+        let permissionResult =
+            await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-    let image = route.params.edit ? report.image : route.params.image
+        if (permissionResult.granted === false) {
+            alert("Permission to access camera roll is required!");
+            return;
+        }
 
+        let pickerResult = await ImagePicker.launchImageLibraryAsync();
+
+        if (pickerResult.cancelled === true) {
+            return;
+        }
+        console.log(pickerResult)
+        setSelectedImage(pickerResult.uri);
+    };
     return (
         <ScrollView  style = {Nofar_styles.container} >
 
@@ -192,11 +209,21 @@ export default function Screen1Report({route, navigation}) {
                             currentPosition={0}
                             labels={labels}
                             stepCount={3} /></View>
+                    <View>
                 <View style={styles.pictureContainer}>
                         <Image
-                            source={{uri: image}}
-                            style={styles.card}/>
+                            source={{uri: selectedImage}}
+                            style={styles.pictureContainer}/>
                     </View>
+                    {  !route.params.edit && route.params.gallery &&
+                    <View style={stylesPoster.fabContainer}>
+                        <FAB
+                            style={stylesPoster.fab}
+                            small
+                            icon={"image-edit"}
+                            onPress={openImagePickerAsync}
+                        />
+                    </View>}</View>
                     <View >
                         <TouchableOpacity
                             onPress={nextScreen}

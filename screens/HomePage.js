@@ -29,7 +29,7 @@ export default function HomePage({navigation}) {
         }
         console.log(pickerResult)
         if (!pickerResult.cancelled) {
-            navigation.navigate('ReportCreation',{image:pickerResult.uri, edit:false})
+            navigation.navigate('ReportCreation',{image:pickerResult.uri, edit:false, gallery: true})
         }
     };
 
@@ -48,7 +48,7 @@ export default function HomePage({navigation}) {
         console.log(result);
 
         if (!result.cancelled) {
-            navigation.navigate('ReportCreation',{image:result.uri, edit:false})
+            navigation.navigate('ReportCreation',{image:result.uri, edit:false, gallery: false})
         }
     }
 
