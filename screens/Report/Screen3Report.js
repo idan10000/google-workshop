@@ -164,7 +164,7 @@ export default function Screen3Report({route, navigation}) {
                 });
             }
             navigation.pop()
-            navigation.navigate("ReportPage")
+            navigation.navigate("ReportPage", {data: sendReport, ref: "", contact: checked})
         } else {
             const imageAndPath = await uploadImageAsync(image,"Reports")
             dbReport.image = imageAndPath.link

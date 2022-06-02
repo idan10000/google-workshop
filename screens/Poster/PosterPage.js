@@ -6,6 +6,7 @@ import {AR_styles} from "./PosterStyle";
 import {Button, Chip} from "react-native-paper";
 import PosterTemplate from "./PosterTemplate";
 import Icon from "react-native-vector-icons/Entypo";
+import {stylesPoster} from "../CreatePoster/CreatePosterStyle";
 
 export default function PosterPage({navigation, route, typeOfPage}) {
     console.log(route.params.data.description.length == 0)
@@ -19,6 +20,8 @@ export default function PosterPage({navigation, route, typeOfPage}) {
             ref: route.params.ref
         });
     };
+    const [expanded, setExpanded] = React.useState(false);
+
     // let dotText = ""
     // if(!report){
     //     dotText = "·";
@@ -57,33 +60,79 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                     {/*} <Text style = {styles.whenText}>בתאריך: {route.params.data.date}</Text>*/}
 
                     </View >
-                    <View style={{ ...Nofar_styles.Viewchips }}>
-                        <View style={styles.containerChips}>
-                            {route.params.data.tagList.map((item, index) => (
+                    {
+                        !expanded&&
+                        <View style={{ ...Nofar_styles.Viewchips }}>
+                            <View style={styles.containerChips}>
 
-                                <Chip
-                                    key={index}
-                                    selected={false}
-                                    style={Nofar_styles.chips}
-                                >
-                                    {item}
-                                </Chip>
-                            ))}
-                            {
-                                route.params.data.tagList.length == 0 &&
-                                <View justifyContent="center" alignSelf = "center" alignItems = "center" marginHorizontal = "5%">
+                                {route.params.data.tagList.map((item, index) => (
 
-                                <Text style = {styles.newText}>אין תגיות</Text></View>
+                                    <Chip
+                                        key={index}
+                                        selected={false}
+                                        style={Nofar_styles.chips}
+                                    >
+                                        {item}
+                                    </Chip>
+                                ))}
 
-                            }
+                                {route.params.data.tagList.length == 0 &&
+
+                                    <View justifyContent="center" alignSelf = "center" alignItems = "center" marginHorizontal = "5%">
+
+                                        <Text style = {styles.newText}>אין תגיות</Text></View>
+
+                                }
+                            </View>
+                            <View style = {styles.chveron2}>
+                                {
+                                    route.params.data.tagList.length != 0 &&
+                                    <TouchableOpacity>
+                                        <Icon name="chevron-down" size={32} color ="#000"
+                                              onPress={() => {
+                                                  setExpanded(!expanded);}}>
+                                        </Icon></TouchableOpacity>}
+                            </View>
+
+                        </View>}
+
+                    {
+
+                        expanded&&
+
+                        <View style={{...styles.chipsColumn, marginLeft: "2%"}}>
+                            <View style={{...styles.chips, marginLeft: "2%"}}>
+
+                                {route.params.data.tagList.map((item, index) => (
+
+                                    <Chip
+                                        key={index}
+                                        selected={false}
+                                        style={Nofar_styles.chips}
+                                    >
+                                        {item}
+                                    </Chip>
+                                ))}
+                                {route.params.data.tagList.length == 0 &&
+
+                                    <View justifyContent="center" alignSelf = "center" alignItems = "center" marginHorizontal = "5%">
+
+                                        <Text style = {styles.newText}>אין תגיות</Text></View>
+
+                                }
+                            </View>
+
+                            <View style = {styles.chveron1} >
+                                {
+                                    route.params.data.tagList.length != 0 &&
+                                    <TouchableOpacity>
+                                        <Icon name="chevron-up" size={32} color ="#000"
+                                              onPress={() => {
+                                                  setExpanded(!expanded);}}>
+                                        </Icon></TouchableOpacity>}
+                            </View>
                         </View>
-                        <View>
-                            {
-                                route.params.data.tagList.length != 0 &&
-                            <TouchableOpacity>
-                                <Icon name="chevron-down" size={32} color ="#000" ></Icon></TouchableOpacity>}
-                        </View>
-                    </View>
+                    }
 
                     {/*<View marginTop="3%" ><Text style = {styles.descriptionText}>תיאור</Text></View>*/}
 
@@ -166,33 +215,79 @@ else if(typeOfPage=="PosterForBrowse"){
                             {/*} <Text style = {styles.whenText}>בתאריך: {route.params.data.date}</Text>*/}
 
                         </View >
-                        <View style={{ ...Nofar_styles.Viewchips }}>
-                            <View style={styles.containerChips}>
-                                {route.params.data.tagList.map((item, index) => (
+                        {
+                            !expanded&&
+                            <View style={{ ...Nofar_styles.Viewchips }}>
+                                <View style={styles.containerChips}>
 
-                                    <Chip
-                                        key={index}
-                                        selected={false}
-                                        style={Nofar_styles.chips}
-                                    >
-                                        {item}
-                                    </Chip>
-                                ))}
-                                {
-                                    route.params.data.tagList.length == 0 &&
-                                    <View justifyContent="center" alignSelf = "center" alignItems = "center" marginHorizontal = "5%">
+                                    {route.params.data.tagList.map((item, index) => (
 
-                                        <Text style = {styles.newText}>אין תגיות</Text></View>
+                                        <Chip
+                                            key={index}
+                                            selected={false}
+                                            style={Nofar_styles.chips}
+                                        >
+                                            {item}
+                                        </Chip>
+                                    ))}
 
-                                }
-                            </View>
-                            {
-                                route.params.data.tagList.length != 0 &&
-                            <View>
-                                <TouchableOpacity>
-                                    <Icon name="chevron-down" size={32} color ="#000" ></Icon></TouchableOpacity>
+                                    {route.params.data.tagList.length == 0 &&
+
+                                        <View justifyContent="center" alignSelf = "center" alignItems = "center" marginHorizontal = "5%">
+
+                                            <Text style = {styles.newText}>אין תגיות</Text></View>
+
+                                    }
+                                </View>
+                                <View style = {styles.chveron2}>
+                                    {
+                                        route.params.data.tagList.length != 0 &&
+                                        <TouchableOpacity>
+                                            <Icon name="chevron-down" size={32} color ="#000"
+                                                  onPress={() => {
+                                                      setExpanded(!expanded);}}>
+                                            </Icon></TouchableOpacity>}
+                                </View>
+
                             </View>}
-                        </View>
+
+                        {
+
+                            expanded&&
+
+                            <View style={{...styles.chipsColumn, marginLeft: "2%"}}>
+                                <View style={{...styles.chips, marginLeft: "2%"}}>
+
+                                    {route.params.data.tagList.map((item, index) => (
+
+                                        <Chip
+                                            key={index}
+                                            selected={false}
+                                            style={Nofar_styles.chips}
+                                        >
+                                            {item}
+                                        </Chip>
+                                    ))}
+                                    {route.params.data.tagList.length == 0 &&
+
+                                        <View justifyContent="center" alignSelf = "center" alignItems = "center" marginHorizontal = "5%">
+
+                                            <Text style = {styles.newText}>אין תגיות</Text></View>
+
+                                    }
+                                </View>
+
+                                <View style = {styles.chveron1} >
+                                    {
+                                        route.params.data.tagList.length != 0 &&
+                                        <TouchableOpacity>
+                                            <Icon name="chevron-up" size={32} color ="#000"
+                                                  onPress={() => {
+                                                      setExpanded(!expanded);}}>
+                                            </Icon></TouchableOpacity>}
+                                </View>
+                            </View>
+                        }
 
                         {/*<View marginTop="3%" ><Text style = {styles.descriptionText}>תיאור</Text></View>*/}
 
@@ -262,12 +357,14 @@ else if(typeOfPage=="report"){
 
                                 <Text style = {styles.whenText}>נצפה לאחרונה ב:</Text>
                                 <Icon name="location-pin" size={22} color ="#000"  />
-                                <TouchableOpacity><Text fontSize="16" lineHeight="20" fontWeight= "500" textAlign= "center">{route.params.data.location}</Text></TouchableOpacity>
+                                <TouchableOpacity ><Text fontSize="16" lineHeight="20" fontWeight= "500" textAlign= "center">{route.params.data.location}</Text></TouchableOpacity>
                             </View>
 
 
 
                         </View >
+                        {
+                            !expanded&&
                         <View style={{ ...Nofar_styles.Viewchips }}>
                             <View style={styles.containerChips}>
 
@@ -281,6 +378,7 @@ else if(typeOfPage=="report"){
                                         {item}
                                     </Chip>
                                 ))}
+
                                 {route.params.data.tagList.length == 0 &&
 
                                     <View justifyContent="center" alignSelf = "center" alignItems = "center" marginHorizontal = "5%">
@@ -289,13 +387,56 @@ else if(typeOfPage=="report"){
 
                                 }
                             </View>
-                            <View>
+                            <View style = {styles.chveron2}>
                                 {
                                     route.params.data.tagList.length != 0 &&
                                 <TouchableOpacity>
-                                    <Icon name="chevron-down" size={32} color ="#000" ></Icon></TouchableOpacity>}
+                                    <Icon name="chevron-down" size={32} color ="#000"
+                                          onPress={() => {
+                                              setExpanded(!expanded);}}>
+                                    </Icon></TouchableOpacity>}
                             </View>
-                        </View>
+
+                        </View>}
+
+                        {
+
+                            expanded&&
+
+                            <View style={{...styles.chipsColumn, marginLeft: "2%"}}>
+                                <View style={{...styles.chips, marginLeft: "2%"}}>
+
+                                    {route.params.data.tagList.map((item, index) => (
+
+                                        <Chip
+                                            key={index}
+                                            selected={false}
+                                            style={Nofar_styles.chips}
+                                        >
+                                            {item}
+                                        </Chip>
+                                    ))}
+                                    {route.params.data.tagList.length == 0 &&
+
+                                        <View justifyContent="center" alignSelf = "center" alignItems = "center" marginHorizontal = "5%">
+
+                                            <Text style = {styles.newText}>אין תגיות</Text></View>
+
+                                    }
+                                </View>
+
+                                <View style = {styles.chveron1} >
+                                    {
+                                        route.params.data.tagList.length != 0 &&
+                                        <TouchableOpacity>
+                                            <Icon name="chevron-up" size={32} color ="#000"
+                                                  onPress={() => {
+                                                      setExpanded(!expanded);}}>
+                                            </Icon></TouchableOpacity>}
+                                </View>
+                            </View>
+                        }
+
 
                         {/*<View marginTop="3%" ><Text style = {styles.descriptionText}>תיאור</Text></View>*/}
 
@@ -379,33 +520,79 @@ else if(typeOfPage=="report"){
                             {/*} <Text style = {styles.whenText}>בתאריך: {route.params.data.date}</Text>*/}
 
                         </View >
-                        <View style={{ ...Nofar_styles.Viewchips }}>
-                            <View style={styles.containerChips}>
-                                {route.params.data.tagList.map((item, index) => (
+                        {
+                            !expanded&&
+                            <View style={{ ...Nofar_styles.Viewchips }}>
+                                <View style={styles.containerChips}>
 
-                                    <Chip
-                                        key={index}
-                                        selected={false}
-                                        style={Nofar_styles.chips}
-                                    >
-                                        {item}
-                                    </Chip>
-                                ))}
-                            </View>
-                            {
-                                route.params.data.tagList.length == 0 &&
-                                <View justifyContent="center" alignSelf = "center" alignItems = "center" marginHorizontal = "5%">
+                                    {route.params.data.tagList.map((item, index) => (
 
-                                    <Text style = {styles.newText}>אין תגיות</Text></View>
+                                        <Chip
+                                            key={index}
+                                            selected={false}
+                                            style={Nofar_styles.chips}
+                                        >
+                                            {item}
+                                        </Chip>
+                                    ))}
 
-                            }
-                            {
-                                route.params.data.tagList.length != 0 &&
-                            <View justifyContent="center" alignSelf = "center" alignItems = "center">
-                                <TouchableOpacity>
-                                    <Icon name="chevron-down" size={34} color ="#000" justifyContent="center" alignSelf = "center" alignItems = "center"></Icon></TouchableOpacity>
+                                    {route.params.data.tagList.length == 0 &&
+
+                                        <View justifyContent="center" alignSelf = "center" alignItems = "center" marginHorizontal = "5%">
+
+                                            <Text style = {styles.newText}>אין תגיות</Text></View>
+
+                                    }
+                                </View>
+                                <View style = {styles.chveron2}>
+                                    {
+                                        route.params.data.tagList.length != 0 &&
+                                        <TouchableOpacity>
+                                            <Icon name="chevron-down" size={32} color ="#000"
+                                                  onPress={() => {
+                                                      setExpanded(!expanded);}}>
+                                            </Icon></TouchableOpacity>}
+                                </View>
+
                             </View>}
-                        </View>
+
+                        {
+
+                            expanded&&
+
+                            <View style={{...styles.chipsColumn, marginLeft: "2%"}}>
+                                <View style={{...styles.chips, marginLeft: "2%"}}>
+
+                                    {route.params.data.tagList.map((item, index) => (
+
+                                        <Chip
+                                            key={index}
+                                            selected={false}
+                                            style={Nofar_styles.chips}
+                                        >
+                                            {item}
+                                        </Chip>
+                                    ))}
+                                    {route.params.data.tagList.length == 0 &&
+
+                                        <View justifyContent="center" alignSelf = "center" alignItems = "center" marginHorizontal = "5%">
+
+                                            <Text style = {styles.newText}>אין תגיות</Text></View>
+
+                                    }
+                                </View>
+
+                                <View style = {styles.chveron1} >
+                                    {
+                                        route.params.data.tagList.length != 0 &&
+                                        <TouchableOpacity>
+                                            <Icon name="chevron-up" size={32} color ="#000"
+                                                  onPress={() => {
+                                                      setExpanded(!expanded);}}>
+                                            </Icon></TouchableOpacity>}
+                                </View>
+                            </View>
+                        }
 
                         {/*<View marginTop="3%" ><Text style = {styles.descriptionText}>תיאור</Text></View>*/}
 
@@ -524,6 +711,51 @@ const styles = StyleSheet.create({
         fontSize:16,
         // fontWeight:"bold"
     },
+    chips: {
+
+        backgroundColor:"#DCA277",
+        flexDirection: "row",
+        overflow: "hidden",
+        flexWrap: "wrap",
+        paddingHorizontal:"1%",
+        width: Dimensions.get("window").width / 1.2,
+        alignSelf:"center",
+        borderRadius: 20,
+
+
+    },
+    chipsColumn: {
+        paddingTop: "1%",
+        shadowColor: "#000",
+        shadowOpacity: 0.01,
+        shadowRadius: 100,
+        elevation: 8,
+        backgroundColor:"#DCA277",
+        flexDirection: "column",
+        overflow: "hidden",
+        flexWrap: "wrap",
+        paddingHorizontal:"1%",
+        width: Dimensions.get("window").width / 1.2,
+        alignSelf:"center",
+        borderRadius: 12,
+
+
+        marginBottom:"3%"
+    }, chveron1: {
+        // alignSelf: "center",
+        // alignItems: "center",
+        // justifyContent:"center",
+        marginRight:"52%",
+        // marginLeft:"45%"
+
+    },
+    chveron2: {
+        // alignSelf: "center",
+        // alignItems: "center",
+        // justifyContent:"center",
+        // marginRight:"45%",
+        marginLeft:"42%"}
+
 
 });
 

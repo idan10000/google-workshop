@@ -79,7 +79,7 @@ export default function Screen1Poster({route, navigation}) {
         setSelectedImage(pickerResult.uri);
     };
     let imagePicker = (
-        <View style={{...Nofar_styles.mainImage, borderWidth: 1, alignSelf: 'center'}}>
+        <View style={{...styles.pictureContainer, borderWidth: 1, alignSelf: 'center'}}>
             <TouchableOpacity
                 onPress={openImagePickerAsync}
                 style={Nofar_styles.SmallButton}
@@ -94,7 +94,7 @@ export default function Screen1Poster({route, navigation}) {
             <View>
                 <View style={{...Nofar_styles.mainImage, alignSelf: 'center'}}>
                     <Image
-                        style={Nofar_styles.mainImage}
+                        style={styles.pictureContainer}
                         source={{uri: selectedImage}}
                     />
                 </View>
