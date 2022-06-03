@@ -51,10 +51,10 @@ const BrowsePage = ({navigation, route}) => {
 
     //---------------------- Infinite Scrolling ----------------------
 
-    const [data,setData] = useState({
-        docs:[],error:null,lastDocId:null,
-        initialBatchStatus:"",
-        nextBatchStatus:"",
+    const [data, setData] = useState({
+        docs: [], error: null, lastDocId: null,
+        initialBatchStatus: "",
+        nextBatchStatus: "",
     })
 
 
@@ -65,10 +65,10 @@ const BrowsePage = ({navigation, route}) => {
     }, []);
 
 
-    const renderLoadingIndicator = ()=>{
+    const renderLoadingIndicator = () => {
         return (
 
-            <View style={{flex:1,alignItems:"center",justifyContent:'center'}}>
+            <View style={{flex: 1, alignItems: "center", justifyContent: 'center'}}>
 
 
                 <ActivityIndicator color="#000" size="large"/>
@@ -82,83 +82,85 @@ const BrowsePage = ({navigation, route}) => {
 
     const refreshItems = () => {
         console.log("start refreshing")
-        getInitialData(setData, collectionPath).then(() =>{
+        getInitialData(setData, collectionPath).then(() => {
             setRefreshing(false);
             console.log("Finished refreshing")
         });
     }
 
-    console.log(collectionPath)
-    console.log(data.docs)
     return (
         <ImageBackground
             style={{flex: 1}}
             source={require('../../assets/new_background.png')}>
-        <Provider>
-            {/*<TouchableOpacity >*/}
-            <View  style={{flexWrap: "wrap", flexDirection: 'row',
-                // borderWidth:0.5,borderColor:"#000",
-                justifyContent: 'center', alignItems: 'center'}}>
-                {/* search bar + sort + filter*/}
+            <Provider>
+                {/*<TouchableOpacity >*/}
+                <View style={{
+                    flexWrap: "wrap", flexDirection: 'row',
+                    // borderWidth:0.5,borderColor:"#000",
+                    justifyContent: 'center', alignItems: 'center'
+                }}>
+                    {/* search bar + sort + filter*/}
 
-                <Menu
-                    visible={visibleSortMenu}
-                    onDismiss={closeSortMenu}
-                    anchor={<IconButton
-                        icon={"sort"}
-                        onPress={openSortMenu}
+                    <Menu
+                        visible={visibleSortMenu}
+                        onDismiss={closeSortMenu}
+                        anchor={<IconButton
+                            icon={"sort"}
+                            onPress={openSortMenu}
                         />}>
-                    <Menu.Item onPress={() => {sortByDate()}} title="תאריך"/>
-                </Menu>
+                        <Menu.Item onPress={() => {
+                            sortByDate()
+                        }} title="תאריך"/>
+                    </Menu>
 
-                {/*<View style={styles.Search}>*/}
-                {/*    <Searchbar>*/}
-                {/*    </Searchbar>*/}
-                {/*</View>*/}
+                    {/*<View style={styles.Search}>*/}
+                    {/*    <Searchbar>*/}
+                    {/*    </Searchbar>*/}
+                    {/*</View>*/}
 
-                <View style={styles.Search}>
-                    <Text style = {styles.textSort}>מיון לפי:</Text>
+                    <View style={styles.Search}>
+                        <Text style={styles.textSort}>מיון לפי:</Text>
+                    </View>
+                    {/*<IconButton*/}
+                    {/*    icon={"filter"}*/}
+                    {/*    style={styles.filterButton}*/}
+                    {/*    onPress={() => console.log("filter")}*/}
+                    {/*/>*/}
+
+
                 </View>
-                {/*<IconButton*/}
-                {/*    icon={"filter"}*/}
-                {/*    style={styles.filterButton}*/}
-                {/*    onPress={() => console.log("filter")}*/}
-                {/*/>*/}
+                {/*</TouchableOpacity>*/}
+                <View style={styles.listContainer}>
+                    {/* List */}
+                    <FlatList data={data.docs}
+                              ItemSeparatorComponent={FlatListItemSeparator}
+                              keyExtractor={(item) => item.image}
+                              onEndReached={() => getNextData(data, setData, collectionPath)}
+                              onEndReachedThreshold={0.5}
+                              refreshControl={
+                                  <RefreshControl refreshing={refreshing} onRefresh={refreshItems}/>
+                              }
+                              numColumns={2}
+                              renderItem={({item}) => {
 
+                                  return (
 
-            </View>
-            {/*</TouchableOpacity>*/}
-            <View style={styles.listContainer}>
-                {/* List */}
-                <FlatList data={data.docs}
-                          ItemSeparatorComponent={FlatListItemSeparator}
-                          keyExtractor={(item) => item.image}
-                          onEndReached={() => getNextData(data,setData,collectionPath)}
-                          onEndReachedThreshold={0.5}
-                          refreshControl={
-                              <RefreshControl refreshing={refreshing} onRefresh={refreshItems} />
-                          }
-                          numColumns={2}
-                          renderItem={({item}) => {
-                              console.log(item.image)
-                    return (
+                                      <View style={{paddingVertical: 5}}>
+                                          <PostListItem
+                                              image={item.image}
+                                              date={item.date}
+                                              distance={item.location}
+                                              data={item}
+                                              navigation={navigation}
+                                              destination={destination}
+                                          /></View>
+                                  )
+                              }}/>
 
-                        <View style={{paddingVertical:5}}>
-                        <PostListItem
-                            image={item.image}
-                            date={item.date}
-                            distance={item.location}
-                            data={item}
-                            navigation={navigation}
-                            destination={destination}
-                        /></View>
-                    )
-                }}/>
-
-            </View>
-            {/* <NewReportFAB/> */}
-        </Provider>
-            </ImageBackground>
+                </View>
+                {/* <NewReportFAB/> */}
+            </Provider>
+        </ImageBackground>
     )
 
 };
@@ -178,7 +180,7 @@ const styles = StyleSheet.create({
     filterButton: {
         position: "absolute",
         right: 16,
-        top:10,
+        top: 10,
         zIndex: 2,
     },
     Search: {
@@ -188,19 +190,20 @@ const styles = StyleSheet.create({
     },
     listContainer: {
         flex: 1,
-        alignItems:'center',
-        justifyContent:'center',
+        alignItems: 'center',
+        justifyContent: 'center',
 
     },
     image: {
-        width:Dimensions.get('window').width / 2,
+        width: Dimensions.get('window').width / 2,
         height: Dimensions.get('window').width / 2,
         resizeMode: "cover"
     },
     textSort: {
 
-        fontSize:16,
-        fontWeight: "700",}
+        fontSize: 16,
+        fontWeight: "700",
+    }
 
 });
 

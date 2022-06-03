@@ -50,7 +50,7 @@ export default function Screen2Report({route, navigation}) {
 
     }
     return (
-        <ScrollView  style = {Nofar_styles.container} >
+        <ScrollView  style = {{...Nofar_styles.container}} >
 
         <View style = {Nofar_styles.container}>
             <View         marginTop="2.5%">
@@ -96,8 +96,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#DCA277",
         marginVertical:"5%",
         width: Dimensions.get("window").width / 2.2,
-        marginLeft: (Dimensions.get("window").width - Dimensions.get("window").width / 1.2)/2
-
+        marginLeft: (Dimensions.get("window").width - Dimensions.get("window").width / 1.2)/2,
     },
 
 

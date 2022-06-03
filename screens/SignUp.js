@@ -99,10 +99,10 @@ export default function SignUp({navigation}) {
             phone: phone,
             reports: [],
             posters: []
-        }).then(() => {
         }).catch(error => {
             console.log(error)
         })
+        await updateProfile(newUser,{displayName:name})
     }
 
     useEffect(() => {

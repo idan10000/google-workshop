@@ -68,9 +68,8 @@ export default function SignIn({navigation}) {
         console.log(password)
         await signInWithEmailAndPassword(fireAuth, email, password)
             .then(() => {
-                console.log('User account created & signed in!');
                 // navigation.popToTop();
-                navigation.replace("Home")
+
                 // navigation.navigate("App")
             })
             // .then((result) => {
