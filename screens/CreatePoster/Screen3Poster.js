@@ -22,6 +22,12 @@ import {reverseGeocodeAsync} from "expo-location";
 export default function Screen3Poster({route, navigation}) {
     let prevPoster = route.params.poster
 
+    const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+    const [correctPhone, setCorrectPhone] = React.useState(true);
+    const [correctDogName, setCorrectDogName] = React.useState(true);
+
+
+
     const tagList = [
         {tag: "ביישן", state: false},
         {tag: "חברותי", state: false},
@@ -154,79 +160,95 @@ export default function Screen3Poster({route, navigation}) {
 
     const [phoneText, setPhone] = React.useState(initPhone);
     const nextScreen = async () => {
+        if(phoneRegExp.test(phoneText) === true && phoneText.length == 10 && nameText.length !==0) {
 
 
-        //first confirming the tags
-        // setSelectedTags((prevSelected) => {
-        //     return prevSelected.concat(modalTags.filter(modalTags => modalTags.state));
-        // });
-        // setModalTags((prevTags) => {
-        //     return prevTags.filter(prevTags => !prevTags.state)
-        // });
+            //first confirming the tags
+            // setSelectedTags((prevSelected) => {
+            //     return prevSelected.concat(modalTags.filter(modalTags => modalTags.state));
+            // });
+            // setModalTags((prevTags) => {
+            //     return prevTags.filter(prevTags => !prevTags.state)
+            // });
 
-        let date = new Date()
-        const dd = String(date.getDate()).padStart(2, '0');
-        const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
-        const yyyy = date.getFullYear();
-        console.log(selectedTags)
-        const plainTags = selectedTags.map((function (tag) {
-            return tag.tag
-        }))
-        let today = route.params.edit ? prevPoster.date : dd + '/' + mm + '/' + yyyy;
+            let date = new Date()
+            const dd = String(date.getDate()).padStart(2, '0');
+            const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+            const yyyy = date.getFullYear();
+            console.log(selectedTags)
+            const plainTags = selectedTags.map((function (tag) {
+                return tag.tag
+            }))
+            let today = route.params.edit ? prevPoster.date : dd + '/' + mm + '/' + yyyy;
 
-        const selectedImage = route.params.edit ? prevPoster.image : route.params.image
-        const name = user.displayName
+            const selectedImage = route.params.edit ? prevPoster.image : route.params.image
+            const name = user.displayName
 
-        let tempLocation = route.params.location
-        const hash = geofire.geohashForLocation([tempLocation.latitude, tempLocation.longitude])
-        const location = {
-            latitude: tempLocation.latitude,
-            longitude: tempLocation.longitude,
-            geohash: hash
-        }
-        const [addressResponse] = await reverseGeocodeAsync(tempLocation)
-        const address = `${addressResponse.street} ${addressResponse.streetNumber}, ${addressResponse.city}`;
+            let tempLocation = route.params.location
+            const hash = geofire.geohashForLocation([tempLocation.latitude, tempLocation.longitude])
+            const location = {
+                latitude: tempLocation.latitude,
+                longitude: tempLocation.longitude,
+                geohash: hash
+            }
+            const [addressResponse] = await reverseGeocodeAsync(tempLocation)
+            const address = `${addressResponse.street} ${addressResponse.streetNumber}, ${addressResponse.city}`;
 
-        const dbPoster = new Poster(selectedImage, "", location, address, today, today, descriptionText, nameText, '', phoneText, name, user.uid)
-        const sendPoster = new Poster(selectedImage, "", location, address, today, plainTags, descriptionText, nameText, '', phoneText, name, user.uid)
-        const db = fireStoreDB;
+            const dbPoster = new Poster(selectedImage, "", location, address, today, today, descriptionText, nameText, '', phoneText, name, user.uid)
+            const sendPoster = new Poster(selectedImage, "", location, address, today, plainTags, descriptionText, nameText, '', phoneText, name, user.uid)
+            const db = fireStoreDB;
 
-        // if we reached from an edit Report
-        if (route.params.edit) {
-            // if the prevPoster was changed, update the prevPoster page
-            if (deepDiffer(sendPoster, prevPoster)) {
-                await deleteObject(ref(getStorage(), prevPoster.imagePath))
+            // if we reached from an edit Report
+            if (route.params.edit) {
+                // if the prevPoster was changed, update the prevPoster page
+                if (deepDiffer(sendPoster, prevPoster)) {
+                    await deleteObject(ref(getStorage(), prevPoster.imagePath))
+                    const image = await uploadImageAsync(selectedImage, "Posters")
+                    dbPoster.image = image.link
+                    dbPoster.imagePath = image.path
+                    const docRef = await setDoc(doc(db, "Posters", route.params.ref).withConverter(posterConverter), dbPoster).then(() => {
+                        console.log("updated Poster page")
+                    }).catch(error => {
+                        console.log(error)
+                    });
+                }
+                navigation.pop()
+                navigation.pop()
+                navigation.pop()
+                navigation.navigate("AdPage", {data: sendPoster, ref: route.params.ref})
+            } else {
                 const image = await uploadImageAsync(selectedImage, "Posters")
                 dbPoster.image = image.link
                 dbPoster.imagePath = image.path
-                const docRef = await setDoc(doc(db, "Posters", route.params.ref).withConverter(posterConverter), dbPoster).then(() => {
-                    console.log("updated Poster page")
+                const docRef = await addDoc(collection(db, "Posters").withConverter(posterConverter), dbPoster)
+
+                // add poster page id to user posters
+                await updateDoc(doc(db, "Users", user.uid), {posters: arrayUnion(docRef)}).then(() => {
+                    navigation.pop()
+                    navigation.pop()
+                    navigation.pop()
+                    navigation.navigate("AdPage", {data: sendPoster, ref: docRef.id})
                 }).catch(error => {
                     console.log(error)
                 });
             }
-            navigation.pop()
-            navigation.pop()
-            navigation.pop()
-            navigation.navigate("AdPage", {data: sendPoster, ref: route.params.ref})
-        } else {
-            const image = await uploadImageAsync(selectedImage, "Posters")
-            dbPoster.image = image.link
-            dbPoster.imagePath = image.path
-            const docRef = await addDoc(collection(db, "Posters").withConverter(posterConverter), dbPoster)
+        }
+        else{
+            if(!(phoneRegExp.test(phoneText) === true && phoneText.length == 10) ){
+                setCorrectPhone(false)
+            }
+            if(nameText.length==0){
+                setCorrectDogName(false)
 
-            // add poster page id to user posters
-            await updateDoc(doc(db, "Users", user.uid), {posters: arrayUnion(docRef)}).then(() => {
-                navigation.pop()
-                navigation.pop()
-                navigation.pop()
-                navigation.navigate("AdPage", {data: sendPoster, ref: docRef.id})
-            }).catch(error => {
-                console.log(error)
-            });
+            }
         }
     }
-
+    if (phoneRegExp.test(phoneText) === true && phoneText.length == 10 && correctPhone === false){
+        setCorrectPhone(true)
+    }
+    if (nameText.length!==0 && correctDogName === false){
+        setCorrectDogName(true)
+    }
 
     return (
         <ScrollView style={Nofar_styles.container}>
@@ -260,6 +282,10 @@ export default function Screen3Poster({route, navigation}) {
                             activeOutlineColor="#000000"
                         />
                     </View>
+                    {correctDogName &&
+                    <View style={styles.dogNameContainer}>
+
+                        <Text style={Nofar_styles.TinyButtonTitleRed}>אנא הכנס שם</Text></View>}
                     <Portal>
                         {/*Tags*/}
                         <Modal
@@ -362,6 +388,10 @@ export default function Screen3Poster({route, navigation}) {
                                 activeOutlineColor="#000000"
                             />
                         </View>
+                        {correctPhone &&
+                            <View style={styles.dogNameContainer}>
+
+                                <Text style={Nofar_styles.TinyButtonTitleRed}>אנא הכנס מספר טלפון תקין</Text></View>}
                     </View>
                     <TouchableOpacity
                         onPress={nextScreen}
@@ -418,7 +448,6 @@ const styles = StyleSheet.create({
         width: Dimensions.get("window").width * 0.85,
     },
     nameContainer: {
-        marginBottom: "5%",
         marginRight: "7.5%",
         marginLeft: "7.5%",
         justifyContent: "center",
@@ -470,7 +499,7 @@ const styles = StyleSheet.create({
         paddingTop: "2%",
         flexDirection: "row",
     }, dogNameContainer: {
-        marginTop: "2.5%",
+        marginTop: "5%",
         marginHorizontal: "7.5%",
         flexDirection: "row",
     }
