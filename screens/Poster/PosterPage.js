@@ -9,8 +9,8 @@ import Icon from "react-native-vector-icons/Entypo";
 import {stylesPoster} from "../CreatePoster/CreatePosterStyle";
 
 export default function PosterPage({navigation, route, typeOfPage}) {
-    console.log("55555555");
-    console.log(route.params.data.contact)
+    console.log("5555555522222");
+    user
     const editButtonPressHandler = () => {
 
         navigation.navigate("PosterCreation2", {

@@ -162,8 +162,8 @@ export default function Screen3Poster({route, navigation}) {
         console.log(nameText)
         console.log(phoneText)
 
-        const dbPoster = new Poster(selectedImage, "", "", today, today, descriptionText, nameText, '',phoneText, user.uid)
-        const sendPoster = new Poster(selectedImage, "", "", today, plainTags, descriptionText, nameText, '',phoneText, user.uid)
+        const dbPoster = new Poster(selectedImage, "", "", today, today, descriptionText, nameText, '',phoneText,name, user.uid)
+        const sendPoster = new Poster(selectedImage, "", "", today, plainTags, descriptionText, nameText, '',phoneText,name, user.uid)
         const db = fireStoreDB;
 
         // if we reached from an edit Report

@@ -65,16 +65,19 @@ export default function SignIn({navigation}) {
         return fireAuth.onAuthStateChanged(onAuthStateChanged); // unsubscribe on unmount
     }, []);
 
-    const handleSubmitPress = (email, password) => {
+    async function handleSubmitPress(email, password){
         console.log(email)
         console.log(password)
-        signInWithEmailAndPassword(fireAuth, email, password)
+        await signInWithEmailAndPassword(fireAuth, email, password)
             .then(() => {
                 console.log('User account created & signed in!');
                 // navigation.popToTop();
-                // navigation.replace("Home")
-                navigation.navigate("App")
+                navigation.replace("Home")
+                // navigation.navigate("App")
             })
+            // .then((result) => {
+            //
+            // })
             .catch(error => {
                 if (error.code === 'auth/email-already-in-use') {
                     console.log('That email address is already in use!');
