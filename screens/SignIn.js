@@ -18,7 +18,6 @@ import {AfterSignedStyle} from '../styles/AfterSignedStyle';
 import * as yup from 'yup';
 import {fireAuth} from "../shared_components/Firebase";
 import {signInWithEmailAndPassword} from "firebase/auth";
-import {user} from "./SignUp";
 import {Nofar_styles} from "../styles/NofarStyle";
 import {signUpStyle} from "../styles/SignUpStyle";
 
@@ -57,7 +56,6 @@ export default function SignIn({navigation}) {
     function onAuthStateChanged(newUser) {
         setLoggedUser(newUser);
         console.log(newUser)
-        user = newUser
         if (initializing) setInitializing(false);
     }
 

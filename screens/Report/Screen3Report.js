@@ -19,6 +19,7 @@ import CheckBox from '@react-native-community/checkbox';
 export default function Screen3Report({route, navigation}) {
     let report = route.params.report
 
+    const db = fireStoreDB;
     const tagList = [
         {tag: "ביישן", state: false},
         {tag: "חברותי", state: false},
@@ -125,14 +126,6 @@ export default function Screen3Report({route, navigation}) {
     }
     const nextScreen = async () => {
 
-        //first confirming the tags
-        // setSelectedTags((prevSelected) => {
-        //     return prevSelected.concat(modalTags.filter(modalTags => modalTags.state));
-        // });
-        // setModalTags((prevTags) => {
-        //     return prevTags.filter(prevTags => !prevTags.state)
-        // });
-
         let date = new Date()
         const dd = String(date.getDate()).padStart(2, '0');
         const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -144,7 +137,6 @@ export default function Screen3Report({route, navigation}) {
 
         console.log(plainTags)
         let image = route.params.edit ? report.image : route.params.image
-
         let today = route.params.edit ? report.date : dd + '/' + mm + '/' + yyyy;
 
         const name = user.name
