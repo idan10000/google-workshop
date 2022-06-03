@@ -151,7 +151,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
 
                         <View style={AR_styles.ownerData}>
 
-                            <Text style={styles.whenText}>המדווח: דוד דוד</Text>
+                            <Text style={styles.whenText}>המדווח: {route.params.data.name}</Text>
                             {route.params.data.contact &&
                                 <View style={AR_styles.verticalLine}/>}
                             {route.params.data.contact &&
@@ -311,7 +311,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
 
                         <View style={AR_styles.ownerData}>
 
-                            <Text style={styles.whenText}>הבעלים: דוד דוד</Text>
+                            <Text style={styles.whenText}>הבעלים: {route.params.data.name}</Text>
                             <View style={AR_styles.verticalLine}></View>
                             <TouchableOpacity
                                 style={AR_styles.contact}>
@@ -464,7 +464,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
 
                         <View style={AR_styles.ownerData}>
 
-                            <Text style={styles.whenText}>המדווח: יוסף יוסף</Text>
+                            <Text style={styles.whenText}>המדווח: {route.params.data.name}</Text>
                             {route.params.data.contact &&
                                 <View style={AR_styles.verticalLine}>
 
@@ -625,7 +625,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
 
                         <View style={AR_styles.ownerData}>
 
-                            <Text style={styles.whenText}>הבעלים: דוד דוד</Text>
+                            <Text style={styles.whenText}>הבעלים: {route.params.data.name}</Text>
                             <View style={AR_styles.verticalLine}/>
                             <TouchableOpacity
                                 style={AR_styles.contact}>

@@ -59,16 +59,23 @@ export default function Screen3Report({route, navigation}) {
     }
     const {user} = useContext(AuthenticatedUserContext);
     console.log(route.params)
-
     const initDescription = route.params.edit ? report.description : ''
+
+    const [initializedPhone, setInitializedPhone] = React.useState(false);
     let initPhone = "loading..."
-    if (route.params.edit) {
+    if (route.params.edit && !initializedPhone) {
         initPhone = report.phoneNumber
-    } else {
+    }
+    else if(initializedPhone){
+    }
+    else {
+
         getDoc(doc(db, "Users",user.uid)).then((snapshot) => {
             const newPhone = snapshot.get("phone")
             initPhone = newPhone
             setPhone(newPhone)
+            setInitializedPhone(true)
+
         })
 
     }
