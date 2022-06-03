@@ -9,8 +9,13 @@ import {signInWithEmailAndPassword} from "firebase/auth";
 
 
 export default function PageLaunch({navigation}) {
+    const nextScreen = async () => {
+        // navigation.pop()
+        navigation.navigate("SignIn")
+    }
 
-    const tempDebugLoginHandler = (email, password) => {
+
+        const tempDebugLoginHandler = (email, password) => {
         console.log(email)
         console.log(password)
         signInWithEmailAndPassword(fireAuth,email,password)
@@ -79,7 +84,7 @@ export default function PageLaunch({navigation}) {
             </View>
             <View style={landingPageStyle.containerForRegisterClick}>
                 <Text style={Nofar_styles.text}> כבר רשומים? </Text>
-                <TouchableOpacity onPress={() => {tempDebugLoginHandler("idan.pinto3@gmail.com","123456")}}><Text style={landingPageStyle.clickHere}>לחצו כאן!</Text></TouchableOpacity>
+                <TouchableOpacity onPress = {nextScreen}><Text style={landingPageStyle.clickHere}>לחצו כאן!</Text></TouchableOpacity>
 
 
             </View>
