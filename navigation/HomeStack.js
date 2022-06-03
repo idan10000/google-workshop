@@ -1,9 +1,7 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import Header from '../shared_components/Header';
 import OldhomeScreen from "../screens/HomePage";
-import ReportCreationScreen from "../screens/CreateReport/CreateReportPage";
 import ReportPage from "../screens/Report/ReportPage"
-import PosterPostingComponent from '../screens/CreatePoster/CreatePosterPage';
 import AdPage from '../screens/Poster/PosterPage';
 import NotificationsPage from '../screens/NotificationsPage';
 import NavigationBar from './NavigationBar';
@@ -17,8 +15,8 @@ import Screen3Poster from "../screens/CreatePoster/Screen3Poster";
 import {registerForPushNotificationsAsync} from '../shared_components/NotificationsUtils'
 import * as Notifications from 'expo-notifications';
 import {fireStoreDB} from "../shared_components/Firebase";
-import {arrayUnion, doc, getDoc, setDoc, updateDoc} from "firebase/firestore";
-import {createContext, useContext, useEffect, useRef, useState} from "react";
+import {arrayUnion, doc, getDoc, updateDoc} from "firebase/firestore";
+import {useContext, useEffect, useRef, useState} from "react";
 import {AuthenticatedUserContext} from "./AuthenticatedUserProvider";
 import Screen1Poster from "../screens/CreatePoster/Screen1Poster";
 import SignIn from "../screens/SignIn";
@@ -36,10 +34,9 @@ const Stack = createStackNavigator();
 
 export default function HomeStack() {
     const [expoPushToken, setExpoPushToken] = useState('');
-    const [notification, setNotification] = useState(false);
+    const [newNotification, setNewNotification] = useState(false);
     const notificationListener = useRef();
     const responseListener = useRef();
-    const [responseReport, setResponseReport] = useState({})
     const {user} = useContext(AuthenticatedUserContext);
 
     useEffect(() => {
@@ -59,6 +56,7 @@ export default function HomeStack() {
         // This listener is fired whenever a notification is received while the app is foregrounded
         notificationListener.current = Notifications.addNotificationReceivedListener(async (notification) => {
             const userRef = doc(fireStoreDB, "Users", user.uid);
+            setNewNotification(true);
             await updateDoc(userRef, {
                 notifications: arrayUnion(notification)
             }).then(() => {
@@ -93,7 +91,7 @@ export default function HomeStack() {
     }, []);
 
 
-    const options = {header: (props) => <Header {...props}/>}
+    const options = {header: (props) => <Header {...props} newNotification={newNotification}/>}
 
     return (
         <Stack.Navigator screenOptions={options} /*initialRouteName={responseReport === {} ? "התראות" : "Main"}*/>
@@ -110,8 +108,10 @@ export default function HomeStack() {
             <Stack.Screen name="ReportPage" component={ReportPage}/>
             {/*<Stack.Screen name="CreateAd" component={PosterPostingComponent}/>*/}
             <Stack.Screen name="AdPage" component={AdPage}/>
-            <Stack.Screen name="התראות" component={NotificationsPage} />
-            {/* <Stack.Screen name="ReportForBrowse" component={ReportForBrowse}/> */}
+            <Stack.Screen name="התראות">
+                {(props) => <NotificationsPage {...props} setNewNotification={setNewNotification}/>}
+            </Stack.Screen>
+    {/* <Stack.Screen name="ReportForBrowse" component={ReportForBrowse}/> */}
             <Stack.Screen name="Report" component={ReportForBrowser} />
             <Stack.Screen name="Poster" component={PosterBrowse} />
 

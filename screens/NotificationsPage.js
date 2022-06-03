@@ -1,29 +1,29 @@
 import { List } from 'react-native-paper';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  FlatList, ImageBackground, Text, RefreshControl
+    StyleSheet,
+    TouchableOpacity,
+    View, ScrollView,
+    FlatList, Text, RefreshControl
 } from 'react-native';
 import {arrayRemove, doc, getDoc, updateDoc} from "firebase/firestore";
 import {fireStoreDB} from "../shared_components/Firebase";
 import {AuthenticatedUserContext} from "../navigation/AuthenticatedUserProvider";
 
 
-export default function NotificationsPage({navigation}) {
+export default function NotificationsPage({navigation, setNewNotification}) {
 
     const {user} = useContext(AuthenticatedUserContext);
     const loadedNotifications = useRef(false)
     const [notifications, setNotifications] = useState([])
+    const [isNotification, setIsNotification] = useState(false);
     const [refreshing, setRefreshing] = useState(true);
-    // {id:1, title: "האם זה הכלב שלך?", description: "כלב שדומה לרקסי נמצא באזורך"},
-    // {id:2, title: "האם זה הכלב שלך?", description: "כלב שדומה לרקסי נמצא באזורך"},
-    // {id:3, title: "האם זה הכלב שלך?", description: "כלב שדומה לרקסי נמצא באזורך"},
-    // {id:4, title: "האם זה הכלב שלך?", description: "כלב שדומה לרקסי נמצא באזורך"},
+    const [isLoading, setIsLoading] = useState(true);
+
 
     useEffect(async () => {
         await loadNotifications();
+        setIsLoading(false);
     })
 
     const loadNotifications = () => {
@@ -34,7 +34,14 @@ export default function NotificationsPage({navigation}) {
                 //console.log("Document data:", userSnap.data());
                 if (loadedNotifications.current === false){
                     loadedNotifications.current = true
-                    setNotifications(userSnap.data().notifications)
+                    const notificationsArray = userSnap.data().notifications;
+                    if (notificationsArray === undefined || notificationsArray.length === 0){
+                        setIsNotification(false);
+                    }
+                    else {
+                        setIsNotification(true);
+                    }
+                    setNotifications(notificationsArray)
                 }
                 // setNotifications(userSnap.data().notifications);
             } else {
@@ -48,9 +55,17 @@ export default function NotificationsPage({navigation}) {
         const userRef = doc(fireStoreDB, "Users", user.uid);
         return getDoc(userRef).then((userSnap) => {
             setRefreshing(false);
+            setNewNotification(false);
             if (userSnap.exists()) {
                 //console.log("Document data:", userSnap.data());
-                setNotifications(userSnap.data().notifications);
+                const notificationsArray = userSnap.data().notifications;
+                if (notificationsArray === undefined || notificationsArray.length === 0){
+                    setIsNotification(false);
+                }
+                else {
+                    setIsNotification(true);
+                }
+                setNotifications(notificationsArray);
             } else {
                 // doc.data() will be undefined in this case
                 console.log("No such document!");
@@ -90,22 +105,30 @@ export default function NotificationsPage({navigation}) {
         })
     }
 
-    // if (loadedNotifications.current === true && notifications.length === 0){
-    //     return (
-    //         <ImageBackground
-    //             style={{flex: 1}}
-    //             source={require('../assets/new_background.png')}>
-    //             <View style={styles.container}>
-    //                 <Text>אין התראות</Text>
-    //             </View>
-    //         </ImageBackground>
-    //     )
-    // }
+    if (isLoading)
+        return (
+            <View style={styles.container}>
+            </View>
+        );
+
+    if (isNotification === false){
+        return (
+                <View style={styles.container}>
+                    <ScrollView
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={refreshNotifications} />
+                        }
+                        contentContainerStyle={styles.noNotificationsContainer}>
+
+                        <Text style={styles.noNotificationsTitle}>אין התראות...</Text>
+                        <Text style={styles.noNotificationsParagraph}>כשנמצא כלב שמתאים לתמונה של הכלב שלכם, נשלח לכם התראה מיד, והיא תופיע ממש כאן</Text>
+                    </ScrollView>
+                </View>
+        )
+    }
 
     return (
-        <ImageBackground
-            style={{flex: 1}}
-            source={require('../assets/new_background.png')}>
+
             <View style={styles.container}>
                 <FlatList
                     style={styles.notificationList}
@@ -119,7 +142,6 @@ export default function NotificationsPage({navigation}) {
                     }
                     renderItem={({item}) => {
                         return (
-
                             <TouchableOpacity onPress={() => {
                                 console.log("open notification")
                             }}>
@@ -139,7 +161,6 @@ export default function NotificationsPage({navigation}) {
                         )
                     }}/>
             </View>
-        </ImageBackground>
     );
 }
 
@@ -157,5 +178,23 @@ const styles = StyleSheet.create({
         borderWidth:0.18,
         borderColor:"#000",
         backgroundColor:"#F9F8F0",
+    },
+    noNotificationsTitle:{
+        color:"#777777",
+        textAlign:"center",
+        fontSize:32,
+        marginBottom:40
+    },
+    noNotificationsParagraph:{
+        color:"#777777",
+        textAlign:"center",
+        fontSize:18,
+        marginBottom:20,
+        marginHorizontal:10
+    },
+    noNotificationsContainer:{
+        flex:1,
+        alignItems:"center",
+        justifyContent:"center",
     }
 });

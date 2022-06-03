@@ -1,18 +1,22 @@
 import React from 'react';
 import { Appbar } from 'react-native-paper';
 import {StyleSheet} from 'react-native';
-import { color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
-export default function Header({ navigation, back }) {
-  return (
-    <Appbar.Header style={styles.header}>
 
-      {back ? <Appbar.BackAction onPress={navigation.goBack} color ='#5C4C3D'/> : null }
-      <Appbar.Content title="FinDog" style={styles.content} titleStyle={styles.title}/>
-      {back ? null : <Appbar.Action style={styles.action} icon="bell" color='#5C4C3D' onPress={() => {navigation.navigate('התראות')}} />}
+export default function Header({ navigation, back, newNotification }) {
 
-    </Appbar.Header>
-  );
+
+    return (
+        <Appbar.Header style={styles.header}>
+
+            {back ? <Appbar.BackAction onPress={navigation.goBack} color ='#5C4C3D'/> : null }
+
+            <Appbar.Content title="FinDog" style={styles.content} titleStyle={styles.title}/>
+
+            {back ? null : <Appbar.Action style={styles.action} icon={newNotification ? "bell-alert":"bell"} color='#5C4C3D' onPress={() => {navigation.navigate('התראות')}} />}
+
+        </Appbar.Header>
+    );
 }
 
 
