@@ -57,16 +57,23 @@ export default function Screen3Report({route, navigation}) {
     }
     const {user} = useContext(AuthenticatedUserContext);
     console.log(route.params)
-
     const initDescription = route.params.edit ? report.description : ''
+
+    const [initializedPhone, setInitializedPhone] = React.useState(false);
     let initPhone = "loading..."
-    if (route.params.edit) {
+    if (route.params.edit && !initializedPhone) {
         initPhone = report.phoneNumber
-    } else {
+    }
+    else if(initializedPhone){
+    }
+    else {
+
         getDoc(doc(db, "Users",user.uid)).then((snapshot) => {
             const newPhone = snapshot.get("phone")
             initPhone = newPhone
             setPhone(newPhone)
+            setInitializedPhone(true)
+
         })
 
     }
@@ -128,7 +135,6 @@ export default function Screen3Report({route, navigation}) {
         let today = route.params.edit ? report.date : dd + '/' + mm + '/' + yyyy;
 
         const name = user.displayName
-        console.log(user)
         const dbReport = new Report(image, "", route.params.location, today, plainTags, descriptionText, "", phoneText, checked, name, user.uid) // Report to upload to DB
         const sendReport = new Report(image, "", route.params.location, today, plainTags, descriptionText, "", phoneText, checked, name, user.uid) // Report to send to the Report page
 

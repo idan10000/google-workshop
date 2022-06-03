@@ -11,7 +11,7 @@ import {stylesPoster} from "../CreatePoster/CreatePosterStyle";
 import Report, {reportConverter} from "../../data_classes/Report";
 import {fireStoreDB, uploadImageAsync} from "../../shared_components/Firebase";
 import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
-import {addDoc, arrayUnion, collection, doc, setDoc, updateDoc} from "firebase/firestore";
+import {addDoc, arrayUnion, collection, doc, getDoc, setDoc, updateDoc} from "firebase/firestore";
 import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
 import CheckBox from '@react-native-community/checkbox';
 import Poster, {posterConverter} from "../../data_classes/Poster";
@@ -123,10 +123,29 @@ export default function Screen3Poster({route, navigation}) {
         setModalTags(prevTags => ([...prevTags, {tag: tag, state: false}]))
         setSelectedTags(prevSelected => (prevSelected.filter((prevSelected) => prevSelected.tag !== tag)))
     }
+    const db = fireStoreDB;
+
     const initDescription = route.params.edit ? prevPoster.description : ''
     const initName = route.params.edit ? prevPoster.name : ''
 
-    const initPhone =  route.params.edit ?prevPoster.phoneNumber : '0547323711'
+    const [initializedPhone, setInitializedPhone] = React.useState(false);
+    let initPhone = "loading..."
+    if (route.params.edit && !initializedPhone) {
+        initPhone = prevPoster.phoneNumber
+    }
+    else if(initializedPhone){
+    }
+    else {
+
+        getDoc(doc(db, "Users",user.uid)).then((snapshot) => {
+            const newPhone = snapshot.get("phone")
+            initPhone = newPhone
+            setPhone(newPhone)
+            setInitializedPhone(true)
+
+        })
+
+    }
 
     const [descriptionText, setDescription] = React.useState(initDescription);
     const [nameText, setName] = React.useState(initName);
@@ -154,15 +173,9 @@ export default function Screen3Poster({route, navigation}) {
         let today = route.params.edit ? prevPoster.date : dd + '/' + mm + '/' + yyyy;
 
         const selectedImage = route.params.edit ? prevPoster.image : route.params.image
-        console.log(5555555555555555)
 
-        console.log(selectedImage)
-        console.log(today)
-        console.log(descriptionText)
-        console.log(nameText)
-        console.log(phoneText)
-
-        const dbPoster = new Poster(selectedImage, "", "", today, today, descriptionText, nameText, '',phoneText,name, user.uid)
+        const name = user.displayName
+        const dbPoster = new Poster(selectedImage, "", "", today,plainTags, descriptionText, nameText, '',phoneText,name, user.uid)
         const sendPoster = new Poster(selectedImage, "", "", today, plainTags, descriptionText, nameText, '',phoneText,name, user.uid)
         const db = fireStoreDB;
 
