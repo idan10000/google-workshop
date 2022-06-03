@@ -8,9 +8,11 @@ import {stylesPoster} from "../CreatePoster/CreatePosterStyle";
 import Report, {reportConverter} from "../../data_classes/Report";
 import {fireStoreDB, uploadImageAsync} from "../../shared_components/Firebase";
 import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
-import {addDoc, arrayUnion, collection, doc, getDoc, getDocs, setDoc, updateDoc} from "firebase/firestore";
+import {addDoc, arrayUnion, collection, doc, getDoc, setDoc, updateDoc} from "firebase/firestore";
 import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
-
+import {deleteObject, ref, getStorage} from "firebase/storage";
+import * as geofire from "geofire-common";
+import {reverseGeocodeAsync} from "expo-location"
 export default function Screen3Report({route, navigation}) {
     let report = route.params.report
 
@@ -128,15 +130,25 @@ export default function Screen3Report({route, navigation}) {
         let today = route.params.edit ? report.date : dd + '/' + mm + '/' + yyyy;
 
         const name = user.displayName
-        console.log(user)
-        const dbReport = new Report(image, "", route.params.location, today, plainTags, descriptionText, "", phoneText, checked, name, user.uid) // Report to upload to DB
-        const sendReport = new Report(image, "", route.params.location, today, plainTags, descriptionText, "", phoneText, checked, name, user.uid) // Report to send to the Report page
+        let templocation = route.params.location
+        const hash = geofire.geohashForLocation([templocation.latitude, templocation.longitude])
+        const location = {
+            latitude: templocation.latitude,
+            longitude: templocation.longitude,
+            geohash: hash
+        }
+        const [addressResponse] = await reverseGeocodeAsync(templocation)
+        const address = `${addressResponse.street} ${addressResponse.streetNumber}, ${addressResponse.city}`;
+        console.log(address)
+        const dbReport = new Report(image, "", location, address, today, plainTags, descriptionText, "", phoneText, checked, name, user.uid) // Report to upload to DB
+        const sendReport = new Report(image, "", location, address, today, plainTags, descriptionText, "", phoneText, checked, name, user.uid) // Report to send to the Report page
 
 
         // if we reached from an edit Report
         if (route.params.edit) {
             // if the Report was changed, update the Report page
             if (deepDiffer(sendReport, report)) {
+                await deleteObject(ref(getStorage(),report.imagePath))
                 const imageAndPath = await uploadImageAsync(image, "Reports")
                 dbReport.image = imageAndPath.link
                 dbReport.imagePath = imageAndPath.path

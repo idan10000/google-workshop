@@ -24,11 +24,8 @@ export default function Map({startLocation}) {
         setErrorMsg("Permission to access location was denied");
         return;
       }
-      console.log(status);
 
-      console.log("before location");
       let newLocation = await Location.getCurrentPositionAsync({});
-      console.log("after location");
       setLocation(newLocation);
       setPin({
         latitude: newLocation.coords.latitude,

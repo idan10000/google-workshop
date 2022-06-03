@@ -4,10 +4,11 @@ import * as ImagePicker from 'expo-image-picker';
 import {getAuth, signOut} from "firebase/auth";
 import {Text, TouchableOpacity, Image} from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
-import React from "react";
+import React, {useState} from "react";
 import {Nofar_styles} from "../../styles/NofarStyle";
 import StepIndicator from 'react-native-step-indicator';
 import Map from "../Map/Map";
+import MapForCreation from "../Map/MapForCreation";
 
 export default function Screen2Poster({route, navigation}) {
     // console.log(route.params.data)
@@ -43,10 +44,12 @@ export default function Screen2Poster({route, navigation}) {
 
     const initLocation = route.params.edit ? prevPoster.location : 0
 
+    const [location, setLocation] = useState(null)
+
     const nextScreen = async () => {
         // navigation.pop()
 
-        navigation.navigate("PosterCreation3", {poster :prevPoster,location: initLocation, image: route.params.image ,edit : route.params.edit, ref: route.params.ref})
+        navigation.navigate("PosterCreation3", {poster :prevPoster,location: location, image: route.params.image ,edit : route.params.edit, ref: route.params.ref})
 
     }
     return (
@@ -61,8 +64,12 @@ export default function Screen2Poster({route, navigation}) {
                         stepCount={3}
                     /></View>
 
-                <Map startLocation = {initLocation}>
-                </Map>
+                <MapForCreation
+                    preLocation={initLocation}
+                    usePreLocation={route.params.edit}
+                    location={location}
+                    setLocation={setLocation}
+                />
 
                 <TouchableOpacity
                     onPress={nextScreen}

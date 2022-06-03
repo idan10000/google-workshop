@@ -15,6 +15,9 @@ import {addDoc, arrayUnion, collection, doc, setDoc, updateDoc} from "firebase/f
 import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
 import CheckBox from '@react-native-community/checkbox';
 import Poster, {posterConverter} from "../../data_classes/Poster";
+import {deleteObject, getStorage, ref} from "firebase/storage";
+import * as geofire from "geofire-common";
+import {reverseGeocodeAsync} from "expo-location";
 
 export default function Screen3Poster({route, navigation}) {
     let prevPoster = route.params.poster
@@ -44,10 +47,10 @@ export default function Screen3Poster({route, navigation}) {
     //     });
     // }
 
-    const labels = ["תמונה","מיקום","פרטים"];
+    const labels = ["תמונה", "מיקום", "פרטים"];
     const customStyles = {
         stepIndicatorSize: 25,
-        currentStepIndicatorSize:30,
+        currentStepIndicatorSize: 30,
         separatorStrokeWidth: 2,
         currentStepStrokeWidth: 3,
         stepStrokeCurrentColor: "#DCA277",
@@ -79,7 +82,6 @@ export default function Screen3Poster({route, navigation}) {
     //     tagList.filter((item) => !initSelectedTagList.some(e => e.tag === item.tag)) : tagList
     // const [modalTags, setModalTags] = React.useState(initModalTagList);
     // const [selectedTags, setSelectedTags] = React.useState(initSelectedTagList);
-
 
 
     //---------------------- Tag Selection Modal ----------------------
@@ -126,7 +128,7 @@ export default function Screen3Poster({route, navigation}) {
     const initDescription = route.params.edit ? prevPoster.description : ''
     const initName = route.params.edit ? prevPoster.name : ''
 
-    const initPhone =  route.params.edit ?prevPoster.phoneNumber : '0547323711'
+    const initPhone = route.params.edit ? prevPoster.phoneNumber : '0547323711'
 
     const [descriptionText, setDescription] = React.useState(initDescription);
     const [nameText, setName] = React.useState(initName);
@@ -156,20 +158,25 @@ export default function Screen3Poster({route, navigation}) {
         const selectedImage = route.params.edit ? prevPoster.image : route.params.image
         console.log(5555555555555555)
 
-        console.log(selectedImage)
-        console.log(today)
-        console.log(descriptionText)
-        console.log(nameText)
-        console.log(phoneText)
+        let tempLocation = route.params.location
+        const hash = geofire.geohashForLocation([tempLocation.latitude, tempLocation.longitude])
+        const location = {
+            latitude: tempLocation.latitude,
+            longitude: tempLocation.longitude,
+            geohash: hash
+        }
+        const [addressResponse] = await reverseGeocodeAsync(tempLocation)
+        const address = `${addressResponse.street} ${addressResponse.streetNumber}, ${addressResponse.city}`;
 
-        const dbPoster = new Poster(selectedImage, "", "", today, today, descriptionText, nameText, '',phoneText,name, user.uid)
-        const sendPoster = new Poster(selectedImage, "", "", today, plainTags, descriptionText, nameText, '',phoneText,name, user.uid)
+        const dbPoster = new Poster(selectedImage, "", location, address, today, today, descriptionText, nameText, '', phoneText, name, user.uid)
+        const sendPoster = new Poster(selectedImage, "", location, address, today, plainTags, descriptionText, nameText, '', phoneText, name, user.uid)
         const db = fireStoreDB;
 
         // if we reached from an edit Report
         if (route.params.edit) {
             // if the prevPoster was changed, update the prevPoster page
             if (deepDiffer(sendPoster, prevPoster)) {
+                await deleteObject(ref(getStorage(), prevPoster.imagePath))
                 const image = await uploadImageAsync(selectedImage, "Posters")
                 dbPoster.image = image.link
                 dbPoster.imagePath = image.path
@@ -202,14 +209,12 @@ export default function Screen3Poster({route, navigation}) {
     }
 
 
-
-
     return (
-        <ScrollView  style = {Nofar_styles.container} >
+        <ScrollView style={Nofar_styles.container}>
             <Provider>
 
-                <View style = {Nofar_styles.container}>
-                    <View  marginTop="2.5%">
+                <View style={Nofar_styles.container}>
+                    <View marginTop="2.5%">
                         <StepIndicator
                             customStyles={customStyles}
                             currentPosition={2}
@@ -219,11 +224,11 @@ export default function Screen3Poster({route, navigation}) {
                     {/*<View marginHorizontal = "7.5%" marginTop = "2.5%" >*/}
 
                     {/*    <Text style = {styles.textFound}>תיאור הכלב: </Text></View>*/}
-                        <View style = {styles.dogNameContainer}>
+                    <View style={styles.dogNameContainer}>
 
-                    <Text style = {Nofar_styles.TinyButtonTitleBlack}>שם הכלב: </Text></View>
+                        <Text style={Nofar_styles.TinyButtonTitleBlack}>שם הכלב: </Text></View>
 
-                <View style={styles.nameContainer}>
+                    <View style={styles.nameContainer}>
                         <TextInput
                             style={styles.nameOfDog}
                             dense={false}
@@ -305,9 +310,9 @@ export default function Screen3Poster({route, navigation}) {
                         }
                     </View>
                     <View>
-                        <View style = {styles.dogNameContainer}>
+                        <View style={styles.dogNameContainer}>
 
-                            <Text style = {Nofar_styles.TinyButtonTitleBlack}>תיאור: </Text></View>
+                            <Text style={Nofar_styles.TinyButtonTitleBlack}>תיאור: </Text></View>
                         <View style={styles.descriptionContainer}>
 
                             <TextInput
@@ -322,22 +327,22 @@ export default function Screen3Poster({route, navigation}) {
                                 activeOutlineColor="#000000"
                             />
                         </View>
-                        <View style = {styles.checkboxContainer}>
-                            <View >
-                                <Text style = {Nofar_styles.TinyButtonTitleBlack}>פרטי יצירת קשר</Text>
+                        <View style={styles.checkboxContainer}>
+                            <View>
+                                <Text style={Nofar_styles.TinyButtonTitleBlack}>פרטי יצירת קשר</Text>
                             </View>
                         </View>
-                            <View style={styles.phoneContainer}>
-                                <TextInput
-                                    dense={false}
-                                    placeholder={'הוסף טלפון'}
-                                    value={phoneText}
-                                    onChangeText={setPhone}
-                                    mode={'outlined'}
-                                    activeUnderlineColor="#000000"
-                                    activeOutlineColor="#000000"
-                                />
-                            </View>
+                        <View style={styles.phoneContainer}>
+                            <TextInput
+                                dense={false}
+                                placeholder={'הוסף טלפון'}
+                                value={phoneText}
+                                onChangeText={setPhone}
+                                mode={'outlined'}
+                                activeUnderlineColor="#000000"
+                                activeOutlineColor="#000000"
+                            />
+                        </View>
                     </View>
                     <TouchableOpacity
                         onPress={nextScreen}
@@ -349,71 +354,71 @@ export default function Screen3Poster({route, navigation}) {
                 </View>
             </Provider>
 
-        </ScrollView >
+        </ScrollView>
 
     );
 }
 
 const styles = StyleSheet.create({
 
-    button:{
+    button: {
         marginBottom: "2.5%",
         marginHorizontal: "7.5%",
-        paddingVertical:"2%",
+        paddingVertical: "2%",
         paddingRight: "5%",
         paddingLeft: "5%",
         borderRadius: 10,
         backgroundColor: "#DCA277",
     },
-    backgroundCamera:{
-        marginTop :"5%",
+    backgroundCamera: {
+        marginTop: "5%",
         width: Dimensions.get("window").width / 1.2,
         height: Dimensions.get("window").height / 1.5,
         justifyContent: "center",
         alignItems: "center",
-        alignSelf:"center",
+        alignSelf: "center",
         resizeMode: "cover",
     },
-    proceedButton :{
-        paddingVertical:"3%",
+    proceedButton: {
+        paddingVertical: "3%",
         paddingRight: "5%",
         paddingLeft: "5%",
         justifyContent: "center",
-        alignSelf:"center",
+        alignSelf: "center",
         alignItems: "center",
         borderRadius: 10,
         backgroundColor: "#DCA277",
-        marginVertical:"7.5%",
+        marginVertical: "7.5%",
         width: Dimensions.get("window").width / 2.2,
 
     },
-    descriptionContainer:{
+    descriptionContainer: {
         marginRight: "7.5%",
         marginLeft: "7.5%",
         justifyContent: "center",
-        width: Dimensions.get("window").width*0.85,
+        width: Dimensions.get("window").width * 0.85,
     },
-    nameContainer:{
+    nameContainer: {
         marginBottom: "5%",
         marginRight: "7.5%",
         marginLeft: "7.5%",
         justifyContent: "center",
-        width: Dimensions.get("window").width*0.85,
+        width: Dimensions.get("window").width * 0.85,
     },
-    phoneContainer:{
+    phoneContainer: {
         marginRight: "7.5%",
         marginLeft: "7.5%",
 
         justifyContent: "center",
-        width: Dimensions.get("window").width*0.85,
+        width: Dimensions.get("window").width * 0.85,
     },
-    checkboxContainer:{
+    checkboxContainer: {
         marginHorizontal: "7.5%",
-        flexDirection : "row",
-        marginTop:"5%",
+        flexDirection: "row",
+        marginTop: "5%",
     },
-    inDescription:{
-        height: Dimensions.get("window").height*0.2
+    inDescription: {
+        height: Dimensions.get("window").height * 0.2
 
     },
     chips: {
@@ -424,31 +429,31 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         flexWrap: "wrap",
 
-        paddingHorizontal:"7.5%",
+        paddingHorizontal: "7.5%",
     }, textFound: {
         textDecorationLine: 'underline',
 
-        fontSize:20,
-        lineHeight:25,
+        fontSize: 20,
+        lineHeight: 25,
         fontWeight: "700",
     },
     chip: {
         // tp be changed to left
         marginRight: "5%",
         marginVertical: "1.5%",
-        paddingHorizontal:"2%",
+        paddingHorizontal: "2%",
         height: 35,
         justifyContent: "center",
         borderRadius: 25,
         backgroundColor: "#EADDCA",
     },
     addTagsBTContainer: {
-        paddingTop:"2%",
-        flexDirection:"row",
+        paddingTop: "2%",
+        flexDirection: "row",
     }, dogNameContainer: {
-        marginTop:"2.5%",
+        marginTop: "2.5%",
         marginHorizontal: "7.5%",
-        flexDirection : "row",
+        flexDirection: "row",
     }
 
 

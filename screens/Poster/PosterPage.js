@@ -51,7 +51,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 <Text style={styles.whenText}>נצפה לאחרונה ב:</Text>
                                 <Icon name="location-pin" size={22} color="#000"/>
                                 <TouchableOpacity><Text fontSize="16" lineHeight="20" fontWeight="500"
-                                                        textAlign="center">{route.params.data.location}</Text></TouchableOpacity>
+                                                        textAlign="center">{route.params.data.address}</Text></TouchableOpacity>
                             </View>
 
 
@@ -211,7 +211,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 <Text style={styles.whenText}>נצפה לאחרונה ב:</Text>
                                 <Icon name="location-pin" size={22} color="#000"/>
                                 <TouchableOpacity><Text fontSize="16" lineHeight="20" fontWeight="500"
-                                                        textAlign="center">{route.params.data.location}</Text></TouchableOpacity>
+                                                        textAlign="center">{route.params.data.address}</Text></TouchableOpacity>
                             </View>
 
 
@@ -365,7 +365,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 <Text style={styles.whenText}>נצפה לאחרונה ב:</Text>
                                 <Icon name="location-pin" size={22} color="#000"/>
                                 <TouchableOpacity><Text fontSize="16" lineHeight="20" fontWeight="500"
-                                                        textAlign="center">{route.params.data.location}</Text></TouchableOpacity>
+                                                        textAlign="center">{route.params.data.address}</Text></TouchableOpacity>
                             </View>
 
 
@@ -525,7 +525,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 <Text style={styles.whenText}>נצפה לאחרונה ב:</Text>
                                 <Icon name="location-pin" size={22} color="#000"/>
                                 <TouchableOpacity><Text fontSize="16" lineHeight="20" fontWeight="500"
-                                                        textAlign="center">{route.params.data.location}</Text></TouchableOpacity>
+                                                        textAlign="center">{route.params.data.address}</Text></TouchableOpacity>
                             </View>
 
 
