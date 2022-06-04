@@ -100,7 +100,6 @@ export default function HomeStack() {
             <Stack.Screen name="ReportCreation" component={Screen1Report}/>
             <Stack.Screen name="ReportCreation2" component={Screen2Report}/>
             <Stack.Screen name="ReportCreation3" component={Screen3Report}/>
-            <Stack.Screen name="SignIn" component={SignIn}/>
 
             <Stack.Screen name="PosterCreation" component={Screen1Poster}/>
             <Stack.Screen name="PosterCreation2" component={Screen2Poster}/>

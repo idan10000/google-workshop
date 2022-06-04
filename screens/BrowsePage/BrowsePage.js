@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
     Provider,
-    Searchbar,
     IconButton,
     Menu,
 } from 'react-native-paper';
@@ -11,22 +10,40 @@ import {
     FlatList,
     Dimensions,
     ImageBackground,
-    TouchableOpacity,
     Text,
     RefreshControl
 } from 'react-native'
 import PostListItem from '../../shared_components/PostListItem'
-import Report from "../../data_classes/Report";
-import {addDoc, arrayUnion, collection, doc, getDoc, getFirestore, setDoc, updateDoc} from "firebase/firestore";
-import {getDocuments, getInitialData, getNextData} from "./InfiniteScroll"
-import {fireStoreDB} from "../../shared_components/Firebase";
+import {getInitialData, getNextData} from "./InfiniteScroll"
+import {getCurrentPositionAsync, requestForegroundPermissionsAsync} from "expo-location";
 
 const BrowsePage = ({navigation, route}) => {
     const {collectionPath, destination} = route.params
 
+    const getInitialLocation = async () => {
+        console.log("getting initial location")
+        let {status} = await requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+            return;
+        }
+
+        let newLocation = await getCurrentPositionAsync({});
+        setInitialLocation([newLocation.coords.latitude, newLocation.coords.longitude])
+        return [newLocation.coords.latitude, newLocation.coords.longitude]
+    }
+
+    const [initialLocation, setInitialLocation] = useState(null)
+
     const sortByDate = () => (
         setData((prevData) => (
                 prevData.sort((a, b) => a.date.localeCompare(b.date))
+            )
+        )
+    )
+
+    const sortByDistance = () => (
+        setData((prevData) => (
+                prevData.sort((a, b) => a.distance.localeCompare(b.distance))
             )
         )
     )
@@ -60,7 +77,8 @@ const BrowsePage = ({navigation, route}) => {
 
     useEffect(async () => {
         // Load initial batch documents when main component mounted.
-        await getInitialData(setData, collectionPath);
+        const loc = await getInitialLocation()
+        await getInitialData(setData, collectionPath, loc);
         setRefreshing(false);
     }, []);
 
@@ -82,7 +100,7 @@ const BrowsePage = ({navigation, route}) => {
 
     const refreshItems = () => {
         console.log("start refreshing")
-        getInitialData(setData, collectionPath).then(() => {
+        getInitialData(setData, collectionPath, initialLocation).then(() => {
             setRefreshing(false);
             console.log("Finished refreshing")
         });
@@ -93,7 +111,6 @@ const BrowsePage = ({navigation, route}) => {
             style={{flex: 1}}
             source={require('../../assets/new_background.png')}>
             <Provider>
-                {/*<TouchableOpacity >*/}
                 <View style={{
                     flexWrap: "wrap", flexDirection: 'row',
                     // borderWidth:0.5,borderColor:"#000",
@@ -113,43 +130,30 @@ const BrowsePage = ({navigation, route}) => {
                         }} title="תאריך"/>
                     </Menu>
 
-                    {/*<View style={styles.Search}>*/}
-                    {/*    <Searchbar>*/}
-                    {/*    </Searchbar>*/}
-                    {/*</View>*/}
 
                     <View style={styles.Search}>
                         <Text style={styles.textSort}>מיון לפי:</Text>
                     </View>
-                    {/*<IconButton*/}
-                    {/*    icon={"filter"}*/}
-                    {/*    style={styles.filterButton}*/}
-                    {/*    onPress={() => console.log("filter")}*/}
-                    {/*/>*/}
 
 
                 </View>
-                {/*</TouchableOpacity>*/}
                 <View style={styles.listContainer}>
-                    {/* List */}
                     <FlatList data={data.docs}
                               ItemSeparatorComponent={FlatListItemSeparator}
                               keyExtractor={(item) => item.image}
-                              onEndReached={() => getNextData(data, setData, collectionPath)}
+                              onEndReached={() => getNextData(data, setData, collectionPath, initialLocation)}
                               onEndReachedThreshold={0.5}
                               refreshControl={
                                   <RefreshControl refreshing={refreshing} onRefresh={refreshItems}/>
                               }
                               numColumns={2}
                               renderItem={({item}) => {
-
                                   return (
-
                                       <View style={{paddingVertical: 5}}>
                                           <PostListItem
                                               image={item.image}
                                               date={item.date}
-                                              distance={item.location}
+                                              distance={item.distance}
                                               data={item}
                                               navigation={navigation}
                                               destination={destination}
@@ -158,7 +162,6 @@ const BrowsePage = ({navigation, route}) => {
                               }}/>
 
                 </View>
-                {/* <NewReportFAB/> */}
             </Provider>
         </ImageBackground>
     )

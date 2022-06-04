@@ -12,6 +12,7 @@ import {
 } from "react-native";
 
 const postListItem = ({ image, date, distance, data, destination, navigation}) => {
+  console.log(distance)
   return (
     <TouchableOpacity onPress={() => {navigation.navigate(destination, {data: data})}}>
       <Provider>
@@ -22,7 +23,7 @@ const postListItem = ({ image, date, distance, data, destination, navigation}) =
           <View style={styles.detailsContainer}>
             <Caption style={styles.date}>{date}</Caption>
 
-            <Caption style={styles.distance}>{distance} מ'</Caption>
+            <Caption style={styles.distance}>{distance.toFixed(2)} ק"מ</Caption>
           </View>
         </View>
       </Provider>

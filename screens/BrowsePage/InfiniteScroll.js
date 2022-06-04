@@ -1,17 +1,20 @@
 import {collection, getFirestore, getDocs, getDoc, doc, query, orderBy, startAfter, limit} from "firebase/firestore";
 import {fireStoreDB} from "../../shared_components/Firebase";
 import {useEffect} from "react";
+import {distanceBetween} from "geofire-common";
 
 
-const extractSnapshots = (snapshots) => {
+const extractSnapshotsAndGetDistance = (snapshots, currentLocation) => {
     let extracts = [];
     snapshots.forEach((documentSnapshot) => {
-        extracts.push(documentSnapshot.data());
+        const data = documentSnapshot.data();
+        data.distance = distanceBetween([data.location.latitude, data.location.longitude], currentLocation)
+        extracts.push(data);
     });
     return extracts;
 };
 
-export const getDocuments = async ({lastDocId, lim = 10, path}) => {
+export const getDocuments = async ({lastDocId, lim = 10, path, currentLocation}) => {
     let docs = []; // Array of docs in current bath
     let newLastDocId = null; // Last document ID in this batch
     let error = null;
@@ -68,7 +71,7 @@ export const getDocuments = async ({lastDocId, lim = 10, path}) => {
             snapshots.docs[snapshots.docs.length - 1]?.ref.path || null;
 
 
-        docs = extractSnapshots(snapshots);
+        docs = extractSnapshotsAndGetDistance(snapshots,currentLocation);
         status = "succeeded";
 
         return {
@@ -91,7 +94,7 @@ export const getDocuments = async ({lastDocId, lim = 10, path}) => {
 };
 
 /** Fetch initial batch docs and save last document ID */
-export const getInitialData = async (setData, path) => {
+export const getInitialData = async (setData, path, currentLocation) => {
     console.log("getInitialData called")
     setData({initialBatchStatus: "pending", error: null});
     const {
@@ -99,7 +102,7 @@ export const getInitialData = async (setData, path) => {
         error,
         lastDocId,
         status: initialBatchStatus,
-    } = await getDocuments({lim: 10, path: path});
+    } = await getDocuments({lim: 10, path: path, currentLocation:currentLocation});
     if (error) {
         console.log("error retrieving initial data: " + error)
         return setData({initialBatchStatus, error});
@@ -111,7 +114,7 @@ export const getInitialData = async (setData, path) => {
 /*
 * Fetch next batch of documents start from {lastDocId}
 */
-export const getNextData = async (data, setData, path) => {
+export const getNextData = async (data, setData, path, currentLocation) => {
     console.log(data)
     console.log("getting next data")
     // Discard next API call when there's pending request
@@ -126,7 +129,7 @@ export const getNextData = async (data, setData, path) => {
         error,
         lastDocId,
         status: nextBatchStatus,
-    } = await getDocuments({lim: 6, lastDocId: data.lastDocId, path: path});
+    } = await getDocuments({lim: 6, lastDocId: data.lastDocId, path: path,currentLocation:currentLocation});
     console.log("after getting docs")
 
     if (error) {
