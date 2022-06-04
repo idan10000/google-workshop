@@ -41,7 +41,7 @@ const predictionServiceClient = new PredictionServiceClient(clientOptions);
 // optionally providing an access token if you have enabled push security
 const expo = new Expo({accessToken: process.env.EXPO_ACCESS_TOKEN});
 
-const handlePosterPrediction = (predictions, uid, poster) => {
+const handlePosterPrediction = (predictions, posterData, poster) => {
     console.log("handling poster prediction")
     const predictionResultObj =
         prediction.ClassificationPredictionResult.fromValue(predictions[0]);
@@ -53,7 +53,7 @@ const handlePosterPrediction = (predictions, uid, poster) => {
     if (labels.length !== 0) {
         return db.collection("Reports").where("dogBreed", "array-contains-any", labels).get()
             .then((querySnapshot) => {
-                return sendMatchNotification([uid], querySnapshot.docs).then(() => {
+                return sendMatchNotification([posterData], querySnapshot.docs).then(() => {
                     return poster.update({"dogBreed": labels});
                 });
             });
@@ -61,8 +61,9 @@ const handlePosterPrediction = (predictions, uid, poster) => {
 }
 
 //TODO: add UID for notifications
-const handleReportPrediction = (predictions, uid, report) => {
+const handleReportPrediction = (predictions, reportData, report) => {
     console.log("handling report prediction")
+    const uid = reportData.user;
     const predictionResultObj =
         prediction.ClassificationPredictionResult.fromValue(predictions[0]);
     const labels = [];
@@ -73,15 +74,15 @@ const handleReportPrediction = (predictions, uid, report) => {
     if (labels.length !== 0) {
         return db.collection("Posters").where("dogBreed", "array-contains-any", labels).get()
             .then((querySnapshot) => {
-                const uids = [];
+                const postersToSend = [];
                 // get all user ids from the relevant posters
                 querySnapshot.forEach((snapshot) => {
-                    uids.push(snapshot.data().user);
+                    postersToSend.push(snapshot.data());
                 });
 
                 console.log(`sending notifications from report of user ${uid}`);
-                if (uids.length > 0) {
-                    return sendMatchNotification(uids, [report]).then(() => {
+                if (postersToSend.length > 0) {
+                    return sendMatchNotification(postersToSend, [report]).then(() => {
                         return report.update({"dogBreed": labels});
                     });
                 } else {
@@ -92,7 +93,7 @@ const handleReportPrediction = (predictions, uid, report) => {
 };
 
 //TODO: add UID for notifications
-const getPrediction = (doc, image, uid, handlePrediction) => {
+const getPrediction = (doc, image, post, handlePrediction) => {
     const endpoint = `projects/${project}/locations/` +
         `${location}/endpoints/${endpointId}`;
     console.log(endpoint);
@@ -116,7 +117,7 @@ const getPrediction = (doc, image, uid, handlePrediction) => {
     return predictionServiceClient.predict(request).then((result) => {
         console.log("Predict image classification response");
         const response = result[0];
-        return handlePrediction(response.predictions, uid, doc);
+        return handlePrediction(response.predictions, post, doc);
     });
 }
 
@@ -131,7 +132,7 @@ exports.classifyPoster = functions.firestore
             console.log("download output:");
             const image = data[0].toString("base64");
             // Configure the endpoint resource
-            return getPrediction(snap.ref, image, snap.data().user, handlePosterPrediction);
+            return getPrediction(snap.ref, image, snap.data(), handlePosterPrediction);
         });
     });
 
@@ -145,20 +146,21 @@ exports.classifyReport = functions.firestore
         return bucket.file(newValue.imagePath).download().then((data) => {
             const image = data[0].toString("base64");
             // Configure the endpoint resource
-            return getPrediction(snap.ref, image, snap.data().user, handleReportPrediction);
+            return getPrediction(snap.ref, image, snap.data(), handleReportPrediction);
         });
     });
 
-const sendMatchNotification = (uids, reports) => {
+const sendMatchNotification = (postersToSend, reports) => {
     console.log("sending notification")
-    console.log(uids)
-    const promises = []
-    for (const uid of uids) {
-        const promise = db.doc("Users/" + uid).get();
-        promises.push(promise);
+    console.log(postersToSend)
+    const users = []
+    for (const poster of postersToSend) {
+        const uid = poster.user;
+        const user = db.doc("Users/" + uid).get();
+        users.push(user);
     }
 
-    return Promise.all(promises).then((snapshots) => {
+    return Promise.all(users).then((snapshots) => {
         // const pushTokens = [];
         // for (const snapshot of snapshots) {
         //     // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
@@ -170,53 +172,55 @@ const sendMatchNotification = (uids, reports) => {
         //const docUpdates = [];
         const tickets = [];
 
-        for (const snapshot of snapshots) {
-            const pushToken = snapshot.get("notificationsToken");
-            //const notificationsPerUser = [];
-            // Create the messages that you want to send to clients
-            const messages = [];
-            for (const report of reports) {
-                // Check that all your push tokens appear to be valid Expo push tokens
-                if (!Expo.isExpoPushToken(pushToken)) {
-                    console.error(`Push token ${pushToken} is not a valid Expo push token`);
-                    continue;
-                }
-                const reportID = report.id
-                // Construct a message (see https://docs.expo.io/push-notifications/sending-notifications/)
-                const message = {
-                    to: pushToken,
-                    sound: "default",
-                    title: "מצאנו כלב! יכול להיות שהוא שלכם?",
-                    body: "היכנסו לדיווח לפרטים נוספים",
-                    data: {report: reportID},
-                }
-                messages.push(message);
-                // notificationsPerUser.push(message)
-            }
-            //docUpdates.push(snapshot.ref.update({"notifications": notificationsPerUser}))
-            const chunks = expo.chunkPushNotifications(messages);
-            (() => {
-                // Send the chunks to the Expo push notification service. There are
-                // different strategies you could use. A simple one is to send one chunk at a
-                // time, which nicely spreads the load out over time:
-                for (const chunk of chunks) {
-                    try {
-                        return expo.sendPushNotificationsAsync(chunk).then((ticketChunk) => {
-                            console.log("TICKET CHUNK:");
-                            console.log(ticketChunk);
-                            tickets.push(...ticketChunk);
-                            // NOTE: If a ticket contains an error code in ticket.details.error, you
-                            // must handle it appropriately. The error codes are listed in the Expo
-                            // documentation:
-                            // https://docs.expo.io/push-notifications/sending-notifications/#individual-errors
-                        });
-                    } catch (error) {
-                        console.error(error);
-                        console.error(error.details)
-                    }
-                }
-            })();
-        }
+        snapshots.forEach((snapshot, index) => {
+           const pushToken = snapshot.get("notificationsToken");
+           // Check that all your push tokens appear to be valid Expo push tokens
+           if (!Expo.isExpoPushToken(pushToken)) {
+               console.error(`Push token ${pushToken} is not a valid Expo push token`);
+               return;
+           }
+           const posterToSend = postersToSend[index];
+           const dogName = posterToSend.dogName;
+           // Create the messages that you want to send to clients
+           const messages = [];
+           for (const report of reports) {
+               const reportID = report.id
+               const reportAddress = report.get("address");
+               // Construct a message (see https://docs.expo.io/push-notifications/sending-notifications/)
+               const message = {
+                   to: pushToken,
+                   sound: "default",
+                   title: "מצאנו כלב! יכול להיות שהוא שלכם?",
+                   body: "כלב שנראה כמו " + dogName + " נצפה לאחרונה ב-" + reportAddress,
+                   data: {report: reportID},
+               }
+               messages.push(message);
+               // notificationsPerUser.push(message)
+           }
+           //docUpdates.push(snapshot.ref.update({"notifications": notificationsPerUser}))
+           const chunks = expo.chunkPushNotifications(messages);
+           (() => {
+               // Send the chunks to the Expo push notification service. There are
+               // different strategies you could use. A simple one is to send one chunk at a
+               // time, which nicely spreads the load out over time:
+               for (const chunk of chunks) {
+                   try {
+                       return expo.sendPushNotificationsAsync(chunk).then((ticketChunk) => {
+                           console.log("TICKET CHUNK:");
+                           console.log(ticketChunk);
+                           tickets.push(...ticketChunk);
+                           // NOTE: If a ticket contains an error code in ticket.details.error, you
+                           // must handle it appropriately. The error codes are listed in the Expo
+                           // documentation:
+                           // https://docs.expo.io/push-notifications/sending-notifications/#individual-errors
+                       });
+                   } catch (error) {
+                       console.error(error);
+                       console.error(error.details)
+                   }
+               }
+           })();
+        })
         return tickets;
 
         //Promise.all(docUpdates).then(() => {

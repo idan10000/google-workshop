@@ -69,18 +69,18 @@ export default function HomeStack() {
         responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
             const reportID = response.notification.request.content.data.report;
             console.log(reportID);
-            const reportRef = doc(fireStoreDB, "Reports", reportID);
-            return getDoc(reportRef).then((reportSnap) => {
-                if (reportSnap.exists()) {
-                    //console.log("Document data:", userSnap.data());
-                    const report = reportSnap.data();
-                    //setResponseReport(report);
-                    console.log(report)
-                } else {
-                    // doc.data() will be undefined in this case
-                    console.log("No such report!");
-                }
-            })
+            // const reportRef = doc(fireStoreDB, "Reports", reportID);
+            // return getDoc(reportRef).then((reportSnap) => {
+            //     if (reportSnap.exists()) {
+            //         //console.log("Document data:", userSnap.data());
+            //         const report = reportSnap.data();
+            //         //setResponseReport(report);
+            //         console.log(report)
+            //     } else {
+            //         // doc.data() will be undefined in this case
+            //         console.log("No such report!");
+            //     }
+            // })
             // navigation.navigate(destination, {data: data})
         });
 
