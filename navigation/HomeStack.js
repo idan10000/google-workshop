@@ -46,7 +46,8 @@ export default function HomeStack() {
             // update user document in firestore with the notifications token
             const userRef = doc(fireStoreDB, "Users", user.uid);
             await updateDoc(userRef, {
-                notificationsToken: token
+                notificationsToken: token,
+                notificationsActive: true
             }).then(() => {
             }).catch(error => {
                 console.log(error)

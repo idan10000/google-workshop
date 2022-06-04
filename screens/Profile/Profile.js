@@ -1,12 +1,15 @@
-import React from "react";
+import React, {useContext} from "react";
 import { View, SafeAreaView, TouchableOpacity } from "react-native";
 import { Title, Text, Button } from "react-native-paper";
 import { user_styles } from "./ProfileStyle";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Nofar_styles } from "../../styles/NofarStyle";
 import {getAuth, signOut} from "firebase/auth";
+import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
+import {turnOffNotifications} from "../../shared_components/NotificationsUtils";
 
 export default function ProfilePage({ navigation }) {
+  const {user} = useContext(AuthenticatedUserContext);
   const userDetalies = {
     name: "אמיר כהן",
     userName: "queenOfEngland18",
@@ -79,7 +82,9 @@ export default function ProfilePage({ navigation }) {
       <View style={user_styles.confirmBTContainer}>
         <TouchableOpacity
           style={user_styles.profileButton}
-          onPress={() => {signOut(getAuth()).then(() => {})}}>
+          onPress={async () => {
+            await turnOffNotifications(user);
+            signOut(getAuth()).then(() => {})}}>
           <Text style={user_styles.BigButtonText}>התנתקות מהאפליקציה</Text>
         </TouchableOpacity>
       </View>

@@ -90,16 +90,16 @@ export default function SignIn({navigation}) {
 
 
     const hasErrors = (det, val, touched) => {
-        if (det == "email") {
+        if (det === "email") {
             return touched && !val.includes("@");
         }
-        if (det == "name") {
+        if (det === "name") {
             return touched && val.localeCompare(" ")
         }
-        if (det == "phone") {
+        if (det === "phone") {
             return touched && !val.match(phoneRegExp)
         }
-        if (det == "password") {
+        if (det === "password") {
             return touched && val.length < 6
         }
     }

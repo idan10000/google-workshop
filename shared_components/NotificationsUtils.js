@@ -1,5 +1,7 @@
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
+import {doc, updateDoc} from "firebase/firestore";
+import {fireStoreDB} from "./Firebase";
 
 
 export async function registerForPushNotificationsAsync() {
@@ -31,4 +33,14 @@ export async function registerForPushNotificationsAsync() {
     }
 
     return token;
+}
+
+export async function turnOffNotifications(user){
+    const userRef = doc(fireStoreDB, "Users", user.uid);
+    await updateDoc(userRef, {
+        notificationsActive: false
+    }).then(() => {
+    }).catch(error => {
+        console.log(error)
+    })
 }

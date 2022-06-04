@@ -29,6 +29,7 @@ export default function NotificationsPage({navigation, setNewNotification}) {
     const loadNotifications = () => {
         const userRef = doc(fireStoreDB, "Users", user.uid);
         return getDoc(userRef).then((userSnap) => {
+            setNewNotification(false);
             setRefreshing(false);
             if (userSnap.exists()) {
                 //console.log("Document data:", userSnap.data());
