@@ -127,6 +127,15 @@ export default function Screen3Report({route, navigation}) {
         setModalTags(prevTags => ([...prevTags, {tag: tag, state: false}]))
         setSelectedTags(prevSelected => (prevSelected.filter((prevSelected) => prevSelected.tag !== tag)))
     }
+
+    const getCurrentTime = () => {
+        let today = new Date();
+        let hours = (today.getHours() < 10 ? '0' : '') + today.getHours();
+        let minutes = (today.getMinutes() < 10 ? '0' : '') + today.getMinutes();
+        let seconds = (today.getSeconds() < 10 ? '0' : '') + today.getSeconds();
+        return hours + ':' + minutes + ':' + seconds;
+    }
+
     const nextScreen = async () => {
         if(phoneRegExp.test(phoneText) === true && phoneText.length == 10) {
             let date = new Date()
@@ -140,6 +149,7 @@ export default function Screen3Report({route, navigation}) {
 
             let image = route.params.edit ? report.image : route.params.image
             let today = route.params.edit ? report.date : dd + '/' + mm + '/' + yyyy;
+            let time = route.params.edit ? report.time : getCurrentTime();
 
             const name = user.displayName
             let templocation = route.params.location
@@ -152,8 +162,8 @@ export default function Screen3Report({route, navigation}) {
             const [addressResponse] = await reverseGeocodeAsync(templocation)
             const address = `${addressResponse.street} ${addressResponse.streetNumber}, ${addressResponse.city}`;
             console.log(address)
-            const dbReport = new Report(image, "", location, address, today, plainTags, descriptionText, "", phoneText, checked, name, user.uid) // Report to upload to DB
-            const sendReport = new Report(image, "", location, address, today, plainTags, descriptionText, "", phoneText, checked, name, user.uid) // Report to send to the Report page
+            const dbReport = new Report(image, "", location, address, today, time, plainTags, descriptionText, "", phoneText, checked, name, user.uid) // Report to upload to DB
+            const sendReport = new Report(image, "", location, address, today, time, plainTags, descriptionText, "", phoneText, checked, name, user.uid) // Report to send to the Report page
 
 
             // if we reached from an edit Report

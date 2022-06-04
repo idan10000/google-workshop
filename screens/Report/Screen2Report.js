@@ -45,16 +45,17 @@ export default function Screen2Report({route, navigation}) {
 
     const [location, setLocation] = useState(null)
 
-    const nextScreen = async () => {
+    const nextScreen = () => {
         // navigation.pop()
-
-        navigation.navigate("ReportCreation3", {
-            report: report,
-            location: location,
-            image: route.params.image,
-            edit: route.params.edit,
-            ref: route.params.ref
-        })
+        if(location !== null) {
+            navigation.navigate("ReportCreation3", {
+                report: report,
+                location: location,
+                image: route.params.image,
+                edit: route.params.edit,
+                ref: route.params.ref
+            })
+        }
 
     }
     return (

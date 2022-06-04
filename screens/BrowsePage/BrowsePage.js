@@ -16,6 +16,7 @@ import {
 import PostListItem from '../../shared_components/PostListItem'
 import {getInitialData, getNextData} from "./InfiniteScroll"
 import {getCurrentPositionAsync, requestForegroundPermissionsAsync} from "expo-location";
+import {geohashForLocation} from "geofire-common";
 
 const BrowsePage = ({navigation, route}) => {
     const {collectionPath, destination} = route.params
@@ -28,24 +29,25 @@ const BrowsePage = ({navigation, route}) => {
         }
 
         let newLocation = await getCurrentPositionAsync({});
-        setInitialLocation([newLocation.coords.latitude, newLocation.coords.longitude])
+        const coords = [newLocation.coords.latitude, newLocation.coords.longitude]
+        setInitialLocation(coords)
+        const hash = geohashForLocation([newLocation.coords.latitude, newLocation.coords.longitude])
+        setGeohash(hash)
+
         return [newLocation.coords.latitude, newLocation.coords.longitude]
     }
 
     const [initialLocation, setInitialLocation] = useState(null)
+    const [geohash, setGeohash] = useState(null)
+
+    const [sortType, setSortType] = useState(["date", "desc"]);
 
     const sortByDate = () => (
-        setData((prevData) => (
-                prevData.sort((a, b) => a.date.localeCompare(b.date))
-            )
-        )
+        setSortType(["date", "desc"])
     )
 
     const sortByDistance = () => (
-        setData((prevData) => (
-                prevData.sort((a, b) => a.distance.localeCompare(b.distance))
-            )
-        )
+        setSortType(["location.geohash", "asc", geohash])
     )
 
     const [visibleSortMenu, setVisibleSortMenu] = useState(false);
@@ -78,7 +80,7 @@ const BrowsePage = ({navigation, route}) => {
     useEffect(async () => {
         // Load initial batch documents when main component mounted.
         const loc = await getInitialLocation()
-        await getInitialData(setData, collectionPath, loc);
+        await getInitialData(setData, collectionPath, loc, sortType);
         setRefreshing(false);
     }, []);
 
@@ -100,7 +102,7 @@ const BrowsePage = ({navigation, route}) => {
 
     const refreshItems = () => {
         console.log("start refreshing")
-        getInitialData(setData, collectionPath, initialLocation).then(() => {
+        getInitialData(setData, collectionPath, initialLocation, sortType).then(() => {
             setRefreshing(false);
             console.log("Finished refreshing")
         });
@@ -141,7 +143,7 @@ const BrowsePage = ({navigation, route}) => {
                     <FlatList data={data.docs}
                               ItemSeparatorComponent={FlatListItemSeparator}
                               keyExtractor={(item) => item.image}
-                              onEndReached={() => getNextData(data, setData, collectionPath, initialLocation)}
+                              onEndReached={() => getNextData(data, setData, collectionPath, initialLocation, sortType)}
                               onEndReachedThreshold={0.5}
                               refreshControl={
                                   <RefreshControl refreshing={refreshing} onRefresh={refreshItems}/>

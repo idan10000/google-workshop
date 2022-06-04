@@ -13,10 +13,10 @@ import MapForCreation from "../Map/MapForCreation";
 export default function Screen2Poster({route, navigation}) {
     // console.log(route.params.data)
 
-    const labels = ["תמונה","מיקום","פרטים"];
+    const labels = ["תמונה", "מיקום", "פרטים"];
     const customStyles = {
         stepIndicatorSize: 25,
-        currentStepIndicatorSize:30,
+        currentStepIndicatorSize: 30,
         separatorStrokeWidth: 2,
         currentStepStrokeWidth: 3,
         stepStrokeCurrentColor: "#DCA277",
@@ -38,7 +38,6 @@ export default function Screen2Poster({route, navigation}) {
         currentStepLabelColor: "#DCA277",
 
 
-
     }
     let prevPoster = route.params.poster
 
@@ -46,17 +45,24 @@ export default function Screen2Poster({route, navigation}) {
 
     const [location, setLocation] = useState(null)
 
-    const nextScreen = async () => {
+    const nextScreen = () => {
         // navigation.pop()
-
-        navigation.navigate("PosterCreation3", {poster :prevPoster,location: location, image: route.params.image ,edit : route.params.edit, ref: route.params.ref})
+        if(location !== null) {
+            navigation.navigate("PosterCreation3", {
+                poster: prevPoster,
+                location: location,
+                image: route.params.image,
+                edit: route.params.edit,
+                ref: route.params.ref
+            })
+        }
 
     }
     return (
-        <ScrollView  style = {Nofar_styles.container} >
+        <ScrollView style={Nofar_styles.container}>
 
-            <View style = {Nofar_styles.container}>
-                <View         marginTop="2.5%">
+            <View style={Nofar_styles.container}>
+                <View marginTop="2.5%">
                     <StepIndicator
                         customStyles={customStyles}
                         currentPosition={1}
@@ -78,35 +84,34 @@ export default function Screen2Poster({route, navigation}) {
 
                 </TouchableOpacity>
             </View>
-        </ScrollView >
+        </ScrollView>
 
     );
 }
 
 const styles = StyleSheet.create({
-    backgroundCamera:{
-        marginTop :"5%",
+    backgroundCamera: {
+        marginTop: "5%",
         width: Dimensions.get("window").width / 1.2,
         height: Dimensions.get("window").height / 1.5,
         justifyContent: "center",
         alignItems: "center",
-        alignSelf:"center",
+        alignSelf: "center",
         resizeMode: "cover",
     },
-    proceedButton :{
-        paddingVertical:"3%",
+    proceedButton: {
+        paddingVertical: "3%",
         paddingRight: "5%",
         paddingLeft: "5%",
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 20,
         backgroundColor: "#DCA277",
-        marginVertical:"5%",
+        marginVertical: "5%",
         width: Dimensions.get("window").width / 2.2,
-        marginLeft: (Dimensions.get("window").width - Dimensions.get("window").width / 1.2)/2
+        marginLeft: (Dimensions.get("window").width - Dimensions.get("window").width / 1.2) / 2
 
     },
-
 
 
 });

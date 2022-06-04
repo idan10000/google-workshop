@@ -1,4 +1,4 @@
-import {collection, getFirestore, getDocs, getDoc, doc, query, orderBy, startAfter, limit} from "firebase/firestore";
+import {collection, getFirestore, getDocs, getDoc, doc, query, orderBy, startAfter, limit, startAt} from "firebase/firestore";
 import {fireStoreDB} from "../../shared_components/Firebase";
 import {useEffect} from "react";
 import {distanceBetween} from "geofire-common";
@@ -14,7 +14,7 @@ const extractSnapshotsAndGetDistance = (snapshots, currentLocation) => {
     return extracts;
 };
 
-export const getDocuments = async ({lastDocId, lim = 10, path, currentLocation}) => {
+export const getDocuments = async ({lastDocId, lim = 10, path, currentLocation, sortType}) => {
     let docs = []; // Array of docs in current bath
     let newLastDocId = null; // Last document ID in this batch
     let error = null;
@@ -46,14 +46,15 @@ export const getDocuments = async ({lastDocId, lim = 10, path, currentLocation})
              *  Read more about Firestore paginated query here
              *  https://firebase.google.com/docs/firestore/query-data/query-cursors#paginate_a_query
              */
-            batch = query(reportsRef, orderBy("date", "desc"), startAfter(lastDoc), limit(lim));
+            batch = query(reportsRef, orderBy(sortType[0], sortType[1]), orderBy("time", "desc"),
+                startAfter(lastDoc), limit(lim));
 
         } else {
 
             /**
              *  The {lastDocId} not provided. Start on first document in collection
              */
-            batch = query(reportsRef, orderBy("date", "desc"), limit(lim));
+            batch = query(reportsRef, orderBy(sortType[0], sortType[1]), orderBy("time", "desc"), limit(lim));
         }
 
         status = "pending";
@@ -71,7 +72,7 @@ export const getDocuments = async ({lastDocId, lim = 10, path, currentLocation})
             snapshots.docs[snapshots.docs.length - 1]?.ref.path || null;
 
 
-        docs = extractSnapshotsAndGetDistance(snapshots,currentLocation);
+        docs = extractSnapshotsAndGetDistance(snapshots, currentLocation);
         status = "succeeded";
 
         return {
@@ -94,7 +95,7 @@ export const getDocuments = async ({lastDocId, lim = 10, path, currentLocation})
 };
 
 /** Fetch initial batch docs and save last document ID */
-export const getInitialData = async (setData, path, currentLocation) => {
+export const getInitialData = async (setData, path, currentLocation, sortType) => {
     console.log("getInitialData called")
     setData({initialBatchStatus: "pending", error: null});
     const {
@@ -102,7 +103,7 @@ export const getInitialData = async (setData, path, currentLocation) => {
         error,
         lastDocId,
         status: initialBatchStatus,
-    } = await getDocuments({lim: 10, path: path, currentLocation:currentLocation});
+    } = await getDocuments({lim: 10, path: path, currentLocation: currentLocation, sortType:sortType});
     if (error) {
         console.log("error retrieving initial data: " + error)
         return setData({initialBatchStatus, error});
@@ -114,7 +115,7 @@ export const getInitialData = async (setData, path, currentLocation) => {
 /*
 * Fetch next batch of documents start from {lastDocId}
 */
-export const getNextData = async (data, setData, path, currentLocation) => {
+export const getNextData = async (data, setData, path, currentLocation, sortType) => {
     console.log(data)
     console.log("getting next data")
     // Discard next API call when there's pending request
@@ -129,7 +130,7 @@ export const getNextData = async (data, setData, path, currentLocation) => {
         error,
         lastDocId,
         status: nextBatchStatus,
-    } = await getDocuments({lim: 6, lastDocId: data.lastDocId, path: path,currentLocation:currentLocation});
+    } = await getDocuments({lim: 6, lastDocId: data.lastDocId, path: path, currentLocation: currentLocation, sortType:sortType});
     console.log("after getting docs")
 
     if (error) {

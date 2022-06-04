@@ -159,8 +159,17 @@ export default function Screen3Poster({route, navigation}) {
     const [nameText, setName] = React.useState(initName);
 
     const [phoneText, setPhone] = React.useState(initPhone);
+
+    const getCurrentTime = () => {
+        let today = new Date();
+        let hours = (today.getHours() < 10 ? '0' : '') + today.getHours();
+        let minutes = (today.getMinutes() < 10 ? '0' : '') + today.getMinutes();
+        let seconds = (today.getSeconds() < 10 ? '0' : '') + today.getSeconds();
+        return hours + ':' + minutes + ':' + seconds;
+    }
+
     const nextScreen = async () => {
-        if(phoneRegExp.test(phoneText) === true && phoneText.length == 10 && nameText.length !==0) {
+        if(phoneRegExp.test(phoneText) === true && phoneText.length === 10 && nameText.length !==0) {
 
 
             //first confirming the tags
@@ -180,7 +189,7 @@ export default function Screen3Poster({route, navigation}) {
                 return tag.tag
             }))
             let today = route.params.edit ? prevPoster.date : dd + '/' + mm + '/' + yyyy;
-
+            let time = route.params.edit ? prevPoster.time : getCurrentTime();
             const selectedImage = route.params.edit ? prevPoster.image : route.params.image
             const name = user.displayName
 
@@ -194,8 +203,8 @@ export default function Screen3Poster({route, navigation}) {
             const [addressResponse] = await reverseGeocodeAsync(tempLocation)
             const address = `${addressResponse.street} ${addressResponse.streetNumber}, ${addressResponse.city}`;
 
-            const dbPoster = new Poster(selectedImage, "", location, address, today, today, descriptionText, nameText, '', phoneText, name, user.uid)
-            const sendPoster = new Poster(selectedImage, "", location, address, today, plainTags, descriptionText, nameText, '', phoneText, name, user.uid)
+            const dbPoster = new Poster(selectedImage, "", location, address, today, time, plainTags, descriptionText, nameText, '', phoneText, name, user.uid)
+            const sendPoster = new Poster(selectedImage, "", location, address, today, time, plainTags, descriptionText, nameText, '', phoneText, name, user.uid)
             const db = fireStoreDB;
 
             // if we reached from an edit Report
