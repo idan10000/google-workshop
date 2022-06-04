@@ -19,6 +19,10 @@ import * as ImagePicker from "expo-image-picker";
 // ref - the DB page reference to where the Report was written to
 
 export default function Screen1Poster({route, navigation}) {
+    const [imagePicked, setImagePicked] = React.useState(true);
+
+
+
 
     const labels = ["תמונה","מיקום","פרטים"];
     console.log("opened Report screen")
@@ -27,9 +31,12 @@ export default function Screen1Poster({route, navigation}) {
 
     const nextScreen = async () => {
         // navigation.pop()
-
+        if(selectedImage !==null){
         console.log(selectedImage)
-        navigation.navigate("PosterCreation2", {image: selectedImage,edit: false, ref: route.params.ref})
+        navigation.navigate("PosterCreation2", {image: selectedImage,edit: false, ref: route.params.ref})}
+        else{
+            setImagePicked(false)
+        }
 
     }
 
@@ -110,7 +117,9 @@ export default function Screen1Poster({route, navigation}) {
         );
     }
 
-
+    if (selectedImage!==null && imagePicked=== false){
+        setImagePicked(true)
+    }
     return (
         <ScrollView  style = {Nofar_styles.container} >
             <View         marginVertical="5%">
@@ -119,7 +128,10 @@ export default function Screen1Poster({route, navigation}) {
                     currentPosition={0}
                     labels={labels}
                     stepCount={3} /></View>
-
+            {
+                !imagePicked &&
+                <View style = {styles.imagePicked}><Text style = {styles.errorImage}>אנא בחר תמונה על מנת להמשיך בתהליך</Text></View>
+            }
                 {imagePicker}
                     <View >
                         <TouchableOpacity
@@ -196,6 +208,14 @@ const styles = StyleSheet.create({
         backgroundColor: "#DCA277",
         marginVertical:"5%",
         width: Dimensions.get("window").width / 2.2,
+    },
+    errorImage: {
+        color: "#FF0000",
+        fontSize: 18,
+        fontWeight: "700",
+    },
+    imagePicked: {
+        marginLeft: "7.5%",
     }
 
 

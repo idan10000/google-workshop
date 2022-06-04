@@ -135,6 +135,17 @@ export const Nofar_styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "700",
   },
+  TinyButtonTitleRed: {
+    color: "#FF0000",
+    fontSize: 16,
+    textAlign: "center",
+    fontWeight: "700",
+  },
+  TinyButtonTitleRed2: {
+    color: "#FF0000",
+    fontSize: 16,
+    fontWeight: "700",
+  },
   TinyButton: {
     paddingVertical:"3%",
     paddingRight: "5%",

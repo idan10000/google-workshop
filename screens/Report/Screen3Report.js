@@ -16,6 +16,11 @@ import {reverseGeocodeAsync} from "expo-location"
 export default function Screen3Report({route, navigation}) {
     let report = route.params.report
 
+    const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+    const [correctPhone, setCorrectPhone] = React.useState(true);
+
+
+
     const db = fireStoreDB;
     const tagList = [
         {tag: "ביישן", state: false},
@@ -123,69 +128,75 @@ export default function Screen3Report({route, navigation}) {
         setSelectedTags(prevSelected => (prevSelected.filter((prevSelected) => prevSelected.tag !== tag)))
     }
     const nextScreen = async () => {
+        if(phoneRegExp.test(phoneText) === true && phoneText.length == 10) {
+            let date = new Date()
+            const dd = String(date.getDate()).padStart(2, '0');
+            const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+            const yyyy = date.getFullYear();
 
-        let date = new Date()
-        const dd = String(date.getDate()).padStart(2, '0');
-        const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
-        const yyyy = date.getFullYear();
+            const plainTags = selectedTags.map((function (tag) {
+                return tag.tag
+            }))
 
-        const plainTags = selectedTags.map((function (tag) {
-            return tag.tag
-        }))
+            let image = route.params.edit ? report.image : route.params.image
+            let today = route.params.edit ? report.date : dd + '/' + mm + '/' + yyyy;
 
-        let image = route.params.edit ? report.image : route.params.image
-        let today = route.params.edit ? report.date : dd + '/' + mm + '/' + yyyy;
-
-        const name = user.displayName
-        let templocation = route.params.location
-        const hash = geofire.geohashForLocation([templocation.latitude, templocation.longitude])
-        const location = {
-            latitude: templocation.latitude,
-            longitude: templocation.longitude,
-            geohash: hash
-        }
-        const [addressResponse] = await reverseGeocodeAsync(templocation)
-        const address = `${addressResponse.street} ${addressResponse.streetNumber}, ${addressResponse.city}`;
-        console.log(address)
-        const dbReport = new Report(image, "", location, address, today, plainTags, descriptionText, "", phoneText, checked, name, user.uid) // Report to upload to DB
-        const sendReport = new Report(image, "", location, address, today, plainTags, descriptionText, "", phoneText, checked, name, user.uid) // Report to send to the Report page
+            const name = user.displayName
+            let templocation = route.params.location
+            const hash = geofire.geohashForLocation([templocation.latitude, templocation.longitude])
+            const location = {
+                latitude: templocation.latitude,
+                longitude: templocation.longitude,
+                geohash: hash
+            }
+            const [addressResponse] = await reverseGeocodeAsync(templocation)
+            const address = `${addressResponse.street} ${addressResponse.streetNumber}, ${addressResponse.city}`;
+            console.log(address)
+            const dbReport = new Report(image, "", location, address, today, plainTags, descriptionText, "", phoneText, checked, name, user.uid) // Report to upload to DB
+            const sendReport = new Report(image, "", location, address, today, plainTags, descriptionText, "", phoneText, checked, name, user.uid) // Report to send to the Report page
 
 
-        // if we reached from an edit Report
-        if (route.params.edit) {
-            // if the Report was changed, update the Report page
-            if (deepDiffer(sendReport, report)) {
-                await deleteObject(ref(getStorage(),report.imagePath))
+            // if we reached from an edit Report
+            if (route.params.edit) {
+                // if the Report was changed, update the Report page
+                if (deepDiffer(sendReport, report)) {
+                    await deleteObject(ref(getStorage(), report.imagePath))
+                    const imageAndPath = await uploadImageAsync(image, "Reports")
+                    dbReport.image = imageAndPath.link
+                    dbReport.imagePath = imageAndPath.path
+                    const docRef = await setDoc(doc(db, "Reports", route.params.ref).withConverter(reportConverter), dbReport).then(() => {
+                        console.log("updated Report page")
+                    }).catch(error => {
+                        console.log(error)
+                    });
+                }
+                navigation.pop()
+                navigation.navigate("ReportPage", {data: sendReport, ref: "", contact: checked})
+            } else {
                 const imageAndPath = await uploadImageAsync(image, "Reports")
                 dbReport.image = imageAndPath.link
                 dbReport.imagePath = imageAndPath.path
-                const docRef = await setDoc(doc(db, "Reports", route.params.ref).withConverter(reportConverter), dbReport).then(() => {
-                    console.log("updated Report page")
+                const docRef = await addDoc(collection(db, "Reports").withConverter(reportConverter), dbReport)
+                console.log("uploaded Report")
+                await updateDoc(doc(db, "Users", user.uid), {reports: arrayUnion(docRef)}).then(() => {
+                    // navigation.pop()
+                    navigation.pop()
+                    navigation.pop()
+                    navigation.pop()
+
+                    navigation.navigate("ReportPage", {data: sendReport, ref: docRef.id, contact: checked})
                 }).catch(error => {
                     console.log(error)
                 });
             }
-            navigation.pop()
-            navigation.navigate("ReportPage", {data: sendReport, ref: "", contact: checked})
-        } else {
-            const imageAndPath = await uploadImageAsync(image, "Reports")
-            dbReport.image = imageAndPath.link
-            dbReport.imagePath = imageAndPath.path
-            const docRef = await addDoc(collection(db, "Reports").withConverter(reportConverter), dbReport)
-            console.log("uploaded Report")
-            await updateDoc(doc(db, "Users", user.uid), {reports: arrayUnion(docRef)}).then(() => {
-                // navigation.pop()
-                navigation.pop()
-                navigation.pop()
-                navigation.pop()
-
-                navigation.navigate("ReportPage", {data: sendReport, ref: docRef.id, contact: checked})
-            }).catch(error => {
-                console.log(error)
-            });
+        }
+        else{
+            setCorrectPhone(false)
         }
     }
-
+    if (phoneRegExp.test(phoneText) === true && phoneText.length == 10 && correctPhone === false){
+        setCorrectPhone(true)
+    }
     return (
         <ScrollView style={Nofar_styles.container}>
             <Provider>
@@ -307,6 +318,11 @@ export default function Screen3Report({route, navigation}) {
                                     activeOutlineColor="#000000"
                                 />
                             </View>}
+                        {checked && !correctPhone &&
+
+                            <View marginLeft= "7.5%">
+                            <Text style={Nofar_styles.TinyButtonTitleRed2}>אנא הכנס מספר טלפון חוקי</Text>
+                        </View>}
                     </View>
                     <TouchableOpacity
                         onPress={nextScreen}
