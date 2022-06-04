@@ -281,8 +281,8 @@ export default function Screen3Poster({route, navigation}) {
                             activeUnderlineColor="#000000"
                             activeOutlineColor="#000000"
                         />
-                    </View>
-                    {correctDogName &&
+                    </View >
+                    {!correctDogName &&
                     <View style={styles.dogNameContainer}>
 
                         <Text style={Nofar_styles.TinyButtonTitleRed}>אנא הכנס שם</Text></View>}
@@ -388,7 +388,7 @@ export default function Screen3Poster({route, navigation}) {
                                 activeOutlineColor="#000000"
                             />
                         </View>
-                        {correctPhone &&
+                        {!correctPhone &&
                             <View style={styles.dogNameContainer}>
 
                                 <Text style={Nofar_styles.TinyButtonTitleRed}>אנא הכנס מספר טלפון תקין</Text></View>}
@@ -499,7 +499,6 @@ const styles = StyleSheet.create({
         paddingTop: "2%",
         flexDirection: "row",
     }, dogNameContainer: {
-        marginTop: "5%",
         marginHorizontal: "7.5%",
         flexDirection: "row",
     }

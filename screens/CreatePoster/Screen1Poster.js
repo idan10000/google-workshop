@@ -21,9 +21,7 @@ import * as ImagePicker from "expo-image-picker";
 export default function Screen1Poster({route, navigation}) {
     const [imagePicked, setImagePicked] = React.useState(true);
 
-    if (selectedImage!==null && imagePicked=== false){
-        setImagePicked(true)
-    }
+
 
 
     const labels = ["תמונה","מיקום","פרטים"];
@@ -131,8 +129,8 @@ export default function Screen1Poster({route, navigation}) {
                     labels={labels}
                     stepCount={3} /></View>
             {
-                imagePicked &&
-                <View><Text style = {styles.errorImage}>אנא בחר תמונה על מנת להמשיך בתהליך</Text></View>
+                !imagePicked &&
+                <View style = {styles.imagePicked}><Text style = {styles.errorImage}>אנא בחר תמונה על מנת להמשיך בתהליך</Text></View>
             }
                 {imagePicker}
                     <View >
@@ -213,9 +211,11 @@ const styles = StyleSheet.create({
     },
     errorImage: {
         color: "#FF0000",
-        fontSize: 20,
-        textAlign: "center",
+        fontSize: 18,
         fontWeight: "700",
+    },
+    imagePicked: {
+        marginLeft: "7.5%",
     }
 
 

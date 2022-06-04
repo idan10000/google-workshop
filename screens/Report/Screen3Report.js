@@ -320,8 +320,8 @@ export default function Screen3Report({route, navigation}) {
                             </View>}
                         {checked && !correctPhone &&
 
-                            <View marginHorziontal = "7.5%">
-                            <Text style={Nofar_styles.TinyButtonTitleRed}>אנא הכנס מספר טלפון חוקי</Text>
+                            <View marginLeft= "7.5%">
+                            <Text style={Nofar_styles.TinyButtonTitleRed2}>אנא הכנס מספר טלפון חוקי</Text>
                         </View>}
                     </View>
                     <TouchableOpacity
