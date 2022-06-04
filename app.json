@@ -4,11 +4,11 @@
     "slug": "FinDog",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/square_logo.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/square_logo.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#F9F8F0"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -21,7 +21,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/square_logo.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.example.findog",
@@ -30,10 +30,13 @@
       "googleServicesFile": "./google-services.json"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/Find_my_dog_logo.png"
     },
     "extra": {
       "ANDROID_KEY": "692765980591-6fogaevtphdce97vsq55d8gbu1snfsrg.apps.googleusercontent.com"
+    },
+    "notification": {
+      "icon": "./assets/square_logo.png"
     }
   }
 }
