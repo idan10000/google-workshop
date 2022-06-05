@@ -389,6 +389,7 @@ export default function Screen3Poster({route, navigation}) {
                         <View style={styles.phoneContainer}>
                             <TextInput
                                 dense={false}
+                                keyboardType = 'numeric'
                                 placeholder={'הוסף טלפון'}
                                 value={phoneText}
                                 onChangeText={setPhone}

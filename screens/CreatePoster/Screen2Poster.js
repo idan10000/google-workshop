@@ -69,6 +69,7 @@ export default function Screen2Poster({route, navigation}) {
                         labels={labels}
                         stepCount={3}
                     /></View>
+                <View style = {styles.imagePicked}><Text style = {styles.errorImage}>אנא סמן את המיקום בו ראית את הכלב</Text></View>
 
                 <MapForCreation
                     preLocation={initLocation}
@@ -112,6 +113,14 @@ const styles = StyleSheet.create({
         marginLeft: (Dimensions.get("window").width - Dimensions.get("window").width / 1.2) / 2
 
     },
+    errorImage: {
+        color: "#000",
+        fontSize: 18,
+        fontWeight: "700",
+    },
+    imagePicked: {
+        marginLeft: "7.5%",
+    }
 
 
 });

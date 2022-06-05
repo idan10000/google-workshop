@@ -132,7 +132,7 @@ export default function SignIn({navigation}) {
                 </View>
 
                 <View style={signUpStyle.welcomeText}>
-                    <Text style={signUpStyle.welcomeText}>כיף לראות אותך שוב!</Text>
+                    <Text style={signUpStyle.welcomeText}>ברוכים השבים</Text>
                 </View>
 
 
