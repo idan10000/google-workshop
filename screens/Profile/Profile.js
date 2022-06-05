@@ -32,7 +32,10 @@ export default function ProfilePage({ navigation }) {
   const Name = user.displayName;
   const Email = user.email;
   const [Phone, setPhone] = useState(getPhoneNumber(user));
-  const [Posters, setPosters] = userState(getPosters); // should have an id, dogName, date
+
+  // const Posters = getPosters(user);
+  // should have an id, dogName, date
+  // console.log(Posters);
 
   const pressHandler_supp = () => {
     navigation.navigate("SupportScreen");
