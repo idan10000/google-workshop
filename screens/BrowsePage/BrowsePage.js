@@ -11,12 +11,16 @@ import {
     Dimensions,
     ImageBackground,
     Text,
-    RefreshControl
+    RefreshControl,
+    TouchableOpacity,
+    Alert
 } from 'react-native'
 import PostListItem from '../../shared_components/PostListItem'
 import {getInitialData, getNextData} from "./InfiniteScroll"
 import {getCurrentPositionAsync, requestForegroundPermissionsAsync} from "expo-location";
 import {geohashForLocation} from "geofire-common";
+import RadioGroup from "react-native-radio-button-group";
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const BrowsePage = ({navigation, route}) => {
     const {collectionPath, destination} = route.params
@@ -108,6 +112,46 @@ const BrowsePage = ({navigation, route}) => {
         });
     }
 
+    //
+    // const radiogroup_options = [
+    //     {id: 0, label: 'Button1' },
+    //     {id: 1, label: 'Button2' },
+    //
+    // ];
+    // const [selectedOption, setSelectedOption] = useState(1)
+
+    const [selectedDate, setSelectedDate] = useState(true)
+    const [selectedDis, setSelectedDis] = useState(false)
+
+    const handleDatePress = () => {
+        // navigation.pop()
+        if(selectedDate==false) {
+            setSelectedDate(true)
+            setSelectedDis(false)
+        }
+    }
+        const handleDisPress = () => {
+            if(selectedDis==false) {
+                setSelectedDate(false)
+                setSelectedDis(true)
+            }
+        }
+
+
+
+    const createTwoButtonAlert = () =>
+        Alert.alert(
+            "",
+            "מרחק החיפוש מוגבל ברדיוס מסוים",
+            [
+
+                { text: "הבנתי!", onPress: () => console.log("OK Pressed") }
+            ]
+        );
+
+
+
+
     return (
         <ImageBackground
             style={{flex: 1}}
@@ -116,25 +160,78 @@ const BrowsePage = ({navigation, route}) => {
                 <View style={{
                     flexWrap: "wrap", flexDirection: 'row',
                     // borderWidth:0.5,borderColor:"#000",
-                    justifyContent: 'center', alignItems: 'center'
+                    marginVertical: '2.5%', alignItems: 'center',
+                    marginLeft:"5%",
                 }}>
                     {/* search bar + sort + filter*/}
 
-                    <Menu
-                        visible={visibleSortMenu}
-                        onDismiss={closeSortMenu}
-                        anchor={<IconButton
-                            icon={"sort"}
-                            onPress={openSortMenu}
-                        />}>
-                        <Menu.Item onPress={() => {
-                            sortByDate()
-                        }} title="תאריך"/>
-                    </Menu>
+                    {/*<Menu*/}
+                    {/*    visible={visibleSortMenu}*/}
+                    {/*    onDismiss={closeSortMenu}*/}
+                    {/*    anchor={<IconButton*/}
+                    {/*        icon={"sort"}*/}
+                    {/*        onPress={openSortMenu}*/}
+                    {/*    />}>*/}
+                    {/*    <Menu.Item onPress={() => {*/}
+                    {/*        sortByDate()*/}
+                    {/*    }} title="תאריך"/>*/}
+                    {/*</Menu>*/}
+
+                    {/*<View>*/}
+                    {/*    <RadioGroup*/}
+                    {/*        horizontal*/}
+                    {/*        options={radiogroup_options}*/}
+                    {/*        onChange={(option) => setSelectedOption(option)}*/}
+                    {/*    />*/}
+                    {/*</View>*/}
+
 
 
                     <View style={styles.Search}>
                         <Text style={styles.textSort}>מיון לפי:</Text>
+                    </View>
+
+                    {selectedDate &&
+                    <View style = {styles.dateView}>
+                        <TouchableOpacity onPress={handleDatePress}>
+                            <Text style = {styles.dateText}>תאריך</Text>
+                        </TouchableOpacity>
+                    </View>}
+
+                    {!selectedDate &&
+                        <View style = {styles.notDateView}>
+                            <TouchableOpacity onPress={handleDatePress}>
+                                <Text style = {styles.notDateText}>תאריך</Text>
+                            </TouchableOpacity>
+                        </View>}
+
+
+                        <View style = {styles.sepreator}>
+                        <Text style = {styles.seperateText}>/</Text></View>
+
+                    {selectedDis &&
+                    <View style = {styles.dateView}>
+                        <TouchableOpacity onPress={handleDisPress}>
+                            <Text style = {styles.dateText}>מרחק</Text>
+                        </TouchableOpacity>
+                    </View>}
+                    {!selectedDis &&
+                        <View style = {styles.notDateView}>
+                            <TouchableOpacity onPress={handleDisPress}>
+                                <Text style = {styles.notDateText}>מרחק</Text>
+                            </TouchableOpacity>
+                        </View>}
+
+
+                    <View marginLeft="13%">
+                        <TouchableOpacity title={"2-Button Alert"} onPress={createTwoButtonAlert}>
+                            <Icon name = 'infocirlce' size={28} color ="#DCA277" />
+                            </TouchableOpacity>
+
+                        {/*<TouchableOpacity*/}
+                        {/*    title={"3-Button Alert"}*/}
+                        {/*    onPress={createThreeButtonAlert}*/}
+                        {/*/>*/}
                     </View>
 
 
@@ -189,9 +286,7 @@ const styles = StyleSheet.create({
         zIndex: 2,
     },
     Search: {
-        flex: 1,
-        zIndex: 1,
-
+        marginRight: "2.5%"
     },
     listContainer: {
         flex: 1,
@@ -207,8 +302,39 @@ const styles = StyleSheet.create({
     textSort: {
 
         fontSize: 16,
+        fontWeight: "500",
+    },
+    dateText: {
+        fontSize: 16,
         fontWeight: "700",
+    },
+    seperateText: {
+        fontSize: 23,
+        fontWeight: "500",
+    },
+    dateView: {
+        borderRadius:40,
+        paddingVertical: "0.1%",
+
+        paddingHorizontal: "4%",
+         borderWidth: 2,
+    },
+    sepreator: {
+        marginHorizontal:"3%",
+    },
+    notDateView: {
+        borderRadius:40,
+        paddingVertical: "1%",
+
+        paddingHorizontal: "4%",
+        // borderWidth: 2,
+
+    },
+    notDateText: {
+        fontSize: 16,
+        fontWeight: "500",
     }
+
 
 });
 

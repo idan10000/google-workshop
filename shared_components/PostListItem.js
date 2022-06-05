@@ -22,8 +22,11 @@ const postListItem = ({ image, date, distance, data, destination, navigation}) =
           {/*</View>*/}
           <View style={styles.detailsContainer}>
             <Caption style={styles.date}>{date}</Caption>
+            { distance.toFixed(2) > 100 &&
+            <Caption style={styles.distance}>{distance.toFixed(0)} ק"מ</Caption>}
+            {! (distance.toFixed(2) > 100) &&
+              <Caption style={styles.distance}>{distance.toFixed(2)} ק"מ</Caption>}
 
-            <Caption style={styles.distance}>{distance.toFixed(2)} ק"מ</Caption>
           </View>
         </View>
       </Provider>
