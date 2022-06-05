@@ -12,7 +12,6 @@ import {
 } from "react-native";
 
 const postListItem = ({ image, date, distance, data, destination, navigation}) => {
-  console.log(distance)
   return (
     <TouchableOpacity onPress={() => {navigation.navigate(destination, {data: data})}}>
       <Provider>
