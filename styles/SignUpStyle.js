@@ -53,6 +53,12 @@ export const signUpStyle = StyleSheet.create({
     fontWeight: 'bold',
 
   },
+  errorText2: {
+    color: 'crimson',
+    fontWeight: 'bold',
+    fontSize: 20,
+
+  },
   submitButton:{
     alignItems: 'center',
     justifyContent: 'center',

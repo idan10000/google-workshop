@@ -118,6 +118,7 @@ export default function SignUp({navigation}) {
             .catch(error => {
                 if (error.code === 'auth/email-already-in-use') {
                     console.log('That email address is already in use!');
+                    setValidEmail(false)
                 }
 
                 if (error.code === 'auth/invalid-email') {
@@ -129,6 +130,7 @@ export default function SignUp({navigation}) {
     }
 
     const formRef = useRef();
+    const [validEmail, setValidEmail] = useState(true);
 
     return (
         <ImageBackground
@@ -183,6 +185,7 @@ export default function SignUp({navigation}) {
                                     left={<TextInput.Icon name="face"/>}
                                 />
                                 <Text style={signUpStyle.errorText}>{props.touched.Name && props.errors.Name}</Text>
+
                             </View>
 
 
@@ -195,6 +198,7 @@ export default function SignUp({navigation}) {
                                     onChangeText={(email) => {
                                         props.handleChange('Email')(email)
                                         onChangeEmail(email)
+                                        setValidEmail(true)
                                     }
                                     }
                                     value={props.values.Email}
@@ -205,7 +209,11 @@ export default function SignUp({navigation}) {
                                     activeOutlineColor="#000000"
                                     left={<TextInput.Icon name="email"/>}
                                 />
-                                <Text style={signUpStyle.errorText}>{props.touched.Email && props.errors.Email}</Text>
+                                {validEmail &&
+
+                                    <Text style={signUpStyle.errorText}>{props.touched.Email && props.errors.Email}</Text>}
+                                {!validEmail &&
+                                    <Text style={signUpStyle.errorText}>אימייל זה נמצא כבר בשימוש</Text>}
                             </View>
 
 

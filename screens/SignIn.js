@@ -76,12 +76,20 @@ export default function SignIn({navigation}) {
             //
             // })
             .catch(error => {
-                if (error.code === 'auth/email-already-in-use') {
+                if (error.code === 'auth/wrong-password') {
                     console.log('That email address is already in use!');
+                    setValidPassword(false)
                 }
 
                 if (error.code === 'auth/invalid-email') {
                     console.log('That email address is invalid!');
+                    setValidEmail(false)
+                }
+                if (error.code === 'auth/user-not-found') {
+                    console.log('That email address is invalid!');
+                    setValidEmail(false)
+                    setValidPassword(false)
+
                 }
 
                 console.error(error);
@@ -104,9 +112,8 @@ export default function SignIn({navigation}) {
         }
     }
     const reviewSchema = yup.object({
-
-        Email: yup.string().email().required('Email is required'),
-        Password: yup.string().min(6),
+        Email: yup.string().email('זו לא כתובת אימייל חוקית').required('אימייל הוא שדה חובה'),
+        Password: yup.string().min(6, 'סיסמה חייבת להיות לפחות 6 תווים').required('סיסמה היא שדה חובה'),
 
 
     });
@@ -117,6 +124,8 @@ export default function SignIn({navigation}) {
     const [password, setPassword] = useState('');
 
 
+    const [validEmail, setValidEmail] = useState(true);
+    const [validPassword, setValidPassword] = useState(true);
 
 
     return (
@@ -158,7 +167,12 @@ export default function SignIn({navigation}) {
                                     // value={state.email}
                                     //
                                     // onChangeText={onChangeEmail}
-                                    onChangeText={props.handleChange('Email')}
+                                    onChangeText={(email) => {
+                                        props.handleChange('Email')(email)
+                                        setValidEmail(true)
+                                        setValidPassword(true)
+
+                                    }                 }
                                     value={props.values.Email}
                                     onBlur={props.handleBlur('Email')}
                                     error={hasErrors('email', props.values.Email, props.touched.Email)}
@@ -167,6 +181,7 @@ export default function SignIn({navigation}) {
                                     activeOutlineColor="#000000"
                                     left={<TextInput.Icon name="email"/>}
                                 />
+
                                 <Text style={signUpStyle.errorText}>{props.touched.Email && props.errors.Email}</Text>
                             </View>
 
@@ -176,7 +191,12 @@ export default function SignIn({navigation}) {
                                     placeholder="סיסמה"
                                     // value={state.password}
                                     // onChangeText={onChangePassword}
-                                    onChangeText={props.handleChange('Password')}
+                                    onChangeText={(email) => {
+                                        props.handleChange('Password')(email)
+                                        setValidEmail(true)
+                                        setValidPassword(true)
+
+                                    }      }
                                     value={props.values.Password}
                                     secureTextEntry={passwordVisibility}
                                     error={hasErrors('password', props.values.Password, props.touched.Password)}
@@ -193,7 +213,14 @@ export default function SignIn({navigation}) {
 
 
 
+                            {(!validEmail || !validPassword) &&
+                                !hasErrors('email', props.values.Email, props.touched.Email) &&
+                                !hasErrors('password', props.values.Password, props.touched.Password) &&
+                                <View style={Nofar_styles.actionInput}>
+                                    <Text style={signUpStyle.errorText2}>האימייל או הסיסמה אינם נכונים</Text></View>
 
+
+                            }
                             <View style={signUpStyle.submitButton}>
                                 {/*<TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>*/}
                                 {/*    <Text style={Nofar_styles.BigButtonText}>עדכן פרטים</Text>*/}
@@ -203,6 +230,7 @@ export default function SignIn({navigation}) {
                                     <Text style={Nofar_styles.SmallButtonTitle}>תכניסו אותי!</Text>
                                 </TouchableOpacity>
                             </View>
+
                         </View>
                     )}
                 </Formik>
