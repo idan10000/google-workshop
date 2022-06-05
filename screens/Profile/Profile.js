@@ -1,102 +1,93 @@
-import React, {useContext} from "react";
-import { View, SafeAreaView, TouchableOpacity } from "react-native";
+import React, { useContext, useState } from "react";
+import {
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  ScrollView,
+  TextInput,
+} from "react-native";
 import { Title, Text, Button } from "react-native-paper";
 import { user_styles } from "./ProfileStyle";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Nofar_styles } from "../../styles/NofarStyle";
-import {getAuth, signOut} from "firebase/auth";
-import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
-import {turnOffNotifications} from "../../shared_components/NotificationsUtils";
+import { getAuth, signOut } from "firebase/auth";
+import { AuthenticatedUserContext } from "../../navigation/AuthenticatedUserProvider";
+// import { turnOffNotifications } from "../../shared_components/NotificationsUtils";
+import {
+  getPhoneNumber,
+  updatePhoneNumber,
+} from "../../shared_components/Firebase.js";
+
+// 1) user data-  Name + email ---------------------------------- V
+// 2) update user phone number, with input object --------------- V
+// 3) buttons for support and signOut --------------------------- V
+// 4) all user posters (with update\delete buttons)--------------
 
 export default function ProfilePage({ navigation }) {
-  const {user} = useContext(AuthenticatedUserContext);
-  const userDetalies = {
-    name: "אמיר כהן",
-    userName: "queenOfEngland18",
-    country: "ישראל",
-    city: "אילת",
-    phone: "052-1111111",
-    email: "abc@gmail.com",
-  };
-  const pressHandler = () => {
-    navigation.navigate("EditProfileScreen");
-  };
+  const { user } = useContext(AuthenticatedUserContext);
+  console.log(user.uid);
+  const Name = user.displayName;
+  const Email = user.email;
+  const [Phone, setPhone] = useState(getPhoneNumber(user));
+
   const pressHandler_supp = () => {
     navigation.navigate("SupportScreen");
   };
 
   return (
     <SafeAreaView style={Nofar_styles.container}>
-      <View style={user_styles.ProfileCard}>
-        <View style={{ flexDirection: "row", marginTop: "5%", marginLeft: "10%" }}>
-          {/* <Avatar
-            style={{ width: "100px", height: "100px" }}
-            avatarStyle="Circle"
-            {...generateRandomAvatarOptions()}
-          /> */}
-            <Title style={Nofar_styles.BigTitle}>{userDetalies.name}</Title>
-        </View>
-
-        <View style={{ marginTop: 5, marginLeft: "15%", marginBottom: "5%" }}>
-          <View style={{ flexDirection: "row", marginTop: "5%" }}>
-            <Icon name="map-marker-radius" color="#777777" size={30} />
-            <Text style={{ color: "#777777", marginLeft: "3%", fontSize:20}}>
-              {userDetalies.city}, {userDetalies.country}
-            </Text>
+      <ScrollView>
+        <View style={user_styles.ProfileCard}>
+          <View style={{ flexDirection: "row", marginLeft: "10%" }}>
+            <View style={{ marginTop: 30, marginRight: 10 }}>
+              <Title style={Nofar_styles.BigTitle}>{Name}</Title>
+            </View>
           </View>
 
-          <View style={{ flexDirection: "row", marginTop: "5%" }}>
+          <View
+            style={{ flexDirection: "row", marginLeft: "10%", marginTop: "2%" }}
+          >
             <Icon name="email" color="#777777" size={30} />
-            <Text style={{ color: "#777777", marginLeft: "3%", fontSize:20}}>
-              {userDetalies.email}
-            </Text>
+            <Text style={{ color: "#777777", marginLeft: 20 }}>{Email}</Text>
           </View>
 
-          <View style={{ flexDirection: "row", marginTop: "5%" }}>
+          <View
+            style={{ flexDirection: "row", marginLeft: "10%", marginTop: "5%" }}
+          >
             <Icon name="phone" color="#777777" size={30} />
-            <Text style={{ color: "#777777", marginLeft: "3%", fontSize:20}}>
-              {userDetalies.phone}
-            </Text>
+            <TextInput
+              style={{ color: "#777777", marginLeft: 20 }}
+              onChangeText={(newText) => {
+                setPhone(newText);
+                updatePhoneNumber(user, newText);
+              }}
+              defaultValue={Phone}
+            />
           </View>
         </View>
-      </View>
 
-      <View style={user_styles.confirmBTContainer}>
-        <TouchableOpacity
-          style={user_styles.profileButton}
-          onPress={() => {}}
-        >
-          <Text style={user_styles.BigButtonText}>הצגת מודעות ודיווחים</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={user_styles.confirmBTContainer}>
-        <TouchableOpacity
-          style={user_styles.profileButton}
-          onPress={pressHandler}
-        >
-          <Text style={user_styles.BigButtonText}>עדכון פרטים</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={user_styles.confirmBTContainer}>
-        <TouchableOpacity
-          style={user_styles.profileButton}
-          onPress={async () => {
-            await turnOffNotifications(user);
-            signOut(getAuth()).then(() => {})}}>
-          <Text style={user_styles.BigButtonText}>התנתקות מהאפליקציה</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/*<View style={user_styles.confirmBTContainer}>*/}
-      {/*  <TouchableOpacity*/}
-      {/*    style={user_styles.profileButton}*/}
-      {/*    onPress={pressHandler_supp}*/}
-      {/*  >*/}
-      {/*    <Text style={user_styles.BigButtonText}>תמיכה טכנית</Text>*/}
-      {/*  </TouchableOpacity>*/}
-      {/*</View>*/}
+        <View style={user_styles.confirmBTContainer}>
+          <Button
+            mode={"contained"}
+            style={Nofar_styles.BigButton}
+            onPress={pressHandler_supp}
+          >
+            <Text style={Nofar_styles.BigButtonText}>תמיכה טכנית</Text>
+          </Button>
+        </View>
+        <View style={user_styles.confirmBTContainer}>
+          <TouchableOpacity
+            style={user_styles.profileButton}
+            onPress={() => {
+              signOut(getAuth()).then(() => {});
+            }}
+          >
+            <Text style={user_styles.BigButtonText}>התנתקות מהאפליקציה</Text>
+          </TouchableOpacity>
+        </View>
+        <Title style={Nofar_styles.BigTitle}>מודעות שפרסמת</Title>
+        <View></View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
