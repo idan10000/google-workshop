@@ -89,3 +89,5 @@ export async function updatePhoneNumber(user, num) {
       console.log("phone updated! ");
     });
 }
+export async function getPosters(user) {}
+export async function deletePoster(posterKey) {}

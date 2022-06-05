@@ -112,7 +112,13 @@ export default function EditProfile({ navigation }) {
       {/*  </Text>*/}
       {/*</HelperText>*/}
 
-      <View style={{ justifyContent:"center", alignSelf:"center", marginTop:"10%" }}>
+      <View
+        style={{
+          justifyContent: "center",
+          alignSelf: "center",
+          marginTop: "10%",
+        }}
+      >
         <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>
           <Text style={Nofar_styles.BigButtonText}>עדכן פרטים</Text>
         </TouchableOpacity>

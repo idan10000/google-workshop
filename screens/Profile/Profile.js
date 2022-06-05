@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  FlatList,
 } from "react-native";
 import { Title, Text, Button } from "react-native-paper";
 import { user_styles } from "./ProfileStyle";
@@ -16,6 +17,8 @@ import { AuthenticatedUserContext } from "../../navigation/AuthenticatedUserProv
 import {
   getPhoneNumber,
   updatePhoneNumber,
+  getPosters,
+  deletePoster,
 } from "../../shared_components/Firebase.js";
 
 // 1) user data-  Name + email ---------------------------------- V
@@ -29,10 +32,26 @@ export default function ProfilePage({ navigation }) {
   const Name = user.displayName;
   const Email = user.email;
   const [Phone, setPhone] = useState(getPhoneNumber(user));
+  const [Posters, setPosters] = userState(getPosters); // should have an id, dogName, date
 
   const pressHandler_supp = () => {
     navigation.navigate("SupportScreen");
   };
+  // const renderItem = ({ item }) => (
+  //   <View style={{ flexDirection: "row", marginLeft: "10%" }}>
+  //     <Button onPress={(item) => {}}>
+  //       <Icon name="setting" color="#777777" size={20} />
+  //     </Button>
+  //     <Button
+  //       onPress={(item) => {
+  //         deletePoster(item.id);
+  //       }}
+  //     >
+  //       <Icon name="delete" color="#777777" size={20} />
+  //     </Button>
+  //     <Title style={{ color: "#777777" }}>{item.dogName}</Title>
+  //   </View>
+  // );
 
   return (
     <SafeAreaView style={Nofar_styles.container}>
@@ -86,7 +105,11 @@ export default function ProfilePage({ navigation }) {
           </TouchableOpacity>
         </View>
         <Title style={Nofar_styles.BigTitle}>מודעות שפרסמת</Title>
-        <View></View>
+        {/* <FlatList
+          data={Posters}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+        /> */}
       </ScrollView>
     </SafeAreaView>
   );

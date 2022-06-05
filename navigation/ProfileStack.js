@@ -11,7 +11,7 @@ export default function ProfileStack() {
   return (
     <Stack.Navigator screenOptions={options}>
       <Stack.Screen name="ProfileScreen" component={ProfilePage} />
-      <Stack.Screen name="EditProfileScreen" component={EditProfile} />
+      {/* <Stack.Screen name="EditProfileScreen" component={EditProfile} /> */}
       <Stack.Screen name="SupportScreen" component={SupportPage} />
     </Stack.Navigator>
   );
