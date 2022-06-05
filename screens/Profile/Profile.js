@@ -34,7 +34,7 @@ export default function ProfilePage({ navigation }) {
   const [Phone, setPhone] = useState(getPhoneNumber(user));
 
   // const Posters = getPosters(user);
-  // should have an id, dogName, date
+  // // should have an id, dogName, date
   // console.log(Posters);
 
   const pressHandler_supp = () => {
