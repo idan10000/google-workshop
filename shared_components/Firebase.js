@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -7,10 +8,9 @@ import {
   doc,
   getDoc,
 } from "firebase/firestore";
-import { db } from "../firebase";
 
 import uuid from "react-native-uuid";
-import { getFirestore } from "firebase/firestore";
+import { lection, query, where, getDocs } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAs3eewx9m6kipMfsQkz-37NWQgXF1_fnQ",
@@ -86,8 +86,23 @@ export async function updatePhoneNumber(user, num) {
     .doc(user.uid.toString())
     .update({ phone: num })
     .then(() => {
-      console.log("phone updated! ");
+      console.log("user phone updated! ");
     });
 }
-export async function getPosters(user) {}
+
+// create an object of user's posters
+export async function getPosters(user) {
+  const [userPosters, setUserPosters] = useState([]);
+  const userId = user.uid;
+  const q = query(
+    collection(firebase.firesore(), "Posters"),
+    where("user", "==", userId)
+  );
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    console.log(doc.id, " => ", doc.data());
+  });
+}
+
+// delete poster by given key
 export async function deletePoster(posterKey) {}
