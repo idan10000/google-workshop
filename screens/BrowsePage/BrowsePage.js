@@ -193,6 +193,16 @@ const BrowsePage = ({navigation, route}) => {
         }
     }
 
+                    <View position= "absolute" marginLeft="75%" >
+                        <TouchableOpacity title={"2-Button Alert"} onPress={createTwoButtonAlert}>
+                            <Icon name = 'infocirlce' size={24} color ="#DCA277" />
+                        </TouchableOpacity>
+
+                        {/*<TouchableOpacity*/}
+                        {/*    title={"3-Button Alert"}*/}
+                        {/*    onPress={createThreeButtonAlert}*/}
+                        {/*/>*/}
+                    </View>
 
     const createTwoButtonAlert = () =>
         Alert.alert(

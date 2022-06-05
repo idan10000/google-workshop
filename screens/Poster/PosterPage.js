@@ -44,6 +44,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                             </View>
 
                         </View>
+                        { route.params.data.address.length < 15 &&
                         <View
                             marginVertical="4%">
                             <View style={AR_styles.lastSeen}>
@@ -54,10 +55,19 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                                         textAlign="center">{route.params.data.address}</Text></TouchableOpacity>
                             </View>
 
+                        </View>}
+                        { route.params.data.address.length >= 15 &&
+                            <View
+                                marginVertical="4%" flexDirection= "column">
+                                <View style={AR_styles.lastSeen}>
 
-                            {/*} <Text style = {styles.whenText}>בתאריך: {route.params.data.date}</Text>*/}
+                                    <Text style={styles.whenText}>נצפה לאחרונה ב:</Text>
+                                    <Icon name="location-pin" size={22} color="#000"/>
+                                    <TouchableOpacity><Text fontSize="16" lineHeight="20" fontWeight="500"
+                                                            textAlign="center">{route.params.data.address}</Text></TouchableOpacity>
+                                </View>
 
-                        </View>
+                            </View>}
                         {
                             !expanded &&
                             <View style={{...Nofar_styles.Viewchips}}>
