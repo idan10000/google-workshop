@@ -2,7 +2,7 @@ import * as React from "react";
 import { Dimensions, StyleSheet, Text, View, Alert } from "react-native";
 import MapView, { Callout, Marker } from "react-native-maps";
 
-export default function EditLocation() {
+export default function MapBrowse() {
   //user location
   const [pin, setPin] = React.useState({
     latitude: 37.78825,

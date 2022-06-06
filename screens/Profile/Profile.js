@@ -1,17 +1,15 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
-  SafeAreaView,
   TouchableOpacity,
-  ScrollView,
   TextInput,
   FlatList,
   ImageBackground,
   Dimensions,
+  SafeAreaView,
 } from "react-native";
-import { Title, Text, Button } from "react-native-paper";
-import { user_styles } from "./ProfileStyle";
+import { Title, Text } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Nofar_styles } from "../../styles/NofarStyle";
 import { getAuth, signOut } from "firebase/auth";
@@ -20,14 +18,13 @@ import { AuthenticatedUserContext } from "../../navigation/AuthenticatedUserProv
 import {
   getPhoneNumber,
   updatePhoneNumber,
-  getPosters,
-  deletePoster,
 } from "../../shared_components/Firebase.js";
-import {getInitialData} from "../BrowsePage/InfiniteScroll";
-import {doc, getDoc, getFirestore} from "firebase/firestore";
-import PostListItem from "../../shared_components/PostListItem";
+import { getInitialData } from "../BrowsePage/InfiniteScroll";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
+import PostPofileItem from "./PostPofileItem";
 
 export default function ProfilePage({ navigation }) {
+  console.log("------------------- RUN ");
   const { user } = useContext(AuthenticatedUserContext);
   const Name = user.displayName;
   const Email = user.email;
@@ -51,60 +48,32 @@ export default function ProfilePage({ navigation }) {
   const pressHandler_supp = () => {
     navigation.navigate("SupportScreen");
   };
-  // const renderItem = ({ item }) => (
-  //   <View style={{ flexDirection: "row", marginLeft: "10%" }}>
-  //     <Button onPress={(item) => {}}>
-  //       <Icon name="setting" color="#777777" size={20} />
-  //     </Button>
-  //     <Button
-  //       onPress={(item) => {
-  //         deletePoster(item.id);
-  //       }}
-  //     >
-  //       <Icon name="delete" color="#777777" size={20} />
-  //     </Button>
-  //     <Title style={{ color: "#777777" }}>{item.dogName}</Title>
-  //   </View>
-  // );
 
+  const getPosters = () => {
+    const db = getFirestore();
+    const posters = [];
+    console.log("POSTERS", posters);
+    getDoc(doc(db, "Users", user.uid)).then((userRef) => {
+      const data = userRef.data(); // USER'S DATA
+      const refs = data.posters;
+      console.log("refs", refs);
+      const promises = [];
 
-    const getPosters = () => {
-      const db = getFirestore()
-      const posters = []
-      getDoc(doc(db, "Users", user.uid)).then(userRef => {
-        const data = userRef.data()
-        const refs = data.posters
-        const promises = []
-
-        refs.forEach(ref => {
-          promises.push(getDoc(doc(db, "Posters", ref)))
-        })
-        Promise.all(promises).then(docs => {
-          docs.forEach(doc => {
-            posters.push(doc.data())
-          })
-          setData(posters)
-        })
-      })
-    }
-    // const userItem = userSnapshot.data()
-    // console.log(userItem.test)
-    // console.log(userItem)
-    // if (userItem.test) {
-    //   getDoc(userItem.test).then(res => {
-    //     console.log(res)
-    //   })
-    // }
-    // const reportRefs = userItem.reports
-    // console.log(reportRefs[0])
-    // const reports = []
-    // reportRefs.foreach((item) => {
-    //   console.log(item)
-    // })
+      refs.forEach((ref) => {
+        promises.push(getDoc(doc(db, "Posters", ref)));
+      });
+      Promise.all(promises).then((docs) => {
+        docs.forEach((doc) => {
+          posters.push(doc.data());
+        });
+        setData(posters);
+      });
+    });
+  };
 
   useEffect(async () => {
     await getPhoneNumber(user, setPhone);
-    await getPosters()
+    await getPosters();
   }, []);
 
   return (
@@ -112,7 +81,7 @@ export default function ProfilePage({ navigation }) {
       style={{ flex: 1 }}
       source={require("./new_background.png")}
     >
-      <ScrollView>
+      <SafeAreaView style={{ flex: 1 }}>
         <View>
           <View style={{ flexDirection: "row", marginLeft: "10%" }}>
             <View style={{ marginTop: 30, marginRight: 10 }}>
@@ -133,8 +102,6 @@ export default function ProfilePage({ navigation }) {
             style={{
               flexDirection: "row",
               marginLeft: "10%",
-              marginTop: "5%",
-              marginBottom: "10%",
             }}
           >
             <Icon name="phone" color="#000000" size={30} />
@@ -153,57 +120,66 @@ export default function ProfilePage({ navigation }) {
             />
           </View>
         </View>
-        <View>
-          <View style={user_styles.confirmBTContainer}>
-            <TouchableOpacity
-              style={styles.MidButton}
-              onPress={pressHandler_supp}
+
+        <View
+          style={{
+            flexDirection: "row",
+            paddingHorizontal: 10,
+            marginTop: "1%",
+          }}
+        >
+          <TouchableOpacity
+            style={styles.MidButton}
+            onPress={pressHandler_supp}
+          >
+            <View
+              justifyContent="center"
+              alignItems="center"
+              flexDirection="row"
+              marginRight="4%"
             >
-              <View
-                justifyContent="center"
-                alignItems="center"
-                flexDirection="row"
-                marginRight="4%"
-              >
-                <Icon name="pen" size={24} color="#FFFFFF" />
-              </View>
-              <Text style={styles.MidButtonTitle}>תמיכה טכנית</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={user_styles.confirmBTContainer}>
-            <TouchableOpacity
-              style={styles.MidButton}
-              onPress={() => {
-                signOut(getAuth()).then(() => {});
-              }}
+              <Icon name="pen" size={24} color="#FFFFFF" />
+            </View>
+            <Text style={styles.MidButtonTitle}>תמיכה טכנית</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.MidButton}
+            onPress={() => {
+              signOut(getAuth()).then(() => {});
+            }}
+          >
+            <View
+              justifyContent="center"
+              alignItems="center"
+              flexDirection="row"
+              marginRight="4%"
             >
-              <View
-                justifyContent="center"
-                alignItems="center"
-                flexDirection="row"
-                marginRight="4%"
-              >
-                <Icon name="cancel" size={24} color="#FFFFFF" />
-              </View>
-              <Text style={styles.MidButtonTitle}>התנתקות</Text>
-            </TouchableOpacity>
-          </View>
+              <Icon name="cancel" size={24} color="#FFFFFF" />
+            </View>
+            <Text style={styles.MidButtonTitle}>התנתקות</Text>
+          </TouchableOpacity>
         </View>
 
-        <Title style={styles.foundDog}>המודעות שלך</Title>
         <View style={styles.listContainer}>
+          <Title style={styles.foundDog}>המודעות שלך</Title>
           <FlatList
             data={data}
             ItemSeparatorComponent={FlatListItemSeparator}
             keyExtractor={(item) => item.image}
-            numColumns={2}
+            numColumns={1}
             renderItem={({ item }) => {
               return (
-                <View style={{ paddingVertical: 5 }}>
-                  <PostListItem
+                <View
+                  style={{
+                    paddingVertical: 5,
+                  }}
+                >
+                  <PostPofileItem
                     image={item.image}
                     date={item.date}
-                    distance={0}
+                    name={item.dogName}
+                    address={item.address}
+                    description={item.description}
                     data={item}
                     navigation={navigation}
                     destination={"Poster"}
@@ -213,7 +189,32 @@ export default function ProfilePage({ navigation }) {
             }}
           />
         </View>
-      </ScrollView>
+        <View style={styles.listContainer}>
+          <Title style={styles.foundDog}>הדיווחים שלך</Title>
+          <FlatList
+            data={data}
+            ItemSeparatorComponent={FlatListItemSeparator}
+            keyExtractor={(item) => item.image}
+            numColumns={1}
+            renderItem={({ item }) => {
+              return (
+                <View style={{ paddingVertical: 5 }}>
+                  <PostPofileItem
+                    image={item.image}
+                    date={item.date}
+                    name={item.dogName}
+                    address={item.address}
+                    description={item.description}
+                    data={item}
+                    navigation={navigation}
+                    destination={"Poster"}
+                  />
+                </View>
+              );
+            }}
+          />
+        </View>
+      </SafeAreaView>
     </ImageBackground>
   );
 }
@@ -221,12 +222,10 @@ export default function ProfilePage({ navigation }) {
 const styles = StyleSheet.create({
   foundDog: {
     fontWeight: "700",
-    marginTop: "14%",
-    marginBottom: "3%",
+    marginLeft: "2%",
     lineHeight: 35,
     color: "#9E6C6C",
-    fontSize: 27,
-    textAlign: "center",
+    fontSize: 24,
     textDecorationLine: "underline",
   },
   MidButtonTitle: {
@@ -244,8 +243,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 7,
     elevation: 6,
-    width: Dimensions.get("window").width * 0.75,
-    height: Dimensions.get("window").height * 0.08,
+    width: "45%",
+    height: "60%",
+    marginLeft: "2%",
+    marginBottom: "7%",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -254,7 +255,5 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
   },
 });

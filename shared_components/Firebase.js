@@ -80,20 +80,3 @@ export async function updatePhoneNumber(user, num) {
     console.log("user phone updated!");
   });
 }
-
-// create an object of user's posters
-export async function getPosters(user) {
-  //     const [userPosters, setUserPosters] = useState([]);
-  //     const userId = user.uid;
-  //     const q = query(
-  //         collection(fireStoreDB, "Posters"),
-  //         where("user", "==", userId)
-  //     );
-  //     const querySnapshot = await getDocs(q);
-  //     querySnapshot.forEach((doc) => {
-  //         console.log(doc.id, " => ", doc.data());
-  //     });
-}
-
-// // delete poster by given key
-export async function deletePoster(posterKey) {}
