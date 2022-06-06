@@ -44,16 +44,16 @@ export default function ProfilePage({ navigation }) {
   // const renderItem = ({ item }) => (
   //   <View style={{ flexDirection: "row", marginLeft: "10%" }}>
   //     <Button onPress={(item) => {}}>
-  //       <Icon name="setting" color="#777777" size={20} />
+  //       <Icon name="setting" color="#000000" size={20} />
   //     </Button>
   //     <Button
   //       onPress={(item) => {
   //         deletePoster(item.id);
   //       }}
   //     >
-  //       <Icon name="delete" color="#777777" size={20} />
+  //       <Icon name="delete" color="#000000" size={20} />
   //     </Button>
-  //     <Title style={{ color: "#777777" }}>{item.dogName}</Title>
+  //     <Title style={{ color: "#000000" }}>{item.dogName}</Title>
   //   </View>
   // );
 
@@ -63,18 +63,18 @@ export default function ProfilePage({ navigation }) {
       source={require("./new_background.png")}
     >
       <ScrollView>
-        <View style={user_styles.ProfileCard}>
+        <View>
           <View style={{ flexDirection: "row", marginLeft: "10%" }}>
             <View style={{ marginTop: 30, marginRight: 10 }}>
-              <Title style={Nofar_styles.BigTitle}>{Name}</Title>
+              <Title style={Nofar_styles.BigTitle}>{Name} </Title>
             </View>
           </View>
 
           <View
             style={{ flexDirection: "row", marginLeft: "10%", marginTop: "2%" }}
           >
-            <Icon name="email" color="#777777" size={30} />
-            <Text style={{ color: "#777777", marginLeft: 20, fontSize: 17 }}>
+            <Icon name="email" color="#000000" size={30} />
+            <Text style={{ color: "#000000", marginLeft: 20, fontSize: 17 }}>
               {Email}
             </Text>
           </View>
@@ -87,13 +87,17 @@ export default function ProfilePage({ navigation }) {
               marginBottom: "10%",
             }}
           >
-            <Icon name="phone" color="#777777" size={30} />
+            <Icon name="phone" color="#000000" size={30} />
             <TextInput
-              style={{ color: "#777777", marginLeft: 20, fontSize: 17 }}
+              style={{
+                color: "#000000",
+                marginLeft: 20,
+                fontSize: 17,
+                textDecorationLine: "underline",
+              }}
               onChangeText={(newText) => {
                 setPhone(newText);
                 updatePhoneNumber(user, newText);
-                console.log("------- User's Phone number update:", Phone);
               }}
               defaultValue={Phone}
             />
@@ -135,7 +139,7 @@ export default function ProfilePage({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-        <Title style={styles.foundDog}>מודעות שפרסמת</Title>
+        <Title style={styles.foundDog}>המודעות שלך</Title>
         {/* <FlatList
           data={Posters}
           renderItem={renderItem}
@@ -155,6 +159,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: "center",
     fontWeight: "700",
+    textDecorationLine: "underline",
   },
   MidButtonTitle: {
     color: "#FFFFFF",
