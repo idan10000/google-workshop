@@ -421,7 +421,7 @@ export default function Screen3Poster({route, navigation}) {
 const styles = StyleSheet.create({
 
     button: {
-        marginBottom: "5%",
+        marginBottom: "1%",
         marginHorizontal: "7.5%",
         paddingVertical: "2%",
         paddingRight: "5%",
