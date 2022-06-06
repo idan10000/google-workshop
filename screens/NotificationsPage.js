@@ -4,7 +4,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     View, ScrollView,
-    FlatList, Text, RefreshControl
+    FlatList, Text, RefreshControl, ActivityIndicator
 } from 'react-native';
 import {arrayRemove, doc, getDoc, updateDoc} from "firebase/firestore";
 import {fireStoreDB} from "../shared_components/Firebase";
@@ -109,6 +109,7 @@ export default function NotificationsPage({navigation, setNewNotification}) {
     if (isLoading)
         return (
             <View style={styles.container}>
+                <ActivityIndicator size="large" color="#DCA277" />
             </View>
         );
 
@@ -173,7 +174,8 @@ const styles = StyleSheet.create({
     },
     container:{
       backgroundColor: "#F9F8F0",
-      flex:1
+      flex:1,
+      justifyContent: "center",
     },
     listItem: {
         borderWidth:0.18,
