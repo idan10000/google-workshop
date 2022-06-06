@@ -23,40 +23,37 @@ import {
   getPosters,
   deletePoster,
 } from "../../shared_components/Firebase.js";
-// 1) user data-  Name + email ---------------------------------- V
-// 2) update user phone number, with input object --------------- V
-// 3) buttons for support and signOut --------------------------- V
-// 4) all user posters (with update\delete buttons)--------------
+
 export default function ProfilePage({ navigation }) {
   const { user } = useContext(AuthenticatedUserContext);
   const Name = user.displayName;
   const Email = user.email;
   const [Phone, setPhone] = useState();
   getPhoneNumber(user, setPhone);
-  console.log("------- User Phone number is:", Phone);
 
-  // const Posters = getPosters(user);
-  // // should have an id, dogName, date
+  const [data, setData] = useState({
+    docs: [],
+    error: null,
+    lastDocId: null,
+    initialBatchStatus: "",
+    nextBatchStatus: "",
+  });
+
+  var FlatListItemSeparator = () => {
+    return (
+      <View
+        style={{
+          height: 1,
+          width: "100%",
+          backgroundColor: "#000",
+        }}
+      />
+    );
+  };
 
   const pressHandler_supp = () => {
     navigation.navigate("SupportScreen");
   };
-  // const renderItem = ({ item }) => (
-  //   <View style={{ flexDirection: "row", marginLeft: "10%" }}>
-  //     <Button onPress={(item) => {}}>
-  //       <Icon name="setting" color="#000000" size={20} />
-  //     </Button>
-  //     <Button
-  //       onPress={(item) => {
-  //         deletePoster(item.id);
-  //       }}
-  //     >
-  //       <Icon name="delete" color="#000000" size={20} />
-  //     </Button>
-  //     <Title style={{ color: "#000000" }}>{item.dogName}</Title>
-  //   </View>
-  // );
-
   return (
     <ImageBackground
       style={{ flex: 1 }}
@@ -139,12 +136,30 @@ export default function ProfilePage({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
+
         <Title style={styles.foundDog}>המודעות שלך</Title>
-        {/* <FlatList
-          data={Posters}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        /> */}
+        <View style={styles.listContainer}>
+          <FlatList
+            data={data.docs}
+            ItemSeparatorComponent={FlatListItemSeparator}
+            keyExtractor={(item) => item.image}
+            numColumns={2}
+            renderItem={({ item }) => {
+              return (
+                <View style={{ paddingVertical: 5 }}>
+                  <PostListItem
+                    image={item.image}
+                    date={item.date}
+                    distance={item.distance}
+                    data={item}
+                    navigation={navigation}
+                    destination={destination}
+                  />
+                </View>
+              );
+            }}
+          />
+        </View>
       </ScrollView>
     </ImageBackground>
   );
@@ -183,5 +198,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 11.111,
     backgroundColor: "#DCA277",
+  },
+  listContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
