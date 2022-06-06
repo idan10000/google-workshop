@@ -1,5 +1,5 @@
 import React from "react";
-import {Text, View, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Dimensions} from "react-native";
+import {Text, View, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Dimensions,Linking} from "react-native";
 import {Nofar_styles} from "../../styles/NofarStyle";
 
 import {AR_styles} from "./PosterStyle";
@@ -9,6 +9,12 @@ import Icon from "react-native-vector-icons/Entypo";
 export default function PosterPage({navigation, route, typeOfPage}) {
     console.log("5555555522222");
 
+    const makeCall = () => {
+        console.log("Its calling");
+        let phoneNumber = route.params.data.phoneNumber;
+        console.log(route.params.data.phoneNumber)
+        Linking.openURL(`tel:${phoneNumber}`)
+    };
     const editButtonPressHandler = () => {
 
         navigation.navigate("PosterCreation2", {
@@ -51,7 +57,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
 
                                 <Text style={styles.whenText}>נצפה לאחרונה ב:</Text>
                                 <Icon name="location-pin" size={22} color="#000"/>
-                                <TouchableOpacity><Text fontSize="16" lineHeight="20" fontWeight="500"
+                                <TouchableOpacity ><Text fontSize="16" lineHeight="20" fontWeight="500"
                                                         textAlign="center">{route.params.data.address}</Text></TouchableOpacity>
                             </View>
 
@@ -167,6 +173,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                             {route.params.data.contact &&
 
                                 <TouchableOpacity
+                                    onPress={makeCall}
                                     style={AR_styles.contact}>
                                     <Text style={AR_styles.contactTitle}>צור קשר</Text>
 
@@ -324,6 +331,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                             <Text style={styles.whenText}>הבעלים: {route.params.data.name}</Text>
                             <View style={AR_styles.verticalLine}></View>
                             <TouchableOpacity
+                                onPress={makeCall}
                                 style={AR_styles.contact}>
                                 <Text style={AR_styles.contactTitle}>צור קשר</Text>
 
@@ -481,6 +489,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 </View>}
                             {route.params.data.contact &&
                                 <TouchableOpacity
+                                    onPress={makeCall}
                                     style={AR_styles.contact}>
                                     <Text style={AR_styles.contactTitle}>צור קשר</Text>
 
@@ -638,6 +647,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                             <Text style={styles.whenText}>הבעלים: {route.params.data.name}</Text>
                             <View style={AR_styles.verticalLine}/>
                             <TouchableOpacity
+                                onPress={makeCall}
                                 style={AR_styles.contact}>
                                 <Text style={AR_styles.contactTitle}>צור קשר</Text>
 
