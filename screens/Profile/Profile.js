@@ -23,10 +23,7 @@ import {
   getPosters,
   deletePoster,
 } from "../../shared_components/Firebase.js";
-// 1) user data-  Name + email ---------------------------------- V
-// 2) update user phone number, with input object --------------- V
-// 3) buttons for support and signOut --------------------------- V
-// 4) all user posters (with update\delete buttons)--------------
+
 export default function ProfilePage({ navigation }) {
   const { user } = useContext(AuthenticatedUserContext);
   const Name = user.displayName;
