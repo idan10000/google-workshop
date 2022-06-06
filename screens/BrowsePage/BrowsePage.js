@@ -198,7 +198,7 @@ const BrowsePage = ({navigation, route}) => {
     const createTwoButtonAlert = () =>
         Alert.alert(
             "",
-            "מרחק החיפוש מוגבל ברדיוס של 10 קילומטרים",
+            "במיון לפי מרחק, מוצגים כלבים במרחק של עד 10 ק\"מ בלבד",
             [
 
                 {text: "הבנתי!", onPress: () => console.log("OK Pressed")}

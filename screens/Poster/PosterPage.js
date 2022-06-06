@@ -8,11 +8,9 @@ import {
     ImageBackground,
     StyleSheet,
     Dimensions,
-    Linking,
-
 } from "react-native";
 import {Nofar_styles} from "../../styles/NofarStyle";
-
+import * as Linking from 'expo-linking';
 import {AR_styles} from "./PosterStyle";
 import {Chip,Modal,Provider,Portal} from "react-native-paper";
 import Icon from "react-native-vector-icons/Entypo";
@@ -26,6 +24,11 @@ export default function PosterPage({navigation, route, typeOfPage}) {
         console.log(route.params.data.phoneNumber)
         Linking.openURL(`tel:${phoneNumber}`)
     };
+
+    const openMap = async (location) => {
+        await Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`);
+    }
+
     const editButtonPressHandler = () => {
 
         navigation.navigate("PosterCreation2", {
@@ -202,8 +205,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                         <View style={AR_styles.confirmBTContainer}>
                             <TouchableOpacity
                                 style={Nofar_styles.BigButton}
-                                onPress={() => {
-                                }}
+                                onPress={() => {openMap(route.params.data.location)}}
                             >
                                 <Text style={Nofar_styles.BigButtonText}>פתיחת מיקום במפה</Text>
                             </TouchableOpacity>
@@ -375,8 +377,8 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                         <View style={AR_styles.confirmBTContainer}>
                             <TouchableOpacity
                                 style={Nofar_styles.BigButton}
-                                onPress={() => {
-                                }}
+                                onPress={() => {openMap(route.params.data.location)}}
+
                             >
                                 <Text style={Nofar_styles.BigButtonText}>פתיחת מיקום במפה</Text>
                             </TouchableOpacity>
@@ -536,8 +538,8 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                         <View style={AR_styles.confirmBTContainer}>
                             <TouchableOpacity
                                 style={Nofar_styles.BigButton}
-                                onPress={() => {
-                                }}
+                                onPress={() => {openMap(route.params.data.location)}}
+
                             >
                                 <Text style={Nofar_styles.BigButtonText}>פתיחת מיקום במפה</Text>
                             </TouchableOpacity>
@@ -694,8 +696,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                         <View style={AR_styles.confirmBTContainer}>
                             <TouchableOpacity
                                 style={Nofar_styles.BigButton}
-                                onPress={() => {
-                                }}
+                                onPress={() => {openMap(route.params.data.location)}}
                             >
                                 <Text style={Nofar_styles.BigButtonText}>פתיחת מיקום במפה</Text>
                             </TouchableOpacity>
