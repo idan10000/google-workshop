@@ -25,17 +25,16 @@ import {
 // 2) update user phone number, with input object --------------- V
 // 3) buttons for support and signOut --------------------------- V
 // 4) all user posters (with update\delete buttons)--------------
-
 export default function ProfilePage({ navigation }) {
   const { user } = useContext(AuthenticatedUserContext);
-  console.log(user.uid);
   const Name = user.displayName;
   const Email = user.email;
-  const [Phone, setPhone] = useState(getPhoneNumber(user));
+  const [Phone, setPhone] = useState();
+  getPhoneNumber(user, setPhone);
+  console.log("------- User Phone number is:", Phone);
 
   // const Posters = getPosters(user);
   // // should have an id, dogName, date
-  // console.log(Posters);
 
   const pressHandler_supp = () => {
     navigation.navigate("SupportScreen");
@@ -74,7 +73,12 @@ export default function ProfilePage({ navigation }) {
           </View>
 
           <View
-            style={{ flexDirection: "row", marginLeft: "10%", marginTop: "5%" }}
+            style={{
+              flexDirection: "row",
+              marginLeft: "10%",
+              marginTop: "5%",
+              marginBottom: "10%",
+            }}
           >
             <Icon name="phone" color="#777777" size={30} />
             <TextInput
@@ -82,6 +86,7 @@ export default function ProfilePage({ navigation }) {
               onChangeText={(newText) => {
                 setPhone(newText);
                 updatePhoneNumber(user, newText);
+                console.log("------- User's Phone number update:", Phone);
               }}
               defaultValue={Phone}
             />
