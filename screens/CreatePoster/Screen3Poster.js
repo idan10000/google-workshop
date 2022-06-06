@@ -137,7 +137,7 @@ export default function Screen3Poster({route, navigation}) {
     const initName = route.params.edit ? prevPoster.name : ''
 
     const [initializedPhone, setInitializedPhone] = React.useState(false);
-    let initPhone = "loading..."
+    let initPhone = ""
     if (route.params.edit && !initializedPhone) {
         initPhone = prevPoster.phoneNumber
     }
@@ -277,7 +277,6 @@ export default function Screen3Poster({route, navigation}) {
                         <TextInput
                             style={styles.nameOfDog}
                             dense={false}
-                            placeholder={'הכנס שם...'}
                             value={nameText}
                             onChangeText={setName}
                             mode={'outlined'}
@@ -287,7 +286,7 @@ export default function Screen3Poster({route, navigation}) {
                         />
                     </View >
                     {!correctDogName &&
-                    <View style={styles.dogNameContainer}>
+                    <View style={styles.descriptionTextContainer}>
 
                         <Text style={Nofar_styles.TinyButtonTitleRed}>אנא הכנס שם</Text></View>}
                     <Portal>
@@ -332,7 +331,7 @@ export default function Screen3Poster({route, navigation}) {
                             style={styles.button}
                             onPress={showTagModal}
                         >
-                            <Text style={Nofar_styles.TinyButtonTitle}> הוסף תגיות לתיאור הכלב:</Text>
+                            <Text style={Nofar_styles.TinyButtonTitle}> הוסף תגיות לתיאור הכלב</Text>
                         </TouchableOpacity>
                     </View>
                     {/*<View style={styles.chips}>*/}
@@ -359,15 +358,14 @@ export default function Screen3Poster({route, navigation}) {
                         }
                     </View>
                     <View marginTop = "4%">
-                        <View style={styles.dogNameContainer}>
+                        <View style={styles.descriptionTextContainer}>
 
-                            <Text style={Nofar_styles.TinyButtonTitleBlack}>תיאור: </Text></View>
+                            <Text style={Nofar_styles.TinyButtonTitleBlack}>פרטים נוספים: </Text></View>
                         <View style={styles.descriptionContainer}>
 
                             <TextInput
                                 style={styles.inDescription}
                                 dense={false}
-                                placeholder={'הוסף תיאור...'}
                                 value={descriptionText}
                                 onChangeText={setDescription}
                                 mode={'outlined'}
@@ -378,14 +376,13 @@ export default function Screen3Poster({route, navigation}) {
                         </View>
                         <View style={styles.checkboxContainer}>
                             <View>
-                                <Text style={Nofar_styles.TinyButtonTitleBlack}>פרטי יצירת קשר</Text>
+                                <Text style={Nofar_styles.TinyButtonTitleBlack}>טלפון:</Text>
                             </View>
                         </View>
                         <View style={styles.phoneContainer}>
                             <TextInput
                                 dense={false}
                                 keyboardType = 'numeric'
-                                placeholder={'הוסף טלפון'}
                                 value={phoneText}
                                 onChangeText={setPhone}
                                 mode={'outlined'}
@@ -503,11 +500,17 @@ const styles = StyleSheet.create({
     addTagsBTContainer: {
         paddingTop: "2.5%",
         flexDirection: "row",
-    }, dogNameContainer: {
+    },
+    dogNameContainer: {
         marginHorizontal: "7.5%",
         flexDirection: "row",
-
+        marginTop: "5%"
     },
+    descriptionTextContainer: {
+        marginHorizontal: "7.5%",
+        flexDirection: "row",
+    },
+
 
 
     nameOfDog:{

@@ -67,7 +67,7 @@ export default function Screen3Report({route, navigation}) {
     const initDescription = route.params.edit ? report.description : ''
 
     const [initializedPhone, setInitializedPhone] = React.useState(false);
-    let initPhone = "loading..."
+    let initPhone = ""
     if (route.params.edit && !initializedPhone) {
         initPhone = report.phoneNumber
     } else if (initializedPhone) {
@@ -219,9 +219,9 @@ export default function Screen3Report({route, navigation}) {
                                     labels={labels}
                                     stepCount={3}
                                 /></View>
-                            <View marginHorizontal="7.5%" marginTop="2.5%" marginBottom="2.5%">
+                            <View marginHorizontal="7.5%" marginTop="5%" marginBottom="2.5%">
 
-                                <Text style={styles.textFound}>תיאור הכלב שנמצא:</Text></View>
+                                <Text style={styles.textFound}>פרטים נוספים:</Text></View>
                             <Portal>
                                 {/*Tags*/}
                                 <Modal
@@ -265,7 +265,7 @@ export default function Screen3Report({route, navigation}) {
                                     style={styles.button}
                                     onPress={showTagModal}
                                 >
-                                    <Text style={Nofar_styles.TinyButtonTitle}>הוסף תגיות לתיאור הכלב:</Text>
+                                    <Text style={Nofar_styles.TinyButtonTitle}>הוסף תגיות לתיאור הכלב</Text>
                                 </TouchableOpacity>
                             </View>
                             {/*<View style={styles.chips}>*/}
@@ -296,7 +296,7 @@ export default function Screen3Report({route, navigation}) {
                                     <TextInput
                                         style={styles.inDescription}
                                         dense={false}
-                                        placeholder={'הוסף תיאור...'}
+                                        placeholder={'פרטים נוספים'}
                                         value={descriptionText}
                                         onChangeText={setDescription}
                                         mode={'outlined'}
@@ -323,7 +323,7 @@ export default function Screen3Report({route, navigation}) {
                                             dense={false}
                                             keyboardType='numeric'
 
-                                            placeholder={'הוסף טלפון'}
+                                            placeholder={'טלפון'}
                                             value={phoneText}
                                             onChangeText={setPhone}
                                             mode={'outlined'}
@@ -365,7 +365,7 @@ export default function Screen3Report({route, navigation}) {
                                 /></View>
                             <View marginHorizontal="7.5%" marginTop="2.5%" marginBottom="2.5%">
 
-                                <Text style={styles.textFound}>תיאור הכלב שנמצא:</Text></View>
+                                <Text style={styles.textFound}>פרטים נוספים:</Text></View>
                             <Portal>
                                 {/*Tags*/}
                                 <Modal

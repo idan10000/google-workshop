@@ -3,7 +3,7 @@ import {Button} from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import {getAuth, signOut} from "firebase/auth";
 import {Text, TouchableOpacity, Image} from "react-native";
-import Icon from "react-native-vector-icons/Entypo";
+import Icon from 'react-native-vector-icons/AntDesign';
 import React, {useState} from "react";
 import {Nofar_styles} from "../../styles/NofarStyle";
 import StepIndicator from 'react-native-step-indicator';
@@ -69,7 +69,7 @@ export default function Screen2Poster({route, navigation}) {
                         labels={labels}
                         stepCount={3}
                     /></View>
-                <View style = {styles.imagePicked}><Text style = {styles.errorImage}>אנא סמן את המיקום בו ראית את הכלב</Text></View>
+                <View style = {styles.imagePicked}><Text style = {styles.errorImage}>סמנו את המיקום האחרון בו ראיתם את הכלב</Text></View>
 
                 <MapForCreation
                     preLocation={initLocation}
@@ -77,12 +77,16 @@ export default function Screen2Poster({route, navigation}) {
                     location={location}
                     setLocation={setLocation}
                 />
-
+                <View style={styles.bottomView}>
+                    <Icon name='infocirlceo' size={20} color="#000"/>
+                    <View style={styles.bottomTextView}>
+                        <Text style = {styles.bottomText}>ניתן להזיז את הסמן באמצעות לחיצה ארוכה</Text>
+                    </View>
+                </View>
                 <TouchableOpacity
                     onPress={nextScreen}
                     style={styles.proceedButton}>
                     <Text style={Nofar_styles.TinyButtonTitle}>המשך</Text>
-
                 </TouchableOpacity>
             </View>
         </ScrollView>
@@ -115,12 +119,26 @@ const styles = StyleSheet.create({
     },
     errorImage: {
         color: "#000",
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: "700",
     },
     imagePicked: {
-        marginLeft: "7.5%",
-    }
+        marginHorizontal: "7.5%",
+        marginTop:"5%"
+    },
+    bottomView: {
+        flexDirection: "row",
+        marginHorizontal: "7.5%",
+    },
+    bottomText: {
+        color: "#000",
+        fontSize: 16,
+        fontWeight: "600",
+    },
+    bottomTextView: {
+        flexDirection: "row",
+        marginLeft: "2.5%"
+    },
 
 
 });
