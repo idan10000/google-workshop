@@ -20,6 +20,7 @@ import {useContext, useEffect, useRef, useState} from "react";
 import {AuthenticatedUserContext} from "./AuthenticatedUserProvider";
 import Screen1Poster from "../screens/CreatePoster/Screen1Poster";
 import SignIn from "../screens/SignIn";
+import SupportPage from "../screens/Profile/TechnicalSupport";
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -114,6 +115,7 @@ export default function HomeStack() {
     {/* <Stack.Screen name="ReportForBrowse" component={ReportForBrowse}/> */}
             <Stack.Screen name="Report" component={ReportForBrowser} />
             <Stack.Screen name="Poster" component={PosterBrowse} />
+            <Stack.Screen name="SupportScreen" component={SupportPage} />
 
         </Stack.Navigator>
     );

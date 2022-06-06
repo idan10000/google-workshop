@@ -89,10 +89,9 @@ export default function SignIn({navigation}) {
                     console.log('That email address is invalid!');
                     setValidEmail(false)
                     setValidPassword(false)
-
                 }
 
-                console.error(error);
+                // console.error(error);
             });
     }
 
