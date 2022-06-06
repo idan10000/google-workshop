@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
   StyleSheet,
   View,
@@ -23,21 +23,18 @@ import {
   getPosters,
   deletePoster,
 } from "../../shared_components/Firebase.js";
+import {getInitialData} from "../BrowsePage/InfiniteScroll";
+import {doc, getDoc, getFirestore} from "firebase/firestore";
+import PostListItem from "../../shared_components/PostListItem";
 
 export default function ProfilePage({ navigation }) {
   const { user } = useContext(AuthenticatedUserContext);
   const Name = user.displayName;
   const Email = user.email;
   const [Phone, setPhone] = useState();
-  getPhoneNumber(user, setPhone);
+  console.log("------- User Phone number is:", Phone);
 
-  const [data, setData] = useState({
-    docs: [],
-    error: null,
-    lastDocId: null,
-    initialBatchStatus: "",
-    nextBatchStatus: "",
-  });
+  const [data, setData] = useState([]);
 
   var FlatListItemSeparator = () => {
     return (
@@ -54,6 +51,62 @@ export default function ProfilePage({ navigation }) {
   const pressHandler_supp = () => {
     navigation.navigate("SupportScreen");
   };
+  // const renderItem = ({ item }) => (
+  //   <View style={{ flexDirection: "row", marginLeft: "10%" }}>
+  //     <Button onPress={(item) => {}}>
+  //       <Icon name="setting" color="#777777" size={20} />
+  //     </Button>
+  //     <Button
+  //       onPress={(item) => {
+  //         deletePoster(item.id);
+  //       }}
+  //     >
+  //       <Icon name="delete" color="#777777" size={20} />
+  //     </Button>
+  //     <Title style={{ color: "#777777" }}>{item.dogName}</Title>
+  //   </View>
+  // );
+
+
+    const getPosters = () => {
+      const db = getFirestore()
+      const posters = []
+      getDoc(doc(db, "Users", user.uid)).then(userRef => {
+        const data = userRef.data()
+        const refs = data.posters
+        const promises = []
+
+        refs.forEach(ref => {
+          promises.push(getDoc(doc(db, "Posters", ref)))
+        })
+        Promise.all(promises).then(docs => {
+          docs.forEach(doc => {
+            posters.push(doc.data())
+          })
+          setData(posters)
+        })
+      })
+    }
+    // const userItem = userSnapshot.data()
+    // console.log(userItem.test)
+    // console.log(userItem)
+    // if (userItem.test) {
+    //   getDoc(userItem.test).then(res => {
+    //     console.log(res)
+    //   })
+    // }
+    // const reportRefs = userItem.reports
+    // console.log(reportRefs[0])
+    // const reports = []
+    // reportRefs.foreach((item) => {
+    //   console.log(item)
+    // })
+
+  useEffect(async () => {
+    await getPhoneNumber(user, setPhone);
+    await getPosters()
+  }, []);
+
   return (
     <ImageBackground
       style={{ flex: 1 }}
@@ -140,7 +193,7 @@ export default function ProfilePage({ navigation }) {
         <Title style={styles.foundDog}>המודעות שלך</Title>
         <View style={styles.listContainer}>
           <FlatList
-            data={data.docs}
+            data={data}
             ItemSeparatorComponent={FlatListItemSeparator}
             keyExtractor={(item) => item.image}
             numColumns={2}
@@ -150,10 +203,10 @@ export default function ProfilePage({ navigation }) {
                   <PostListItem
                     image={item.image}
                     date={item.date}
-                    distance={item.distance}
+                    distance={0}
                     data={item}
                     navigation={navigation}
-                    destination={destination}
+                    destination={"Poster"}
                   />
                 </View>
               );

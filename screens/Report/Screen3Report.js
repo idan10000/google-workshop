@@ -13,12 +13,12 @@ import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvid
 import {deleteObject, ref, getStorage} from "firebase/storage";
 import * as geofire from "geofire-common";
 import {reverseGeocodeAsync} from "expo-location"
+
 export default function Screen3Report({route, navigation}) {
     let report = route.params.report
 
     const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
     const [correctPhone, setCorrectPhone] = React.useState(true);
-
 
 
     const db = fireStoreDB;
@@ -70,12 +70,10 @@ export default function Screen3Report({route, navigation}) {
     let initPhone = "loading..."
     if (route.params.edit && !initializedPhone) {
         initPhone = report.phoneNumber
-    }
-    else if(initializedPhone){
-    }
-    else {
+    } else if (initializedPhone) {
+    } else {
 
-        getDoc(doc(db, "Users",user.uid)).then((snapshot) => {
+        getDoc(doc(db, "Users", user.uid)).then((snapshot) => {
             const newPhone = snapshot.get("phone")
             initPhone = newPhone
             setPhone(newPhone)
@@ -91,7 +89,7 @@ export default function Screen3Report({route, navigation}) {
     console.log(route.params.edit)
 
 
-    const initChecked = route.params.edit? report.contact : true
+    const initChecked = route.params.edit ? report.contact : true
 
     const [checked, setChecked] = React.useState(initChecked);
 
@@ -140,7 +138,7 @@ export default function Screen3Report({route, navigation}) {
     }
 
     const nextScreen = async () => {
-        if((phoneRegExp.test(phoneText) === true && phoneText.length == 10 && checked) || !checked) {
+        if ((phoneRegExp.test(phoneText) === true && phoneText.length === 10 && checked) || !checked) {
             let date = new Date()
             const dd = String(date.getDate()).padStart(2, '0');
             const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -187,7 +185,7 @@ export default function Screen3Report({route, navigation}) {
                 dbReport.imagePath = imageAndPath.path
                 const docRef = await addDoc(collection(db, "Reports").withConverter(reportConverter), dbReport)
                 console.log("uploaded Report")
-                await updateDoc(doc(db, "Users", user.uid), {reports: arrayUnion(docRef)}).then(() => {
+                await updateDoc(doc(db, "Users", user.uid), {reports: arrayUnion(docRef.id)}).then(() => {
                     // navigation.pop()
                     navigation.pop()
                     navigation.pop()
@@ -198,12 +196,11 @@ export default function Screen3Report({route, navigation}) {
                     console.log(error)
                 });
             }
-        }
-        else{
+        } else {
             setCorrectPhone(false)
         }
     }
-    if (phoneRegExp.test(phoneText) === true && phoneText.length == 10 && correctPhone === false){
+    if (phoneRegExp.test(phoneText) === true && phoneText.length == 10 && correctPhone === false) {
         setCorrectPhone(true)
     }
     return (
@@ -234,7 +231,8 @@ export default function Screen3Report({route, navigation}) {
                                 >
 
                                     <View>
-                                        <Text style={{...Nofar_styles.SmallTitle, paddingBottom: "3%"}}>בחר תגיות:</Text>
+                                        <Text style={{...Nofar_styles.SmallTitle, paddingBottom: "3%"}}>בחר
+                                            תגיות:</Text>
                                     </View>
                                     <View style={stylesPoster.chips}>
                                         {modalTags.map((item, index) => (
@@ -323,7 +321,7 @@ export default function Screen3Report({route, navigation}) {
                                     <View style={styles.phoneContainer}>
                                         <TextInput
                                             dense={false}
-                                            keyboardType = 'numeric'
+                                            keyboardType='numeric'
 
                                             placeholder={'הוסף טלפון'}
                                             value={phoneText}
@@ -335,7 +333,7 @@ export default function Screen3Report({route, navigation}) {
                                     </View>}
                                 {checked && !correctPhone &&
 
-                                    <View marginLeft= "7.5%">
+                                    <View marginLeft="7.5%">
                                         <Text style={Nofar_styles.TinyButtonTitleRed2}>אנא הכנס מספר טלפון חוקי</Text>
                                     </View>}
                             </View>
@@ -353,146 +351,147 @@ export default function Screen3Report({route, navigation}) {
 
             {
                 visibleTag &&
-        <View style={Nofar_styles.container}>
-
-            <Provider>
-
                 <View style={Nofar_styles.container}>
-                    <View marginTop="2.5%">
-                        <StepIndicator
-                            customStyles={customStyles}
-                            currentPosition={2}
-                            labels={labels}
-                            stepCount={3}
-                        /></View>
-                    <View marginHorizontal="7.5%" marginTop="2.5%" marginBottom="2.5%">
 
-                        <Text style={styles.textFound}>תיאור הכלב שנמצא:</Text></View>
-                    <Portal>
-                        {/*Tags*/}
-                        <Modal
-                            visible={visibleTag}
-                            onDismiss={modalConfirmPressHandler}
-                            contentContainerStyle={stylesPoster.modal}
-                        >
+                    <Provider>
 
-                            <View>
-                                <Text style={{...Nofar_styles.SmallTitle, paddingBottom: "3%"}}>בחר תגיות:</Text>
-                            </View>
-                            <View style={stylesPoster.chips}>
-                                {modalTags.map((item, index) => (
-                                    <Chip
-                                        key={index}
-                                        selected={modalTags[index].state}
-                                        onPress={() => modalChipHandler(index)}
-                                        style={Nofar_styles.chips}
-                                    >
-                                        {item.tag}
-                                    </Chip>
-                                ))}
-                            </View>
-                            <View style={{...stylesPoster.modalButtonContainer, paddingTop: "3%"}}>
-                                <TouchableOpacity
-                                    style={Nofar_styles.TinyButton}
-                                    onPress={modalConfirmPressHandler}
+                        <View style={Nofar_styles.container}>
+                            <View marginTop="2.5%">
+                                <StepIndicator
+                                    customStyles={customStyles}
+                                    currentPosition={2}
+                                    labels={labels}
+                                    stepCount={3}
+                                /></View>
+                            <View marginHorizontal="7.5%" marginTop="2.5%" marginBottom="2.5%">
+
+                                <Text style={styles.textFound}>תיאור הכלב שנמצא:</Text></View>
+                            <Portal>
+                                {/*Tags*/}
+                                <Modal
+                                    visible={visibleTag}
+                                    onDismiss={modalConfirmPressHandler}
+                                    contentContainerStyle={stylesPoster.modal}
                                 >
-                                    <Text style={Nofar_styles.TinyButtonTitle}>אישור</Text>
+
+                                    <View>
+                                        <Text style={{...Nofar_styles.SmallTitle, paddingBottom: "3%"}}>בחר
+                                            תגיות:</Text>
+                                    </View>
+                                    <View style={stylesPoster.chips}>
+                                        {modalTags.map((item, index) => (
+                                            <Chip
+                                                key={index}
+                                                selected={modalTags[index].state}
+                                                onPress={() => modalChipHandler(index)}
+                                                style={Nofar_styles.chips}
+                                            >
+                                                {item.tag}
+                                            </Chip>
+                                        ))}
+                                    </View>
+                                    <View style={{...stylesPoster.modalButtonContainer, paddingTop: "3%"}}>
+                                        <TouchableOpacity
+                                            style={Nofar_styles.TinyButton}
+                                            onPress={modalConfirmPressHandler}
+                                        >
+                                            <Text style={Nofar_styles.TinyButtonTitle}>אישור</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </Modal>
+
+                                {/*Details*/}
+
+                            </Portal>
+                            <View style={styles.addTagsBTContainer}>
+                                <TouchableOpacity
+                                    // comapct={false}
+                                    style={styles.button}
+                                    onPress={showTagModal}
+                                >
+                                    <Text style={Nofar_styles.TinyButtonTitle}>הוסף תגיות לתיאור הכלב:</Text>
                                 </TouchableOpacity>
                             </View>
-                        </Modal>
-
-                        {/*Details*/}
-
-                    </Portal>
-                    <View style={styles.addTagsBTContainer}>
-                        <TouchableOpacity
-                            // comapct={false}
-                            style={styles.button}
-                            onPress={showTagModal}
-                        >
-                            <Text style={Nofar_styles.TinyButtonTitle}>הוסף תגיות לתיאור הכלב:</Text>
-                        </TouchableOpacity>
-                    </View>
-                    {/*<View style={styles.chips}>*/}
-                    {/*    {modalTags.map((item, index) => (*/}
-                    {/*        <Chip*/}
-                    {/*            key={index}*/}
-                    {/*            selected={modalTags[index].state}*/}
-                    {/*            onPress={() => modalChipHandler(index)}*/}
-                    {/*            style={styles.chip}*/}
-                    {/*        >*/}
-                    {/*            {item.tag}*/}
-                    {/*        </Chip>*/}
-                    {/*    ))}*/}
-                    {/*</View>*/}
-                    <View style={{...stylesPoster.chips, marginLeft: "2%"}}>
-                        {
-                            selectedTags.map((item, index) => (
-                                <Chip key={index}
-                                      icon={"close"}
-                                      selected={false}
-                                      style={{...Nofar_styles.chips, marginTop: "2.5%"}}
-                                      onPress={() => selectedTagPressHandler(item.tag)}>{item.tag}</Chip>
-                            ))
-                        }
-                    </View>
-                    <View>
-                        <View style={styles.descriptionContainer}>
-                            <TextInput
-                                style={styles.inDescription}
-                                dense={false}
-                                placeholder={'הוסף תיאור...'}
-                                value={descriptionText}
-                                onChangeText={setDescription}
-                                mode={'outlined'}
-                                multiline={true}
-                                activeUnderlineColor="#000000"
-                                activeOutlineColor="#000000"
-                            />
-                        </View>
-                        <View style={styles.checkboxContainer}>
-                            <Checkbox
-                                color="#DCA277"
-                                status={checked ? 'checked' : 'unchecked'}
-                                onPress={() => {
-                                    setChecked(!checked);
-                                }}
-                            />
-                            <View>
-                                <Text style={Nofar_styles.TinyButtonTitleBlack}>אפשר יצירת קשר</Text>
+                            {/*<View style={styles.chips}>*/}
+                            {/*    {modalTags.map((item, index) => (*/}
+                            {/*        <Chip*/}
+                            {/*            key={index}*/}
+                            {/*            selected={modalTags[index].state}*/}
+                            {/*            onPress={() => modalChipHandler(index)}*/}
+                            {/*            style={styles.chip}*/}
+                            {/*        >*/}
+                            {/*            {item.tag}*/}
+                            {/*        </Chip>*/}
+                            {/*    ))}*/}
+                            {/*</View>*/}
+                            <View style={{...stylesPoster.chips, marginLeft: "2%"}}>
+                                {
+                                    selectedTags.map((item, index) => (
+                                        <Chip key={index}
+                                              icon={"close"}
+                                              selected={false}
+                                              style={{...Nofar_styles.chips, marginTop: "2.5%"}}
+                                              onPress={() => selectedTagPressHandler(item.tag)}>{item.tag}</Chip>
+                                    ))
+                                }
                             </View>
+                            <View>
+                                <View style={styles.descriptionContainer}>
+                                    <TextInput
+                                        style={styles.inDescription}
+                                        dense={false}
+                                        placeholder={'הוסף תיאור...'}
+                                        value={descriptionText}
+                                        onChangeText={setDescription}
+                                        mode={'outlined'}
+                                        multiline={true}
+                                        activeUnderlineColor="#000000"
+                                        activeOutlineColor="#000000"
+                                    />
+                                </View>
+                                <View style={styles.checkboxContainer}>
+                                    <Checkbox
+                                        color="#DCA277"
+                                        status={checked ? 'checked' : 'unchecked'}
+                                        onPress={() => {
+                                            setChecked(!checked);
+                                        }}
+                                    />
+                                    <View>
+                                        <Text style={Nofar_styles.TinyButtonTitleBlack}>אפשר יצירת קשר</Text>
+                                    </View>
+                                </View>
+                                {checked &&
+                                    <View style={styles.phoneContainer}>
+                                        <TextInput
+                                            dense={false}
+                                            keyboardType='numeric'
+
+                                            placeholder={'הוסף טלפון'}
+                                            value={phoneText}
+                                            onChangeText={setPhone}
+                                            mode={'outlined'}
+                                            activeUnderlineColor="#000000"
+                                            activeOutlineColor="#000000"
+                                        />
+                                    </View>}
+                                {checked && !correctPhone &&
+
+                                    <View marginLeft="7.5%">
+                                        <Text style={Nofar_styles.TinyButtonTitleRed2}>אנא הכנס מספר טלפון חוקי</Text>
+                                    </View>}
+                            </View>
+                            <TouchableOpacity
+                                onPress={nextScreen}
+
+                                style={styles.proceedButton}>
+                                <Text style={Nofar_styles.TinyButtonTitle}>יצירת דיווח</Text>
+
+                            </TouchableOpacity>
                         </View>
-                        {checked &&
-                            <View style={styles.phoneContainer}>
-                                <TextInput
-                                    dense={false}
-                                    keyboardType = 'numeric'
+                    </Provider>
 
-                                    placeholder={'הוסף טלפון'}
-                                    value={phoneText}
-                                    onChangeText={setPhone}
-                                    mode={'outlined'}
-                                    activeUnderlineColor="#000000"
-                                    activeOutlineColor="#000000"
-                                />
-                            </View>}
-                        {checked && !correctPhone &&
-
-                            <View marginLeft= "7.5%">
-                            <Text style={Nofar_styles.TinyButtonTitleRed2}>אנא הכנס מספר טלפון חוקי</Text>
-                        </View>}
-                    </View>
-                    <TouchableOpacity
-                        onPress={nextScreen}
-
-                        style={styles.proceedButton}>
-                        <Text style={Nofar_styles.TinyButtonTitle}>יצירת דיווח</Text>
-
-                    </TouchableOpacity>
-                </View>
-            </Provider>
-
-        </View>}
+                </View>}
         </View>
 
     );

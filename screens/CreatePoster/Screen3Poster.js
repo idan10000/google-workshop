@@ -227,7 +227,7 @@ export default function Screen3Poster({route, navigation}) {
                 const docRef = await addDoc(collection(db, "Posters").withConverter(posterConverter), dbPoster)
 
                 // add poster page id to user posters
-                await updateDoc(doc(db, "Users", user.uid), {posters: arrayUnion(docRef)}).then(() => {
+                await updateDoc(doc(db, "Users", user.uid), {posters: arrayUnion(docRef.id)}).then(() => {
                     navigation.pop()
                     navigation.pop()
                     navigation.pop()
