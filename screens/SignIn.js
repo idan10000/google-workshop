@@ -133,16 +133,18 @@ export default function SignIn({navigation}) {
             style={{flex: 1}}
             source={require('../assets/new_background.png')}>
             <View style={Nofar_styles.container}>
-                <View style={{...signUpStyle.logoHeaderContainer, marginTop: "20%"} }>
+                <View style={signUpStyle.logoHeaderContainer}>
 
-                    <TouchableOpacity><Image source={require('../assets/Find_my_dog_logo.png')}
-                                             style={signUpStyle.appLogo}/></TouchableOpacity>
+                    <TouchableOpacity>
+                        <Image source={require('../assets/Find_my_dog_logo.png')}
+                                             style={signUpStyle.appLogo}/>
+                    </TouchableOpacity>
 
                 </View>
 
-                <View style={signUpStyle.welcomeText}>
-                    <Text style={signUpStyle.welcomeText}>ברוכים השבים</Text>
-                </View>
+                {/*<View style={signUpStyle.welcomeText}>*/}
+                {/*    <Text style={signUpStyle.welcomeText}>ברוכים השבים</Text>*/}
+                {/*</View>*/}
 
 
                 <Formik

@@ -27,7 +27,6 @@ export default function MapForCreation({
         latitude: preLocation.latitude,
         longitude: preLocation.longitude,
       });
-      console.log(location);
       setIsLoading(false);
     } else {
       (async () => {
@@ -59,12 +58,13 @@ export default function MapForCreation({
     longitude: 0,
   });
 
-  if (isLoading)
+  if (isLoading) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" />
-      </View>
+        <View style={styles.map}>
+          <ActivityIndicator size="large" color="#DCA277" />
+        </View>
     );
+  }
   return (
     <View>
       <MapView
@@ -94,7 +94,7 @@ export default function MapForCreation({
           }}
         >
           <Callout>
-            <Text>I'm here!</Text>
+            <Text>הזיזו אותי למיקום האחרון שראיתם בו את הכלב</Text>
           </Callout>
         </Marker>
       </MapView>

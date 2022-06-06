@@ -8,8 +8,8 @@ export const signUpStyle = StyleSheet.create({
     justifyContent: 'center',
   },
   logoHeaderContainer: {
-    marginTop:20,
-
+    marginTop:"30%",
+    marginBottom:"20%",
     flexDirection: "row",
     alignItems: 'center',
     justifyContent: 'center',
