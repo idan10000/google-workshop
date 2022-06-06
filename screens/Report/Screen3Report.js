@@ -87,9 +87,13 @@ export default function Screen3Report({route, navigation}) {
 
     const [descriptionText, setDescription] = React.useState(initDescription);
     const [phoneText, setPhone] = React.useState(initPhone);
+    console.log(22222222)
+    console.log(route.params.edit)
 
 
-    const [checked, setChecked] = React.useState(true);
+    const initChecked = route.params.edit? report.contact : true
+
+    const [checked, setChecked] = React.useState(initChecked);
 
     //---------------------- Tag Selection Modal ----------------------
     const [visibleTag, setVisibleTag] = React.useState(false);

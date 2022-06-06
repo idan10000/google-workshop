@@ -198,7 +198,7 @@ const BrowsePage = ({navigation, route}) => {
     const createTwoButtonAlert = () =>
         Alert.alert(
             "",
-            "מרחק החיפוש מוגבל ברדיוס מסוים",
+            "מרחק החיפוש מוגבל ברדיוס של 10 קילומטרים",
             [
 
                 {text: "הבנתי!", onPress: () => console.log("OK Pressed")}
