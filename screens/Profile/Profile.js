@@ -1,11 +1,14 @@
 import React, { useContext, useState } from "react";
 import {
+  StyleSheet,
   View,
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
   TextInput,
   FlatList,
+  ImageBackground,
+  Dimensions,
 } from "react-native";
 import { Title, Text, Button } from "react-native-paper";
 import { user_styles } from "./ProfileStyle";
@@ -20,7 +23,6 @@ import {
   getPosters,
   deletePoster,
 } from "../../shared_components/Firebase.js";
-
 // 1) user data-  Name + email ---------------------------------- V
 // 2) update user phone number, with input object --------------- V
 // 3) buttons for support and signOut --------------------------- V
@@ -56,7 +58,10 @@ export default function ProfilePage({ navigation }) {
   // );
 
   return (
-    <SafeAreaView style={Nofar_styles.container}>
+    <ImageBackground
+      style={{ flex: 1 }}
+      source={require("./new_background.png")}
+    >
       <ScrollView>
         <View style={user_styles.ProfileCard}>
           <View style={{ flexDirection: "row", marginLeft: "10%" }}>
@@ -69,7 +74,9 @@ export default function ProfilePage({ navigation }) {
             style={{ flexDirection: "row", marginLeft: "10%", marginTop: "2%" }}
           >
             <Icon name="email" color="#777777" size={30} />
-            <Text style={{ color: "#777777", marginLeft: 20 }}>{Email}</Text>
+            <Text style={{ color: "#777777", marginLeft: 20, fontSize: 17 }}>
+              {Email}
+            </Text>
           </View>
 
           <View
@@ -82,7 +89,7 @@ export default function ProfilePage({ navigation }) {
           >
             <Icon name="phone" color="#777777" size={30} />
             <TextInput
-              style={{ color: "#777777", marginLeft: 20 }}
+              style={{ color: "#777777", marginLeft: 20, fontSize: 17 }}
               onChangeText={(newText) => {
                 setPhone(newText);
                 updatePhoneNumber(user, newText);
@@ -92,33 +99,84 @@ export default function ProfilePage({ navigation }) {
             />
           </View>
         </View>
-
-        <View style={user_styles.confirmBTContainer}>
-          <Button
-            mode={"contained"}
-            style={Nofar_styles.BigButton}
-            onPress={pressHandler_supp}
-          >
-            <Text style={Nofar_styles.BigButtonText}>תמיכה טכנית</Text>
-          </Button>
+        <View>
+          <View style={user_styles.confirmBTContainer}>
+            <TouchableOpacity
+              style={styles.MidButton}
+              onPress={pressHandler_supp}
+            >
+              <View
+                justifyContent="center"
+                alignItems="center"
+                flexDirection="row"
+                marginRight="4%"
+              >
+                <Icon name="pen" size={24} color="#FFFFFF" />
+              </View>
+              <Text style={styles.MidButtonTitle}>תמיכה טכנית</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={user_styles.confirmBTContainer}>
+            <TouchableOpacity
+              style={styles.MidButton}
+              onPress={() => {
+                signOut(getAuth()).then(() => {});
+              }}
+            >
+              <View
+                justifyContent="center"
+                alignItems="center"
+                flexDirection="row"
+                marginRight="4%"
+              >
+                <Icon name="cancel" size={24} color="#FFFFFF" />
+              </View>
+              <Text style={styles.MidButtonTitle}>התנתקות</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={user_styles.confirmBTContainer}>
-          <TouchableOpacity
-            style={user_styles.profileButton}
-            onPress={() => {
-              signOut(getAuth()).then(() => {});
-            }}
-          >
-            <Text style={user_styles.BigButtonText}>התנתקות מהאפליקציה</Text>
-          </TouchableOpacity>
-        </View>
-        <Title style={Nofar_styles.BigTitle}>מודעות שפרסמת</Title>
+        <Title style={styles.foundDog}>מודעות שפרסמת</Title>
         {/* <FlatList
           data={Posters}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
         /> */}
       </ScrollView>
-    </SafeAreaView>
+    </ImageBackground>
   );
 }
+
+const styles = StyleSheet.create({
+  foundDog: {
+    marginTop: "14%",
+    marginBottom: "3%",
+    lineHeight: 35,
+    color: "#9E6C6C",
+    fontSize: 24,
+    textAlign: "center",
+    fontWeight: "700",
+  },
+  MidButtonTitle: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    textAlign: "center",
+    fontWeight: "500",
+  },
+  MidButton: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 7,
+    elevation: 6,
+    width: Dimensions.get("window").width * 0.75,
+    height: Dimensions.get("window").height * 0.08,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 11.111,
+    backgroundColor: "#DCA277",
+  },
+});
