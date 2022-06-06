@@ -79,7 +79,7 @@ export default function Screen2Report({route, navigation}) {
                 />
 
                 <View style={styles.bottomView}>
-                    <Icon name='infocirlceo' size={20} color="#000"/>
+                    <Icon name='infocirlceo' size={18} color="#000"/>
                     <View style={styles.bottomTextView}>
                         <Text style = {styles.bottomText}>ניתן להזיז את הסמן באמצעות לחיצה ארוכה</Text>
                     </View>
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     },
     bottomText: {
         color: "#000",
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: "600",
     },
     bottomTextView: {

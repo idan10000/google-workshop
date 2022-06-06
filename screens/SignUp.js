@@ -125,7 +125,7 @@ export default function SignUp({navigation}) {
                     console.log('That email address is invalid!');
                 }
 
-                console.error(error);
+                // console.error(error);
             });
     }
 

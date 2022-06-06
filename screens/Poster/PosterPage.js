@@ -205,7 +205,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 onPress={() => {
                                 }}
                             >
-                                <Text style={Nofar_styles.BigButtonText}>פתח מיקום במפה</Text>
+                                <Text style={Nofar_styles.BigButtonText}>פתיחת מיקום במפה</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -378,7 +378,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 onPress={() => {
                                 }}
                             >
-                                <Text style={Nofar_styles.BigButtonText}>פתח מיקום במפה</Text>
+                                <Text style={Nofar_styles.BigButtonText}>פתיחת מיקום במפה</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -539,7 +539,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 onPress={() => {
                                 }}
                             >
-                                <Text style={Nofar_styles.BigButtonText}>פתח מיקום במפה</Text>
+                                <Text style={Nofar_styles.BigButtonText}>פתיחת מיקום במפה</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -697,7 +697,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 onPress={() => {
                                 }}
                             >
-                                <Text style={Nofar_styles.BigButtonText}>פתח מיקום במפה</Text>
+                                <Text style={Nofar_styles.BigButtonText}>פתיחת מיקום במפה</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={AR_styles.confirmBTContainer}>
