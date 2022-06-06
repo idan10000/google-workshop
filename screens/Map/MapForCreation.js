@@ -114,6 +114,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width / 1.2,
     justifyContent: "center",
     alignSelf: "center",
-    height: Dimensions.get("window").height / 1.5,
+    height: Dimensions.get("window").height / 1.8,
   },
 });

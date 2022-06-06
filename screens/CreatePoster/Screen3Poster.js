@@ -363,7 +363,7 @@ export default function Screen3Poster({route, navigation}) {
                             ))
                         }
                     </View>
-                    <View>
+                    <View marginTop = "4%">
                         <View style={styles.dogNameContainer}>
 
                             <Text style={Nofar_styles.TinyButtonTitleBlack}>תיאור: </Text></View>
@@ -421,7 +421,7 @@ export default function Screen3Poster({route, navigation}) {
 const styles = StyleSheet.create({
 
     button: {
-        marginBottom: "2.5%",
+        marginBottom: "5%",
         marginHorizontal: "7.5%",
         paddingVertical: "2%",
         paddingRight: "5%",
@@ -506,12 +506,17 @@ const styles = StyleSheet.create({
         backgroundColor: "#EADDCA",
     },
     addTagsBTContainer: {
-        paddingTop: "2%",
+        paddingTop: "2.5%",
         flexDirection: "row",
     }, dogNameContainer: {
         marginHorizontal: "7.5%",
         flexDirection: "row",
+
+    },
+
+
+    nameOfDog:{
+        marginBottom: "5%",
+
     }
-
-
 });
