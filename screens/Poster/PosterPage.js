@@ -1,9 +1,20 @@
 import React from "react";
-import {Text, View, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Dimensions,Linking} from "react-native";
+import {
+    Text,
+    View,
+    Image,
+    TouchableOpacity,
+    ScrollView,
+    ImageBackground,
+    StyleSheet,
+    Dimensions,
+    Linking,
+
+} from "react-native";
 import {Nofar_styles} from "../../styles/NofarStyle";
 
 import {AR_styles} from "./PosterStyle";
-import {Chip} from "react-native-paper";
+import {Chip,Modal,Provider,Portal} from "react-native-paper";
 import Icon from "react-native-vector-icons/Entypo";
 
 export default function PosterPage({navigation, route, typeOfPage}) {
@@ -24,6 +35,12 @@ export default function PosterPage({navigation, route, typeOfPage}) {
         });
     };
     const [expanded, setExpanded] = React.useState(false);
+    const [fullPicture, setFullPicture] = React.useState(false);
+    const showSlider = ()  =>{
+        setFullPicture(true);
+    };
+    const hideFullPicture = () => setFullPicture(false);
+
 
     // let dotText = ""
     // if(!report){
@@ -198,18 +215,32 @@ export default function PosterPage({navigation, route, typeOfPage}) {
         );
     } else if (typeOfPage === "PosterForBrowse") {
         return (
+
             <View style={Nofar_styles.container}>
 
-                <ScrollView style={AR_styles.content}>
+                <ScrollView style={Nofar_styles.container}>
 
+                    <Provider>
+                        <View style={Nofar_styles.container}>
+
+                        <Portal>
+                            <Modal
+
+                                visible={fullPicture}
+                                onDismiss={hideFullPicture}
+                            >
+                                <Image style={styles.fullImage} source={{uri: route.params.data.image}} />
+                            </Modal>
+                        </Portal>
                     <View>
                         <View>
                             <View style={{alignSelf: "center"}}>
 
+                                <TouchableOpacity  onPress={showSlider}>
                                 <Image
                                     style={Nofar_styles.mainImage}
                                     source={{uri: route.params.data.image}}/>
-
+                                </TouchableOpacity>
                                 <View style={styles.textOnComponent}>
                                     <View style={styles.centerVertical}>
                                         <Text style={styles.dogsName}>{route.params.data.dogName}</Text></View>
@@ -219,6 +250,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                         <Text style={styles.dogsName2}>{route.params.data.date}</Text></View>
                                 </View>
                             </View>
+
 
                         </View>
                         <View
@@ -350,6 +382,9 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                             </TouchableOpacity>
                         </View>
                     </View>
+                        </View>
+                    </Provider>
+
                 </ScrollView>
 
             </View>
@@ -792,6 +827,13 @@ const styles = StyleSheet.create({
         // justifyContent:"center",
         // marginRight:"45%",
         marginLeft: "42%"
+    },
+    fullImage: {
+        width: Dimensions.get("window").width,
+        height: Dimensions.get("window").height/1.6 ,
+        marginBottom:"30%",
+        alignSelf:"center",
+        resizeMode: "contain",
     }
 
 
