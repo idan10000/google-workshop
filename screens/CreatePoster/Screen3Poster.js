@@ -164,8 +164,7 @@ export default function Screen3Poster({route, navigation}) {
         let today = new Date();
         let hours = (today.getHours() < 10 ? '0' : '') + today.getHours();
         let minutes = (today.getMinutes() < 10 ? '0' : '') + today.getMinutes();
-        let seconds = (today.getSeconds() < 10 ? '0' : '') + today.getSeconds();
-        return hours + ':' + minutes + ':' + seconds;
+        return hours + ':' + minutes;
     }
 
     const nextScreen = async () => {
@@ -202,7 +201,7 @@ export default function Screen3Poster({route, navigation}) {
             }
             const [addressResponse] = await reverseGeocodeAsync(tempLocation)
             const address = `${addressResponse.street} ${addressResponse.streetNumber}, ${addressResponse.city}`;
-
+            let imagePath = route.params.edit ? prevPoster.imagePath : ""
             const dbPoster = new Poster(selectedImage, "", location, address, today, time, plainTags, descriptionText, nameText, '', phoneText, name, user.uid)
             const sendPoster = new Poster(selectedImage, "", location, address, today, time, plainTags, descriptionText, nameText, '', phoneText, name, user.uid)
             const db = fireStoreDB;
@@ -211,10 +210,6 @@ export default function Screen3Poster({route, navigation}) {
             if (route.params.edit) {
                 // if the prevPoster was changed, update the prevPoster page
                 if (deepDiffer(sendPoster, prevPoster)) {
-                    await deleteObject(ref(getStorage(), prevPoster.imagePath))
-                    const image = await uploadImageAsync(selectedImage, "Posters")
-                    dbPoster.image = image.link
-                    dbPoster.imagePath = image.path
                     const docRef = await setDoc(doc(db, "Posters", route.params.ref).withConverter(posterConverter), dbPoster).then(() => {
                         console.log("updated Poster page")
                     }).catch(error => {

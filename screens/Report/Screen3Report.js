@@ -136,8 +136,7 @@ export default function Screen3Report({route, navigation}) {
         let today = new Date();
         let hours = (today.getHours() < 10 ? '0' : '') + today.getHours();
         let minutes = (today.getMinutes() < 10 ? '0' : '') + today.getMinutes();
-        let seconds = (today.getSeconds() < 10 ? '0' : '') + today.getSeconds();
-        return hours + ':' + minutes + ':' + seconds;
+        return hours + ':' + minutes;
     }
 
     const nextScreen = async () => {
@@ -174,10 +173,6 @@ export default function Screen3Report({route, navigation}) {
             if (route.params.edit) {
                 // if the Report was changed, update the Report page
                 if (deepDiffer(sendReport, report)) {
-                    await deleteObject(ref(getStorage(), report.imagePath))
-                    const imageAndPath = await uploadImageAsync(image, "Reports")
-                    dbReport.image = imageAndPath.link
-                    dbReport.imagePath = imageAndPath.path
                     const docRef = await setDoc(doc(db, "Reports", route.params.ref).withConverter(reportConverter), dbReport).then(() => {
                         console.log("updated Report page")
                     }).catch(error => {
@@ -185,7 +180,7 @@ export default function Screen3Report({route, navigation}) {
                     });
                 }
                 navigation.pop()
-                navigation.navigate("ReportPage", {data: sendReport, ref: "", contact: checked})
+                navigation.navigate("ReportPage", {data: sendReport, ref: route.params.ref, contact: checked})
             } else {
                 const imageAndPath = await uploadImageAsync(image, "Reports")
                 dbReport.image = imageAndPath.link
