@@ -152,13 +152,13 @@ export default function ProfilePage({ navigation }) {
 
 const styles = StyleSheet.create({
   foundDog: {
+    fontWeight: "700",
     marginTop: "14%",
     marginBottom: "3%",
     lineHeight: 35,
     color: "#9E6C6C",
-    fontSize: 24,
+    fontSize: 27,
     textAlign: "center",
-    fontWeight: "700",
     textDecorationLine: "underline",
   },
   MidButtonTitle: {
