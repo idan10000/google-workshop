@@ -6,6 +6,7 @@ import {
   Text,
   Image,
   View,
+  WebView,
 } from "react-native";
 import * as Location from "expo-location";
 import MapView, {
@@ -112,7 +113,22 @@ export default function Map({ navi }) {
           >
             <Callout>
               <View style={styles.calloutContainer}>
-                <Image source={{ uri: marker.image }} style={styles.image} />
+                {/* <Text>
+                  <Image source={{ uri: marker.image }} style={styles.image} />
+                </Text> */}
+
+                {/* <Text>
+                  <Image
+                    style={{ height: 100, width: 100 }}
+                    source={{ uri: marker.image }}
+                    resizeMode="cover"
+                  />
+                </Text> */}
+
+                <WebView
+                  style={{ height: 100, width: 230 }}
+                  source={{ uri: marker.image }}
+                />
                 <Text style={styles.calloutHeaderText}>{marker.address}</Text>
               </View>
             </Callout>
