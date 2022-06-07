@@ -158,7 +158,7 @@ export default function FirstProfile({ navigation }) {
                 {/*</View>*/}
 
                 <View style={styles.listContainer}>
-                    <Title style={styles.foundDog}>המודעות שלך</Title>
+                    <Title style={styles.foundDog}>המודעות שלי</Title>
                     <FlatList
                         data={data}
                         ItemSeparatorComponent={FlatListItemSeparator}
@@ -187,7 +187,7 @@ export default function FirstProfile({ navigation }) {
                     />
                 </View>
                 <View style={styles.listContainer}>
-                    <Title style={styles.foundDog}>הדיווחים שלך</Title>
+                    <Title style={styles.foundDog}>הדיווחים שלי</Title>
                     <FlatList
                         data={data}
                         ItemSeparatorComponent={FlatListItemSeparator}
@@ -219,7 +219,7 @@ export default function FirstProfile({ navigation }) {
 const styles = StyleSheet.create({
     foundDog: {
         fontWeight: "700",
-        marginLeft: "2%",
+        marginLeft: "7.5%",
         lineHeight: 35,
         color: "#9E6C6C",
         fontSize: 24,

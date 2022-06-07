@@ -1,11 +1,11 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {View, SafeAreaView, TouchableOpacity, TextInput, ImageBackground} from "react-native";
 import { Title, Text, Button } from "react-native-paper";
 import { user_styles } from "./ProfileStyle";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Nofar_styles } from "../../styles/NofarStyle";
 import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
-import {updatePhoneNumber} from "../../shared_components/Firebase";
+import {getPhoneNumber, updatePhoneNumber} from "../../shared_components/Firebase";
 import {getAuth, signOut} from "firebase/auth";
 import {turnOffNotifications} from "../../shared_components/NotificationsUtils";
 
@@ -34,7 +34,9 @@ export default function ProfilePage({ navigation }) {
   const pressHandler_supp = () => {
     navigation.navigate("SupportScreen");
   };
-
+    useEffect(async () => {
+        await getPhoneNumber(user, setPhone);
+    }, []);
   return (
       <ImageBackground
           style={{ flex: 1 }}
