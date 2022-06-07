@@ -10,7 +10,7 @@ import * as Location from "expo-location";
 import MapView, { Callout, Circle, Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
 
-export default function Map({startLocation}) {
+export default function Map({ startLocation }) {
   const sheetRef = React.useRef(null);
   // user live location :
   const [location, setLocation] = useState(null);
@@ -59,7 +59,7 @@ export default function Map({startLocation}) {
     );
 
   return (
-    <View >
+    <View>
       <MapView
         style={styles.map}
         initialRegion={{
@@ -73,16 +73,16 @@ export default function Map({startLocation}) {
         <Marker
           coordinate={pin}
           pinColor="red"
-          draggable={true}
-          onDragStart={(e) => {
-            console.log("Drag start", e.nativeEvent.coordinates);
-          }}
-          onDragEnd={(e) => {
-            setPin({
-              latitude: e.nativeEvent.coordinate.latitude,
-              longitude: e.nativeEvent.coordinate.longitude,
-            });
-          }}
+          draggable={false}
+          // onDragStart={(e) => {
+          //   console.log("Drag start", e.nativeEvent.coordinates);
+          // }}
+          // onDragEnd={(e) => {
+          //   setPin({
+          //     latitude: e.nativeEvent.coordinate.latitude,
+          //     longitude: e.nativeEvent.coordinate.longitude,
+          //   });
+          // }}
         >
           <Callout>
             <Text>I'm here!</Text>
@@ -91,7 +91,7 @@ export default function Map({startLocation}) {
         <Circle
           center={pin}
           radius={1000}
-          strokeWidth={8}
+          strokeWidth={5}
           strokeColor={"grey"}
         />
       </MapView>
@@ -108,8 +108,9 @@ const styles = StyleSheet.create({
   },
   map: {
     marginVertical: "2.5%",
-    width: Dimensions.get("window").width/1.2,
-    justifyContent:"center",
-    alignSelf:"center",
-    height: Dimensions.get("window").height / 1.5,  },
+    width: Dimensions.get("window").width / 1.2,
+    justifyContent: "center",
+    alignSelf: "center",
+    height: Dimensions.get("window").height / 1.5,
+  },
 });
