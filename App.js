@@ -10,6 +10,7 @@ export default function App() {
 
     LogBox.ignoreLogs(['Warning: ...']);
     LogBox.ignoreLogs(['Setting a timer']);
+    LogBox.ignoreLogs(['AsyncStorage has been extracted from react-native core']);
 
 
     I18nManager.allowRTL(true);
