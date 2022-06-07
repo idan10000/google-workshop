@@ -88,6 +88,14 @@ export default function ProfilePage({ navigation }) {
               style={user_styles.profileButton}
               onPress={posterReportPage1}
           >
+              <View
+                  justifyContent="center"
+                  alignItems="center"
+                  flexDirection="row"
+                  marginRight="4%"
+              >
+                  <Icon name="card-text" size={24} color="#FFFFFF" />
+              </View>
             <Text style={user_styles.BigButtonText}>הצגת דיווחים</Text>
           </TouchableOpacity>
         </View>
@@ -96,6 +104,14 @@ export default function ProfilePage({ navigation }) {
                   style={user_styles.profileButton}
                   onPress={posterReportPage2}
               >
+                  <View
+                      justifyContent="center"
+                      alignItems="center"
+                      flexDirection="row"
+                      marginRight="4%"
+                  >
+                      <Icon name="post" size={24} color="#FFFFFF" />
+                  </View>
                   <Text style={user_styles.BigButtonText}>הצגת מודעות</Text>
               </TouchableOpacity>
           </View>
