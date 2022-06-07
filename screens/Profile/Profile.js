@@ -54,9 +54,7 @@ export default function ProfilePage({ navigation }) {
     getDoc(doc(db, "Users", user.uid)).then((userRef) => {
       const data = userRef.data(); // USER'S DATA
       const refs = data.posters;
-      console.log("refs", refs);
       const promises = [];
-
       refs.forEach((ref) => {
         promises.push(getDoc(doc(db, "Posters", ref)));
       });
