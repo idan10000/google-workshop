@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
         lineHeight: 35,
         color: "#9E6C6C",
         fontSize: 24,
-        textDecorationLine: "underline",
+        // textDecorationLine: "underline",
     },
     MidButtonTitle: {
         color: "#FFFFFF",
