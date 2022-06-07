@@ -92,18 +92,10 @@ export default function NotificationsPage({navigation, setNewNotification}) {
         console.log(item.request.content.title)
         console.log(item.request.content.body)
         console.log(item.request.content.data)
-        const reportID = item.request.content.data.report;
-        const reportRef = doc(fireStoreDB, "Reports", reportID);
-        return getDoc(reportRef).then((reportSnap) => {
-            if (reportSnap.exists()) {
-                //console.log("Document data:", userSnap.data());
-                const report = reportSnap.data();
-                navigation.navigate("Report", {data: report})
-            } else {
-                // doc.data() will be undefined in this case
-                console.log("No such report!");
-            }
-        })
+        const report = item.request.content.data.report;
+        console.log("reportID")
+        console.log(report)
+        navigation.navigate("Report", {data: report})
     }
 
     if (isLoading)

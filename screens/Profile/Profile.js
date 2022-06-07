@@ -22,6 +22,7 @@ import {
 import { getInitialData } from "../BrowsePage/InfiniteScroll";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import PostPofileItem from "./PostPofileItem";
+import {turnOffNotifications} from "../../shared_components/NotificationsUtils";
 
 export default function ProfilePage({ navigation }) {
   console.log("------------------- RUN ");
@@ -144,8 +145,9 @@ export default function ProfilePage({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.MidButton}
-            onPress={() => {
+            onPress={async () => {
               signOut(getAuth()).then(() => {});
+              await turnOffNotifications(user);
             }}
           >
             <View

@@ -53,7 +53,11 @@ const handlePosterPrediction = (predictions, posterData, poster) => {
     if (labels.length !== 0) {
         return db.collection("Reports").where("dogBreed", "array-contains-any", labels).get()
             .then((querySnapshot) => {
-                return sendMatchNotification([posterData], querySnapshot.docs).then(() => {
+                const reports = [];
+                querySnapshot.docs.forEach((item) => {
+                    reports.push(item.data())
+                })
+                return sendMatchNotification([posterData], reports).then(() => {
                     return poster.update({"dogBreed": labels});
                 });
             });
@@ -82,7 +86,7 @@ const handleReportPrediction = (predictions, reportData, report) => {
 
                 console.log(`sending notifications from report of user ${uid}`);
                 if (postersToSend.length > 0) {
-                    return sendMatchNotification(postersToSend, [report]).then(() => {
+                    return sendMatchNotification(postersToSend, [reportData]).then(() => {
                         return report.update({"dogBreed": labels});
                     });
                 } else {
@@ -185,15 +189,16 @@ const sendMatchNotification = (postersToSend, reports) => {
            // Create the messages that you want to send to clients
            const messages = [];
            for (const report of reports) {
-               const reportID = report.id
-               const reportAddress = report.get("address");
+               console.log(report)
+               //const reportID = report.id
+               const reportAddress = report.address;
                // Construct a message (see https://docs.expo.io/push-notifications/sending-notifications/)
                const message = {
                    to: pushToken,
                    sound: "default",
                    title: "מצאנו כלב! יכול להיות שהוא שלכם?",
                    body: "כלב שנראה כמו " + dogName + " נצפה לאחרונה ב-" + reportAddress,
-                   data: {report: reportID},
+                   data: {report: report},
                }
                messages.push(message);
            }
