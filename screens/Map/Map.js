@@ -112,8 +112,8 @@ export default function Map({ navi }) {
           >
             <Callout>
               <View style={styles.calloutContainer}>
-                {/* <Image source={{ uri: marker.image }} style={styles.image} /> */}
-                <Text style={styles.calloutHeaderText}>"{marker.address}"</Text>
+                <Image source={{ uri: marker.image }} style={styles.image} />
+                <Text style={styles.calloutHeaderText}>{marker.address}</Text>
               </View>
             </Callout>
           </Marker>
@@ -137,8 +137,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   image: {
-    resizeMode: "cover",
-    flex: 1,
+    height: "10%",
+    width: "10%",
   },
 
   map: {
@@ -153,6 +153,6 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   calloutHeaderText: {
-    fontSize: 18,
+    fontSize: 12,
   },
 });
