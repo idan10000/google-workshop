@@ -50,6 +50,7 @@ export default function FirstProfile({ navigation }) {
   const getPosters = () => {
     const db = getFirestore();
     const posters = [];
+    console.log("POSTERS", posters);
     getDoc(doc(db, "Users", user.uid)).then((userRef) => {
       const data = userRef.data(); // USER'S DATA
       const refs = data.posters;
@@ -156,35 +157,6 @@ export default function FirstProfile({ navigation }) {
         {/*    </TouchableOpacity>*/}
         {/*</View>*/}
 
-        <View style={styles.listContainer}>
-          <Title style={styles.foundDog}>המודעות שלי</Title>
-          <FlatList
-            data={data}
-            ItemSeparatorComponent={FlatListItemSeparator}
-            keyExtractor={(item) => item.image}
-            numColumns={1}
-            renderItem={({ item }) => {
-              return (
-                <View
-                  style={{
-                    paddingVertical: 5,
-                  }}
-                >
-                  <PostPofileItem
-                    image={item.image}
-                    date={item.date}
-                    name={item.dogName}
-                    address={item.address}
-                    description={item.description}
-                    data={item}
-                    navigation={navigation}
-                    destination={"Poster"}
-                  />
-                </View>
-              );
-            }}
-          />
-        </View>
         <View style={styles.listContainer}>
           <Title style={styles.foundDog}>הדיווחים שלי</Title>
           <FlatList
