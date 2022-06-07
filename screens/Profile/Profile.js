@@ -16,9 +16,12 @@ export default function ProfilePage({ navigation }) {
   const [Phone, setPhone] = useState();
   const [data, setData] = useState([]);
 
-  const posterReportPage = () => {
+  const posterReportPage1 = () => {
     navigation.navigate("FirstProfile");
   };
+    const posterReportPage2 = () => {
+        navigation.navigate("SecondProfile");
+    };
 
   // const userDetalies = {
   //   name: "אמיר כהן",
@@ -83,11 +86,19 @@ export default function ProfilePage({ navigation }) {
         <View style={user_styles.confirmBTContainer}>
           <TouchableOpacity
               style={user_styles.profileButton}
-              onPress={posterReportPage}
+              onPress={posterReportPage1}
           >
-            <Text style={user_styles.BigButtonText}>הצגת מודעות ודיווחים</Text>
+            <Text style={user_styles.BigButtonText}>הצגת דיווחים</Text>
           </TouchableOpacity>
         </View>
+          <View style={user_styles.confirmBTContainer}>
+              <TouchableOpacity
+                  style={user_styles.profileButton}
+                  onPress={posterReportPage2}
+              >
+                  <Text style={user_styles.BigButtonText}>הצגת מודעות</Text>
+              </TouchableOpacity>
+          </View>
 
         <View style={user_styles.confirmBTContainer}>
           <TouchableOpacity

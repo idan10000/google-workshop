@@ -24,7 +24,7 @@ import { doc, getDoc, getFirestore } from "firebase/firestore";
 import PostPofileItem from "./PostPofileItem";
 import { turnOffNotifications } from "../../shared_components/NotificationsUtils";
 
-export default function FirstProfile({ navigation }) {
+export default function SecondProfile({ navigation }) {
     const { user } = useContext(AuthenticatedUserContext);
     const Name = user.displayName;
     const Email = user.email;
@@ -157,9 +157,8 @@ export default function FirstProfile({ navigation }) {
                 {/*    </TouchableOpacity>*/}
                 {/*</View>*/}
 
-
                 <View style={styles.listContainer}>
-                    <Title style={styles.foundDog}>הדיווחים שלי</Title>
+                    <Title style={styles.foundDog}>המודעות שלי</Title>
                     <FlatList
                         data={data}
                         ItemSeparatorComponent={FlatListItemSeparator}
@@ -167,7 +166,11 @@ export default function FirstProfile({ navigation }) {
                         numColumns={1}
                         renderItem={({ item }) => {
                             return (
-                                <View style={{ paddingVertical: 5 }}>
+                                <View
+                                    style={{
+                                        paddingVertical: 5,
+                                    }}
+                                >
                                     <PostPofileItem
                                         image={item.image}
                                         date={item.date}
@@ -183,6 +186,7 @@ export default function FirstProfile({ navigation }) {
                         }}
                     />
                 </View>
+
             </SafeAreaView>
         </ImageBackground>
     );
