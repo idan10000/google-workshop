@@ -14,7 +14,8 @@ import MapView, {
   MyCustomMarkerView,
 } from "react-native-maps";
 import { useEffect, useState } from "react";
-import {doc, getDoc, getFirestore} from "firebase/firestore";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 
 export default function Map({ navi }) {
   const sheetRef = React.useRef(null);
@@ -30,7 +31,7 @@ export default function Map({ navi }) {
     getDoc(doc(db, "Reports")).then((tableRef) => {
       const promises = [];
       tableRef.data().forEach((ref) => {
-        promises.push(getDoc(doc(ref)));
+        promises.push(getDoc(doc(db, "Reports", ref)));
       });
       Promise.all(promises).then((docs) => {
         docs.forEach((doc) => {
