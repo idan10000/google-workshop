@@ -26,21 +26,25 @@ export default function Screen3Poster({route, navigation}) {
     const [correctPhone, setCorrectPhone] = React.useState(true);
     const [correctDogName, setCorrectDogName] = React.useState(true);
 
-
-
     const tagList = [
+        {tag: "גדול", state: false},
+        {tag: "קטן", state: false},
+        {tag: "בינוני", state: false},
+        {tag: "זכר", state: false},
+        {tag: "נקבה", state: false},
+        {tag: "עונה לשמו", state: false},
         {tag: "ביישן", state: false},
+        {tag: "פחדן", state: false},
         {tag: "חברותי", state: false},
-        {tag: "אגרסיבי", state: false},
-        {tag: "שמח", state: false},
-        {tag: "עצוב", state: false},
-        {tag: "בודד", state: false},
-        {tag: "ביישן", state: false},
-        {tag: "חברותי", state: false},
-        {tag: "אגרסיבי", state: false},
-        {tag: "שמח", state: false},
-        {tag: "עצוב", state: false},
-        {tag: "בודד", state: false},
+        {tag: "תוקפני", state: false},
+        {tag: "נבחן", state: false},
+        {tag: "שקט", state: false},
+        {tag: "מבוגר", state: false},
+        {tag: "גור", state: false},
+        {tag: "עם קולר", state: false},
+        {tag: "ללא קולר", state: false},
+        {tag: "חירש", state: false},
+        {tag: "עיוור", state: false}
     ];
 
 

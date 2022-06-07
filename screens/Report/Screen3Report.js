@@ -20,21 +20,26 @@ export default function Screen3Report({route, navigation}) {
     const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
     const [correctPhone, setCorrectPhone] = React.useState(true);
 
-
     const db = fireStoreDB;
     const tagList = [
+        {tag: "גדול", state: false},
+        {tag: "קטן", state: false},
+        {tag: "בינוני", state: false},
+        {tag: "זכר", state: false},
+        {tag: "נקבה", state: false},
+        {tag: "עונה לשמו", state: false},
         {tag: "ביישן", state: false},
+        {tag: "פחדן", state: false},
         {tag: "חברותי", state: false},
-        {tag: "אגרסיבי", state: false},
-        {tag: "שמח", state: false},
-        {tag: "עצוב", state: false},
-        {tag: "בודד", state: false},
-        {tag: "ביישן", state: false},
-        {tag: "חברותי", state: false},
-        {tag: "אגרסיבי", state: false},
-        {tag: "שמח", state: false},
-        {tag: "עצוב", state: false},
-        {tag: "בודד", state: false},
+        {tag: "תוקפני", state: false},
+        {tag: "נבחן", state: false},
+        {tag: "שקט", state: false},
+        {tag: "מבוגר", state: false},
+        {tag: "גור", state: false},
+        {tag: "עם קולר", state: false},
+        {tag: "ללא קולר", state: false},
+        {tag: "חירש", state: false},
+        {tag: "עיוור", state: false}
     ];
 
 
