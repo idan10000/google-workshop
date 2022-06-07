@@ -706,7 +706,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 style={Nofar_styles.BigButton}
                                 onPress={editButtonPressHandler}
                             >
-                                <Text style={Nofar_styles.BigButtonText}>עדכן את הדיווח</Text>
+                                <Text style={Nofar_styles.BigButtonText}>עדכון מודעה</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

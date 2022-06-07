@@ -25,7 +25,7 @@ export default function ReportPage({ route, navigation }) {
           source={require('../../assets/new_background.png')}>
     <View style={Nofar_styles.container}>
       <ScrollView style={AR_styles.content}>
-        <PosterPage route = { route} navigation={navigation} typeOfPage={ "report"} />
+        <PosterPage route = { route} navigation={navigation} typeOfPage={"report"} />
 
 
         <View style={AR_styles.confirmBTContainer}>
@@ -33,7 +33,7 @@ export default function ReportPage({ route, navigation }) {
             style={Nofar_styles.BigButton}
             onPress={editButtonPressHandler}
           >
-            <Text style={Nofar_styles.BigButtonText}>עדכן את הדיווח</Text>
+            <Text style={Nofar_styles.BigButtonText}>עדכון דיווח</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
