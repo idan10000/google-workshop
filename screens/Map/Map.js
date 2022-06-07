@@ -137,8 +137,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   image: {
-    height: "10%",
-    width: "10%",
+    height: Dimensions.get("window").height / 4.2,
+    width: Dimensions.get("window").width / 4.2,
   },
 
   map: {
