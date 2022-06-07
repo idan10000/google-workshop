@@ -113,9 +113,9 @@ export default function Map({ navi }) {
           >
             <Callout>
               <View style={styles.calloutContainer}>
-                {/* <Text>
+                <Text>
                   <Image source={{ uri: marker.image }} style={styles.image} />
-                </Text> */}
+                </Text>
 
                 {/* <Text>
                   <Image
@@ -125,10 +125,10 @@ export default function Map({ navi }) {
                   />
                 </Text> */}
 
-                <WebView
+                {/* <WebView
                   style={{ height: 100, width: 230 }}
                   source={{ uri: marker.image }}
-                />
+                /> */}
                 <Text style={styles.calloutHeaderText}>{marker.address}</Text>
               </View>
             </Callout>
