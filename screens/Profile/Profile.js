@@ -22,16 +22,13 @@ import {
 import { getInitialData } from "../BrowsePage/InfiniteScroll";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import PostPofileItem from "./PostPofileItem";
-import {turnOffNotifications} from "../../shared_components/NotificationsUtils";
+import { turnOffNotifications } from "../../shared_components/NotificationsUtils";
 
 export default function ProfilePage({ navigation }) {
-  console.log("------------------- RUN ");
   const { user } = useContext(AuthenticatedUserContext);
   const Name = user.displayName;
   const Email = user.email;
   const [Phone, setPhone] = useState();
-  console.log("------- User Phone number is:", Phone);
-
   const [data, setData] = useState([]);
 
   var FlatListItemSeparator = () => {

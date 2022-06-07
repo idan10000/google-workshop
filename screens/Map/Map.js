@@ -7,15 +7,39 @@ import {
   View,
 } from "react-native";
 import * as Location from "expo-location";
-import MapView, { Callout, Circle, Marker } from "react-native-maps";
+import MapView, {
+  Callout,
+  Circle,
+  Marker,
+  MyCustomMarkerView,
+} from "react-native-maps";
 import { useEffect, useState } from "react";
 
-export default function Map({ startLocation }) {
+export default function Map({ navi }) {
   const sheetRef = React.useRef(null);
   // user live location :
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState([]);
+
+  const getAllReports = () => {
+    const db = getFirestore();
+    const reports = [];
+    getDoc(doc(db, "Reports")).then((tableRef) => {
+      const promises = [];
+      tableRef.forEach((ref) => {
+        promises.push(getDoc(doc(ref)));
+      });
+      Promise.all(promises).then((docs) => {
+        docs.forEach((doc) => {
+          reports.push(doc.data());
+        });
+        setData(reports);
+      });
+    });
+    console.log("-----------DATA", data);
+  };
 
   useEffect(() => {
     (async () => {
@@ -33,6 +57,7 @@ export default function Map({ startLocation }) {
       });
       console.log(location);
       setIsLoading(false);
+      await getAllReports(); // new line
     })();
   }, []);
 
@@ -70,22 +95,23 @@ export default function Map({ startLocation }) {
         }}
         provider="google"
       >
-        <Marker
-          coordinate={pin}
-          pinColor="red"
-          draggable={false}
-          // onDragStart={(e) => {
-          //   console.log("Drag start", e.nativeEvent.coordinates);
-          // }}
-          // onDragEnd={(e) => {
-          //   setPin({
-          //     latitude: e.nativeEvent.coordinate.latitude,
-          //     longitude: e.nativeEvent.coordinate.longitude,
-          //   });
-          // }}
-        >
+        {/* {data.map((marker) => (
+          <Marker
+            coordinate={marker.location}
+            pinColor="blue"
+            draggable={false}
+            image={{ uri: marker.image }}
+            onPress={(e) => {}}
+          >
+            <Callout>
+              <Text>VIEW REPORT!</Text>
+            </Callout>
+          </Marker>
+        ))} */}
+
+        <Marker coordinate={pin} pinColor="red" draggable={false}>
           <Callout>
-            <Text>I'm here!</Text>
+            <Text>You're here!</Text>
           </Callout>
         </Marker>
         <Circle
