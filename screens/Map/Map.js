@@ -15,7 +15,6 @@ import MapView, {
 } from "react-native-maps";
 import { useEffect, useState } from "react";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
 
 export default function Map({ navi }) {
   const sheetRef = React.useRef(null);
