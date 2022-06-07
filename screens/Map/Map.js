@@ -14,7 +14,7 @@ import MapView, {
   MyCustomMarkerView,
 } from "react-native-maps";
 import { useEffect, useState } from "react";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { doc, getDoc, getFirestore, collection } from "firebase/firestore";
 
 export default function Map({ navi }) {
   const sheetRef = React.useRef(null);
@@ -24,22 +24,39 @@ export default function Map({ navi }) {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
 
+  // const getAllReports = () => {
+  //   const db = getFirestore();
+  //   const reports = [];
+  //   getDoc(doc(db, "Reports")).then((tableRef) => {
+  //     const promises = [];
+  //     tableRef.data().forEach((ref) => {
+  //       promises.push(getDoc(doc(db, "Reports", ref)));
+  //     });
+  //     Promise.all(promises).then((docs) => {
+  //       docs.forEach((doc) => {
+  //         reports.push(doc.data());
+  //       });
+  //       setData(reports);
+  //     });
+  //   });
+  //   console.log("-----------DATA", data);
+  // };
+
   const getAllReports = () => {
     const db = getFirestore();
     const reports = [];
-    getDoc(doc(db, "Reports")).then((tableRef) => {
-      const promises = [];
-      tableRef.data().forEach((ref) => {
-        promises.push(getDoc(doc(db, "Reports", ref)));
-      });
-      Promise.all(promises).then((docs) => {
-        docs.forEach((doc) => {
-          reports.push(doc.data());
-        });
-        setData(reports);
-      });
+    const querySnapshot = await getDocs(collection(db, "Reports"));
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id, " => ", doc.data());
     });
-    console.log("-----------DATA", data);
+    //       Promise.all(promises).then((docs) => {
+    //     docs.forEach((doc) => {
+    //       reports.push(doc.data());
+    //     });
+    //     setData(reports);
+    //   });
+    // });
+    // console.log("-----------DATA", data);
   };
 
   useEffect(() => {
