@@ -4,6 +4,7 @@ import {
   Dimensions,
   StyleSheet,
   Text,
+  Image,
   View,
 } from "react-native";
 import * as Location from "expo-location";
@@ -14,7 +15,14 @@ import MapView, {
   MyCustomMarkerView,
 } from "react-native-maps";
 import { useEffect, useState } from "react";
-import { doc, getDoc, getFirestore, collection } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  collection,
+} from "firebase/firestore";
+import { async } from "@firebase/util";
 
 export default function Map({ navi }) {
   const sheetRef = React.useRef(null);
@@ -24,41 +32,23 @@ export default function Map({ navi }) {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
 
-  // const getAllReports = () => {
-  //   const db = getFirestore();
-  //   const reports = [];
-  //   getDoc(doc(db, "Reports")).then((tableRef) => {
-  //     const promises = [];
-  //     tableRef.data().forEach((ref) => {
-  //       promises.push(getDoc(doc(db, "Reports", ref)));
-  //     });
-  //     Promise.all(promises).then((docs) => {
-  //       docs.forEach((doc) => {
-  //         reports.push(doc.data());
-  //       });
-  //       setData(reports);
-  //     });
-  //   });
-  //   console.log("-----------DATA", data);
-  // };
-
-  const getAllReports = () => {
+  const getAllReports = async () => {
     const db = getFirestore();
     const reports = [];
     const querySnapshot = await getDocs(collection(db, "Reports"));
     querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
+      let obj = doc.data();
+      let pair = { key: doc.id };
+      obj = { ...obj, pair };
+      console.log(obj.pair.key);
+      reports.push(obj);
     });
-    //       Promise.all(promises).then((docs) => {
-    //     docs.forEach((doc) => {
-    //       reports.push(doc.data());
-    //     });
-    //     setData(reports);
-    //   });
-    // });
-    // console.log("-----------DATA", data);
+    setData(reports);
+    console.log(
+      "---------------------------------------------------------------------------------DATA",
+      data
+    );
   };
-
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -113,31 +103,27 @@ export default function Map({ navi }) {
         }}
         provider="google"
       >
-        {/* {data.map((marker) => (
+        {data.map((marker) => (
           <Marker
+            key={marker.pair.key}
             coordinate={marker.location}
             pinColor="blue"
             draggable={false}
-            image={{ uri: marker.image }}
-            onPress={(e) => {}}
           >
             <Callout>
-              <Text>VIEW REPORT!</Text>
+              <View style={styles.calloutContainer}>
+                {/* <Image source={{ uri: marker.image }} style={styles.image} /> */}
+                <Text style={styles.calloutHeaderText}>"{marker.address}"</Text>
+              </View>
             </Callout>
           </Marker>
-        ))} */}
+        ))}
 
         <Marker coordinate={pin} pinColor="red" draggable={false}>
           <Callout>
             <Text>You're here!</Text>
           </Callout>
         </Marker>
-        <Circle
-          center={pin}
-          radius={1000}
-          strokeWidth={5}
-          strokeColor={"grey"}
-        />
       </MapView>
     </View>
   );
@@ -150,11 +136,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  image: {
+    resizeMode: "cover",
+    flex: 1,
+  },
+
   map: {
     marginVertical: "2.5%",
-    width: Dimensions.get("window").width / 1.2,
+    width: Dimensions.get("window").width,
     justifyContent: "center",
     alignSelf: "center",
-    height: Dimensions.get("window").height / 1.5,
+    height: Dimensions.get("window").height / 1.2,
+  },
+  calloutContainer: {
+    flexDirection: "column",
+    alignSelf: "flex-start",
+  },
+  calloutHeaderText: {
+    fontSize: 18,
   },
 });
