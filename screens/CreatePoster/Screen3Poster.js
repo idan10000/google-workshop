@@ -331,7 +331,7 @@ export default function Screen3Poster({route, navigation}) {
                             style={styles.button}
                             onPress={showTagModal}
                         >
-                            <Text style={Nofar_styles.TinyButtonTitle}> הוסף תגיות לתיאור הכלב</Text>
+                            <Text style={Nofar_styles.TinyButtonTitle}> הוספת תגיות לתיאור הכלב</Text>
                         </TouchableOpacity>
                     </View>
                     {/*<View style={styles.chips}>*/}
