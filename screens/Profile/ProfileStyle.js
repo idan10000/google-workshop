@@ -29,6 +29,7 @@ export const user_styles = StyleSheet.create({
     // marginTop: 5,
     // marginBottom: 0,
     marginBottom:"2%",
+
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",

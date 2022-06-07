@@ -21,6 +21,7 @@ import {AuthenticatedUserContext} from "./AuthenticatedUserProvider";
 import Screen1Poster from "../screens/CreatePoster/Screen1Poster";
 import SignIn from "../screens/SignIn";
 import SupportPage from "../screens/Profile/TechnicalSupport";
+import FirstProfile from "../screens/Profile/firstProfile";
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -116,6 +117,9 @@ export default function HomeStack() {
             <Stack.Screen name="Report" component={ReportForBrowser} />
             <Stack.Screen name="Poster" component={PosterBrowse} />
             <Stack.Screen name="SupportScreen" component={SupportPage} />
+            <Stack.Screen name="FirstProfile" component={FirstProfile} />
+
+
 
         </Stack.Navigator>
     );
