@@ -111,33 +111,39 @@ export default function Map({ navi }) {
             pinColor="blue"
             draggable={false}
           >
-            <Callout>
-              <View style={styles.calloutContainer}>
-                <Text>
-                  <Image source={{ uri: marker.image }} style={styles.image} />
-                </Text>
-
-                {/* <Text>
-                  <Image
-                    style={{ height: 100, width: 100 }}
-                    source={{ uri: marker.image }}
-                    resizeMode="cover"
-                  />
-                </Text> */}
-
-                {/* <WebView
-                  style={{ height: 100, width: 230 }}
+            <Callout
+              style={{
+                height: Dimensions.get("window").height / 4.5,
+                width: Dimensions.get("window").width / 3,
+              }}
+            >
+              <Text
+                style={{
+                  height: Dimensions.get("window").height / 1.5,
+                  width: Dimensions.get("window").width / 3,
+                  backgroundColor: "#fbfbf0",
+                  marginTop: "-50%",
+                  marginBottom: "-80%",
+                  flexDirection: "column",
+                }}
+              >
+                <Image
+                  style={{
+                    height: Dimensions.get("window").height / 5,
+                    width: Dimensions.get("window").width / 3,
+                  }}
                   source={{ uri: marker.image }}
-                /> */}
-                <Text style={styles.calloutHeaderText}>{marker.address}</Text>
-              </View>
+                  resizeMode="cover"
+                />
+              </Text>
+              <Text>{marker.address}</Text>
             </Callout>
           </Marker>
         ))}
 
         <Marker coordinate={pin} pinColor="red" draggable={false}>
           <Callout>
-            <Text>You're here!</Text>
+            <Text>אתה כאן! </Text>
           </Callout>
         </Marker>
       </MapView>
@@ -146,29 +152,15 @@ export default function Map({ navi }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+  calloutHeaderText: {
+    fontSize: 14,
+    fontWeight: "700",
   },
-  image: {
-    height: Dimensions.get("window").height / 4.2,
-    width: Dimensions.get("window").width / 4.2,
-  },
-
   map: {
     marginVertical: "2.5%",
     width: Dimensions.get("window").width,
     justifyContent: "center",
     alignSelf: "center",
     height: Dimensions.get("window").height / 1.2,
-  },
-  calloutContainer: {
-    flexDirection: "column",
-    alignSelf: "flex-start",
-  },
-  calloutHeaderText: {
-    fontSize: 12,
   },
 });
