@@ -24,6 +24,8 @@ import {signUpStyle} from "../styles/SignUpStyle";
 import {getFirestore, setDoc, doc} from 'firebase/firestore';
 import {getDatabase, ref, set} from "firebase/database";
 
+// this is the page e you wee when you sign in to your user
+
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
@@ -31,6 +33,8 @@ export const useTogglePasswordVisibility = () => {
     const [passwordVisibility, setPasswordVisibility] = useState(true);
     const [rightIcon, setRightIcon] = useState('eye');
 
+
+    // changes the visibility of the password
     const handlePasswordVisibility = () => {
         if (rightIcon === 'eye') {
             setRightIcon('eye-off');
@@ -91,11 +95,10 @@ export default function SignIn({navigation}) {
                     setValidPassword(false)
                 }
 
-                // console.error(error);
             });
     }
 
-
+    // simple check of errors in given data
     const hasErrors = (det, val, touched) => {
         if (det === "email") {
             return touched && !val.includes("@");
@@ -223,9 +226,7 @@ export default function SignIn({navigation}) {
 
                             }
                             <View style={signUpStyle.submitButton}>
-                                {/*<TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>*/}
-                                {/*    <Text style={Nofar_styles.BigButtonText}>עדכן פרטים</Text>*/}
-                                {/*</TouchableOpacity>*/}
+
                                 <TouchableOpacity style={Nofar_styles.SmallButton}
                                                   onPress={() => handleSubmitPress(props.values.Email, props.values.Password)}>
                                     <Text style={Nofar_styles.SmallButtonTitle}>תכניסו אותי!</Text>

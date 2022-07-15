@@ -2,6 +2,8 @@ import React from 'react';
 import { Appbar } from 'react-native-paper';
 import {StyleSheet} from 'react-native';
 
+// this is the page of the header of the app which appears almost in every screen
+
 
 export default function Header({ navigation, back, newNotification }) {
 

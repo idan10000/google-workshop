@@ -1,3 +1,6 @@
+//here we initialize the stuck of our app - we declare the relevant screens for the stuck
+
+
 import {createStackNavigator} from '@react-navigation/stack';
 import Header from '../shared_components/Header';
 import OldhomeScreen from "../screens/HomePage";
@@ -35,6 +38,7 @@ Notifications.setNotificationHandler({
 
 const Stack = createStackNavigator();
 
+// setting the default home screen with no notifications
 export default function HomeStack() {
     const [expoPushToken, setExpoPushToken] = useState('');
     const [newNotification, setNewNotification] = useState(false);

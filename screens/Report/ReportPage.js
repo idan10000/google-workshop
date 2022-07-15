@@ -9,6 +9,9 @@ export default function ReportPage({ route, navigation }) {
 
   const editButtonPressHandler = () => {
     console.log("opening Report screen");
+    console.log( route.params.data);
+    console.log(555555555)
+
     console.log(route.params.ref)
     navigation.navigate("ReportCreation2", {
       report: route.params.data,
@@ -16,7 +19,6 @@ export default function ReportPage({ route, navigation }) {
       ref: route.params.ref
     });
   };
-  console.log(555555555)
 
   console.log(route.params.data)
 

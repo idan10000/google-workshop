@@ -8,6 +8,9 @@ import {fireAuth} from "../shared_components/Firebase";
 import {signInWithEmailAndPassword} from "firebase/auth";
 
 
+// this is the page that you see when you launch the app for the first time (or if you have disconnected from app)
+
+
 export default function PageLaunch({navigation}) {
     const nextScreen = async () => {
         // navigation.pop()
@@ -57,11 +60,6 @@ export default function PageLaunch({navigation}) {
             <View style={landingPageStyle.bigTitle}>
                 <Text style={landingPageStyle.bigTitle}>הכלב חסר? אל תדאגו!{'\n'}נעזור למצוא אותו מהר!</Text>
             </View>
-
-            {/*<View style={landingPageStyle.howToSign}>*/}
-
-            {/*    <Text style={Nofar_styles.text}> איך לחבר אותך?</Text>*/}
-            {/*</View>*/}
 
 
             <View style={landingPageStyle.emailRegist}>

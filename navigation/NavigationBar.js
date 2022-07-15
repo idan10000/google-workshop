@@ -7,6 +7,10 @@ import BrowsePageNavigation from "./BrowsePageNavigation";
 import Map from "../screens/Map/Map";
 import ProfilePage from "../screens/Profile/Profile";
 
+
+//here we define the attributes of the navigation bar which appears almost always in the bottom of the app
+
+
 const Tab = createMaterialBottomTabNavigator();
 
 export default function NavigationBar() {

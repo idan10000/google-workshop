@@ -4,6 +4,8 @@ import SignUp from '../screens/SignUp';
 import HomeStack from './HomeStack';
 import SignIn from "../screens/SignIn";
 
+//connect between signing ( authentication) and our home stack after we successfully entered the app
+
 const Stack = createStackNavigator();
 
 export default function AuthStack() {

@@ -9,6 +9,9 @@ import { AR_styles } from "./PosterStyle";
 import {Button} from "react-native-paper";
 import PosterPage from "./PosterPage";
 
+//this is the page that relevant to show a poster when you open it form the browser
+
+
 export default function PosterBrowse({route}) {
   const makeCall = () => {
     console.log("Its calling");

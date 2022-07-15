@@ -13,6 +13,12 @@ import Icon from 'react-native-vector-icons/Entypo';
 import StepIndicator from 'react-native-step-indicator';
 import * as ImagePicker from "expo-image-picker";
 
+
+
+// this is the first screen when you want to post a poster. we present the chosen picture and let the user change it
+
+
+
 // Expected input from previous screen is:
 // edit - if the Report is being edited (TRUE) or it is a new Report (FALSE)
 // Report - if the Report is being edited this is the values it had, null otherwise
@@ -21,14 +27,13 @@ import * as ImagePicker from "expo-image-picker";
 export default function Screen1Poster({route, navigation}) {
     const [imagePicked, setImagePicked] = React.useState(true);
 
-
-
-
+    // the var in the top of the page
     const labels = ["תמונה","מיקום","פרטים"];
     console.log("opened Report screen")
     let report = route.params.report
 
 
+    //when finished with screen pass the data
     const nextScreen = async () => {
         // navigation.pop()
         if(selectedImage !==null){
@@ -39,7 +44,7 @@ export default function Screen1Poster({route, navigation}) {
         }
 
     }
-
+    // style of the bar
     const customStyles = {
         stepIndicatorSize: 25,
         currentStepIndicatorSize:30,

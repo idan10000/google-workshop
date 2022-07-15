@@ -2,6 +2,9 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import {StyleSheet} from 'react-native';
 import BrowsePage from '../screens/BrowsePage/BrowsePage';
 
+// in our browse for dogs, we need to initialize tabs - one of "found" and one for "lost" and also its navigator
+
+
 const Tab = createMaterialTopTabNavigator();
 
 export default function BrowseTabs() {

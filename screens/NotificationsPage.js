@@ -51,7 +51,7 @@ export default function NotificationsPage({navigation, setNewNotification}) {
             }
         })
     }
-
+    // refreshes the notifications so we can see the newest matches
     const refreshNotifications = () => {
         const userRef = doc(fireStoreDB, "Users", user.uid);
         return getDoc(userRef).then((userSnap) => {
@@ -73,7 +73,7 @@ export default function NotificationsPage({navigation, setNewNotification}) {
             }
         })
     }
-
+    // dismissing a message
     const deleteHandler = async (item) => {
         // setNotifications((prevNotifications) => {
         //     return prevNotifications.filter(notification => notification.id != id)
@@ -88,6 +88,7 @@ export default function NotificationsPage({navigation, setNewNotification}) {
         await refreshNotifications();
     }
 
+    // when you see a relevant notification, and you want to open it fot more details
     const goToReportPage = (item) => {
         console.log(item.request.content.title)
         console.log(item.request.content.body)

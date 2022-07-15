@@ -9,6 +9,12 @@ import { AR_styles } from "./ReportStyle";
 
 
 import PosterPage from "../Poster/PosterPage";
+
+
+
+//this is the page that relevant to show a report when you open it form the browser
+
+
 export default function ReportForBrowse({route}) {
   const makeCall = () => {
     console.log("Its calling");

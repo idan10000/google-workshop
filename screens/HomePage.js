@@ -8,11 +8,7 @@ import * as React from "react";
 
 export default function HomePage({navigation}) {
 
-    const arielNavigation= async () => {
-        navigation.navigate('ReportCreation')
-
-    }
-
+    // this function opens the gallery in order to upload a picture of dog
     let openImagePickerAsync = async () => {
         let permissionResult =
             await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -33,6 +29,7 @@ export default function HomePage({navigation}) {
         }
     };
 
+    // opens the camera of the phone in order to take picture of the dog
     const openCamera = async () => {
         // Ask the user for the permission to access the camera
         const permissionResult = await ImagePicker.requestCameraPermissionsAsync();

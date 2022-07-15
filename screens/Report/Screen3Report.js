@@ -14,6 +14,10 @@ import {deleteObject, ref, getStorage} from "firebase/storage";
 import * as geofire from "geofire-common";
 import {reverseGeocodeAsync} from "expo-location"
 
+// this is the third and last screen of the process of uploading a report.
+// here you can put tags that express the dog and add a description and phone number if you want to be contacted
+
+
 export default function Screen3Report({route, navigation}) {
     let report = route.params.report
 

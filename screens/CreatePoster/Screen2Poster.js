@@ -10,6 +10,10 @@ import StepIndicator from 'react-native-step-indicator';
 import Map from "../Map/Map";
 import MapForCreation from "../Map/MapForCreation";
 
+
+// this is the second screen when you post. here you can control the location where the dog got lost
+
+
 export default function Screen2Poster({route, navigation}) {
     // console.log(route.params.data)
 

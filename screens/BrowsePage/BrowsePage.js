@@ -24,10 +24,15 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {collection, limit, orderBy, query, startAt, endAt, getDocs} from "firebase/firestore";
 import {fireStoreDB} from "../../shared_components/Firebase";
 
+
+//here we set the parameters of the reports and posters of missing dogs. we load the data and considering the location, time etc
+
+
 const BrowsePage = ({navigation, route}) => {
     const {collectionPath, destination} = route.params
     const radius = 10000
 
+    //get the location of the user in order to show him only close dogs
     const getInitialLocation = async () => {
         console.log("getting initial location")
         let {status} = await requestForegroundPermissionsAsync();
@@ -118,7 +123,7 @@ const BrowsePage = ({navigation, route}) => {
     }
 
 
-    //---------------------- Infinite Scrolling ----------------------
+    //---------------------- Infinite Scrolling of posters/reports ----------------------
 
     const [data, setData] = useState({
         docs: [], error: null, lastDocId: null,
@@ -147,7 +152,7 @@ const BrowsePage = ({navigation, route}) => {
         )
     }
 
-    //---------------------- Refresh ----------------------
+    //---------------------- Refresh the posters/reports ----------------------
     const [refreshing, setRefreshing] = useState(true);
 
     const refreshItems = () => {

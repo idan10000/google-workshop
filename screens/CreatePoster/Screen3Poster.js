@@ -19,6 +19,13 @@ import {deleteObject, getStorage, ref} from "firebase/storage";
 import * as geofire from "geofire-common";
 import {reverseGeocodeAsync} from "expo-location";
 
+
+
+// this is the third and last screen of the process of uploading a poster.
+// here you can put the name of the dog, tags that express the dog and add a description and phone number
+
+
+
 export default function Screen3Poster({route, navigation}) {
     let prevPoster = route.params.poster
 
@@ -26,6 +33,8 @@ export default function Screen3Poster({route, navigation}) {
     const [correctPhone, setCorrectPhone] = React.useState(true);
     const [correctDogName, setCorrectDogName] = React.useState(true);
 
+
+    // these are the chosen tags to describe a dog
     const tagList = [
         {tag: "גדול", state: false},
         {tag: "קטן", state: false},
@@ -99,11 +108,6 @@ export default function Screen3Poster({route, navigation}) {
     const showTagModal = () => setVisibleTag(true);
     const hideTagModal = () => setVisibleTag(false);
 
-    // const tagList = [
-    //     {tag: "ביישן", state: false},
-    //     {tag: "חברותי", state: false},
-    //     {tag: "אגרסיבי", state: false},
-    // ];
 
 
     // init tags with previous values if reached this page from an edit Report
@@ -113,6 +117,8 @@ export default function Screen3Poster({route, navigation}) {
     const [modalTags, setModalTags] = React.useState(initModalTagList);
     const [selectedTags, setSelectedTags] = React.useState(initSelectedTagList);
 
+
+    // the modal of the tags where you can choose how to describe the dog
     const modalChipHandler = (index) => {
         setModalTags(prevStates => {
             var temp = [...prevStates]
@@ -171,6 +177,9 @@ export default function Screen3Poster({route, navigation}) {
         return hours + ':' + minutes;
     }
 
+
+    // here we need to handle all the data we have got in this 3 levels of upload
+    // we add the time, date and more details that need to be shown on the report screen
     const nextScreen = async () => {
         if(phoneRegExp.test(phoneText) === true && phoneText.length === 10 && nameText.length !==0) {
 
@@ -210,7 +219,7 @@ export default function Screen3Poster({route, navigation}) {
             const sendPoster = new Poster(selectedImage, "", location, address, today, time, plainTags, descriptionText, nameText, '', phoneText, name, user.uid)
             const db = fireStoreDB;
 
-            // if we reached from an edit Report
+            // if we reached from an edit Report different way to handle data
             if (route.params.edit) {
                 // if the prevPoster was changed, update the prevPoster page
                 if (deepDiffer(sendPoster, prevPoster)) {
@@ -251,6 +260,7 @@ export default function Screen3Poster({route, navigation}) {
             }
         }
     }
+    // before letting the user submit his poster we need to validate that the phone is real number and that the dogs' name is valid
     if (phoneRegExp.test(phoneText) === true && phoneText.length == 10 && correctPhone === false){
         setCorrectPhone(true)
     }

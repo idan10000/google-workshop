@@ -11,6 +11,9 @@ import {getFirestore, setDoc, doc} from 'firebase/firestore';
 import {getDatabase, ref, set} from "firebase/database";
 
 
+// this page is used when a new user wants to join the app via email
+
+
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
 export const useTogglePasswordVisibility = () => {

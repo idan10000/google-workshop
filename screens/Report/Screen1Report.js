@@ -13,6 +13,10 @@ import Icon from 'react-native-vector-icons/Entypo';
 import StepIndicator from 'react-native-step-indicator';
 import * as ImagePicker from "expo-image-picker";
 
+// this is the first screen when you want to post a report. we present the chosen picture and let the user change it
+
+
+
 // Expected input from previous screen is:
 // edit - if the Report is being edited (TRUE) or it is a new Report (FALSE)
 // Report - if the Report is being edited this is the values it had, null otherwise

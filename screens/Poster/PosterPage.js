@@ -65,7 +65,12 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 <View style={styles.textOnComponent}>
 
                                     <View style={styles.centerVerticalDot}>
-                                        <Text style={styles.dogsName2}>{route.params.data.date}</Text></View>
+                                        <Text style={styles.dogsName}>{route.params.data.date}</Text></View>
+                                    <View style={styles.centerVertical}>
+                                        <Text style={styles.dotName}>·</Text></View>
+                                    <View style={styles.centerVerticalDot}>
+                                        <Text style={styles.dogsName2}>{route.params.data.time}</Text>
+                                    </View>
                                 </View>
                             </View>
 
@@ -244,12 +249,16 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                     source={{uri: route.params.data.image}}/>
                                 </TouchableOpacity>
                                 <View style={styles.textOnComponent}>
-                                    <View style={styles.centerVertical}>
+                                    <View style={styles.centerVerticalForPoster}>
                                         <Text style={styles.dogsName}>{route.params.data.dogName}</Text></View>
-                                    <View style={styles.centerVertical}>
+                                    <View style={styles.centerVerticalForPoster}>
                                         <Text style={styles.dotName}>·</Text></View>
-                                    <View style={styles.centerVerticalDot}>
+                                    <View style={styles.centerVerticalDotForPoster}>
                                         <Text style={styles.dogsName2}>{route.params.data.date}</Text></View>
+                                    <View style={styles.centerVerticalForPoster}>
+                                        <Text style={styles.dotName}>·</Text></View>
+                                    <View style={styles.centerVerticalDotForPoster}>
+                                        <Text style={styles.dogsName2}>{route.params.data.time}</Text></View>
                                 </View>
                             </View>
 
@@ -408,7 +417,14 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 <View style={styles.textOnComponent}>
 
                                     <View style={styles.centerVerticalDot}>
-                                        <Text style={styles.dogsName2}>{route.params.data.date}</Text></View>
+                                        <Text style={styles.dogsName}>{route.params.data.date}</Text>
+                                        </View>
+                                    <View style={styles.centerVertical}>
+                                        <Text style={styles.dotName}>·</Text></View>
+                                    <View style={styles.centerVerticalDot}>
+                                        <Text style={styles.dogsName2}>{route.params.data.time}</Text>
+                                    </View>
+
                                 </View>
                             </View>
 
@@ -564,12 +580,16 @@ export default function PosterPage({navigation, route, typeOfPage}) {
     source={{uri: route.params.data.image}}/>
 
                                 <View style={styles.textOnComponent}>
-                                    <View style={styles.centerVertical}>
+                                    <View style={styles.centerVerticalForPoster}>
                                         <Text style={styles.dogsName}>{route.params.data.dogName}</Text></View>
-                                    <View style={styles.centerVertical}>
+                                    <View style={styles.centerVerticalForPoster}>
                                         <Text style={styles.dotName}>·</Text></View>
-                                    <View style={styles.centerVerticalDot}>
+                                    <View style={styles.centerVerticalDotForPoster}>
                                         <Text style={styles.dogsName2}>{route.params.data.date}</Text></View>
+                                    <View style={styles.centerVerticalForPoster}>
+                                        <Text style={styles.dotName}>·</Text></View>
+                                    <View style={styles.centerVerticalDotForPoster}>
+                                        <Text style={styles.dogsName2}>{route.params.data.time}</Text></View>
                                 </View>
                             </View>
 
@@ -757,12 +777,25 @@ const styles = StyleSheet.create({
         marginHorizontal: "4%",
 
     },
+    centerVerticalForPoster: {
+        justifyContent: 'center', //Centered horizontally
+        alignItems: 'center', //Centered vertically
+        marginHorizontal: "2%",
+
+    },
     centerVerticalDot: {
         justifyContent: 'center', //Centered horizontally
         alignItems: 'center', //Centered vertically
         marginHorizontal: "4%",
 
     },
+    centerVerticalDotForPoster: {
+        justifyContent: 'center', //Centered horizontally
+        alignItems: 'center', //Centered vertically
+        marginHorizontal: "2%",
+
+    },
+
     containerChips: {
         width: Dimensions.get("window").width / 1.2,
         alignSelf: "center",
