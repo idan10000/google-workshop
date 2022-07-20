@@ -63,7 +63,6 @@ export default function Screen2Report({route, navigation}) {
 
     }
     return (
-        <ScrollView style={{...Nofar_styles.container}}>
 
             <View style={Nofar_styles.container}>
                 <View marginTop="2.5%">
@@ -80,23 +79,11 @@ export default function Screen2Report({route, navigation}) {
                     usePreLocation={route.params.edit}
                     location={location}
                     setLocation={setLocation}
+                    nextScreen={nextScreen}
                 />
 
-                <View style={styles.bottomView}>
-                    <Icon name='infocirlceo' size={18} color="#000"/>
-                    <View style={styles.bottomTextView}>
-                        <Text style = {styles.bottomText}>ניתן להזיז את הסמן באמצעות לחיצה ארוכה</Text>
-                    </View>
-                </View>
 
-                <TouchableOpacity
-                    onPress={nextScreen}
-                    style={styles.proceedButton}>
-                    <Text style={Nofar_styles.TinyButtonTitle}>המשך</Text>
-
-                </TouchableOpacity>
             </View>
-        </ScrollView>
 
     );
 }
