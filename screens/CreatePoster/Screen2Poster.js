@@ -65,14 +65,14 @@ export default function Screen2Poster({route, navigation}) {
     return (
 
             <View style={Nofar_styles.container}>
-                <View marginTop="2.5%">
+                <View >
                     <StepIndicator
                         customStyles={customStyles}
                         currentPosition={1}
                         labels={labels}
                         stepCount={3}
                     /></View>
-                <View style = {styles.imagePicked}><Text style = {styles.errorImage}>סמנו את המיקום האחרון בו ראיתם את הכלב</Text></View>
+                {/*<View style = {styles.imagePicked}><Text style = {styles.errorImage}>סמנו את המיקום האחרון בו ראיתם את הכלב</Text></View>*/}
 
                 <MapForCreation
                     preLocation={initLocation}
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     },
     imagePicked: {
         marginHorizontal: "7.5%",
-        marginTop:"5%"
+        marginBottom:"1%"
     },
     bottomView: {
         flexDirection: "row",

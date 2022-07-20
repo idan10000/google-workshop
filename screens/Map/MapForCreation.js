@@ -94,9 +94,11 @@ export default function MapForCreation({
     return (
         <View style={{flex: 1}}>
 
-            <View style={{flex: 1}}>
+            <View style={{flex: 1,
+            marginLeft: "5%",
+                marginRight: "5%"}}>
                 <GooglePlacesAutocomplete
-                    placeholder={"חפש כתובת"}
+                    placeholder={"חפש כתובת (או סמן על המפה)"}
                     query={{
                         key: 'AIzaSyBOMIn1twPjZskW-EnIjfNaUcSVoiLRpqQ',
                         language: 'iw',
@@ -186,10 +188,10 @@ const styles = StyleSheet.create({
     },
     map: {
         marginVertical: "2.5%",
-        width: Dimensions.get("window").width / 1.2,
+        width: Dimensions.get("window").width / 1.12,
         justifyContent: "center",
         alignSelf: "center",
-        height: Dimensions.get("window").height / 2,
+        height: Dimensions.get("window").height / 1.63,
     },
     bottomTextView: {
         flexDirection: "row",
@@ -202,7 +204,7 @@ const styles = StyleSheet.create({
     },
     bottomView: {
         flexDirection: "row",
-        marginHorizontal: "7.5%",
+        marginHorizontal: "5%",
     },
     proceedButton: {
         paddingVertical: "3%",
@@ -212,8 +214,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 20,
         backgroundColor: "#DCA277",
-        marginVertical: "5%",
+        marginVertical: "2%",
         width: Dimensions.get("window").width / 2.2,
-        marginLeft: (Dimensions.get("window").width - Dimensions.get("window").width / 1.2) / 2,
+        marginLeft: (Dimensions.get("window").width - Dimensions.get("window").width / 1.12) / 2,
     },
 });

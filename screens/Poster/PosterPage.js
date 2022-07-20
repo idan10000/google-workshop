@@ -122,6 +122,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 <View style={styles.containerChips}>
 
                                     {route.params.data.tagList.map((item, index) => (
+                                        index <3 &&
 
                                         <Chip
                                             key={index}
@@ -158,8 +159,8 @@ export default function PosterPage({navigation, route, typeOfPage}) {
 
                             expanded &&
 
-                            <View style={{...styles.chipsColumn, marginLeft: "2%"}}>
-                                <View style={{...styles.chips, marginLeft: "2%"}}>
+                            <View style={{...styles.chipsColumn, marginLeft: "1%"}}>
+                                <View style={{...styles.chips}}>
 
                                     {route.params.data.tagList.map((item, index) => (
 
@@ -305,6 +306,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 <View style={styles.containerChips}>
 
                                     {route.params.data.tagList.map((item, index) => (
+                                        index <3 &&
 
                                         <Chip
                                             key={index}
@@ -480,6 +482,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 <View style={styles.containerChips}>
 
                                     {route.params.data.tagList.map((item, index) => (
+                                        index <3 &&
 
                                         <Chip
                                             key={index}
@@ -661,6 +664,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 <View style={styles.containerChips}>
 
                                     {route.params.data.tagList.map((item, index) => (
+                                        index <3 &&
 
                                         <Chip
                                             key={index}
@@ -871,7 +875,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         overflow: "hidden",
         flexWrap: "wrap",
-        paddingHorizontal: "1%",
         width: Dimensions.get("window").width / 1.2,
         alignSelf: "center",
         borderRadius: 20,
@@ -888,7 +891,6 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         overflow: "hidden",
         flexWrap: "wrap",
-        paddingHorizontal: "1%",
         width: Dimensions.get("window").width / 1.2,
         alignSelf: "center",
         borderRadius: 12,
