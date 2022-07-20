@@ -26,6 +26,7 @@ import {fireStoreDB} from "../../shared_components/Firebase";
 import {Provider, Portal, Modal} from "react-native-paper";
 import {Nofar_styles} from "../../styles/NofarStyle";
 import {stylesPoster} from "../CreatePoster/CreatePosterStyle";
+import Icon from "react-native-vector-icons/Entypo";
 
 export default function Map({navigation}) {
     const sheetRef = React.useRef(null);
@@ -201,15 +202,34 @@ export default function Map({navigation}) {
                             <TouchableOpacity onPress={() => {
                                 hideTagModal()
                                 navigation.navigate("Report", {data: imageData})}}>
+                                <View style={{
+                                    backgroundColor: "#F9F8F0",
+
+                                    alignSelf: "center",
+                                }}>
                             <Image
                                 style={{
-                                    height: Dimensions.get("window").height / 5,
-                                    width: Dimensions.get("window").width / 3,
+
+                                    height: Dimensions.get("window").height / 2.9,
+                                    width: Dimensions.get("window").width / 1.9,
                                     alignSelf: "center",
                                 }}
                                 source={{uri: image}}
-                                resizeMode="cover"
-                            />
+                                resizeMode="cover"/>
+                                    {
+                                        imageData != null &&
+                                        <View alignSelf="center" flexDirection="column" alignItems="center">
+                                            <View flexDirection="row">
+
+                                            <Icon name="location-pin" size={22} color="#000"/>
+
+                                            <Text>{imageData.address}</Text>
+                                            </View>
+                                            <Text>בתאריך:  {imageData.date}</Text>
+
+                                        </View>}
+                                </View>
+
                             </TouchableOpacity>
                         </Modal>
                     </Portal>
@@ -232,9 +252,9 @@ const styles = StyleSheet.create(
             height: Dimensions.get("window").height / 1.2,
         },
         modal: {
-            width: "100%",
+            width: "50%",
             justifyContent: "center",
             alignSelf: "center",
-            height: "100%",
+            height: "50%",
         }
     });

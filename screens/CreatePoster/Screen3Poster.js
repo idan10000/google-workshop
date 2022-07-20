@@ -18,13 +18,10 @@ import Poster, {posterConverter} from "../../data_classes/Poster";
 import {deleteObject, getStorage, ref} from "firebase/storage";
 import * as geofire from "geofire-common";
 import {reverseGeocodeAsync} from "expo-location";
-
-
+import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 // this is the third and last screen of the process of uploading a poster.
 // here you can put the name of the dog, tags that express the dog and add a description and phone number
-
-
 
 export default function Screen3Poster({route, navigation}) {
     let prevPoster = route.params.poster
@@ -169,12 +166,17 @@ export default function Screen3Poster({route, navigation}) {
     const [nameText, setName] = React.useState(initName);
 
     const [phoneText, setPhone] = React.useState(initPhone);
+    const [time, setTime] = React.useState(false);
+    const [selectedHours, setSelectedHours] = React.useState(0);
+    const [selectedMinutes, setSelectedMinutes] = React.useState(0);
 
     const getCurrentTime = () => {
-        let today = new Date();
-        let hours = (today.getHours() < 10 ? '0' : '') + today.getHours();
-        let minutes = (today.getMinutes() < 10 ? '0' : '') + today.getMinutes();
-        return hours + ':' + minutes;
+        if (time) {
+            let today = new Date();
+            let hours = (today.getHours() < 10 ? '0' : '') + today.getHours();
+            let minutes = (today.getMinutes() < 10 ? '0' : '') + today.getMinutes();
+            return hours + ':' + minutes;
+        }
     }
 
 
@@ -409,6 +411,17 @@ export default function Screen3Poster({route, navigation}) {
 
                                 <Text style={Nofar_styles.TinyButtonTitleRed}>אנא הכנס מספר טלפון תקין</Text></View>}
                     </View>
+                    {/*<View>*/}
+                    {/*<TimePicker*/}
+                    {/*    selectedHours={selectedHours}*/}
+                    {/*    //initial Hourse value*/}
+                    {/*    selectedMinutes={selectedMinutes}*/}
+                    {/*    //initial Minutes value*/}
+                    {/*    onChange={(hours, minutes) => {*/}
+                    {/*        setSelectedHours(hours);*/}
+                    {/*        setSelectedMinutes(minutes);*/}
+                    {/*    }}*/}
+                    {/*/></View>*/}
                     <TouchableOpacity
                         onPress={nextScreen}
 
