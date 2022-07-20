@@ -14,6 +14,7 @@ import * as Linking from 'expo-linking';
 import {AR_styles} from "./PosterStyle";
 import {Chip,Modal,Provider,Portal} from "react-native-paper";
 import Icon from "react-native-vector-icons/Entypo";
+import {stylesPoster} from "../CreatePoster/CreatePosterStyle";
 
 export default function PosterPage({navigation, route, typeOfPage}) {
     console.log("5555555522222");
@@ -51,6 +52,8 @@ export default function PosterPage({navigation, route, typeOfPage}) {
     // }
     if (typeOfPage === "ReportForBrowse") {
         return (
+            <Provider>
+
             <View style={Nofar_styles.container}>
 
                 <ScrollView style={AR_styles.content}>
@@ -58,10 +61,23 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                     <View>
                         <View>
                             <View style={{alignSelf: "center"}}>
+                                    <Portal>
+                                        <Modal
+                                            contentContainerStyle={styles.modal}
 
+                                            visible={fullPicture}
+                                            onDismiss={hideFullPicture}
+                                        >
+                                            <Image style={styles.fullImage} source={{uri: route.params.data.image}} />
+                                        </Modal>
+                                    </Portal>
+
+                                <TouchableOpacity  onPress={showSlider}>
                                 <Image
                                     style={Nofar_styles.mainImage}
                                     source={{uri: route.params.data.image}}/>
+                                </TouchableOpacity>
+
                                 <View style={styles.textOnComponent}>
 
                                     <View style={styles.centerVerticalDot}>
@@ -72,6 +88,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                         <Text style={styles.dogsName2}>{route.params.data.time}</Text>
                                     </View>
                                 </View>
+
                             </View>
 
                         </View>
@@ -126,7 +143,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 </View>
                                 <View style={styles.chveron2}>
                                     {
-                                        route.params.data.tagList.length !== 0 &&
+                                        route.params.data.tagList.length > 3 &&
                                         <TouchableOpacity>
                                             <Icon name="chevron-down" size={32} color="#000"
                                                   onPress={() => {
@@ -216,22 +233,26 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                             </TouchableOpacity>
                         </View>
                     </View>
+
                 </ScrollView>
 
             </View>
-        );
+    </Provider>
+
+    );
     } else if (typeOfPage === "PosterForBrowse") {
         return (
+            <Provider>
 
             <View style={Nofar_styles.container}>
 
                 <ScrollView style={Nofar_styles.container}>
 
-                    <Provider>
                         <View style={Nofar_styles.container}>
 
                         <Portal>
                             <Modal
+                                contentContainerStyle={styles.modal}
 
                                 visible={fullPicture}
                                 onDismiss={hideFullPicture}
@@ -305,7 +326,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 </View>
                                 <View style={styles.chveron2}>
                                     {
-                                        route.params.data.tagList.length !== 0 &&
+                                        route.params.data.tagList.length >3 &&
                                         <TouchableOpacity>
                                             <Icon name="chevron-down" size={32} color="#000"
                                                   onPress={() => {
@@ -394,25 +415,37 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                         </View>
                     </View>
                         </View>
-                    </Provider>
 
                 </ScrollView>
 
             </View>
-        );
+    </Provider>
+
+    );
     } else if (typeOfPage === "report") {
         return (
+            <Provider>
+
             <View style={Nofar_styles.container}>
 
                 <ScrollView style={AR_styles.content}>
-
                     <View>
                         <View>
                             <View style={{alignSelf: "center"}}>
+                                <Portal>
+                                    <Modal
+                                        contentContainerStyle={styles.modal}
 
+                                        visible={fullPicture}
+                                        onDismiss={hideFullPicture}
+                                    >
+                                        <Image style={styles.fullImage} source={{uri: route.params.data.image}} />
+                                    </Modal>
+                                </Portal>
+                                <TouchableOpacity  onPress={showSlider}>
                                 <Image
                                     style={Nofar_styles.mainImage}
-                                    source={{uri: route.params.data.image}}/>
+                                    source={{uri: route.params.data.image}}/></TouchableOpacity>
 
                                 <View style={styles.textOnComponent}>
 
@@ -468,7 +501,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 </View>
                                 <View style={styles.chveron2}>
                                     {
-                                        route.params.data.tagList.length !== 0 &&
+                                        route.params.data.tagList.length > 3 &&
                                         <TouchableOpacity>
                                             <Icon name="chevron-down" size={32} color="#000"
                                                   onPress={() => {
@@ -561,12 +594,15 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                             </TouchableOpacity>
                         </View>
                     </View>
-                </ScrollView>
 
+                </ScrollView>
             </View>
-        );
+    </Provider>
+
+    );
     } else {
         return (
+            <Provider>
             <View style={Nofar_styles.container}>
 
                 <ScrollView style={AR_styles.content}>
@@ -574,10 +610,21 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                     <View>
                         <View>
                             <View style={{alignSelf: "center"}}>
+                                <Portal>
+                                    <Modal
+                                        contentContainerStyle={styles.modal}
 
+                                        visible={fullPicture}
+                                        onDismiss={hideFullPicture}
+                                    >
+                                        <Image style={styles.fullImage} source={{uri: route.params.data.image}} />
+                                    </Modal>
+                                </Portal>
+                                <TouchableOpacity  onPress={showSlider}>
                                 <Image
     style={Nofar_styles.mainImage}
     source={{uri: route.params.data.image}}/>
+                                </TouchableOpacity>
 
                                 <View style={styles.textOnComponent}>
                                     <View style={styles.centerVerticalForPoster}>
@@ -635,7 +682,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 </View>
                                 <View style={styles.chveron2}>
                                     {
-                                        route.params.data.tagList.length !== 0 &&
+                                        route.params.data.tagList.length > 3 &&
                                         <TouchableOpacity>
                                             <Icon name="chevron-down" size={32} color="#000"
                                                   onPress={() => {
@@ -733,6 +780,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                 </ScrollView>
 
             </View>
+            </Provider>
         );
     }
 }
@@ -865,10 +913,14 @@ const styles = StyleSheet.create({
     fullImage: {
         width: Dimensions.get("window").width,
         height: Dimensions.get("window").height/1.6 ,
-        marginBottom:"30%",
+        marginBottom:"40%",
         alignSelf:"center",
-        resizeMode: "contain",
+    },
+    modal: {
+        alignSelf: "center",
+        height: "10%",
     }
+
 
 
 });
