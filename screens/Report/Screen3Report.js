@@ -10,9 +10,8 @@ import {fireStoreDB, uploadImageAsync} from "../../shared_components/Firebase";
 import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
 import {addDoc, arrayUnion, collection, doc, getDoc, setDoc, updateDoc} from "firebase/firestore";
 import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
-import {deleteObject, ref, getStorage} from "firebase/storage";
 import * as geofire from "geofire-common";
-import {reverseGeocodeAsync} from "expo-location"
+import Geocoder from "react-native-geocoding";
 
 // this is the third and last screen of the process of uploading a report.
 // here you can put tags that express the dog and add a description and phone number if you want to be contacted
@@ -146,6 +145,10 @@ export default function Screen3Report({route, navigation}) {
         return hours + ':' + minutes;
     }
 
+    // geocoder setup to return address in hebrew
+    Geocoder.init("AIzaSyAGKKpmqjHELTwvwAx0w0Ed8W2LtQ2lwZg", {language: "iw"})
+
+
     const nextScreen = async () => {
         if ((phoneRegExp.test(phoneText) === true && phoneText.length === 10 && checked) || !checked) {
             let date = new Date()
@@ -169,9 +172,12 @@ export default function Screen3Report({route, navigation}) {
                 longitude: templocation.longitude,
                 geohash: hash
             }
-            const [addressResponse] = await reverseGeocodeAsync(templocation)
-            const address = `${addressResponse.street} ${addressResponse.streetNumber}, ${addressResponse.city}`;
-            console.log(address)
+            // const [addressResponse] = await reverseGeocodeAsync(templocation)
+            // const address = `${addressResponse.street} ${addressResponse.streetNumber}, ${addressResponse.city}`;
+            // console.log(address)
+            let json = await Geocoder.from(templocation.latitude, templocation.longitude)
+            const address = json.results[0].formatted_address
+
             const dbReport = new Report(image, "", location, address, today, time, plainTags, descriptionText, "", phoneText, checked, name, user.uid) // Report to upload to DB
             const sendReport = new Report(image, "", location, address, today, time, plainTags, descriptionText, "", phoneText, checked, name, user.uid) // Report to send to the Report page
 

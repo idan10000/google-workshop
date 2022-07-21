@@ -53,6 +53,7 @@
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
     "react-native-app": "^1.0.0",
+    "react-native-geocoding": "^0.5.0",
     "react-native-gesture-handler": "~2.1.0",
     "react-native-google-places-autocomplete": "^2.4.1",
     "react-native-image-placeholder": "^1.0.14",

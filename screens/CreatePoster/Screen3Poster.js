@@ -18,7 +18,7 @@ import Poster, {posterConverter} from "../../data_classes/Poster";
 import {deleteObject, getStorage, ref} from "firebase/storage";
 import * as geofire from "geofire-common";
 import {reverseGeocodeAsync} from "expo-location";
-import RNDateTimePicker from '@react-native-community/datetimepicker';
+import Geocoder from 'react-native-geocoding';
 
 // this is the third and last screen of the process of uploading a poster.
 // here you can put the name of the dog, tags that express the dog and add a description and phone number
@@ -106,7 +106,6 @@ export default function Screen3Poster({route, navigation}) {
     const hideTagModal = () => setVisibleTag(false);
 
 
-
     // init tags with previous values if reached this page from an edit Report
     const initSelectedTagList = route.params.edit ? prevPoster.tagList.map(({tag}) => ({tag: tag, state: false})) : []
     const initModalTagList = route.params.edit ?
@@ -147,12 +146,10 @@ export default function Screen3Poster({route, navigation}) {
     let initPhone = ""
     if (route.params.edit && !initializedPhone) {
         initPhone = prevPoster.phoneNumber
-    }
-    else if(initializedPhone){
-    }
-    else {
+    } else if (initializedPhone) {
+    } else {
 
-        getDoc(doc(db, "Users",user.uid)).then((snapshot) => {
+        getDoc(doc(db, "Users", user.uid)).then((snapshot) => {
             const newPhone = snapshot.get("phone")
             initPhone = newPhone
             setPhone(newPhone)
@@ -171,19 +168,21 @@ export default function Screen3Poster({route, navigation}) {
     const [selectedMinutes, setSelectedMinutes] = React.useState(0);
 
     const getCurrentTime = () => {
-        if (time) {
-            let today = new Date();
-            let hours = (today.getHours() < 10 ? '0' : '') + today.getHours();
-            let minutes = (today.getMinutes() < 10 ? '0' : '') + today.getMinutes();
-            return hours + ':' + minutes;
-        }
+        let today = new Date();
+        let hours = (today.getHours() < 10 ? '0' : '') + today.getHours();
+        let minutes = (today.getMinutes() < 10 ? '0' : '') + today.getMinutes();
+        return hours + ':' + minutes;
     }
+
+
+    // Geocoding
+    Geocoder.init("AIzaSyAGKKpmqjHELTwvwAx0w0Ed8W2LtQ2lwZg", {language: "iw"})
 
 
     // here we need to handle all the data we have got in this 3 levels of upload
     // we add the time, date and more details that need to be shown on the report screen
     const nextScreen = async () => {
-        if(phoneRegExp.test(phoneText) === true && phoneText.length === 10 && nameText.length !==0) {
+        if (phoneRegExp.test(phoneText) === true && phoneText.length === 10 && nameText.length !== 0) {
 
 
             //first confirming the tags
@@ -214,8 +213,12 @@ export default function Screen3Poster({route, navigation}) {
                 longitude: tempLocation.longitude,
                 geohash: hash
             }
-            const [addressResponse] = await reverseGeocodeAsync(tempLocation)
-            const address = `${addressResponse.street} ${addressResponse.streetNumber}, ${addressResponse.city}`;
+            let json = await Geocoder.from(tempLocation.latitude, tempLocation.longitude)
+            const address = json.results[0].formatted_address
+
+
+            // const [addressResponse] = await reverseGeocodeAsync(tempLocation)
+            // const address = `${addressResponse.street} ${addressResponse.streetNumber}, ${addressResponse.city}`;
             let imagePath = route.params.edit ? prevPoster.imagePath : ""
             const dbPoster = new Poster(selectedImage, "", location, address, today, time, plainTags, descriptionText, nameText, '', phoneText, name, user.uid)
             const sendPoster = new Poster(selectedImage, "", location, address, today, time, plainTags, descriptionText, nameText, '', phoneText, name, user.uid)
@@ -239,6 +242,7 @@ export default function Screen3Poster({route, navigation}) {
                 const image = await uploadImageAsync(selectedImage, "Posters")
                 dbPoster.image = image.link
                 dbPoster.imagePath = image.path
+                console.log(dbPoster)
                 const docRef = await addDoc(collection(db, "Posters").withConverter(posterConverter), dbPoster)
 
                 // add poster page id to user posters
@@ -251,22 +255,21 @@ export default function Screen3Poster({route, navigation}) {
                     console.log(error)
                 });
             }
-        }
-        else{
-            if(!(phoneRegExp.test(phoneText) === true && phoneText.length == 10) ){
+        } else {
+            if (!(phoneRegExp.test(phoneText) === true && phoneText.length == 10)) {
                 setCorrectPhone(false)
             }
-            if(nameText.length==0){
+            if (nameText.length == 0) {
                 setCorrectDogName(false)
 
             }
         }
     }
     // before letting the user submit his poster we need to validate that the phone is real number and that the dogs' name is valid
-    if (phoneRegExp.test(phoneText) === true && phoneText.length == 10 && correctPhone === false){
+    if (phoneRegExp.test(phoneText) === true && phoneText.length == 10 && correctPhone === false) {
         setCorrectPhone(true)
     }
-    if (nameText.length!==0 && correctDogName === false){
+    if (nameText.length !== 0 && correctDogName === false) {
         setCorrectDogName(true)
     }
 
@@ -300,11 +303,12 @@ export default function Screen3Poster({route, navigation}) {
                             activeUnderlineColor="#000000"
                             activeOutlineColor="#000000"
                         />
-                    </View >
+                    </View>
                     {!correctDogName &&
-                    <View style={styles.descriptionTextContainer}>
+                        <View style={styles.descriptionTextContainer}>
 
-                        <Text style={Nofar_styles.TinyButtonTitleRed}>אנא הכנס שם</Text></View>}
+                            <Text style={Nofar_styles.TinyButtonTitleRed}>אנא הכנס שם</Text>
+                        </View>}
                     <Portal>
                         {/*Tags*/}
                         <Modal
@@ -373,7 +377,7 @@ export default function Screen3Poster({route, navigation}) {
                             ))
                         }
                     </View>
-                    <View marginTop = "4%">
+                    <View marginTop="4%">
                         <View style={styles.descriptionTextContainer}>
 
                             <Text style={Nofar_styles.TinyButtonTitleBlack}>פרטים נוספים: </Text></View>
@@ -398,7 +402,7 @@ export default function Screen3Poster({route, navigation}) {
                         <View style={styles.phoneContainer}>
                             <TextInput
                                 dense={false}
-                                keyboardType = 'numeric'
+                                keyboardType='numeric'
                                 value={phoneText}
                                 onChangeText={setPhone}
                                 mode={'outlined'}
@@ -539,8 +543,7 @@ const styles = StyleSheet.create({
     },
 
 
-
-    nameOfDog:{
+    nameOfDog: {
         marginBottom: "5%",
 
     }
