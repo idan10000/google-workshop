@@ -1,5 +1,6 @@
 {
   "expo": {
+    "owner": "findog",
     "name": "FinDog",
     "slug": "FinDog",
     "version": "1.0.0",
@@ -24,7 +25,7 @@
         "foregroundImage": "./assets/square_logo.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.example.findog",
+      "package": "com.findog.findog",
       "permissions": ["NOTIFICATIONS"],
       "useNextNotificationsApi": true,
       "googleServicesFile": "./google-services.json"
