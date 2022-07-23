@@ -53,10 +53,10 @@ export default function FirstProfile({ navigation }) {
     console.log("POSTERS", posters);
     getDoc(doc(db, "Users", user.uid)).then((userRef) => {
       const data = userRef.data(); // USER'S DATA
-      const refs = data.posters;
+      const refs = data.reports;
       const promises = [];
       refs.forEach((ref) => {
-        promises.push(getDoc(doc(db, "Posters", ref)));
+        promises.push(getDoc(doc(db, "Reports", ref)));
       });
       Promise.all(promises).then((docs) => {
         docs.forEach((doc) => {
@@ -175,7 +175,7 @@ export default function FirstProfile({ navigation }) {
                     description={item.description}
                     data={item}
                     navigation={navigation}
-                    destination={"Poster"}
+                    destination={"Report"}
                   />
                 </View>
               );

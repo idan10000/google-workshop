@@ -25,24 +25,24 @@ export default function Screen3Report({route, navigation}) {
 
     const db = fireStoreDB;
     const tagList = [
-        {tag: "גדול", state: false},
-        {tag: "קטן", state: false},
-        {tag: "בינוני", state: false},
-        {tag: "זכר", state: false},
-        {tag: "נקבה", state: false},
-        {tag: "עונה לשמו", state: false},
-        {tag: "ביישן", state: false},
-        {tag: "פחדן", state: false},
-        {tag: "חברותי", state: false},
-        {tag: "תוקפני", state: false},
-        {tag: "נבחן", state: false},
-        {tag: "שקט", state: false},
-        {tag: "מבוגר", state: false},
-        {tag: "גור", state: false},
-        {tag: "עם קולר", state: false},
-        {tag: "ללא קולר", state: false},
-        {tag: "חירש", state: false},
-        {tag: "עיוור", state: false}
+        {tag: "גדול", state: false, num :1},
+        {tag: "קטן", state: false, num :2},
+        {tag: "בינוני", state: false, num :3},
+        {tag: "זכר", state: false, num :4},
+        {tag: "נקבה", state: false, num :5},
+        {tag: "עונה לשמו", state: false, num :6},
+        {tag: "ביישן", state: false, num :7},
+        {tag: "פחדן", state: false, num :8},
+        {tag: "חברותי", state: false, num :9},
+        {tag: "תוקפני", state: false, num :10},
+        {tag: "נבחן", state: false, num :11},
+        {tag: "שקט", state: false, num :12},
+        {tag: "מבוגר", state: false, num :13},
+        {tag: "גור", state: false, num :14},
+        {tag: "עם קולר", state: false, num :15},
+        {tag: "ללא קולר", state: false, num :16},
+        {tag: "חירש", state: false, num :17},
+        {tag: "עיוור", state: false, num :18}
     ];
 
 
@@ -250,7 +250,12 @@ export default function Screen3Report({route, navigation}) {
                                             תגיות:</Text>
                                     </View>
                                     <View style={stylesPoster.chips}>
-                                        {modalTags.map((item, index) => (
+                                        {modalTags.sort(function (a,b){
+                                            if (a.tag > b.tag)
+                                                return 1
+                                            else
+                                                return -1
+                                        }).map((item, index) => (
                                             <Chip
                                                 key={index}
                                                 selected={modalTags[index].state}
@@ -297,7 +302,12 @@ export default function Screen3Report({route, navigation}) {
                             {/*</View>*/}
                             <View style={{...stylesPoster.chips, marginLeft: "2%"}}>
                                 {
-                                    selectedTags.map((item, index) => (
+                                    selectedTags.sort(function (a,b){
+                                        if (a.tag > b.tag)
+                                            return 1
+                                        else
+                                            return -1
+                                    }).map((item, index) => (
                                         <Chip key={index}
                                               icon={"close"}
                                               selected={false}
