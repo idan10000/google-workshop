@@ -16,5 +16,6 @@ module.exports = {
     "semi": ["off"],
     "comma-spacing": ["off"],
     "spaced-comment": ["off"],
+    "no-unused-vars": ["off"],
   },
 };

@@ -24,6 +24,8 @@ const endpointId = "5577875264265781248";
 const project = "findog-a0110";
 const location = "us-central1";
 const aiplatform = require("@google-cloud/aiplatform");
+const {geohashQueryBounds} = require("geofire-common");
+// const {query, collection, orderBy, startAt, endAt, getDocs} = require("firebase-admin/firestore");
 const {instance, params, prediction} =
     aiplatform.protos.google.cloud.aiplatform.v1.schema.predict;
 
@@ -41,6 +43,7 @@ const predictionServiceClient = new PredictionServiceClient(clientOptions);
 // optionally providing an access token if you have enabled push security
 const expo = new Expo({accessToken: process.env.EXPO_ACCESS_TOKEN});
 
+
 const handlePosterPrediction = (predictions, posterData, poster) => {
     console.log("handling poster prediction")
     const predictionResultObj =
@@ -51,16 +54,32 @@ const handlePosterPrediction = (predictions, posterData, poster) => {
     }
     // TODO: add distance filter to the query
     if (labels.length !== 0) {
-        return db.collection("Reports").where("dogBreed", "array-contains-any", labels).get()
-            .then((querySnapshot) => {
-                const reports = [];
-                querySnapshot.docs.forEach((item) => {
-                    reports.push(item.data())
+        const bounds = geohashQueryBounds([posterData.location.latitude, posterData.location.longitude], 10000);
+        const promises = [];
+        for (const b of bounds) {
+            const query = db.collection("Reports")
+                .where("dogBreed", "array-contains-any", labels)
+                .orderBy("location.geohash")
+                .startAt(b[0])
+                .endAt(b[1])
+                .get()
+            promises.push(query);
+        }
+
+// Collect all the query results together into a single list
+        return Promise.all(promises).then((snapshots) => {
+            const reports = [];
+            for (const snap of snapshots) {
+                snap.docs.forEach((item) => {
+                    const newData = item.data()
+                    newData.id = item.id
+                    reports.push(newData)
                 })
-                return sendMatchNotification([posterData], reports).then(() => {
-                    return poster.update({"dogBreed": labels});
-                });
+            }
+            return sendMatchNotification([posterData], reports).then(() => {
+                return poster.update({"dogBreed": labels});
             });
+        })
     }
 }
 
@@ -74,25 +93,37 @@ const handleReportPrediction = (predictions, reportData, report) => {
     for (const [, label] of predictionResultObj.displayNames.entries()) {
         labels.push(label.split("-")[1]);
     }
-    // TODO: add distance filter to the query
     if (labels.length !== 0) {
-        return db.collection("Posters").where("dogBreed", "array-contains-any", labels).get()
-            .then((querySnapshot) => {
-                const postersToSend = [];
-                // get all user ids from the relevant posters
-                querySnapshot.forEach((snapshot) => {
-                    postersToSend.push(snapshot.data());
-                });
+        const bounds = geohashQueryBounds([reportData.location.latitude, reportData.location.longitude], 10000);
+        const promises = [];
+        for (const b of bounds) {
+            const query = db.collection("Posters")
+                .where("dogBreed", "array-contains-any", labels)
+                .orderBy("location.geohash")
+                .startAt(b[0])
+                .endAt(b[1])
+                .get()
+            promises.push(query);
+        }
 
-                console.log(`sending notifications from report of user ${uid}`);
-                if (postersToSend.length > 0) {
-                    return sendMatchNotification(postersToSend, [reportData]).then(() => {
-                        return report.update({"dogBreed": labels});
-                    });
-                } else {
+// Collect all the query results together into a single list
+        return Promise.all(promises).then((snapshots) => {
+            const postersToSend = [];
+            for (const snap of snapshots) {
+                snap.docs.forEach((item) => {
+                    postersToSend.push(item.data())
+                })
+            }
+            console.log(`sending notifications from report of user ${uid}`);
+            if (postersToSend.length > 0) {
+                reportData.id = report.id
+                return sendMatchNotification(postersToSend, [reportData]).then(() => {
                     return report.update({"dogBreed": labels});
-                }
-            });
+                });
+            } else {
+                return report.update({"dogBreed": labels});
+            }
+        })
     }
 };
 

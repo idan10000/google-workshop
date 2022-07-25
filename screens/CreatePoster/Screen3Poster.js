@@ -214,8 +214,8 @@ export default function Screen3Poster({route, navigation}) {
                 geohash: hash
             }
             let json = await Geocoder.from(tempLocation.latitude, tempLocation.longitude)
-            const address = json.results[0].formatted_address
-
+            let address = json.results[0].formatted_address
+            address = address.substring(0,address.length - 7)
 
             // const [addressResponse] = await reverseGeocodeAsync(tempLocation)
             // const address = `${addressResponse.street} ${addressResponse.streetNumber}, ${addressResponse.city}`;

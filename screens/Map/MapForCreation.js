@@ -32,6 +32,12 @@ export default function MapForCreation({
                 latitude: preLocation.latitude,
                 longitude: preLocation.longitude,
             });
+            setRegion({
+                latitude: preLocation.coords.latitude,
+                longitude: preLocation.coords.longitude,
+                latitudeDelta: 0.0025,
+                longitudeDelta: 0.0029,
+            })
             setIsLoading(false);
         } else {
             (async () => {

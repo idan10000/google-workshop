@@ -176,7 +176,8 @@ export default function Screen3Report({route, navigation}) {
             // const address = `${addressResponse.street} ${addressResponse.streetNumber}, ${addressResponse.city}`;
             // console.log(address)
             let json = await Geocoder.from(templocation.latitude, templocation.longitude)
-            const address = json.results[0].formatted_address
+            let address = json.results[0].formatted_address
+            address = address.substring(0,address.length - 7)
 
             const dbReport = new Report(image, "", location, address, today, time, plainTags, descriptionText, "", phoneText, checked, name, user.uid) // Report to upload to DB
             const sendReport = new Report(image, "", location, address, today, time, plainTags, descriptionText, "", phoneText, checked, name, user.uid) // Report to send to the Report page
