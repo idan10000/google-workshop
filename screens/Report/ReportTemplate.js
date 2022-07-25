@@ -3,7 +3,6 @@ import { Text, View, Image } from "react-native";
 import { Chip } from "react-native-paper";
 import { Nofar_styles } from "../../styles/NofarStyle";
 import { AR_styles } from "./ReportStyle";
-import {ImageBackground} from "react-native-web";
 export default function ReportTemplate({ data }) {
   const report_data = {
     desc: "נמצא בפארק העירוני בסביבות השעה ארבע ביום ראשון .",

@@ -12,7 +12,6 @@ import { Avatar, Chip } from "react-native-paper";
 import { Nofar_styles } from "../../../styles/NofarStyle";
 import { AR_styles } from "../PosterStyle";
 import Icon from "react-native-vector-icons/Entypo";
-import { Touchable } from "react-native-web";
 import imageContainer from "../../../shared_components/unused/ImageContainer";
 
 export default function PosterTemplate({ data }) {
