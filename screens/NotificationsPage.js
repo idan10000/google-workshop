@@ -90,12 +90,12 @@ export default function NotificationsPage({navigation, setNewNotification}) {
 
     // when you see a relevant notification, and you want to open it fot more details
     const goToReportPage = (item) => {
-        console.log(item.request.content.title)
-        console.log(item.request.content.body)
-        console.log(item.request.content.data)
-        const report = item.request.content.data.report;
-        console.log("reportID")
-        console.log(report)
+        // console.log(item.request.content.title)
+        // console.log(item.request.content.body)
+        // console.log(item.request.content.data)
+        const report = item.data.report;
+        // console.log("reportID")
+        // console.log(report)
         navigation.navigate("Report", {data: report})
     }
 
@@ -130,7 +130,7 @@ export default function NotificationsPage({navigation, setNewNotification}) {
                     enableEmptySections={true}
                     data={notifications}
                     keyExtractor={(item) => {
-                        return item.request.identifier;
+                        return item.data.report.id;
                     }}
                     refreshControl={
                         <RefreshControl refreshing={refreshing} onRefresh={refreshNotifications} />
@@ -142,8 +142,8 @@ export default function NotificationsPage({navigation, setNewNotification}) {
                             }}>
                                 <List.Item
                                     style={styles.listItem}
-                                    title={item.request.content.title}
-                                    description={item.request.content.body}
+                                    title={item.title}
+                                    description={item.body}
                                     left={props => <List.Icon {...props} icon="bell"/>}
                                     right={props => (
                                         <TouchableOpacity onPress={() => deleteHandler(item)}>

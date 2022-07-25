@@ -52,10 +52,13 @@ export default function HomeStack() {
             console.log("UID: " + user.uid)
             // update user document in firestore with the notifications token
             const userRef = doc(fireStoreDB, "Users", user.uid);
+            const userSnap = await userRef.get();
+            const newNotifications = userSnap.get("newNotifications");
+            setNewNotification(newNotifications);
+
             await updateDoc(userRef, {
                 notificationsToken: token,
                 notificationsActive: true
-            }).then(() => {
             }).catch(error => {
                 console.log(error)
             })
@@ -63,14 +66,13 @@ export default function HomeStack() {
 
         // This listener is fired whenever a notification is received while the app is foregrounded
         notificationListener.current = Notifications.addNotificationReceivedListener(async (notification) => {
-            const userRef = doc(fireStoreDB, "Users", user.uid);
+            // const userRef = doc(fireStoreDB, "Users", user.uid);
             setNewNotification(true);
-            await updateDoc(userRef, {
-                notifications: arrayUnion(notification)
-            }).then(() => {
-            }).catch(error => {
-                console.log(error)
-            })
+            // await updateDoc(userRef, {
+            //     notifications: arrayUnion(notification)
+            // }).catch(error => {
+            //     console.log(error)
+            // })
         });
 
         // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)

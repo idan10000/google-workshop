@@ -185,17 +185,21 @@ exports.classifyReport = functions.firestore
         });
     });
 
+
 const sendMatchNotification = (postersToSend, reports) => {
     console.log("sending notification")
-    console.log(postersToSend)
-    const users = []
+    //console.log(postersToSend)
+    const userSnapshots = []
+    const userDocs = []
     for (const poster of postersToSend) {
         const uid = poster.user;
-        const user = db.doc("Users/" + uid).get();
-        users.push(user);
+        const userDoc = db.doc("Users/" + uid);
+        const userSnapshot = userDoc.get();
+        userSnapshots.push(userSnapshot);
+        userDocs.push(userDoc)
     }
 
-    return Promise.all(users).then((snapshots) => {
+    return Promise.all(userSnapshots).then((snapshots) => {
         // const pushTokens = [];
         // for (const snapshot of snapshots) {
         //     // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
@@ -208,55 +212,69 @@ const sendMatchNotification = (postersToSend, reports) => {
         const tickets = [];
 
         snapshots.forEach((snapshot, index) => {
-           const pushToken = snapshot.get("notificationsToken");
-           const notificationsActive = snapshot.get("notificationsActive");
-           // Check that all your push tokens appear to be valid Expo push tokens
-           if (!Expo.isExpoPushToken(pushToken)) {
-               console.error(`Push token ${pushToken} is not a valid Expo push token`);
-               return;
-           }
-           const posterToSend = postersToSend[index];
-           const dogName = posterToSend.dogName;
-           // Create the messages that you want to send to clients
-           const messages = [];
-           for (const report of reports) {
-               console.log(report)
-               //const reportID = report.id
-               const reportAddress = report.address;
-               // Construct a message (see https://docs.expo.io/push-notifications/sending-notifications/)
-               const message = {
-                   to: pushToken,
-                   sound: "default",
-                   title: "מצאנו כלב! יכול להיות שהוא שלכם?",
-                   body: "כלב שנראה כמו " + dogName + " נצפה לאחרונה ב-" + reportAddress,
-                   data: {report: report},
-               }
-               messages.push(message);
-           }
-           if (notificationsActive === true) {
-               const chunks = expo.chunkPushNotifications(messages);
-               (() => {
-                   // Send the chunks to the Expo push notification service. There are
-                   // different strategies you could use. A simple one is to send one chunk at a
-                   // time, which nicely spreads the load out over time:
-                   for (const chunk of chunks) {
-                       try {
-                           return expo.sendPushNotificationsAsync(chunk).then((ticketChunk) => {
-                               console.log("TICKET CHUNK:");
-                               console.log(ticketChunk);
-                               tickets.push(...ticketChunk);
-                               // NOTE: If a ticket contains an error code in ticket.details.error, you
-                               // must handle it appropriately. The error codes are listed in the Expo
-                               // documentation:
-                               // https://docs.expo.io/push-notifications/sending-notifications/#individual-errors
-                           });
-                       } catch (error) {
-                           console.error(error);
-                           console.error(error.details)
-                       }
-                   }
-               })();
-           }
+            const currentNotifications = snapshot.get("notifications");
+
+            const pushToken = snapshot.get("notificationsToken");
+            const notificationsActive = snapshot.get("notificationsActive");
+            // Check that all your push tokens appear to be valid Expo push tokens
+            if (!Expo.isExpoPushToken(pushToken)) {
+                console.error(`Push token ${pushToken} is not a valid Expo push token`);
+                return;
+            }
+            const posterToSend = postersToSend[index];
+            const dogName = posterToSend.dogName;
+            // Create the messages that you want to send to clients
+            const messages = [];
+            for (const report of reports) {
+                console.log(report)
+                //const reportID = report.id
+                const reportAddress = report.address;
+                // Construct a message (see https://docs.expo.io/push-notifications/sending-notifications/)
+                const message = {
+                    to: pushToken,
+                    sound: "default",
+                    title: "מצאנו כלב! יכול להיות שהוא שלכם?",
+                    body: "כלב שנראה כמו " + dogName + " נצפה לאחרונה ב-" + reportAddress,
+                    data: {
+                        report: report,
+                    },
+                }
+                messages.push(message);
+            }
+            const userDoc = userDocs[index];
+            let allNotifications = []
+            if (typeof currentNotifications !== "undefined") {
+                allNotifications = currentNotifications.concat(messages)
+            } else {
+                allNotifications = messages
+            }
+            userDoc.update({"notifications": allNotifications})
+            if (notificationsActive === true) {
+                const chunks = expo.chunkPushNotifications(messages);
+                (() => {
+                    // Send the chunks to the Expo push notification service. There are
+                    // different strategies you could use. A simple one is to send one chunk at a
+                    // time, which nicely spreads the load out over time:
+                    for (const chunk of chunks) {
+                        try {
+                            return expo.sendPushNotificationsAsync(chunk).then((ticketChunk) => {
+                                console.log("TICKET CHUNK:");
+                                console.log(ticketChunk);
+                                tickets.push(...ticketChunk);
+                                // NOTE: If a ticket contains an error code in ticket.details.error, you
+                                // must handle it appropriately. The error codes are listed in the Expo
+                                // documentation:
+                                // https://docs.expo.io/push-notifications/sending-notifications/#individual-errors
+                            });
+                        } catch (error) {
+                            console.error(error);
+                            console.error(error.details)
+                        }
+                    }
+                })();
+            } else {
+                userDoc.update({"newNotifications": true})
+            }
         })
         return tickets;
 
