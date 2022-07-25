@@ -38,6 +38,18 @@ export default function PosterPage({navigation, route, typeOfPage}) {
             ref: route.params.ref
         });
     };
+    const editButtonPressHandler2 = () => {
+        console.log("opening Report screen");
+        console.log( route.params.data);
+        console.log(555555555)
+
+        console.log(route.params.ref)
+        navigation.navigate("ReportCreation2", {
+            report: route.params.data,
+            edit: true,
+            ref: route.params.ref
+        });
+    };
     const [expanded, setExpanded] = React.useState(false);
     const [fullPicture, setFullPicture] = React.useState(false);
     const showSlider = ()  =>{
@@ -97,7 +109,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                             marginVertical="4%">
                             <View style={AR_styles.lastSeen}>
 
-                                <Text style={styles.whenText}>נצפה לאחרונה ב:</Text>
+                                <Text style={styles.whenText}>נצפה ב:</Text>
                                 <Icon name="location-pin" size={22} color="#000"/>
                                 <TouchableOpacity ><Text fontSize="16" lineHeight="20" fontWeight="500"
                                                         textAlign="center">{route.params.data.address}</Text></TouchableOpacity>
@@ -109,7 +121,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 marginVertical="4%" flexDirection= "column">
                                 <View style={AR_styles.lastSeen}>
 
-                                    <Text style={styles.whenText}>נצפה לאחרונה ב:</Text>
+                                    <Text style={styles.whenText}>נצפה ב:</Text>
                                     <Icon name="location-pin" size={22} color="#000"/>
                                     <TouchableOpacity><Text fontSize="16" lineHeight="20" fontWeight="500"
                                                             textAlign="center">{route.params.data.address}</Text></TouchableOpacity>
@@ -144,7 +156,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 </View>
                                 <View style={styles.chveron2}>
                                     {
-                                        route.params.data.tagList.length > 3 &&
+                                        route.params.data.tagList.length > 4 &&
                                         <TouchableOpacity>
                                             <Icon name="chevron-down" size={32} color="#000"
                                                   onPress={() => {
@@ -290,7 +302,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                             marginVertical="4%">
                             <View style={AR_styles.lastSeen}>
 
-                                <Text style={styles.whenText}>נצפה לאחרונה ב:</Text>
+                                <Text style={styles.whenText}>נצפה ב:</Text>
                                 <Icon name="location-pin" size={22} color="#000"/>
                                 <TouchableOpacity><Text fontSize="16" lineHeight="20" fontWeight="500"
                                                         textAlign="center">{route.params.data.address}</Text></TouchableOpacity>
@@ -328,7 +340,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 </View>
                                 <View style={styles.chveron2}>
                                     {
-                                        route.params.data.tagList.length >3 &&
+                                        route.params.data.tagList.length > 4 &&
                                         <TouchableOpacity>
                                             <Icon name="chevron-down" size={32} color="#000"
                                                   onPress={() => {
@@ -468,7 +480,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                             marginVertical="4%">
                             <View style={AR_styles.lastSeen}>
 
-                                <Text style={styles.whenText}>נצפה לאחרונה ב:</Text>
+                                <Text style={styles.whenText}>נצפה ב:</Text>
                                 <Icon name="location-pin" size={22} color="#000"/>
                                 <TouchableOpacity><Text fontSize="16" lineHeight="20" fontWeight="500"
                                                         textAlign="center">{route.params.data.address}</Text></TouchableOpacity>
@@ -504,7 +516,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 </View>
                                 <View style={styles.chveron2}>
                                     {
-                                        route.params.data.tagList.length > 3 &&
+                                        route.params.data.tagList.length > 4 &&
                                         <TouchableOpacity>
                                             <Icon name="chevron-down" size={32} color="#000"
                                                   onPress={() => {
@@ -596,6 +608,14 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 <Text style={Nofar_styles.BigButtonText}>פתיחת מיקום במפה</Text>
                             </TouchableOpacity>
                         </View>
+                        <View style={AR_styles.confirmBTContainer}>
+                            <TouchableOpacity
+                                style={Nofar_styles.BigButton}
+                                onPress={editButtonPressHandler2}
+                            >
+                                <Text style={Nofar_styles.BigButtonText}>עדכון דיווח</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
 
                 </ScrollView>
@@ -648,7 +668,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                             marginVertical="4%">
                             <View style={AR_styles.lastSeen}>
 
-                                <Text style={styles.whenText}>נצפה לאחרונה ב:</Text>
+                                <Text style={styles.whenText}>נצפה ב:</Text>
                                 <Icon name="location-pin" size={22} color="#000"/>
                                 <TouchableOpacity><Text fontSize="16" lineHeight="20" fontWeight="500"
                                                         textAlign="center">{route.params.data.address}</Text></TouchableOpacity>
@@ -686,7 +706,7 @@ export default function PosterPage({navigation, route, typeOfPage}) {
                                 </View>
                                 <View style={styles.chveron2}>
                                     {
-                                        route.params.data.tagList.length > 3 &&
+                                        route.params.data.tagList.length > 4 &&
                                         <TouchableOpacity>
                                             <Icon name="chevron-down" size={32} color="#000"
                                                   onPress={() => {

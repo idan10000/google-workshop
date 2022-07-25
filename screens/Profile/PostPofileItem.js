@@ -5,9 +5,31 @@ import {
   StyleSheet,
   Image,
   Dimensions,
-  TouchableOpacity,
+  TouchableOpacity, Alert,
 } from "react-native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import {Touchable} from "react-native-web";
+const deleteReport = (ref) => {
+  Alert.alert(
+      "",
+      "האם אתה בטוח שאתה רוצה למחוק דיווח זה?",
+      [
 
+        {text: "כן", onPress:{deleteReportFromDB} }
+      ]
+  );
+};
+
+const deleteReportFromDB = (ref) => {
+  Alert.alert(
+      "",
+      "האם אתה בטוח שאתה רוצה למחוק דיווח זה?",
+      [
+
+        {text: "כן", onPress:{deleteReportFromDB} }
+      ]
+  );
+};
 const PostProfileItem = ({
   image,
   date,
@@ -27,8 +49,15 @@ const PostProfileItem = ({
       <View style={styles.itemContainer}>
         <Image source={{ uri: image }} style={styles.image} />
         <View style={styles.detailsContainer}>
-          <Caption style={styles.date}>{date}</Caption>
-          <Caption style={styles.date}>{name}</Caption>
+          <View style={styles.cancelContainer}>
+
+            <Caption style={styles.date}>{date}</Caption></View>
+          <TouchableOpacity  onPress={deleteReport} >
+            <Icon name="delete" color="#777777" size={25} /></TouchableOpacity>
+
+
+          {destination != "Report" &&
+          <Caption style={styles.date}>{name}</Caption>}
           <Caption style={styles.distance}>כתובת: {address}</Caption>
           <Caption style={styles.distance}>תיאור: {description}</Caption>
         </View>
@@ -54,7 +83,7 @@ const styles = StyleSheet.create({
 
   itemContainer: {
     flexDirection: "row",
-    paddingHorizontal: 12,
+    paddingHorizontal: 10,
   },
   date: {
     color: "black",
@@ -63,7 +92,13 @@ const styles = StyleSheet.create({
   },
   distance: {
     color: "black",
-  },
+  }, cancelContainer: {
+    position:"absolute",
+    flexDirection: "row",
+    alignItems:"center"
+
+  }
+
 });
 
 export default PostProfileItem;
