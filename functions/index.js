@@ -76,6 +76,7 @@ const handlePosterPrediction = (predictions, posterData, poster) => {
                     reports.push(newData)
                 })
             }
+            posterData.id = poster.id
             return sendMatchNotification([posterData], reports).then(() => {
                 return poster.update({"dogBreed": labels});
             });
@@ -111,10 +112,12 @@ const handleReportPrediction = (predictions, reportData, report) => {
             const postersToSend = [];
             for (const snap of snapshots) {
                 snap.docs.forEach((item) => {
-                    postersToSend.push(item.data())
+                    const posterData = item.data()
+                    posterData.id = item.id
+                    postersToSend.push(posterData)
                 })
             }
-            console.log(`sending notifications from report of user ${uid}`);
+            //console.log(`sending notifications from report of user ${uid}`);
             if (postersToSend.length > 0) {
                 reportData.id = report.id
                 return sendMatchNotification(postersToSend, [reportData]).then(() => {
@@ -131,7 +134,7 @@ const handleReportPrediction = (predictions, reportData, report) => {
 const getPrediction = (doc, image, post, handlePrediction) => {
     const endpoint = `projects/${project}/locations/` +
         `${location}/endpoints/${endpointId}`;
-    console.log(endpoint);
+    //console.log(endpoint);
     const parametersObj = new params.ImageClassificationPredictionParams({
         confidenceThreshold: 0.4,
         maxPredictions: 1,
@@ -141,7 +144,7 @@ const getPrediction = (doc, image, post, handlePrediction) => {
         content: image,
     });
     const instanceValue = instanceObj.toValue();
-    console.log(instanceValue);
+    //console.log(instanceValue);
     const instances = [instanceValue];
     const request = {
         endpoint,
@@ -150,7 +153,7 @@ const getPrediction = (doc, image, post, handlePrediction) => {
     };
     // Predict request
     return predictionServiceClient.predict(request).then((result) => {
-        console.log("Predict image classification response");
+        //console.log("Predict image classification response");
         const response = result[0];
         return handlePrediction(response.predictions, post, doc);
     });
@@ -161,10 +164,10 @@ exports.classifyPoster = functions.firestore
     .onCreate((snap, context) => {
         const newValue = snap.data();
         // access a particular field as you would any JS property
-        console.log("image path: " + newValue.imagePath);
+        //console.log("image path: " + newValue.imagePath);
         const bucket = storage.bucket("findog-a0110.appspot.com");
         return bucket.file(newValue.imagePath).download().then((data) => {
-            console.log("download output:");
+            //console.log("download output:");
             const image = data[0].toString("base64");
             // Configure the endpoint resource
             return getPrediction(snap.ref, image, snap.data(), handlePosterPrediction);
@@ -176,7 +179,7 @@ exports.classifyReport = functions.firestore
     .onCreate((snap, context) => {
         const newValue = snap.data();
         // access a particular field as you would any JS property
-        console.log("image path: " + newValue.imagePath);
+        //console.log("image path: " + newValue.imagePath);
         const bucket = storage.bucket("findog-a0110.appspot.com");
         return bucket.file(newValue.imagePath).download().then((data) => {
             const image = data[0].toString("base64");
@@ -206,14 +209,11 @@ const sendMatchNotification = (postersToSend, reports) => {
         //     const token = snapshot.get("notificationsToken");
         //     pushTokens.push(token);
         // }
-
-
         //const docUpdates = [];
         const tickets = [];
+        const notificationsAllUsers = {};
 
         snapshots.forEach((snapshot, index) => {
-            const currentNotifications = snapshot.get("notifications");
-
             const pushToken = snapshot.get("notificationsToken");
             const notificationsActive = snapshot.get("notificationsActive");
             // Check that all your push tokens appear to be valid Expo push tokens
@@ -222,11 +222,14 @@ const sendMatchNotification = (postersToSend, reports) => {
                 return;
             }
             const posterToSend = postersToSend[index];
+            const uid = posterToSend.user;
             const dogName = posterToSend.dogName;
+            //console.log(dogName)
+            const posterID = posterToSend.id;
             // Create the messages that you want to send to clients
             const messages = [];
             for (const report of reports) {
-                console.log(report)
+                //console.log(report)
                 //const reportID = report.id
                 const reportAddress = report.address;
                 // Construct a message (see https://docs.expo.io/push-notifications/sending-notifications/)
@@ -237,18 +240,17 @@ const sendMatchNotification = (postersToSend, reports) => {
                     body: "כלב שנראה כמו " + dogName + " נצפה לאחרונה ב-" + reportAddress,
                     data: {
                         report: report,
+                        posterID: posterID,
                     },
                 }
                 messages.push(message);
             }
-            const userDoc = userDocs[index];
-            let allNotifications = []
-            if (typeof currentNotifications !== "undefined") {
-                allNotifications = currentNotifications.concat(messages)
+            if (Object.prototype.hasOwnProperty.call(notificationsAllUsers,uid)) {
+                notificationsAllUsers[uid] = notificationsAllUsers[uid].concat(messages)
             } else {
-                allNotifications = messages
+                notificationsAllUsers[uid] = messages;
             }
-            userDoc.update({"notifications": allNotifications})
+            const userDoc = userDocs[index];
             if (notificationsActive === true) {
                 const chunks = expo.chunkPushNotifications(messages);
                 (() => {
@@ -275,6 +277,32 @@ const sendMatchNotification = (postersToSend, reports) => {
             } else {
                 userDoc.update({"newNotifications": true})
             }
+        })
+
+        Object.entries(notificationsAllUsers).forEach(([uid, messages]) => {
+            const userDoc = db.doc("Users/" + uid);
+            const userSnapshot = userDoc.get();
+            // console.log("index:")
+            // console.log(index)
+            return userSnapshot.then((snapshot) => {
+                const currentNotifications = snapshot.get("notifications");
+                //const messages = notificationsAllUsers[uid]
+                let allNotifications;
+                // console.log("currentNotifications:")
+                // console.log(currentNotifications)
+                // console.log("messages:")
+                // console.log(messages)
+                if (typeof currentNotifications !== "undefined") {
+                    // console.log("concatenating")
+                    allNotifications = currentNotifications.concat(messages)
+                } else {
+                    // console.log("replacing")
+                    allNotifications = messages
+                }
+                // console.log("allNotifications")
+                // console.log(allNotifications)
+                userDoc.update({"notifications": allNotifications})
+            })
         })
         return tickets;
 

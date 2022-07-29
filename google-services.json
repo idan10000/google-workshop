@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:324712450952:android:0d5a35f8aac35de448883d",
         "android_client_info": {
-          "package_name": "com.example.findog"
+          "package_name": "com.findog.findog"
         }
       },
       "oauth_client": [

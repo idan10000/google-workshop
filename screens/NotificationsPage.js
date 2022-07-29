@@ -1,10 +1,15 @@
-import { List } from 'react-native-paper';
+import {List} from 'react-native-paper';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
+    ActivityIndicator,
+    Alert,
+    FlatList,
+    RefreshControl,
+    ScrollView,
     StyleSheet,
+    Text,
     TouchableOpacity,
-    View, ScrollView,
-    FlatList, Text, RefreshControl, ActivityIndicator
+    View
 } from 'react-native';
 import {arrayRemove, doc, getDoc, updateDoc} from "firebase/firestore";
 import {fireStoreDB} from "../shared_components/Firebase";
@@ -73,11 +78,31 @@ export default function NotificationsPage({navigation, setNewNotification}) {
             }
         })
     }
+
+    const confirmDeletion = async (item) => {
+
+        Alert.alert(
+            "למחוק התראה?",
+            "לא יהיה ניתן לשחזר אותה לאחר מכן!",
+            [
+                {text: "ביטול",
+                    onPress:() => {}},
+                {text: "אישור",
+                    onPress: async () => {await deleteNotification(item)}}
+            ],
+            {
+                cancelable: true,
+                onDismiss: () => {}
+            }
+        );
+    }
+
     // dismissing a message
-    const deleteHandler = async (item) => {
+    const deleteNotification = async (item) => {
         // setNotifications((prevNotifications) => {
         //     return prevNotifications.filter(notification => notification.id != id)
         // })
+
         const userRef = doc(fireStoreDB, "Users", user.uid);
         await updateDoc(userRef, {
             notifications: arrayRemove(item)
@@ -88,7 +113,7 @@ export default function NotificationsPage({navigation, setNewNotification}) {
         await refreshNotifications();
     }
 
-    // when you see a relevant notification, and you want to open it fot more details
+    // when you see a relevant notification, and you want to open it for more details
     const goToReportPage = (item) => {
         // console.log(item.request.content.title)
         // console.log(item.request.content.body)
@@ -130,7 +155,7 @@ export default function NotificationsPage({navigation, setNewNotification}) {
                     enableEmptySections={true}
                     data={notifications}
                     keyExtractor={(item) => {
-                        return item.data.report.id;
+                        return item.data.report.id + "_" + item.data.posterID
                     }}
                     refreshControl={
                         <RefreshControl refreshing={refreshing} onRefresh={refreshNotifications} />
@@ -146,7 +171,7 @@ export default function NotificationsPage({navigation, setNewNotification}) {
                                     description={item.body}
                                     left={props => <List.Icon {...props} icon="bell"/>}
                                     right={props => (
-                                        <TouchableOpacity onPress={() => deleteHandler(item)}>
+                                        <TouchableOpacity onPress={() => confirmDeletion(item)}>
                                             <List.Icon {...props} icon="close"/>
                                         </TouchableOpacity>
                                     )}
