@@ -12,7 +12,7 @@ Your dog is missing? FinDog is here to help! We use machine learning tools to ma
 
 ### Front-End
 
-We used React Native for the front-end and tried to follow the Material Design patterns with the design and icons.
+We used React Native for the front-end and tried to follow the Material Design patterns with the design and icons, by, among other things, using React Native Paper library. 
 
 ### Back-End
 
