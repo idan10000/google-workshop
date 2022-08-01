@@ -4,6 +4,7 @@ import React from "react";
 import {I18nManager} from "react-native";
 import Routes from "./navigation";
 import { LogBox } from 'react-native';
+import {Provider} from "react-native-paper";
 
 
 export default function App() {
@@ -16,7 +17,9 @@ export default function App() {
     I18nManager.allowRTL(true);
     I18nManager.forceRTL(true);
     return (
-        <Routes/>
+        <Provider>
+            <Routes/>
+        </Provider>
     );
 
 // return (

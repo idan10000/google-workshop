@@ -18,11 +18,11 @@ import Screen3Poster from "../screens/CreatePoster/Screen3Poster";
 import {registerForPushNotificationsAsync} from '../shared_components/NotificationsUtils'
 import * as Notifications from 'expo-notifications';
 import {fireStoreDB} from "../shared_components/Firebase";
-import {arrayUnion, doc, getDoc, updateDoc} from "firebase/firestore";
+import {doc, getDoc, updateDoc} from "firebase/firestore";
 import {useContext, useEffect, useRef, useState} from "react";
 import {AuthenticatedUserContext} from "./AuthenticatedUserProvider";
+import {NotificationsContext, NotificationsProvider} from "./NotificationsProvider";
 import Screen1Poster from "../screens/CreatePoster/Screen1Poster";
-import SignIn from "../screens/SignIn";
 import SupportPage from "../screens/Profile/TechnicalSupport";
 import FirstProfile from "../screens/Profile/firstProfile";
 import SecondProfile from "../screens/Profile/secondProfile";
@@ -45,6 +45,36 @@ export default function HomeStack() {
     const notificationListener = useRef();
     const responseListener = useRef();
     const {user} = useContext(AuthenticatedUserContext);
+    const {val} = useContext(NotificationsContext)
+    const [refreshing, setRefreshing,  isNotification, setIsNotification, notifications, setNotifications] =
+        useContext(NotificationsContext);
+    // console.log(useContext(NotificationsContext))
+    // console.log(val)
+
+    // refreshes the notifications so we can see the newest matches
+    const refreshNotifications = () => {
+        console.log("refresh")
+        const userRef = doc(fireStoreDB, "Users", user.uid);
+        return getDoc(userRef).then((userSnap) => {
+            setRefreshing(false);
+            setNewNotification(false);
+            if (userSnap.exists()) {
+                //console.log("Document data:", userSnap.data());
+                const notificationsArray = userSnap.data().notifications;
+                if (notificationsArray === undefined || notificationsArray.length === 0){
+                    setIsNotification(false);
+                }
+                else {
+                    setIsNotification(true);
+                }
+                console.log(notificationsArray.length)
+                setNotifications(notificationsArray);
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+        })
+    }
 
     useEffect(() => {
         registerForPushNotificationsAsync().then(async (token) => {
@@ -102,36 +132,43 @@ export default function HomeStack() {
     }, []);
 
 
-    const options = {header: (props) => <Header {...props} newNotification={newNotification}/>}
+    const options = {header: (props) => <Header {...props} newNotification={newNotification} refreshNotifications={refreshNotifications}/>}
 
     return (
-        <Stack.Navigator screenOptions={options} /*initialRouteName={responseReport === {} ? "התראות" : "Main"}*/>
-            <Stack.Screen name="Main" component={NavigationBar} />
-            <Stack.Screen name="Home" component={OldhomeScreen}/>
-            <Stack.Screen name="ReportCreation" component={Screen1Report}/>
-            <Stack.Screen name="ReportCreation2" component={Screen2Report}/>
-            <Stack.Screen name="ReportCreation3" component={Screen3Report}/>
+    <NotificationsContext.Consumer>
+        {value => {
+            return (
+                <Stack.Navigator screenOptions={options} /*initialRouteName={responseReport === {} ? "התראות" : "Main"}*/>
+                    <Stack.Screen name="Main" component={NavigationBar} />
+                    <Stack.Screen name="Home" component={OldhomeScreen}/>
+                    <Stack.Screen name="ReportCreation" component={Screen1Report}/>
+                    <Stack.Screen name="ReportCreation2" component={Screen2Report}/>
+                    <Stack.Screen name="ReportCreation3" component={Screen3Report}/>
 
-            <Stack.Screen name="PosterCreation" component={Screen1Poster}/>
-            <Stack.Screen name="PosterCreation2" component={Screen2Poster}/>
-            <Stack.Screen name="PosterCreation3" component={Screen3Poster}/>
-            <Stack.Screen name="ReportPage" component={ReportPage}/>
-            {/*<Stack.Screen name="CreateAd" component={PosterPostingComponent}/>*/}
-            <Stack.Screen name="AdPage" component={AdPage}/>
-            <Stack.Screen name="התראות">
-                {(props) => <NotificationsPage {...props} setNewNotification={setNewNotification}/>}
-            </Stack.Screen>
-    {/* <Stack.Screen name="ReportForBrowse" component={ReportForBrowse}/> */}
-            <Stack.Screen name="Report" component={ReportForBrowser} />
-            <Stack.Screen name="Poster" component={PosterBrowse} />
-            <Stack.Screen name="SupportScreen" component={SupportPage} />
-            <Stack.Screen name="FirstProfile" component={FirstProfile} />
-            <Stack.Screen name="SecondProfile" component={SecondProfile} />
+                    <Stack.Screen name="PosterCreation" component={Screen1Poster}/>
+                    <Stack.Screen name="PosterCreation2" component={Screen2Poster}/>
+                    <Stack.Screen name="PosterCreation3" component={Screen3Poster}/>
+                    <Stack.Screen name="ReportPage" component={ReportPage}/>
+                    {/*<Stack.Screen name="CreateAd" component={PosterPostingComponent}/>*/}
+                    <Stack.Screen name="AdPage" component={AdPage}/>
+                    <Stack.Screen name="התראות">
+                        {(props) => <NotificationsPage {...props}
+                                                       refreshNotifications={refreshNotifications}
+                                                       setNewNotification={setNewNotification}
+                        />}
+                    </Stack.Screen>
+                    {/* <Stack.Screen name="ReportForBrowse" component={ReportForBrowse}/> */}
+                    <Stack.Screen name="Report" component={ReportForBrowser} />
+                    <Stack.Screen name="Poster" component={PosterBrowse} />
+                    <Stack.Screen name="SupportScreen" component={SupportPage} />
+                    <Stack.Screen name="FirstProfile" component={FirstProfile} />
+                    <Stack.Screen name="SecondProfile" component={SecondProfile} />
 
+                </Stack.Navigator>
+            )
+        }}
 
-
-
-        </Stack.Navigator>
-    );
+    </NotificationsContext.Consumer>
+            );
 }
 

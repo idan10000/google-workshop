@@ -1,57 +1,128 @@
-import React from 'react';
-import { Appbar } from 'react-native-paper';
-import {StyleSheet} from 'react-native';
+import React, {useContext} from 'react';
+import {Appbar, Divider, Provider, Menu, Text} from 'react-native-paper';
+import {Alert, StyleSheet} from 'react-native';
+import { View } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import {clearAllNotifications, clearAllNotificationsFirebase} from "./NotificationsUtils";
+import {AuthenticatedUserContext} from "../navigation/AuthenticatedUserProvider";
+import {NotificationsContext} from "../navigation/NotificationsProvider";
+import {doc, updateDoc} from "firebase/firestore";
+import {fireStoreDB} from "./Firebase";
+
 
 // this is the page of the header of the app which appears almost in every screen
 
+export default function Header({ navigation, back, newNotification, refreshNotifications}) {
+    const { user } = useContext(AuthenticatedUserContext);
 
-export default function Header({ navigation, back, newNotification }) {
-
-    const _handleMore = () => console.log('Shown more');
+    //const _handleMore = () => console.log('Shown more');
     const route = useRoute();
 
+    const [visible, setVisible] = React.useState(false);
+    const openMenu = () => setVisible(true);
+    const closeMenu = () => setVisible(false);
+
+    const clearAllNotifications = (user) => {
+        Alert.alert(
+            "למחוק את כל ההתראות?",
+            "לא יהיה ניתן לשחזר אותן לאחר מכן!",
+            [
+                {text: "ביטול",
+                    onPress:() => {}},
+                {text: "אישור",
+                    onPress: async () => {await clearAllNotificationsFirebase(user)
+                                            await refreshNotifications()}}
+            ],
+            {
+                cancelable: true,
+                onDismiss: () => {}
+            }
+        );
+    }
+
+    const clearAllNotificationsFirebase = async (user) => {
+        const userRef = doc(fireStoreDB, "Users", user.uid);
+        await updateDoc(userRef, {
+            notifications: []
+        }).catch(error => {
+            console.log(error)
+        })
+    }
+
+    const clearAndRefresh = async () => {
+        //console.log(refreshNotifications)
+        await clearAllNotifications(user)
+        closeMenu()
+    }
+
     return (
-        <Appbar.Header style={styles.header} mode='center-aligned'>
+        <NotificationsContext.Consumer>
+            {(value) => {
+                return (
+                    <Appbar.Header style={styles.header}>
 
-            {back ? <Appbar.BackAction onPress={navigation.goBack} color ='#5C4C3D'/> : null }
+                        {back && <Appbar.BackAction onPress={navigation.goBack} color='#5C4C3D'/>}
 
-            <Appbar.Content title={route.name === "התראות" ? "התראות":"Findog"} style={styles.content} titleStyle={styles.title}/>
-            {route.name === "התראות" ? <Appbar.Action style={styles.action} icon="dots-vertical" onPress={_handleMore} color ='#5C4C3D'/> : null }
+                        <View
+                            style={[
+                                StyleSheet.absoluteFill,
+                                {alignItems: "center", justifyContent: "center"},
+                            ]}
+                            pointerEvents="box-none"
+                        >
+                            <Appbar.Content
+                                title={route.name === "התראות" ? <Text style={styles.title}>התראות</Text> :
+                                    <Text style={styles.title}>Findog</Text>}
+                                style={{
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
+                            />
+                        </View>
+                        <View style={{flex: 1}}/>
 
-            {back ? null : <Appbar.Action style={styles.backAction} icon={newNotification ? "bell-alert":"bell"} color='#5C4C3D' onPress={() => {navigation.navigate('התראות')}} />}
+                        {route.name === "התראות" &&
+                            <Menu
+                                visible={visible}
+                                onDismiss={closeMenu}
+                                anchor={
+                                    <Appbar.Action style={styles.deleteAction} icon="dots-vertical" onPress={openMenu}
+                                                   color='#5C4C3D'/>
+                                }>
+                                <Menu.Item onPress={clearAndRefresh} title="מחיקת כל ההתראות"/>
 
-        </Appbar.Header>
+                            </Menu>}
+
+                        {!back && <Appbar.Action style={styles.bellAction}
+                                                 icon={newNotification ? "bell-alert-outline" : "bell-outline"}
+                                                 color='#5C4C3D' onPress={() => {
+                            navigation.navigate('התראות')
+                        }}/>}
+
+                    </Appbar.Header>
+                )
+            }}
+            </NotificationsContext.Consumer>
     );
 }
 
 
 const styles = StyleSheet.create({
     header: {
-      // backgroundColor: "#9E846C"
         backgroundColor: "#F4F2E3"
-    },
-    content: {
-      marginLeft: 0,
-      position: 'absolute',
-      left: 0,
-      right: 0,
-      zIndex: -1,
     },
     title :{
       alignSelf: 'center',
-      color: "#5C4C3D"
+      color: "#5C4C3D",
+      fontWeight: 'bold'
     },
-    backAction: {
+    bellAction: {
       marginLeft: 0,
       position: 'absolute',
       left: 20,
       right: 0,
     },
-    action: {
-        marginLeft: 0,
-        position: 'absolute',
-        left: 340,
+    deleteAction: {
         right: 0,
-    }
+    },
   })

@@ -1,11 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { View, ActivityIndicator } from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {ActivityIndicator, View} from 'react-native';
 
-import { AuthenticatedUserContext } from './AuthenticatedUserProvider';
+import {AuthenticatedUserContext} from './AuthenticatedUserProvider';
 import AuthStack from './AuthStack';
 import HomeStack from './HomeStack';
 import {getAuth} from "firebase/auth";
+import {NotificationsProvider} from "./NotificationsProvider";
 
 export default function RootNavigator() {
     const { user, setUser } = useContext(AuthenticatedUserContext);
@@ -13,7 +14,8 @@ export default function RootNavigator() {
 
     useEffect(() => {
         // onAuthStateChanged returns an unsubscriber
-        const unsubscribeAuth = getAuth().onAuthStateChanged(async authenticatedUser => {
+        // unsubscribe auth listener on unmount
+        return getAuth().onAuthStateChanged(async authenticatedUser => {
             try {
                 await (authenticatedUser ? setUser(authenticatedUser) : setUser(null));
                 setIsLoading(false);
@@ -21,9 +23,6 @@ export default function RootNavigator() {
                 console.log(error);
             }
         });
-
-        // unsubscribe auth listener on unmount
-        return unsubscribeAuth;
     }, []);
 
     if (isLoading) {
@@ -35,8 +34,10 @@ export default function RootNavigator() {
     }
 
     return (
-        <NavigationContainer>
-            {user ? <HomeStack /> : <AuthStack />}
-        </NavigationContainer>
-    );
+        <NotificationsProvider>
+            <NavigationContainer>
+                    {user ? <HomeStack /> : <AuthStack />}
+            </NavigationContainer>
+        </NotificationsProvider>
+);
 }

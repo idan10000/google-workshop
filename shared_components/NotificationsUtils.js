@@ -2,6 +2,7 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import {doc, updateDoc} from "firebase/firestore";
 import {fireStoreDB} from "./Firebase";
+import {Alert} from "react-native";
 
 
 export async function registerForPushNotificationsAsync() {
@@ -43,4 +44,31 @@ export async function turnOffNotifications(user){
     }).catch(error => {
         console.log(error)
     })
+}
+
+export async function clearAllNotificationsFirebase(user){
+    const userRef = doc(fireStoreDB, "Users", user.uid);
+    await updateDoc(userRef, {
+        notifications: []
+    }).catch(error => {
+        console.log(error)
+    })
+}
+
+export async function clearAllNotifications(user){
+
+    Alert.alert(
+        "למחוק את כל ההתראות?",
+        "לא יהיה ניתן לשחזר אותן לאחר מכן!",
+        [
+            {text: "ביטול",
+                onPress:() => {}},
+            {text: "אישור",
+                onPress: async () => {await clearAllNotificationsFirebase(user)}}
+        ],
+        {
+            cancelable: true,
+            onDismiss: () => {}
+        }
+    );
 }

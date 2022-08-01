@@ -14,18 +14,19 @@ import {
 import {arrayRemove, doc, getDoc, updateDoc} from "firebase/firestore";
 import {fireStoreDB} from "../shared_components/Firebase";
 import {AuthenticatedUserContext} from "../navigation/AuthenticatedUserProvider";
+import {NotificationsContext} from "../navigation/NotificationsProvider";
 
 
-export default function NotificationsPage({navigation, setNewNotification}) {
+export default function NotificationsPage({navigation, refreshNotifications,
+                                              setNewNotification}) {
 
     const {user} = useContext(AuthenticatedUserContext);
     const loadedNotifications = useRef(false)
-    const [notifications, setNotifications] = useState([])
-    const [isNotification, setIsNotification] = useState(false);
-    const [refreshing, setRefreshing] = useState(true);
     const [isLoading, setIsLoading] = useState(true);
-
-
+    const [refreshing, setRefreshing,  isNotification, setIsNotification, notifications, setNotifications] =
+        useContext(NotificationsContext);
+    //const NotificationsConsumer = useContext(NotificationsContext).Consumer
+    //console.log(NotificationsConsumer)
     useEffect(async () => {
         await loadNotifications();
         setIsLoading(false);
@@ -56,31 +57,8 @@ export default function NotificationsPage({navigation, setNewNotification}) {
             }
         })
     }
-    // refreshes the notifications so we can see the newest matches
-    const refreshNotifications = () => {
-        const userRef = doc(fireStoreDB, "Users", user.uid);
-        return getDoc(userRef).then((userSnap) => {
-            setRefreshing(false);
-            setNewNotification(false);
-            if (userSnap.exists()) {
-                //console.log("Document data:", userSnap.data());
-                const notificationsArray = userSnap.data().notifications;
-                if (notificationsArray === undefined || notificationsArray.length === 0){
-                    setIsNotification(false);
-                }
-                else {
-                    setIsNotification(true);
-                }
-                setNotifications(notificationsArray);
-            } else {
-                // doc.data() will be undefined in this case
-                console.log("No such document!");
-            }
-        })
-    }
 
     const confirmDeletion = async (item) => {
-
         Alert.alert(
             "למחוק התראה?",
             "לא יהיה ניתן לשחזר אותה לאחר מכן!",
@@ -99,10 +77,6 @@ export default function NotificationsPage({navigation, setNewNotification}) {
 
     // dismissing a message
     const deleteNotification = async (item) => {
-        // setNotifications((prevNotifications) => {
-        //     return prevNotifications.filter(notification => notification.id != id)
-        // })
-
         const userRef = doc(fireStoreDB, "Users", user.uid);
         await updateDoc(userRef, {
             notifications: arrayRemove(item)
@@ -115,73 +89,75 @@ export default function NotificationsPage({navigation, setNewNotification}) {
 
     // when you see a relevant notification, and you want to open it for more details
     const goToReportPage = (item) => {
-        // console.log(item.request.content.title)
-        // console.log(item.request.content.body)
-        // console.log(item.request.content.data)
         const report = item.data.report;
-        // console.log("reportID")
-        // console.log(report)
         navigation.navigate("Report", {data: report})
     }
 
-    if (isLoading)
-        return (
-            <View style={styles.container}>
-                <ActivityIndicator size="large" color="#DCA277" />
-            </View>
-        );
-
-    if (isNotification === false){
-        return (
-                <View style={styles.container}>
-                    <ScrollView
-                        refreshControl={
-                            <RefreshControl refreshing={refreshing} onRefresh={refreshNotifications} />
-                        }
-                        contentContainerStyle={styles.noNotificationsContainer}>
-
-                        <Text style={styles.noNotificationsTitle}>אין התראות...</Text>
-                        <Text style={styles.noNotificationsParagraph}>כשנמצא כלב שמתאים לתמונה של הכלב שלכם, נשלח לכם התראה מיד, והיא תופיע ממש כאן</Text>
-                    </ScrollView>
-                </View>
-        )
-    }
 
     return (
+        <NotificationsContext.Consumer>
+            {(value) => {
+                const [refreshing, setRefreshing,  isNotification, setIsNotification, notifications, setNotifications] = value
+                if (isLoading)
+                    return (
+                                <View style={styles.container}>
+                                    <ActivityIndicator size="large" color="#DCA277" />
+                                </View>
+                    );
 
-            <View style={styles.container}>
-                <FlatList
-                    style={styles.notificationList}
-                    enableEmptySections={true}
-                    data={notifications}
-                    keyExtractor={(item) => {
-                        return item.data.report.id + "_" + item.data.posterID
-                    }}
-                    refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={refreshNotifications} />
-                    }
-                    renderItem={({item}) => {
-                        return (
-                            <TouchableOpacity onPress={() => {
-                                console.log("open notification")
-                            }}>
-                                <List.Item
-                                    style={styles.listItem}
-                                    title={item.title}
-                                    description={item.body}
-                                    left={props => <List.Icon {...props} icon="bell"/>}
-                                    right={props => (
-                                        <TouchableOpacity onPress={() => confirmDeletion(item)}>
-                                            <List.Icon {...props} icon="close"/>
-                                        </TouchableOpacity>
-                                    )}
-                                    onPress={() => goToReportPage(item)}
-                                />
-                            </TouchableOpacity>
-                        )
-                    }}/>
-            </View>
-    );
+                if (isNotification === false){
+                    return (
+                            <View style={styles.container}>
+                                <ScrollView
+                                    refreshControl={
+                                        <RefreshControl refreshing={refreshing} onRefresh={refreshNotifications} />
+                                    }
+                                    contentContainerStyle={styles.noNotificationsContainer}>
+
+                                    <Text style={styles.noNotificationsTitle}>אין התראות...</Text>
+                                    <Text style={styles.noNotificationsParagraph}>כשנמצא כלב שמתאים לתמונה של הכלב שלכם, נשלח לכם התראה מיד, והיא תופיע ממש כאן</Text>
+                                </ScrollView>
+                            </View>
+                    )
+                }
+
+                return (
+                    <View style={styles.container}>
+                        <FlatList
+                            style={styles.notificationList}
+                            enableEmptySections={true}
+                            data={notifications}
+                            keyExtractor={(item) => {
+                                return item.data.report.id + "_" + item.data.posterID
+                            }}
+                            refreshControl={
+                                <RefreshControl refreshing={refreshing} onRefresh={refreshNotifications} />
+                            }
+                            renderItem={({item}) => {
+                                return (
+                                    <TouchableOpacity onPress={() => {
+                                        console.log("open notification")
+                                    }}>
+                                        <List.Item
+                                            style={styles.listItem}
+                                            title={item.title}
+                                            description={item.body}
+                                            left={props => <List.Icon {...props} icon="bell"/>}
+                                            right={props => (
+                                                <TouchableOpacity onPress={() => confirmDeletion(item)}>
+                                                    <List.Icon {...props} icon="close"/>
+                                                </TouchableOpacity>
+                                            )}
+                                            onPress={() => goToReportPage(item)}
+                                        />
+                                    </TouchableOpacity>
+                                )
+                            }}/>
+                    </View>
+                )
+            }}
+        </NotificationsContext.Consumer>
+    )
 }
 
 
