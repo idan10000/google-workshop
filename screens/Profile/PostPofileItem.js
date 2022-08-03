@@ -25,7 +25,7 @@ const deleteReportFromDB = (ref) => {
       "האם אתה בטוח שאתה רוצה למחוק דיווח זה?",
       [
 
-        {text: "כן", onPress:{deleteReportFromDB} }
+        {text: "כן!", onPress:{deleteReportFromDB} }
       ]
   );
 };

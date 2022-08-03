@@ -60,7 +60,8 @@ export default function FirstProfile({ navigation }) {
       });
       Promise.all(promises).then((docs) => {
         docs.forEach((doc) => {
-          posters.push(doc.data());
+          console.log(doc.ref)
+          posters.push({data: doc.data(),ref: doc.ref});
         });
         setData(posters);
       });
