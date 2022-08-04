@@ -53,9 +53,12 @@ export default function HomeStack() {
 
     // refreshes the notifications so we can see the newest matches
     const refreshNotifications = () => {
-        console.log("refresh")
         const userRef = doc(fireStoreDB, "Users", user.uid);
-        return getDoc(userRef).then((userSnap) => {
+        return updateDoc(userRef, {
+            newNotifications:false
+        }).catch(error => {
+            console.log(error)
+        }).then(() => {getDoc(userRef).then((userSnap) => {
             setRefreshing(false);
             setNewNotification(false);
             if (userSnap.exists()) {
@@ -67,13 +70,12 @@ export default function HomeStack() {
                 else {
                     setIsNotification(true);
                 }
-                console.log(notificationsArray.length)
                 setNotifications(notificationsArray);
             } else {
                 // doc.data() will be undefined in this case
                 console.log("No such document!");
             }
-        })
+        })})
     }
 
     useEffect(() => {
@@ -95,7 +97,7 @@ export default function HomeStack() {
         });
 
         // This listener is fired whenever a notification is received while the app is foregrounded
-        notificationListener.current = Notifications.addNotificationReceivedListener(async (notification) => {
+        notificationListener.current = Notifications.addNotificationReceivedListener( (notification) => {
             // const userRef = doc(fireStoreDB, "Users", user.uid);
             setNewNotification(true);
             // await updateDoc(userRef, {
@@ -104,7 +106,7 @@ export default function HomeStack() {
             //     console.log(error)
             // })
         });
-        console.log(typeof notificationListener.current)
+        //console.log(typeof notificationListener.current)
 
         // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
         responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {

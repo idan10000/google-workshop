@@ -18,6 +18,7 @@ export default function NavigationBar() {
     <Tab.Navigator
       initialRouteName="בית"
       screenOptions={{ headerShown: false }}
+      backBehavior={'initialRoute'}
       barStyle={styles.bar}
       activeColor={"white"}
       inactiveColor={"#5C4C3D"}

@@ -49,7 +49,8 @@ export async function turnOffNotifications(user){
 export async function clearAllNotificationsFirebase(user){
     const userRef = doc(fireStoreDB, "Users", user.uid);
     await updateDoc(userRef, {
-        notifications: []
+        notifications: [],
+        newNotifications:false
     }).catch(error => {
         console.log(error)
     })

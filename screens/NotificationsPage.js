@@ -34,7 +34,12 @@ export default function NotificationsPage({navigation, refreshNotifications,
 
     const loadNotifications = () => {
         const userRef = doc(fireStoreDB, "Users", user.uid);
-        return getDoc(userRef).then((userSnap) => {
+        return updateDoc(userRef, {
+            newNotifications:false
+        }).catch(error => {
+            console.log(error)
+        }).then(() => {getDoc(userRef)
+            .then((userSnap) => {
             setNewNotification(false);
             setRefreshing(false);
             if (userSnap.exists()) {
@@ -55,7 +60,7 @@ export default function NotificationsPage({navigation, refreshNotifications,
                 // doc.data() will be undefined in this case
                 console.log("No such document!");
             }
-        })
+        })})
     }
 
     const confirmDeletion = async (item) => {
@@ -142,7 +147,7 @@ export default function NotificationsPage({navigation, refreshNotifications,
                                             style={styles.listItem}
                                             title={item.title}
                                             description={item.body}
-                                            left={props => <List.Icon {...props} icon="bell"/>}
+                                            left={props => <List.Icon {...props} icon="dog"/>}
                                             right={props => (
                                                 <TouchableOpacity onPress={() => confirmDeletion(item)}>
                                                     <List.Icon {...props} icon="close"/>
