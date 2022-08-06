@@ -8,7 +8,7 @@ import {stylesPoster} from "../CreatePoster/CreatePosterStyle";
 import Report, {reportConverter} from "../../data_classes/Report";
 import {fireStoreDB, uploadImageAsync} from "../../shared_components/Firebase";
 import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
-import {addDoc, arrayUnion, collection, doc, getDoc, setDoc, updateDoc} from "firebase/firestore";
+import {addDoc, arrayUnion, collection, doc, getDoc, serverTimestamp, setDoc, updateDoc} from "firebase/firestore";
 import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
 import * as geofire from "geofire-common";
 import Geocoder from "react-native-geocoding";
@@ -163,7 +163,8 @@ export default function Screen3Report({route, navigation}) {
             let image = route.params.edit ? report.image : route.params.image
             let today = route.params.edit ? report.date : dd + '/' + mm + '/' + yyyy;
             let time = route.params.edit ? report.time : getCurrentTime();
-
+            let timeStamp = route.params.edit ? report.timeStamp : serverTimestamp()
+            console.log(timeStamp)
             const name = user.displayName
             let templocation = route.params.location
             const hash = geofire.geohashForLocation([templocation.latitude, templocation.longitude])
@@ -179,8 +180,8 @@ export default function Screen3Report({route, navigation}) {
             let address = json.results[0].formatted_address
             address = address.substring(0,address.length - 7)
 
-            const dbReport = new Report(image, "", location, address, today, time, plainTags, descriptionText, "", phoneText, checked, name, user.uid) // Report to upload to DB
-            const sendReport = new Report(image, "", location, address, today, time, plainTags, descriptionText, "", phoneText, checked, name, user.uid) // Report to send to the Report page
+            const dbReport = new Report(image, "", location, address, today, time, plainTags, descriptionText, "", phoneText, checked, name, user.uid, timeStamp) // Report to upload to DB
+            const sendReport = new Report(image, "", location, address, today, time, plainTags, descriptionText, "", phoneText, checked, name, user.uid, timeStamp) // Report to send to the Report page
 
 
             // if we reached from an edit Report

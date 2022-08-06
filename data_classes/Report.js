@@ -1,6 +1,6 @@
 class Report {
 
-    constructor(image, imagePath, location, address, date, time, tagList, description, dogBreed,phoneNumber,contact,name, user) {
+    constructor(image, imagePath, location, address, date, time, tagList, description, dogBreed,phoneNumber,contact,name, user, timeStamp) {
         this.image = image;
         this.imagePath = imagePath;
         this.location = location;
@@ -14,6 +14,7 @@ class Report {
         this.contact = contact
         this.name = name
         this.phoneNumber = phoneNumber
+        this.timeStamp = timeStamp
     }
 }
 
@@ -32,12 +33,13 @@ export const reportConverter = {
             phoneNumber: report.phoneNumber,
             contact : report.contact,
             name: report.name,
-            user: report.user
+            user: report.user,
+            timeStamp: report.timeStamp
         };
     },
     fromFirestore: (snapshot, options) => {
         const data = snapshot.data(options);
-        return new Report(data.image, data.imagePath, data.location, data.address, data.date, data.time, data.tagList, data.description, data.dogBreed,data.phoneNumber,data.contact,data.name, data.user);
+        return new Report(data.image, data.imagePath, data.location, data.address, data.date, data.time, data.tagList, data.description, data.dogBreed,data.phoneNumber,data.contact,data.name, data.user, data.timeStamp);
     }
 };
 

@@ -11,7 +11,7 @@ import {stylesPoster} from "../CreatePoster/CreatePosterStyle";
 import Report, {reportConverter} from "../../data_classes/Report";
 import {fireStoreDB, uploadImageAsync} from "../../shared_components/Firebase";
 import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
-import {addDoc, arrayUnion, collection, doc, getDoc, setDoc, updateDoc} from "firebase/firestore";
+import {addDoc, arrayUnion, collection, doc, getDoc, setDoc, updateDoc, serverTimestamp} from "firebase/firestore";
 import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
 import CheckBox from '@react-native-community/checkbox';
 import Poster, {posterConverter} from "../../data_classes/Poster";
@@ -33,24 +33,24 @@ export default function Screen3Poster({route, navigation}) {
 
     // these are the chosen tags to describe a dog
     const tagList = [
-        {tag: "גדול", state: false, num :1},
-        {tag: "קטן", state: false, num :2},
-        {tag: "בינוני", state: false, num :3},
-        {tag: "זכר", state: false, num :4},
-        {tag: "נקבה", state: false, num :5},
-        {tag: "עונה לשמו", state: false, num :6},
-        {tag: "ביישן", state: false, num :7},
-        {tag: "פחדן", state: false, num :8},
-        {tag: "חברותי", state: false, num :9},
-        {tag: "תוקפני", state: false, num :10},
-        {tag: "נבחן", state: false, num :11},
-        {tag: "שקט", state: false, num :12},
-        {tag: "מבוגר", state: false, num :13},
-        {tag: "גור", state: false, num :14},
-        {tag: "עם קולר", state: false, num :15},
-        {tag: "ללא קולר", state: false, num :16},
-        {tag: "חירש", state: false, num :17},
-        {tag: "עיוור", state: false, num :18}
+        {tag: "גדול", state: false, num: 1},
+        {tag: "קטן", state: false, num: 2},
+        {tag: "בינוני", state: false, num: 3},
+        {tag: "זכר", state: false, num: 4},
+        {tag: "נקבה", state: false, num: 5},
+        {tag: "עונה לשמו", state: false, num: 6},
+        {tag: "ביישן", state: false, num: 7},
+        {tag: "פחדן", state: false, num: 8},
+        {tag: "חברותי", state: false, num: 9},
+        {tag: "תוקפני", state: false, num: 10},
+        {tag: "נבחן", state: false, num: 11},
+        {tag: "שקט", state: false, num: 12},
+        {tag: "מבוגר", state: false, num: 13},
+        {tag: "גור", state: false, num: 14},
+        {tag: "עם קולר", state: false, num: 15},
+        {tag: "ללא קולר", state: false, num: 16},
+        {tag: "חירש", state: false, num: 17},
+        {tag: "עיוור", state: false, num: 18}
     ];
 
 
@@ -205,6 +205,7 @@ export default function Screen3Poster({route, navigation}) {
             let time = route.params.edit ? prevPoster.time : getCurrentTime();
             const selectedImage = route.params.edit ? prevPoster.image : route.params.image
             const name = user.displayName
+            let timeStamp = route.params.edit ? prevPoster.timeStamp : serverTimestamp()
 
             let tempLocation = route.params.location
             const hash = geofire.geohashForLocation([tempLocation.latitude, tempLocation.longitude])
@@ -215,13 +216,13 @@ export default function Screen3Poster({route, navigation}) {
             }
             let json = await Geocoder.from(tempLocation.latitude, tempLocation.longitude)
             let address = json.results[0].formatted_address
-            address = address.substring(0,address.length - 7)
+            address = address.substring(0, address.length - 7)
 
             // const [addressResponse] = await reverseGeocodeAsync(tempLocation)
             // const address = `${addressResponse.street} ${addressResponse.streetNumber}, ${addressResponse.city}`;
             let imagePath = route.params.edit ? prevPoster.imagePath : ""
-            const dbPoster = new Poster(selectedImage, "", location, address, today, time, plainTags, descriptionText, nameText, '', phoneText, name, user.uid)
-            const sendPoster = new Poster(selectedImage, "", location, address, today, time, plainTags, descriptionText, nameText, '', phoneText, name, user.uid)
+            const dbPoster = new Poster(selectedImage, imagePath, location, address, today, time, plainTags, descriptionText, nameText, '', phoneText, name, user.uid, timeStamp)
+            const sendPoster = new Poster(selectedImage, imagePath, location, address, today, time, plainTags, descriptionText, nameText, '', phoneText, name, user.uid, timeStamp)
             const db = fireStoreDB;
 
             // if we reached from an edit Report different way to handle data
@@ -321,9 +322,9 @@ export default function Screen3Poster({route, navigation}) {
                                 <Text style={{...Nofar_styles.SmallTitle, paddingBottom: "3%"}}>בחר תגיות:</Text>
                             </View>
                             <View style={stylesPoster.chips}>
-                                {modalTags.sort(function (a,b){
+                                {modalTags.sort(function (a, b) {
                                     if (a.tag > b.tag)
-                                    return 1
+                                        return 1
                                     else
                                         return -1
                                 }).map((item, index) => (
@@ -373,7 +374,7 @@ export default function Screen3Poster({route, navigation}) {
                     {/*</View>*/}
                     <View style={{...stylesPoster.chips, marginLeft: "2%"}}>
                         {
-                            selectedTags.sort(function (a,b){
+                            selectedTags.sort(function (a, b) {
                                 if (a.tag > b.tag)
                                     return 1
                                 else

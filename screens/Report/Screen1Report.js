@@ -75,7 +75,7 @@ export default function Screen1Report({route, navigation}) {
         // navigation.pop()
 
 
-        navigation.navigate("ReportCreation2", {image: route.params.image,edit: false, ref: route.params.ref})
+        navigation.navigate("ReportCreation2", {image: selectedImage,edit: false, ref: route.params.ref})
 
     }
     const [visibleDetails, setVisibleDetails] = React.useState(false);
