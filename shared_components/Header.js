@@ -109,7 +109,8 @@ export default function Header({ navigation, back, newNotification, refreshNotif
 
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: "#F4F2E3"
+        backgroundColor: "#F4F2E3",
+        //height: 55,
     },
     title :{
       alignSelf: 'center',

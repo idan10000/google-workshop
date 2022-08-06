@@ -46,7 +46,7 @@ export default function PageLaunch({navigation}) {
             source={require('../assets/new_background.png')}>
 
             <View style={landingPageStyle.appNameHeader}>
-                <Text style={landingPageStyle.appNameHeader}> FinDog</Text>
+                <Text style={landingPageStyle.appNameHeader}> Findog</Text>
             </View>
             <  View style={landingPageStyle.slogenContainer}>
 

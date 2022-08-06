@@ -1,6 +1,6 @@
-# FinDog
+# Findog
 
-Your dog is missing? FinDog is here to help! We use machine learning tools to match your dog's missing ad with someone that found your dog.
+Your dog is missing? Findog is here to help! We use machine learning tools to match your dog's missing ad with someone that found your dog.
  
 ## Features
 
@@ -28,6 +28,6 @@ We also built an AI model using Vertex AI on the Google Cloud platform. The mode
 
 ## Installation
 
-You can install FinDog using [Google Play](https://play.google.com/store/games) (TODO:add link!)
+You can install Findog using [Google Play](https://play.google.com/store/games) (TODO:add link!)
 
 ## Usage Instructions

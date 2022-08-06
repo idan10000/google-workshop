@@ -157,7 +157,7 @@ export default function SignUp({navigation}) {
                     <TouchableOpacity><Image source={require('../assets/Find_my_dog_logo.png')}
                                              style={signUpStyle.appLogo}/></TouchableOpacity>
                     <View style={Nofar_styles.BigTitle}>
-                        <Text style={Nofar_styles.BigTitle}>Welcome{'\n'}To FinDog</Text>
+                        <Text style={Nofar_styles.BigTitle}>Welcome{'\n'}To Findog</Text>
                     </View>
                 </View>
 
