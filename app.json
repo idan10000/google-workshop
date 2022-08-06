@@ -3,7 +3,7 @@
     "owner": "findog",
     "name": "FinDog",
     "slug": "FinDog",
-    "version": "1.0.0",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/square_logo.png",
     "splash": {
@@ -25,10 +25,16 @@
         "foregroundImage": "./assets/square_logo.png",
         "backgroundColor": "#FFFFFF"
       },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCNBwWdwTxUtj6JrH8rf-8gFsE2eHsY82Q"
+        }
+      },
       "package": "com.findog.findog",
       "permissions": ["NOTIFICATIONS"],
       "useNextNotificationsApi": true,
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "versionCode": 4
     },
     "web": {
       "favicon": "./assets/Find_my_dog_logo.png"
