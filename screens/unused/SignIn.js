@@ -14,12 +14,12 @@ import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {TextInput} from 'react-native-paper';
 
 import {Formik} from 'formik';
-import {AfterSignedStyle} from '../styles/AfterSignedStyle';
+import {AfterSignedStyle} from '../../styles/AfterSignedStyle';
 import * as yup from 'yup';
-import {fireAuth} from "../shared_components/Firebase";
+import {fireAuth} from "../../shared_components/Firebase";
 import {signInWithEmailAndPassword} from "firebase/auth";
-import {Nofar_styles} from "../styles/NofarStyle";
-import {signUpStyle} from "../styles/SignUpStyle";
+import {Nofar_styles} from "../../styles/NofarStyle";
+import {signUpStyle} from "../../styles/SignUpStyle";
 
 import {getFirestore, setDoc, doc} from 'firebase/firestore';
 import {getDatabase, ref, set} from "firebase/database";
@@ -133,12 +133,12 @@ export default function SignIn({navigation}) {
     return (
         <ImageBackground
             style={{flex: 1}}
-            source={require('../assets/new_background.png')}>
+            source={require('../../assets/new_background.png')}>
             <View style={Nofar_styles.container}>
                 <View style={signUpStyle.logoHeaderContainer}>
 
                     <TouchableOpacity>
-                        <Image source={require('../assets/Find_my_dog_logo.png')}
+                        <Image source={require('../../assets/Find_my_dog_logo.png')}
                                              style={signUpStyle.appLogo}/>
                     </TouchableOpacity>
 

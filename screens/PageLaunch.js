@@ -65,7 +65,7 @@ export default function PageLaunch({navigation}) {
             <View style={landingPageStyle.emailRegist}>
 
                 <TouchableOpacity style={Nofar_styles.SmallButton} onPress={() => navigation.navigate('SignUp')}>
-                    <Text style={Nofar_styles.SmallButtonTitle}>הרשמה באמצעות מייל</Text>
+                    <Text style={Nofar_styles.SmallButtonTitle}>הרשמה באמצעות טלפון</Text>
                 </TouchableOpacity>
                 <Text style={landingPageStyle.text}> או באמצעות </Text>
 

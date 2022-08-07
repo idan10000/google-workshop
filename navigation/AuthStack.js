@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import PageLaunch from '../screens/PageLaunch';
 import SignUp from '../screens/SignUp';
 import HomeStack from './HomeStack';
-import SignIn from "../screens/SignIn";
+import SignIn from "../screens/unused/SignIn";
 
 //connect between signing ( authentication) and our home stack after we successfully entered the app
 

@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Image, Text, TouchableOpacity, View, ImageBackground} from 'react-native';
-import {Button, TextInput} from 'react-native-paper';
+import {Image, Text, TouchableOpacity, View, ImageBackground, StyleSheet, Dimensions} from 'react-native';
+import {Button, TextInput, Modal, Portal} from 'react-native-paper';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import {signUpStyle} from "../styles/SignUpStyle";
@@ -10,6 +10,8 @@ import {createUserWithEmailAndPassword, getAuth, PhoneAuthProvider, signInWithCr
 import {setDoc, doc} from 'firebase/firestore';
 import {FirebaseRecaptchaVerifierModal, FirebaseRecaptchaBanner} from 'expo-firebase-recaptcha';
 import {getApp} from 'firebase/app';
+import {Touchable} from "react-native-web";
+import {stylesPoster} from "./CreatePoster/CreatePosterStyle";
 
 
 // this page is used when a new user wants to join the app via email
@@ -146,6 +148,12 @@ export default function SignUp({navigation}) {
     const [message, showMessage] = React.useState();
     const attemptInvisibleVerification = false;
 
+    const modalConfirmPressHandler = () => {
+    }
+    const [visibleVerification, setVisibleVerification] = React.useState(false);
+
+
+
 
     return (
         <ImageBackground
@@ -161,28 +169,36 @@ export default function SignUp({navigation}) {
                     </View>
                 </View>
 
-                <View style={signUpStyle.welcomeText}>
-                    <Text style={signUpStyle.welcomeText}>קודם כל... בוא נכיר אותך...</Text>
-                </View>
+                {/*<View style={signUpStyle.welcomeText}>*/}
+                {/*    <Text style={signUpStyle.welcomeText}>קודם כל... בוא נכיר אותך...</Text>*/}
+                {/*</View>*/}
 
                 <FirebaseRecaptchaVerifierModal
                     ref={recaptchaVerifier}
                     firebaseConfig={app.options}
                     // attemptInvisibleVerification
                 />
-                <Text style={{marginTop: 20}}>Enter phone number</Text>
+                <View style={Nofar_styles.actionInput}>
+                    <Text style={{    color: '#000',
+                        fontWeight: 'bold',
+                        fontSize: 20,}}>Enter phone number</Text></View>
+                <View style={Nofar_styles.actionInput}>
+
                 <TextInput
                     style={{marginVertical: 10, fontSize: 17}}
-                    placeholder="+1 999 999 9999"
+                    placeholder="0545556566"
                     autoFocus
                     autoCompleteType="tel"
                     keyboardType="phone-pad"
                     textContentType="telephoneNumber"
                     onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
                 />
-                <Button
-                    title="Send Verification Code"
-                    disabled={!phoneNumber}
+                </View>
+                    {
+
+                phoneNumber &&
+
+                <TouchableOpacity
                     onPress={async () => {
                         // The FirebaseRecaptchaVerifierModal ref implements the
                         // FirebaseAuthApplicationVerifier interface and can be
@@ -197,21 +213,44 @@ export default function SignUp({navigation}) {
                             showMessage({
                                 text: 'Verification code has been sent to your phone.',
                             });
+                            setVisibleVerification(true)
+
                         } catch (err) {
                             showMessage({text: `Error: ${err.message}`, color: 'red'});
                         }
-                    }}
-                />
-                <Text style={{marginTop: 20}}>Enter Verification code</Text>
+                    }}>
+                    <View  style={{backgroundColor: "#DCA277",    width: Dimensions.get('window').width * 0.6,
+                        height: Dimensions.get('window').height * 0.055,alignSelf:'center',alignItems:"center", justifyContent:"center",
+                        borderRadius: 20,marginTop:"5%"}}>
+                    <Text style={Nofar_styles.TinyButtonTitle}>Send Verification Code</Text></View>
+
+                </TouchableOpacity>}
+
+                <Portal>
+                    {/*Tags*/}
+                    <Modal
+                        visible={visibleVerification}
+                        onDismiss={modalConfirmPressHandler}
+                        contentContainerStyle={stylesPoster.modal}
+                    >
+
+
+                <View style={Nofar_styles.actionInput}>
+                    <Text style={{    color: '#000',
+                        fontWeight: 'bold',
+                        fontSize: 20,}}>Enter verification code</Text></View>
+                <View style={Nofar_styles.actionInput}>
+
                 <TextInput
                     style={{marginVertical: 10, fontSize: 17}}
                     editable={!!verificationId}
                     placeholder="123456"
                     onChangeText={setVerificationCode}
                 />
-                <Button
-                    title="Confirm Verification Code"
-                    disabled={!verificationId}
+
+                </View>
+                        {verificationId &&
+                <TouchableOpacity
                     onPress={async () => {
                         try {
                             const credential = PhoneAuthProvider.credential(
@@ -223,8 +262,13 @@ export default function SignUp({navigation}) {
                         } catch (err) {
                             showMessage({text: `Error: ${err.message}`, color: 'red'});
                         }
-                    }}
-                />
+                    }}>
+                    <View  style={{backgroundColor: "#DCA277",    width: Dimensions.get('window').width * 0.6,
+                        height: Dimensions.get('window').height * 0.055,alignSelf:'center',alignItems:"center", justifyContent:"center",
+                        borderRadius: 20,marginTop:"1%",marginBottom:"5%"}}>
+                        <Text style={Nofar_styles.TinyButtonTitle}>Confirm Verification Code</Text></View>
+                </TouchableOpacity>
+                        }
                 {message ? (
                     <TouchableOpacity
                         style={[
@@ -243,6 +287,8 @@ export default function SignUp({navigation}) {
                     </TouchableOpacity>
                 ) : undefined}
                 {attemptInvisibleVerification && <FirebaseRecaptchaBanner/>}
+                    </Modal>
+                </Portal>
 
                 {/*<Formik*/}
                 {/*    initialValues={{Name: '', Email: '', Password: '', PhoneNumber: ''}}*/}
@@ -369,3 +415,38 @@ export default function SignUp({navigation}) {
         </ImageBackground>
     );
 }
+const styles = StyleSheet.create({
+    imageContainer: {
+        flex: 1,
+    },
+    image: {
+        resizeMode: "cover",
+        flex: 1,
+
+    },
+    detailsContainer: {
+        paddingHorizontal: 4,
+        marginTop: -4,
+        flexDirection: "column",
+        width: "60%",
+    },
+
+    itemContainer: {
+        flexDirection: "row",
+        paddingHorizontal: 10,
+    },
+    date: {
+        color: "black",
+        fontWeight: "bold",
+        fontSize: 14,
+    },
+    distance: {
+        color: "black",
+    }, cancelContainer: {
+        position:"absolute",
+        flexDirection: "row",
+        alignItems:"center"
+
+    }
+
+});

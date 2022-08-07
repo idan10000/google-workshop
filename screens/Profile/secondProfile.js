@@ -60,7 +60,10 @@ export default function SecondProfile({ navigation }) {
             });
             Promise.all(promises).then((docs) => {
                 docs.forEach((doc) => {
-                    posters.push(doc.data());
+                    let data = doc.data()
+                    data.ref = refs[docs.indexOf(doc)]
+                    posters.push(data);
+
                 });
                 setData(posters);
             });
@@ -165,6 +168,8 @@ export default function SecondProfile({ navigation }) {
                         keyExtractor={(item) => item.image}
                         numColumns={1}
                         renderItem={({ item }) => {
+                            console.log("\n\n\n")
+                            console.log("the new is")
                             return (
                                 <View
                                     style={{

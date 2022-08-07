@@ -8,13 +8,19 @@ import {
   TouchableOpacity, Alert,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { doc, deleteDoc } from "firebase/firestore";
+
 import {Touchable} from "react-native-web";
+import {fireStoreDB} from "../../shared_components/Firebase";
 const deleteReport = (ref) => {
   Alert.alert(
       "",
       "האם אתה בטוח שאתה רוצה למחוק דיווח זה?",
       [
-        {text: "כן", onPress:{deleteReportFromDB} }
+        {text: "לא", onPress: () => console.log("No Pressed") },
+
+        {text: "כן", onPress:(ref) => console.log("No Pressed")}
+
       ]
   );
 };
@@ -39,6 +45,9 @@ const PostProfileItem = ({
   destination,
   navigation,
 }) => {
+
+  const db = fireStoreDB;
+
   return (
     <TouchableOpacity
       onPress={() => {
@@ -51,7 +60,22 @@ const PostProfileItem = ({
           <View style={styles.cancelContainer}>
 
             <Caption style={styles.date}>{date}</Caption></View>
-          <TouchableOpacity  onPress={deleteReport} >
+          <TouchableOpacity  onPress={() => {
+            console.log("\n\n\n")
+            console.log("the ref is")
+            console.log(data.ref)
+
+            Alert.alert(
+                "",
+                "האם אתה בטוח שאתה רוצה למחוק דיווח זה?",
+                [
+                  {text: "לא", onPress: () => console.log("No Pressed") },
+
+                  {text: "כן", onPress:async () => deleteDoc(doc(db, "Posters", data.ref))}
+
+                ]
+            );
+          }} >
             <Icon name="delete" color="#777777" size={25} /></TouchableOpacity>
 
 
@@ -72,6 +96,7 @@ const styles = StyleSheet.create({
   image: {
     resizeMode: "cover",
     flex: 1,
+
   },
   detailsContainer: {
     paddingHorizontal: 4,
