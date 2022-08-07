@@ -274,9 +274,8 @@ const sendMatchNotification = (postersToSend, reports) => {
                         }
                     }
                 })();
-            } else {
-                userDoc.update({"newNotifications": true})
             }
+            userDoc.update({"newNotifications": true})
         })
 
         Object.entries(notificationsAllUsers).forEach(([uid, messages]) => {

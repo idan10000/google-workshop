@@ -61,7 +61,7 @@ export default function Header({ navigation, back, newNotification, refreshNotif
                 return (
                     <Appbar.Header style={styles.header}>
 
-                        {back && <Appbar.BackAction onPress={navigation.goBack} color='#5C4C3D'/>}
+                        {back && <Appbar.BackAction onPress={navigation.goBack} color='#5C4C3D' style={styles.bellAction}/>}
 
                         <View
                             style={[
@@ -76,6 +76,7 @@ export default function Header({ navigation, back, newNotification, refreshNotif
                                 style={{
                                     alignItems: "center",
                                     justifyContent: "center",
+                                    bottom:20
                                 }}
                             />
                         </View>
@@ -110,7 +111,7 @@ export default function Header({ navigation, back, newNotification, refreshNotif
 const styles = StyleSheet.create({
     header: {
         backgroundColor: "#F4F2E3",
-        //height: 55,
+        height: 30,
     },
     title :{
       alignSelf: 'center',
@@ -122,8 +123,10 @@ const styles = StyleSheet.create({
       position: 'absolute',
       left: 20,
       right: 0,
+        bottom:10
     },
     deleteAction: {
         right: 0,
+        bottom: 15
     },
   })

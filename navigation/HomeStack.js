@@ -26,6 +26,7 @@ import Screen1Poster from "../screens/CreatePoster/Screen1Poster";
 import SupportPage from "../screens/Profile/TechnicalSupport";
 import FirstProfile from "../screens/Profile/firstProfile";
 import SecondProfile from "../screens/Profile/secondProfile";
+import { useNavigation } from '@react-navigation/native';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -48,6 +49,8 @@ export default function HomeStack() {
     const {val} = useContext(NotificationsContext)
     const [refreshing, setRefreshing,  isNotification, setIsNotification, notifications, setNotifications] =
         useContext(NotificationsContext);
+    const navigation = useNavigation();
+
     // console.log(useContext(NotificationsContext))
     // console.log(val)
 
@@ -98,20 +101,18 @@ export default function HomeStack() {
 
         // This listener is fired whenever a notification is received while the app is foregrounded
         notificationListener.current = Notifications.addNotificationReceivedListener( (notification) => {
-            // const userRef = doc(fireStoreDB, "Users", user.uid);
             setNewNotification(true);
-            // await updateDoc(userRef, {
-            //     notifications: arrayUnion(notification)
-            // }).catch(error => {
-            //     console.log(error)
-            // })
+
         });
-        //console.log(typeof notificationListener.current)
 
         // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
         responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-            const reportID = response.notification.request.content.data.report;
-            console.log(reportID);
+            const report = response.notification.request.content.data.report;
+            console.log("findog REPORT:")
+            console.log(report);
+            navigation.navigate("התראות")
+            navigation.navigate("Report", {data: report})
+
             // const reportRef = doc(fireStoreDB, "Reports", reportID);
             // return getDoc(reportRef).then((reportSnap) => {
             //     if (reportSnap.exists()) {
