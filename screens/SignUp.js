@@ -194,9 +194,7 @@ export default function SignUp({navigation}) {
                     onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
                 />
                 </View>
-                    {
 
-                phoneNumber &&
 
                 <TouchableOpacity
                     onPress={async () => {
@@ -224,7 +222,7 @@ export default function SignUp({navigation}) {
                         borderRadius: 20,marginTop:"5%"}}>
                     <Text style={Nofar_styles.TinyButtonTitle}>Send Verification Code</Text></View>
 
-                </TouchableOpacity>}
+                </TouchableOpacity>
 
                 <Portal>
                     {/*Tags*/}
@@ -264,7 +262,7 @@ export default function SignUp({navigation}) {
                         }
                     }}>
                     <View  style={{backgroundColor: "#DCA277",    width: Dimensions.get('window').width * 0.6,
-                        height: Dimensions.get('window').height * 0.055,alignSelf:'center',alignItems:"center", justifyContent:"center",
+                        height: Dimensions.get('window').height * 0.065,alignSelf:'center',alignItems:"center", justifyContent:"center",
                         borderRadius: 20,marginTop:"1%",marginBottom:"5%"}}>
                         <Text style={Nofar_styles.TinyButtonTitle}>Confirm Verification Code</Text></View>
                 </TouchableOpacity>

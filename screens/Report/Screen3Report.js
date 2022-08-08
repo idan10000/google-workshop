@@ -305,7 +305,7 @@ export default function Screen3Report({route, navigation}) {
                             <View style={{...stylesPoster.chips, marginLeft: "2%"}}>
                                 {
                                     selectedTags.sort(function (a,b){
-                                        if (a.tag > b.tag)
+                                        if (a.num > b.num)
                                             return 1
                                         else
                                             return -1
