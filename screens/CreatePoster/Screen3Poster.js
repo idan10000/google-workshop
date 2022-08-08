@@ -1,10 +1,10 @@
-import {StyleSheet, View, ImageBackground, Dimensions, ScrollView} from 'react-native';
+import {StyleSheet, View, ImageBackground, Dimensions, ScrollView, ActivityIndicator} from 'react-native';
 import {Button, Chip, Modal, Portal, Provider, TextInput, Checkbox} from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import {getAuth, signOut} from "firebase/auth";
 import {Text, TouchableOpacity, Image} from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import {Nofar_styles} from "../../styles/NofarStyle";
 import StepIndicator from 'react-native-step-indicator';
 import {stylesPoster} from "../CreatePoster/CreatePosterStyle";
@@ -140,7 +140,7 @@ export default function Screen3Poster({route, navigation}) {
     const db = fireStoreDB;
 
     const initDescription = route.params.edit ? prevPoster.description : ''
-    const initName = route.params.edit ? prevPoster.name : ''
+    const initName = route.params.edit ? prevPoster.dogName : ''
 
     const [initializedPhone, setInitializedPhone] = React.useState(false);
     let initPhone = ""
@@ -166,6 +166,7 @@ export default function Screen3Poster({route, navigation}) {
     const [time, setTime] = React.useState(false);
     const [selectedHours, setSelectedHours] = React.useState(0);
     const [selectedMinutes, setSelectedMinutes] = React.useState(0);
+    const [isLoading, setIsLoading] = useState(false);
 
     const getCurrentTime = () => {
         let today = new Date();
@@ -182,6 +183,7 @@ export default function Screen3Poster({route, navigation}) {
     // here we need to handle all the data we have got in this 3 levels of upload
     // we add the time, date and more details that need to be shown on the report screen
     const nextScreen = async () => {
+        setIsLoading(true)
         if (phoneRegExp.test(phoneText) === true && phoneText.length === 10 && nameText.length !== 0) {
 
 
@@ -257,21 +259,35 @@ export default function Screen3Poster({route, navigation}) {
                 });
             }
         } else {
-            if (!(phoneRegExp.test(phoneText) === true && phoneText.length == 10)) {
+            if (!(phoneRegExp.test(phoneText) === true && phoneText.length === 10)) {
                 setCorrectPhone(false)
             }
-            if (nameText.length == 0) {
+            if (nameText.length === 0) {
                 setCorrectDogName(false)
 
             }
         }
     }
     // before letting the user submit his poster we need to validate that the phone is real number and that the dogs' name is valid
-    if (phoneRegExp.test(phoneText) === true && phoneText.length == 10 && correctPhone === false) {
+    if (phoneRegExp.test(phoneText) === true && phoneText.length === 10 && correctPhone === false) {
         setCorrectPhone(true)
     }
     if (nameText.length !== 0 && correctDogName === false) {
         setCorrectDogName(true)
+    }
+    if (isLoading) {
+        return (
+            <View style={Nofar_styles.container}>
+                <View marginTop="2.5%">
+                    <StepIndicator
+                        customStyles={customStyles}
+                        currentPosition={2}
+                        labels={labels}
+                        stepCount={3}
+                    /></View>
+                <ActivityIndicator style={{marginTop:"75%"}} size="large" color="#DCA277"/>
+            </View>
+        );
     }
 
     return (

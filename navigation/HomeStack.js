@@ -108,24 +108,9 @@ export default function HomeStack() {
         // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
         responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
             const report = response.notification.request.content.data.report;
-            console.log("findog REPORT:")
-            console.log(report);
             navigation.navigate("התראות")
             navigation.navigate("Report", {data: report})
 
-            // const reportRef = doc(fireStoreDB, "Reports", reportID);
-            // return getDoc(reportRef).then((reportSnap) => {
-            //     if (reportSnap.exists()) {
-            //         //console.log("Document data:", userSnap.data());
-            //         const report = reportSnap.data();
-            //         //setResponseReport(report);
-            //         console.log(report)
-            //     } else {
-            //         // doc.data() will be undefined in this case
-            //         console.log("No such report!");
-            //     }
-            // })
-            // navigation.navigate(destination, {data: data})
         });
 
         return () => {

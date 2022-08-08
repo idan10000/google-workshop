@@ -1,7 +1,7 @@
-import {StyleSheet, View, Dimensions, ScrollView} from 'react-native';
+import {StyleSheet, View, Dimensions, ScrollView, ActivityIndicator} from 'react-native';
 import {Chip, Modal, Portal, Provider, TextInput, Checkbox} from 'react-native-paper';
 import {Text, TouchableOpacity} from "react-native";
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import {Nofar_styles} from "../../styles/NofarStyle";
 import StepIndicator from 'react-native-step-indicator';
 import {stylesPoster} from "../CreatePoster/CreatePosterStyle";
@@ -113,6 +113,7 @@ export default function Screen3Report({route, navigation}) {
         tagList.filter((item) => !initSelectedTagList.some(e => e.tag === item.tag)) : tagList
     const [modalTags, setModalTags] = React.useState(initModalTagList);
     const [selectedTags, setSelectedTags] = React.useState(initSelectedTagList);
+    const [isLoading, setIsLoading] = useState(false);
 
     const modalChipHandler = (index) => {
         setModalTags(prevStates => {
@@ -150,6 +151,7 @@ export default function Screen3Report({route, navigation}) {
 
 
     const nextScreen = async () => {
+        setIsLoading(true)
         if ((phoneRegExp.test(phoneText) === true && phoneText.length === 10 && checked) || !checked) {
             let date = new Date()
             const dd = String(date.getDate()).padStart(2, '0');
@@ -219,6 +221,20 @@ export default function Screen3Report({route, navigation}) {
     }
     if (phoneRegExp.test(phoneText) === true && phoneText.length == 10 && correctPhone === false) {
         setCorrectPhone(true)
+    }
+    if (isLoading) {
+        return (
+            <View style={Nofar_styles.container}>
+                <View marginTop="2.5%">
+                    <StepIndicator
+                        customStyles={customStyles}
+                        currentPosition={2}
+                        labels={labels}
+                        stepCount={3}
+                    /></View>
+                <ActivityIndicator style={{marginTop:"75%"}} size="large" color="#DCA277"/>
+            </View>
+        );
     }
     return (
         <View style={Nofar_styles.container}>
