@@ -3,7 +3,7 @@
     "owner": "findog",
     "name": "Findog",
     "slug": "FinDog",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "orientation": "portrait",
     "icon": "./assets/square_logo.png",
     "splash": {
@@ -34,7 +34,7 @@
       "permissions": ["NOTIFICATIONS"],
       "useNextNotificationsApi": true,
       "googleServicesFile": "./google-services.json",
-      "versionCode": 9
+      "versionCode": 10
     },
     "web": {
       "favicon": "./assets/Find_my_dog_logo.png"

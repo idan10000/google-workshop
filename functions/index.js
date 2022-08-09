@@ -231,6 +231,9 @@ const sendMatchNotification = (postersToSend, reports) => {
             for (const report of reports) {
                 //console.log(report)
                 //const reportID = report.id
+                if (uid === report.user) {
+                    continue
+                }
                 const reportAddress = report.address;
                 // Construct a message (see https://docs.expo.io/push-notifications/sending-notifications/)
                 const message = {
