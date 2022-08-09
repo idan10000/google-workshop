@@ -167,7 +167,6 @@ export default function Map({navigation}) {
 
     return (
         <View style={{flex:1}}>
-            <View>
 
                 <MapView
                     style={styles.map}
@@ -252,7 +251,6 @@ export default function Map({navigation}) {
                         <AntIcon name='infocirlce' size={22} color="#DCA277"/>
                     </TouchableOpacity>
                 </View>
-            </View>
         </View>
     );
 }
@@ -267,7 +265,7 @@ const styles = StyleSheet.create(
             width: Dimensions.get("window").width,
             justifyContent: "center",
             alignSelf: "center",
-            height: Dimensions.get("window").height / 1.2,
+            height: Dimensions.get("window").height,
         },
         modal: {
             width: "50%",
