@@ -6,7 +6,7 @@ import {
     Text,
     Image,
     View,
-    TouchableOpacity,
+    TouchableOpacity, Alert,
 } from "react-native";
 import * as Location from "expo-location";
 import MapView, {
@@ -27,6 +27,7 @@ import {Provider, Portal, Modal} from "react-native-paper";
 import {Nofar_styles} from "../../styles/NofarStyle";
 import {stylesPoster} from "../CreatePoster/CreatePosterStyle";
 import Icon from "react-native-vector-icons/Entypo";
+import AntIcon from 'react-native-vector-icons/AntDesign';
 
 export default function Map({navigation}) {
     const sheetRef = React.useRef(null);
@@ -55,7 +56,8 @@ export default function Map({navigation}) {
             promises.push(getDocs(q));
         }
 
-// Collect all the query results together into a single list
+
+        // Collect all the query results together into a single list
         Promise.all(promises).then((snapshots) => {
             const matchingDocs = [];
 
@@ -77,6 +79,16 @@ export default function Map({navigation}) {
             setData(matchingDocs)
         })
     }
+
+    const mapInfoAlert = () =>
+        Alert.alert(
+            "",
+            "הסמן האדום מייצג את מיקומך\nהסמנים הכחולים מייצגים מיקומים שבהם דווחו כלבים שנמצאו משוטטים. לחצו על הסמן לפרטים נוספים!",
+            [
+                {text: "הבנתי!", onPress: () => console.log("OK Pressed")}
+            ]
+        );
+
     const getAllReports = async () => {
         const db = getFirestore();
         const reports = [];
@@ -156,6 +168,7 @@ export default function Map({navigation}) {
     return (
         <View style={{flex:1}}>
             <View>
+
                 <MapView
                     style={styles.map}
                     initialRegion={region}
@@ -234,6 +247,11 @@ export default function Map({navigation}) {
                         </Modal>
                     </Portal>
                 </Provider>
+                <View style={{position:"absolute",marginLeft:"80%", marginTop:"5%"}}>
+                    <TouchableOpacity title={"2-Button Alert"} onPress={mapInfoAlert}>
+                        <AntIcon name='infocirlce' size={22} color="#DCA277"/>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );
