@@ -21,7 +21,7 @@ import {
 } from "../../shared_components/Firebase.js";
 import { getInitialData } from "../BrowsePage/InfiniteScroll";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
-import PostPofileItem from "./PostPofileItem";
+import PostPofileItem from "./PostProfileItem";
 import { turnOffNotifications } from "../../shared_components/NotificationsUtils";
 
 export default function MyPosters({ navigation }) {
@@ -183,6 +183,7 @@ export default function MyPosters({ navigation }) {
                                         data={item.data}
                                         navigation={navigation}
                                         destination={"Poster"}
+                                        id={item.id}
                                     />
                                 </View>
                             );

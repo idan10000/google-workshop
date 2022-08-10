@@ -17,7 +17,6 @@ import Icon from "react-native-vector-icons/Entypo";
 import {stylesPoster} from "../CreatePoster/CreatePosterStyle";
 
 export default function PosterPage({navigation, route, typeOfPage}) {
-    console.log("5555555522222");
 
     const makeCall = () => {
         console.log("Its calling");
@@ -41,7 +40,6 @@ export default function PosterPage({navigation, route, typeOfPage}) {
     const editButtonPressHandler2 = () => {
         console.log("opening Report screen");
         console.log( route.params.data);
-        console.log(555555555)
 
         console.log(route.params.ref)
         navigation.navigate("ReportCreation2", {
