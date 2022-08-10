@@ -37,9 +37,13 @@ export default function ProfilePage({ navigation }) {
   const pressHandler_supp = () => {
     navigation.navigate("SupportScreen");
   };
-    useEffect(async () => {
-        await getPhoneNumber(user, setPhone);
-    }, []);
+
+    useEffect( () => {
+        const effect = async () => {
+            await getPhoneNumber(user, setPhone);
+        }
+        effect().then(r => {})
+    },[])
   return (
       <ImageBackground
           style={{ flex: 1 }}

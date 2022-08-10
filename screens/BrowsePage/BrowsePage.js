@@ -22,7 +22,7 @@ import {distanceBetween, geohashForLocation, geohashQueryBounds} from "geofire-c
 import RadioGroup from "react-native-radio-button-group";
 import Icon from 'react-native-vector-icons/AntDesign';
 import {collection, limit, orderBy, query, startAt, endAt, getDocs} from "firebase/firestore";
-import {fireStoreDB} from "../../shared_components/Firebase";
+import {fireStoreDB, getPhoneNumber} from "../../shared_components/Firebase";
 
 
 //here we set the parameters of the reports and posters of missing dogs. we load the data and considering the location, time etc
@@ -132,12 +132,15 @@ const BrowsePage = ({navigation, route}) => {
     })
 
 
-    useEffect(async () => {
-        // Load initial batch documents when main component mounted.
-        const loc = await getInitialLocation()
-        await getInitialData(setData, collectionPath, loc);
-        setRefreshing(false);
-    }, []);
+
+    useEffect( () => {
+        const effect = async () => {
+            const loc = await getInitialLocation()
+            await getInitialData(setData, collectionPath, loc);
+            setRefreshing(false);
+        }
+        effect().then(r => {})
+    },[])
 
 
     const renderLoadingIndicator = () => {

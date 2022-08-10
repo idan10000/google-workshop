@@ -70,10 +70,14 @@ export default function SecondProfile({ navigation }) {
         });
     };
 
-    useEffect(async () => {
-        await getPhoneNumber(user, setPhone);
-        await getPosters();
-    }, []);
+
+    useEffect( () => {
+        const effect = async () => {
+            await getPhoneNumber(user, setPhone);
+            await getPosters();
+        }
+        effect().then(r => {})
+    },[])
 
     return (
         <ImageBackground
