@@ -1,20 +1,11 @@
 import * as React from "react";
 import { Caption } from "react-native-paper";
-import {
-  View,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import { View, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import {doc, deleteDoc, updateDoc, arrayRemove} from "firebase/firestore";
+import { doc, deleteDoc, updateDoc, arrayRemove } from "firebase/firestore";
 import { fireStoreDB } from "../../shared_components/Firebase";
-import {useContext} from "react";
-import {AuthenticatedUserContext} from "../../navigation/AuthenticatedUserProvider";
-
-
-
+import { useContext } from "react";
+import { AuthenticatedUserContext } from "../../navigation/AuthenticatedUserProvider";
 
 const PostProfileItem = ({
   image,
@@ -25,19 +16,20 @@ const PostProfileItem = ({
   description,
   destination,
   navigation,
-    id
+  id,
+    refreshPosts
 }) => {
   const db = fireStoreDB;
-  const {user} = useContext(AuthenticatedUserContext);
+  const { user } = useContext(AuthenticatedUserContext);
 
   const deletePostFromDB = async () => {
-    await deleteDoc(doc(db, destination + "s", id))
-    if (destination === "Poster"){
-      await updateDoc(doc(db, "Users", user.uid), {posters: arrayRemove(id)})
+    await deleteDoc(doc(db, destination + "s", id));
+    if (destination === "Poster") {
+      await updateDoc(doc(db, "Users", user.uid), { posters: arrayRemove(id) });
+    } else {
+      await updateDoc(doc(db, "Users", user.uid), { reports: arrayRemove(id) });
     }
-    else {
-      await updateDoc(doc(db, "Users", user.uid), {reports: arrayRemove(id)})
-    }
+    await refreshPosts(destination + "s")
   };
 
   return (
@@ -58,18 +50,25 @@ const PostProfileItem = ({
                 destination === "Report"
                   ? "האם אתה בטוח שאתה רוצה למחוק דיווח זה? לא יהיה ניתן לשחזרו!"
                   : "האם אתה בטוח שאתה רוצה למחוק מודעה זאת? לא יהיה ניתן לשחזרה!";
-              Alert.alert("", message, [
-                { text: "ביטול", onPress: () => {} },
-
-                {
-                  text: "אישור",
-                  onPress: deletePostFromDB,
-                },
-              ],
+              Alert.alert(
+                "",
+                message,
+                [
                   {
-                    cancelable: true,
-                    onDismiss: () => {},
-                  });
+                    text: "ביטול",
+                    onPress: () => {},
+                  },
+
+                  {
+                    text: "אישור",
+                    onPress: deletePostFromDB,
+                  },
+                ],
+                {
+                  cancelable: true,
+                  onDismiss: () => {},
+                }
+              );
             }}
           >
             <Icon name="delete" color="#777777" size={25} />
