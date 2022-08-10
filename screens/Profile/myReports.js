@@ -24,14 +24,14 @@ import { doc, getDoc, getFirestore } from "firebase/firestore";
 import PostPofileItem from "./PostPofileItem";
 import { turnOffNotifications } from "../../shared_components/NotificationsUtils";
 
-export default function FirstProfile({ navigation }) {
+export default function MyReports({ navigation }) {
   const { user } = useContext(AuthenticatedUserContext);
   const Name = user.displayName;
   const Email = user.email;
   const [Phone, setPhone] = useState();
   const [data, setData] = useState([]);
 
-  var FlatListItemSeparator = () => {
+  const FlatListItemSeparator = () => {
     return (
       <View
         style={{
@@ -50,18 +50,18 @@ export default function FirstProfile({ navigation }) {
   const getPosters = () => {
     const db = getFirestore();
     const posters = [];
-    console.log("POSTERS", posters);
+    //console.log("POSTERS", posters);
     getDoc(doc(db, "Users", user.uid)).then((userRef) => {
       const data = userRef.data(); // USER'S DATA
       const refs = data.reports;
       const promises = [];
       refs.forEach((ref) => {
+        //console.log(ref)
         promises.push(getDoc(doc(db, "Reports", ref)));
       });
       Promise.all(promises).then((docs) => {
         docs.forEach((doc) => {
-          console.log(doc.ref)
-          posters.push({data: doc.data(),ref: doc.ref});
+          posters.push({data: doc.data(), id:doc.id});
         });
         setData(posters);
       });
@@ -167,18 +167,18 @@ export default function FirstProfile({ navigation }) {
           <FlatList
             data={data}
             ItemSeparatorComponent={FlatListItemSeparator}
-            keyExtractor={(item) => item.image}
+            keyExtractor={(item) => item.id}
             numColumns={1}
             renderItem={({ item }) => {
               return (
                 <View style={{ paddingVertical: 5 }}>
                   <PostPofileItem
-                    image={item.image}
-                    date={item.date}
-                    name={item.dogName}
-                    address={item.address}
-                    description={item.description}
-                    data={item}
+                    image={item.data.image}
+                    date={item.data.date}
+                    name={item.data.dogName}
+                    address={item.data.address}
+                    description={item.data.description}
+                    data={item.data}
                     navigation={navigation}
                     destination={"Report"}
                   />

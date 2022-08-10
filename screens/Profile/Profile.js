@@ -17,10 +17,10 @@ export default function ProfilePage({ navigation }) {
   const [data, setData] = useState([]);
 
   const posterReportPage1 = () => {
-    navigation.navigate("FirstProfile");
+    navigation.navigate("MyReports");
   };
     const posterReportPage2 = () => {
-        navigation.navigate("SecondProfile");
+        navigation.navigate("MyPosters");
     };
 
   // const userDetalies = {

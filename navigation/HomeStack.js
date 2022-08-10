@@ -24,8 +24,8 @@ import {AuthenticatedUserContext} from "./AuthenticatedUserProvider";
 import {NotificationsContext, NotificationsProvider} from "./NotificationsProvider";
 import Screen1Poster from "../screens/CreatePoster/Screen1Poster";
 import SupportPage from "../screens/Profile/TechnicalSupport";
-import FirstProfile from "../screens/Profile/firstProfile";
-import SecondProfile from "../screens/Profile/secondProfile";
+import MyReports from "../screens/Profile/myReports";
+import MyPosters from "../screens/Profile/myPosters";
 import { useNavigation } from '@react-navigation/native';
 
 Notifications.setNotificationHandler({
@@ -149,8 +149,8 @@ export default function HomeStack() {
                     <Stack.Screen name="Report" component={ReportForBrowser} />
                     <Stack.Screen name="Poster" component={PosterBrowse} />
                     <Stack.Screen name="SupportScreen" component={SupportPage} />
-                    <Stack.Screen name="FirstProfile" component={FirstProfile} />
-                    <Stack.Screen name="SecondProfile" component={SecondProfile} />
+                    <Stack.Screen name="MyReports" component={MyReports} />
+                    <Stack.Screen name="MyPosters" component={MyPosters} />
 
                 </Stack.Navigator>
             )

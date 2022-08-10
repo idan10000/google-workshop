@@ -24,23 +24,23 @@ import { doc, getDoc, getFirestore } from "firebase/firestore";
 import PostPofileItem from "./PostPofileItem";
 import { turnOffNotifications } from "../../shared_components/NotificationsUtils";
 
-export default function SecondProfile({ navigation }) {
+export default function MyPosters({ navigation }) {
     const { user } = useContext(AuthenticatedUserContext);
     const Name = user.displayName;
     const Email = user.email;
     const [Phone, setPhone] = useState();
     const [data, setData] = useState([]);
 
-    var FlatListItemSeparator = () => {
-        return (
-            <View
-                style={{
-                    height: 1,
-                    width: "100%",
-                    backgroundColor: "#000",
-                }}
-            />
-        );
+    const FlatListItemSeparator = () => {
+      return (
+        <View
+          style={{
+            height: 1,
+            width: "100%",
+            backgroundColor: "#000",
+          }}
+        />
+      );
     };
 
     const pressHandler_supp = () => {
@@ -50,7 +50,6 @@ export default function SecondProfile({ navigation }) {
     const getPosters = () => {
         const db = getFirestore();
         const posters = [];
-        console.log("POSTERS", posters);
         getDoc(doc(db, "Users", user.uid)).then((userRef) => {
             const data = userRef.data(); // USER'S DATA
             const refs = data.posters;
@@ -60,10 +59,7 @@ export default function SecondProfile({ navigation }) {
             });
             Promise.all(promises).then((docs) => {
                 docs.forEach((doc) => {
-                    let data = doc.data()
-                    data.ref = refs[docs.indexOf(doc)]
-                    posters.push(data);
-
+                    posters.push({data:doc.data(), id:doc.id});
                 });
                 setData(posters);
             });
@@ -169,11 +165,9 @@ export default function SecondProfile({ navigation }) {
                     <FlatList
                         data={data}
                         ItemSeparatorComponent={FlatListItemSeparator}
-                        keyExtractor={(item) => item.image}
+                        keyExtractor={(item) => item.id}
                         numColumns={1}
                         renderItem={({ item }) => {
-                            console.log("\n\n\n")
-                            console.log("the new is")
                             return (
                                 <View
                                     style={{
@@ -181,12 +175,12 @@ export default function SecondProfile({ navigation }) {
                                     }}
                                 >
                                     <PostPofileItem
-                                        image={item.image}
-                                        date={item.date}
-                                        name={item.dogName}
-                                        address={item.address}
-                                        description={item.description}
-                                        data={item}
+                                        image={item.data.image}
+                                        date={item.data.date}
+                                        name={item.data.dogName}
+                                        address={item.data.address}
+                                        description={item.data.description}
+                                        data={item.data}
                                         navigation={navigation}
                                         destination={"Poster"}
                                     />
