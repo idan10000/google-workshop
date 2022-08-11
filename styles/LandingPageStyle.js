@@ -10,7 +10,7 @@ export const landingPageStyle = StyleSheet.create({
         fontSize:70,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop:"4%",
+        marginTop:"10%",
 
     },
     slogenContainer:{

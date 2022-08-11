@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Image, Text, TouchableOpacity, View, ImageBackground, StyleSheet, Dimensions} from 'react-native';
+
+    import {Image, Text, TouchableOpacity, View, ImageBackground, StyleSheet, Dimensions} from 'react-native';
 import {Button, TextInput, Modal, Portal} from 'react-native-paper';
 import {Formik} from 'formik';
 import * as yup from 'yup';
@@ -7,7 +8,7 @@ import {signUpStyle} from "../styles/SignUpStyle";
 import {Nofar_styles} from "../styles/NofarStyle";
 import {fireAuth, fireStoreDB} from "../shared_components/Firebase";
 import {createUserWithEmailAndPassword, getAuth, PhoneAuthProvider, signInWithCredential, updateProfile} from 'firebase/auth';
-import {setDoc, doc} from 'firebase/firestore';
+import {setDoc, doc, collection, query, where, getFirestore,getDocs} from 'firebase/firestore';
 import {FirebaseRecaptchaVerifierModal, FirebaseRecaptchaBanner} from 'expo-firebase-recaptcha';
 import {getApp} from 'firebase/app';
 import {Touchable} from "react-native-web";
@@ -106,6 +107,8 @@ export default function SignUp({navigation}) {
             reports: [],
             posters: []
         }).catch(error => {
+            console.log("we are here")
+
             console.log(error)
         })
         await updateProfile(newUser, {displayName: name})
@@ -204,7 +207,7 @@ export default function SignUp({navigation}) {
                         try {
                             const phoneProvider = new PhoneAuthProvider(getAuth());
                             const verificationId = await phoneProvider.verifyPhoneNumber(
-                                phoneNumber,
+                                "+972" + phoneNumber,
                                 recaptchaVerifier.current
                             );
                             setVerificationId(verificationId);
@@ -251,6 +254,23 @@ export default function SignUp({navigation}) {
                 <TouchableOpacity
                     onPress={async () => {
                         try {
+                            // const db = getFirestore();
+                            // const phoneNumberRef = collection(db,"Users");
+                            // console.log("\n\n\n\n\n\n")
+                            //
+                            // console.log("BI THERE")
+                            //
+                            // const q = query(phoneNumberRef, where("identifier", "==", phoneNumber));
+                            // const querySnapshot = await getDocs(q);
+                            // querySnapshot.forEach((doc) => {
+                            //     // doc.data() is never undefined for query doc snapshots
+                            //     console.log("\n\n\n\n\n\n")
+                            //     console.log("1")
+                            //
+                            //     console.log("\n\n\n\n\n\n")
+                            //
+                            // });
+
                             const credential = PhoneAuthProvider.credential(
                                 verificationId,
                                 verificationCode

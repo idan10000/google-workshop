@@ -171,9 +171,7 @@ export default function MapForCreation({
         <View style={{marginTop:"5%"}}>
           <View style={styles.bottomView}>
             <EntypoIcon name="location-pin" size={24} color="#999999" />
-            <View style={styles.bottomTextView}>
               <Text style={styles.addressText}>{address}</Text>
-            </View>
           </View>
           <MapView
             style={styles.map}
@@ -212,6 +210,7 @@ export default function MapForCreation({
           </MapView>
 
           <View style={styles.bottomView}>
+
             <Icon name="infocirlceo" size={18} color="#000" />
             <View style={styles.bottomTextView}>
               <Text style={styles.bottomText}>
@@ -246,7 +245,7 @@ const styles = StyleSheet.create({
   },
   bottomTextView: {
     flexDirection: "row",
-    marginLeft: "2.5%",
+
   },
   bottomText: {
     color: "#000",
@@ -261,7 +260,9 @@ const styles = StyleSheet.create({
   bottomView: {
     flexDirection: "row",
     marginHorizontal: "5%",
-    marginBottom: "2.5%",
+    marginVertical: "1.5%",
+    alignItems:"center",
+
   },
   proceedButton: {
     paddingVertical: "3%",

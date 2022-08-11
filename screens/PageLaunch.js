@@ -64,22 +64,22 @@ export default function PageLaunch({navigation}) {
 
             <View style={landingPageStyle.emailRegist}>
 
-                <TouchableOpacity style={Nofar_styles.SmallButton} onPress={() => navigation.navigate('SignUp')}>
-                    <Text style={Nofar_styles.SmallButtonTitle}>הרשמה באמצעות טלפון</Text>
+                <TouchableOpacity style={Nofar_styles.BigButton} onPress={() => navigation.navigate('SignUp')}>
+                    <Text style={Nofar_styles.SmallButtonTitle}>כניסה באמצעות טלפון</Text>
                 </TouchableOpacity>
-                <Text style={landingPageStyle.text}> או באמצעות </Text>
+                {/*<Text style={landingPageStyle.text}> או באמצעות </Text>*/}
 
             </View>
-            <View style={landingPageStyle.AvatarContainer}>
+            {/*<View style={landingPageStyle.AvatarContainer}>*/}
 
-                <TouchableOpacity><Avatar.Image size={55} source={require('../assets/facebook.png')}
-                                                style={landingPageStyle.avatar}/></TouchableOpacity>
+            {/*    <TouchableOpacity><Avatar.Image size={55} source={require('../assets/facebook.png')}*/}
+            {/*                                    style={landingPageStyle.avatar}/></TouchableOpacity>*/}
 
-                <TouchableOpacity onPress={() => {
-                    console.log("google")
-                }}><Avatar.Image size={55} source={require('../assets/google.png')}
-                                 style={landingPageStyle.avatar}/></TouchableOpacity>
-            </View>
+            {/*    <TouchableOpacity onPress={() => {*/}
+            {/*        console.log("google")*/}
+            {/*    }}><Avatar.Image size={55} source={require('../assets/google.png')}*/}
+            {/*                     style={landingPageStyle.avatar}/></TouchableOpacity>*/}
+            {/*</View>*/}
             <View style={landingPageStyle.containerForRegisterClick}>
                 <Text style={Nofar_styles.text}> כבר רשומים? </Text>
                 <TouchableOpacity onPress = {nextScreen}><Text style={landingPageStyle.clickHere}>לחצו כאן!</Text></TouchableOpacity>
