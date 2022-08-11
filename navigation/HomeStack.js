@@ -4,10 +4,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Header from "../shared_components/Header";
 import OldhomeScreen from "../screens/HomePage";
 import ReportPage from "../screens/Report/ReportPage";
-import AdPage from "../screens/Poster/PosterPage";
+import PosterPage from "../screens/Poster/PosterPage";
 import NotificationsPage from "../screens/NotificationsPage";
 import NavigationBar from "./NavigationBar";
-import ReportForBrowser from "../screens/Report/ReportBrowse";
+import ReportBrowse from "../screens/Report/ReportBrowse";
 import PosterBrowse from "../screens/Poster/PosterBrowse";
 import Screen1Report from "../screens/Report/Screen1Report";
 import Screen2Report from "../screens/Report/Screen2Report";
@@ -20,10 +20,7 @@ import { fireStoreDB } from "../shared_components/Firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthenticatedUserContext } from "./AuthenticatedUserProvider";
-import {
-  NotificationsContext,
-  NotificationsProvider,
-} from "./NotificationsProvider";
+import { NotificationsContext } from "./NotificationsProvider";
 import Screen1Poster from "../screens/CreatePoster/Screen1Poster";
 import SupportPage from "../screens/Profile/TechnicalSupport";
 import MyReports from "../screens/Profile/myReports";
@@ -37,7 +34,6 @@ Notifications.setNotificationHandler({
     shouldSetBadge: true,
   }),
 });
-// export const NotificationsListContext = createContext({});
 
 const Stack = createStackNavigator();
 
@@ -200,7 +196,7 @@ export default function HomeStack() {
             <Stack.Screen name="PosterCreation3" component={Screen3Poster} />
             <Stack.Screen name="ReportPage" component={ReportPage} />
             {/*<Stack.Screen name="CreateAd" component={PosterPostingComponent}/>*/}
-            <Stack.Screen name="AdPage" component={AdPage} />
+            <Stack.Screen name="AdPage" component={PosterPage} />
             <Stack.Screen name="התראות">
               {(props) => (
                 <NotificationsPage
@@ -211,7 +207,7 @@ export default function HomeStack() {
               )}
             </Stack.Screen>
             {/* <Stack.Screen name="ReportForBrowse" component={ReportForBrowse}/> */}
-            <Stack.Screen name="Report" component={ReportForBrowser} />
+            <Stack.Screen name="Report" component={ReportBrowse} />
             <Stack.Screen name="Poster" component={PosterBrowse} />
             <Stack.Screen name="SupportScreen" component={SupportPage} />
             <Stack.Screen name="MyReports">

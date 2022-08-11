@@ -1,27 +1,34 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity, ScrollView,ImageBackground } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  ImageBackground,
+} from "react-native";
 import { Nofar_styles } from "../../styles/NofarStyle";
 import { AR_styles } from "./ReportStyle";
 import ReportTemplate from "./ReportTemplate";
-import {Button} from "react-native-paper";
+import { Button } from "react-native-paper";
 import PosterPage from "../Poster/PosterPage";
+
 export default function ReportPage({ route, navigation }) {
+  console.log(route.params.data);
 
-
-
-  console.log(route.params.data)
-
-  return (<ImageBackground
-          style={{flex: 1}}
-          source={require('../../assets/new_background.png')}>
-    <View style={Nofar_styles.container}>
-      <ScrollView style={AR_styles.content}>
-        <PosterPage route = { route} navigation={navigation} typeOfPage={"report"} />
-
-
-
-      </ScrollView>
-    </View>
-        </ImageBackground>
+  return (
+    <ImageBackground
+      style={{ flex: 1 }}
+      source={require("../../assets/new_background.png")}
+    >
+      <View style={Nofar_styles.container}>
+        <ScrollView style={AR_styles.content}>
+          <PosterPage
+            route={route}
+            navigation={navigation}
+            typeOfPage={"report"}
+          />
+        </ScrollView>
+      </View>
+    </ImageBackground>
   );
 }

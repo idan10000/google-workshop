@@ -17,7 +17,7 @@ const PostProfileItem = ({
   destination,
   navigation,
   id,
-    refreshPosts
+  refreshPosts,
 }) => {
   const db = fireStoreDB;
   const { user } = useContext(AuthenticatedUserContext);
@@ -29,13 +29,28 @@ const PostProfileItem = ({
     } else {
       await updateDoc(doc(db, "Users", user.uid), { reports: arrayRemove(id) });
     }
-    await refreshPosts(destination + "s")
+    await refreshPosts(destination + "s");
   };
 
   return (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate(destination, { data: data });
+        navigation.navigate(
+          destination === "Poster" ? "AdPage" : "ReportPage",
+          destination === "Poster"
+            ? {
+                data: data,
+                poster: data,
+                edit: true,
+                ref: id,
+              }
+            : {
+                data: data,
+                report: data,
+                edit: true,
+                ref: id,
+              }
+        );
       }}
     >
       <View style={styles.itemContainer}>
