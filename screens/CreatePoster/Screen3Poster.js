@@ -209,12 +209,12 @@ export default function Screen3Poster({ route, navigation }) {
   // here we need to handle all the data we have got in this 3 levels of upload
   // we add the time, date and more details that need to be shown on the report screen
   const nextScreen = async () => {
-    setIsLoading(true);
     if (
       phoneRegExp.test(phoneText) === true &&
       phoneText.length === 10 &&
       nameText.length !== 0
     ) {
+      setIsLoading(true);
       //first confirming the tags
       // setSelectedTags((prevSelected) => {
       //     return prevSelected.concat(modalTags.filter(modalTags => modalTags.state));

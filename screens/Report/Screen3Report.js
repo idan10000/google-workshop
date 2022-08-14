@@ -177,13 +177,13 @@ export default function Screen3Report({ route, navigation }) {
   Geocoder.init("AIzaSyAGKKpmqjHELTwvwAx0w0Ed8W2LtQ2lwZg", { language: "iw" });
 
   const nextScreen = async () => {
-    setIsLoading(true);
     if (
       (phoneRegExp.test(phoneText) === true &&
         phoneText.length === 10 &&
         checked) ||
       !checked
     ) {
+      setIsLoading(true);
       let date = new Date();
       const dd = String(date.getDate()).padStart(2, "0");
       const mm = String(date.getMonth() + 1).padStart(2, "0"); //January is 0!
