@@ -1,66 +1,77 @@
-import {Dimensions, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {Nofar_styles} from "../styles/NofarStyle";
-import {signUpStyle} from "../styles/SignUpStyle";
-import {TextInput} from "react-native-paper";
+import {
+  Dimensions,
+  Image,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { Nofar_styles } from "../styles/NofarStyle";
+import { signUpStyle } from "../styles/SignUpStyle";
+import { TextInput } from "react-native-paper";
 import Icon from "react-native-vector-icons/AntDesign";
-import {getAuth, PhoneAuthProvider} from "firebase/auth";
+import { getAuth, PhoneAuthProvider } from "firebase/auth";
+import { useState } from "react";
 
 export default function InsertUsername({ username, setUsername }) {
-  const [userName, setUserNameLocal] = React.useState();
+  const [userName, setUserNameLocal] = useState();
 
   return (
     <ImageBackground
       style={{ flex: 1 }}
-      source={require("../assets/new_background.png")}>
-
-    <View style={Nofar_styles.container}>
-      <View style={signUpStyle.logoHeaderContainer}>
-        <TouchableOpacity>
-          <Image
+      source={require("../assets/new_background.png")}
+    >
+      <View style={Nofar_styles.container}>
+        <View style={signUpStyle.logoHeaderContainer}>
+          <TouchableOpacity>
+            <Image
               source={require("../assets/findog_logo_1024_big.png")}
               style={styles.appLogo}
-          />
-        </TouchableOpacity>
-        {/*<View style={Nofar_styles.BigTitle}>*/}
-        {/*  <Text style={Nofar_styles.BigTitle}>ברוכים הבאים{"\n"}אל Findog</Text>*/}
-        {/*</View>*/}
-      </View>
-      <View style={Nofar_styles.actionInput}>
-        <Text
+            />
+          </TouchableOpacity>
+          {/*<View style={Nofar_styles.BigTitle}>*/}
+          {/*  <Text style={Nofar_styles.BigTitle}>ברוכים הבאים{"\n"}אל Findog</Text>*/}
+          {/*</View>*/}
+        </View>
+        <View style={Nofar_styles.actionInput}>
+          <Text
             style={{
               color: "#000",
               fontWeight: "bold",
               fontSize: 20,
-              marginBottom:"5%",
+              marginBottom: "5%",
             }}
-        >
-          אנא הכניסו שם משתמש
-        </Text>
-      </View>
-      <View style={Nofar_styles.actionInput}>
-        <TextInput
+          >
+            אנא הכניסו שם משתמש
+          </Text>
+        </View>
+        <View style={Nofar_styles.actionInput}>
+          <TextInput
             style={{ marginVertical: 10, fontSize: 17 }}
             placeholder="הכנס שם"
             autoFocus
             autoCompleteType="tel"
-            onChangeText={( username) => setUserNameLocal( username)}
-        />
-      </View>
-      <View style={styles.bottomView}>
-        <View style={{marginRight:"1.5%", paddingTop:"1.5%"}}>
-
-          <Icon name="infocirlceo" size={18} color="#000" /></View>
-        <View style={styles.bottomTextView}>
-          <Text style={styles.bottomText}>
-            זהו השם אותו יראו משתמשים אחרים כשתעלו מודעות/דיווחים
-          </Text>
+            onChangeText={(username) => setUserNameLocal(username)}
+          />
         </View>
-        <TouchableOpacity
-            onPress={async () => {
-              setUsername(username)
+        <View style={styles.bottomView}>
+          <View style={{ marginRight: "1.5%", paddingTop: "1.5%" }}>
+            <Icon name="infocirlceo" size={18} color="#000" />
+          </View>
+          <View style={styles.bottomTextView}>
+            <Text style={styles.bottomText}>
+              זהו השם אותו יראו משתמשים אחרים כשתעלו מודעות/דיווחים
+            </Text>
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              console.log("username:");
+              console.log(userName);
+              setUsername(userName);
             }}
-        >
-          <View
+          >
+            <View
               style={{
                 backgroundColor: "#DCA277",
                 width: Dimensions.get("window").width * 0.6,
@@ -71,14 +82,12 @@ export default function InsertUsername({ username, setUsername }) {
                 borderRadius: 20,
                 marginTop: "5%",
               }}
-          >
-            <Text style={Nofar_styles.TinyButtonTitle}>
-              סיימתי!
-            </Text>
-          </View>
-        </TouchableOpacity>
+            >
+              <Text style={Nofar_styles.TinyButtonTitle}>סיימתי!</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
     </ImageBackground>
   );
 }
@@ -116,25 +125,24 @@ const styles = StyleSheet.create({
   },
   bottomTextView: {
     flexDirection: "row",
-
-  },  bottomText: {
+  },
+  bottomText: {
     color: "#000",
     fontSize: 14,
     fontWeight: "600",
   },
   bottomView: {
-    marginVertical:"2%",
+    marginVertical: "2%",
     flexDirection: "row",
     marginHorizontal: "7.5%",
-
   },
-  appLogo:{
-    alignItems: 'center',
-    marginTop:'8%',
-    justifyContent: 'center',
-    height:Dimensions.get("window").height/3,
-    width: Dimensions.get("window").width/2.2 ,
-    resizeMode: 'contain',
-    marginRight:"2%"
+  appLogo: {
+    alignItems: "center",
+    marginTop: "8%",
+    justifyContent: "center",
+    height: Dimensions.get("window").height / 3,
+    width: Dimensions.get("window").width / 2.2,
+    resizeMode: "contain",
+    marginRight: "2%",
   },
 });

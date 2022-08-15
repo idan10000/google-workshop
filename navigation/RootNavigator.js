@@ -46,8 +46,15 @@ export default function RootNavigator() {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" />
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#F9F8F0",
+        }}
+      >
+        <ActivityIndicator size="large" color="#DCA277" />
       </View>
     );
   }
@@ -55,13 +62,13 @@ export default function RootNavigator() {
   return (
     <NotificationsProvider>
       <NavigationContainer>
-        {user && username !== "" ? (
+        {user !== null && username !== "" ? (
           <HomeStack username={username} />
         ) : !user ? (
           <AuthStack />
         ) : (
-          // <InsertUsername username={username} setUsername={setUsername} />
-          <HomeStack username={username} />
+          <InsertUsername username={username} setUsername={setUsername} />
+          //<HomeStack username={username} />
         )}
       </NavigationContainer>
     </NotificationsProvider>
