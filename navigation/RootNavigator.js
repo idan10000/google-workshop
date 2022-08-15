@@ -31,7 +31,7 @@ export default function RootNavigator() {
     return getAuth().onAuthStateChanged(async (authenticatedUser) => {
       if (authenticatedUser) {
         setUser(authenticatedUser);
-        const userRef = doc(fireStoreDB, "Users", user.uid);
+        const userRef = doc(fireStoreDB, "Users", authenticatedUser.uid);
 
         getDoc(userRef).then(async (userSnap) => {
           if (userSnap.exists()) {
@@ -39,11 +39,11 @@ export default function RootNavigator() {
           } else {
             setUsername("");
           }
+          setIsLoading(false);
         });
       } else {
         setUser(null);
       }
-      setIsLoading(false);
     });
   }, []);
 
