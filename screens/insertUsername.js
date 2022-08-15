@@ -23,7 +23,7 @@ export default function InsertUsername({ username, setUsername }) {
       source={require("../assets/new_background.png")}
     >
       <View style={Nofar_styles.container}>
-        <View style={signUpStyle.logoHeaderContainer}>
+        <View style={styles.logoHeaderContainer}>
           <TouchableOpacity>
             <Image
               source={require("../assets/findog_logo_1024_big.png")}
@@ -64,6 +64,7 @@ export default function InsertUsername({ username, setUsername }) {
               זהו השם אותו יראו משתמשים אחרים כשתעלו מודעות/דיווחים
             </Text>
           </View>
+        </View>
           <TouchableOpacity
             onPress={() => {
               console.log("username:");
@@ -86,7 +87,8 @@ export default function InsertUsername({ username, setUsername }) {
               <Text style={Nofar_styles.TinyButtonTitle}>סיימתי!</Text>
             </View>
           </TouchableOpacity>
-        </View>
+
+
       </View>
     </ImageBackground>
   );
@@ -137,12 +139,18 @@ const styles = StyleSheet.create({
     marginHorizontal: "7.5%",
   },
   appLogo: {
-    alignItems: "center",
-    marginTop: "8%",
-    justifyContent: "center",
-    height: Dimensions.get("window").height / 3,
-    width: Dimensions.get("window").width / 2.2,
-    resizeMode: "contain",
-    marginRight: "2%",
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: Dimensions.get("window").width / 2,
+    width: Dimensions.get("window").width / 2,
+    resizeMode: 'stretch',
+
+  },
+  logoHeaderContainer: {
+    marginTop:"20%",
+    marginBottom:"10%",
+    flexDirection: "row",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
