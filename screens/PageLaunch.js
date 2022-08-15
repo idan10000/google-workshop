@@ -52,7 +52,7 @@ export default function PageLaunch({navigation}) {
 
                 <Image
                     style={landingPageStyle.appLogo}
-                    source={require('../assets/Find_my_dog_logo.png')}
+                    source={require('../assets/findog_logo_4096.png')}
                 />
             </View>
 

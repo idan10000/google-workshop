@@ -53,12 +53,12 @@ export default function ProfilePage({ navigation }) {
           </View>
 
           <View style={{ marginTop: 5, marginLeft: "15%", marginBottom: "15%" }}>
-            <View style={{ flexDirection: "row", marginTop: "5%" }}>
-                <Icon name="email" color="#777777" size={30} />
-                <Text style={{ color: "#777777", marginLeft: "3%", fontSize:20}}>
-                    {Email}
-                </Text>
-            </View>
+            {/*<View style={{ flexDirection: "row", marginTop: "5%" }}>*/}
+            {/*    <Icon name="email" color="#777777" size={30} />*/}
+            {/*    <Text style={{ color: "#777777", marginLeft: "3%", fontSize:20}}>*/}
+            {/*        {Email}*/}
+            {/*    </Text>*/}
+            {/*</View>*/}
 
             <View style={{ flexDirection: "row", marginTop: "5%" }}>
               <Icon name="phone" color="#777777" size={30} />
