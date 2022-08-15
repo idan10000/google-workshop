@@ -26,6 +26,7 @@ import SupportPage from "../screens/Profile/TechnicalSupport";
 import MyReports from "../screens/Profile/myReports";
 import MyPosters from "../screens/Profile/myPosters";
 import { useNavigation } from "@react-navigation/native";
+import { updateProfile } from "firebase/auth";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -149,6 +150,7 @@ export default function HomeStack({ username }) {
           });
         }
       })
+      .then(() => updateProfile(user, { displayName: username }))
       .then(() => {
         registerForPushNotificationsAsync().then(async (token) => {
           setExpoPushToken(token);
