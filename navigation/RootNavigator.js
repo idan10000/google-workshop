@@ -7,12 +7,23 @@ import AuthStack from "./AuthStack";
 import HomeStack from "./HomeStack";
 import { getAuth, updateProfile } from "firebase/auth";
 import { NotificationsProvider } from "./NotificationsProvider";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { fireStoreDB } from "../shared_components/Firebase";
+import * as Notifications from "expo-notifications";
+import InsertUsername from "../screens/insertUsername";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+});
 
 export default function RootNavigator() {
   const { user, setUser } = useContext(AuthenticatedUserContext);
   const [isLoading, setIsLoading] = useState(true);
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     // onAuthStateChanged returns an unsubscriber
@@ -23,27 +34,6 @@ export default function RootNavigator() {
         console.log(authenticatedUser);
         if (authenticatedUser) {
           setUser(authenticatedUser);
-          getDoc(doc(fireStoreDB, "Users", authenticatedUser.uid))
-            .then(async (userSnap) => {
-              console.log("getDoc");
-              console.log(authenticatedUser.uid);
-              if (!userSnap.exists()) {
-                console.log("dont exist");
-                await setDoc(doc(fireStoreDB, "Users", authenticatedUser.uid), {
-                  name: "name",
-                  phone: authenticatedUser.phoneNumber,
-                  reports: [],
-                  posters: [],
-                }).catch((error) => {
-                  console.log("we are here");
-                  console.log(error);
-                });
-                //await updateProfile(authenticatedUser, {displayName: name});
-              }
-            })
-            .catch((error) => {
-              console.log("Error getting document:", error);
-            });
         } else {
           setUser(null);
         }
@@ -65,7 +55,14 @@ export default function RootNavigator() {
   return (
     <NotificationsProvider>
       <NavigationContainer>
-        {user ? <HomeStack /> : <AuthStack />}
+        {user && username !== "" ? (
+          <HomeStack username={username} />
+        ) : !user ? (
+          <AuthStack />
+        ) : (
+          <InsertUsername username={username} setUsername={setUsername} />
+          //<HomeStack username={username} />
+        )}
       </NavigationContainer>
     </NotificationsProvider>
   );

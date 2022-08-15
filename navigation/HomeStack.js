@@ -17,7 +17,7 @@ import Screen3Poster from "../screens/CreatePoster/Screen3Poster";
 import { registerForPushNotificationsAsync } from "../shared_components/NotificationsUtils";
 import * as Notifications from "expo-notifications";
 import { fireStoreDB } from "../shared_components/Firebase";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthenticatedUserContext } from "./AuthenticatedUserProvider";
 import { NotificationsContext } from "./NotificationsProvider";
@@ -38,7 +38,7 @@ Notifications.setNotificationHandler({
 const Stack = createStackNavigator();
 
 // setting the default home screen with no notifications
-export default function HomeStack() {
+export default function HomeStack({ username }) {
   const [expoPushToken, setExpoPushToken] = useState("");
   const [newNotification, setNewNotification] = useState(false);
   const notificationListener = useRef();
@@ -127,22 +127,53 @@ export default function HomeStack() {
   };
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then(async (token) => {
-      setExpoPushToken(token);
-      console.log("UID: " + user.uid);
-      // update user document in firestore with the notifications token
-      const userRef = doc(fireStoreDB, "Users", user.uid);
-      const userSnap = await getDoc(userRef);
-      const newNotifications = userSnap.get("newNotifications");
-      setNewNotification(newNotifications);
-
-      await updateDoc(userRef, {
-        notificationsToken: token,
-        notificationsActive: true,
-      }).catch((error) => {
-        console.log(error);
+    const userRef = doc(fireStoreDB, "Users", user.uid);
+    console.log("UID: " + user.uid);
+    getDoc(userRef)
+      .then(async (userSnap) => {
+        console.log("getDoc");
+        console.log(user.uid);
+        if (!userSnap.exists()) {
+          console.log("dont exist");
+          await setDoc(doc(fireStoreDB, "Users", user.uid), {
+            name: "username",
+            phone: user.phoneNumber,
+            reports: [],
+            posters: [],
+            notifications: [],
+            notificationsActive: false,
+            newNotifications: false,
+          }).catch((error) => {
+            console.log("we are here");
+            console.log(error);
+          });
+        }
+      })
+      .then(() => {
+        registerForPushNotificationsAsync().then(async (token) => {
+          setExpoPushToken(token);
+          console.log("UID: " + user.uid);
+          getDoc(userRef)
+            .then(async (userSnap) => {
+              if (userSnap.exists()) {
+                // update user document in firestore with the notifications token
+                const newNotifications = userSnap.get("newNotifications");
+                setNewNotification(newNotifications);
+                await updateDoc(userRef, {
+                  notificationsToken: token,
+                  notificationsActive: true,
+                }).catch((error) => {
+                  console.log(error);
+                });
+              } else {
+                console.log("cant save expo token!");
+              }
+            })
+            .catch((error) => {
+              console.log("Error getting document:", error);
+            });
+        });
       });
-    });
 
     // This listener is fired whenever a notification is received while the app is foregrounded
     notificationListener.current =
