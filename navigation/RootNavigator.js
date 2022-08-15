@@ -29,18 +29,21 @@ export default function RootNavigator() {
     // onAuthStateChanged returns an unsubscriber
     // unsubscribe auth listener on unmount
     return getAuth().onAuthStateChanged(async (authenticatedUser) => {
-      try {
-        console.log("AUTHENTICATED USER:");
-        console.log(authenticatedUser);
-        if (authenticatedUser) {
-          setUser(authenticatedUser);
-        } else {
-          setUser(null);
-        }
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
+      if (authenticatedUser) {
+        setUser(authenticatedUser);
+        const userRef = doc(fireStoreDB, "Users", user.uid);
+
+        getDoc(userRef).then(async (userSnap) => {
+          if (userSnap.exists()) {
+            setUsername(userSnap.data().name);
+          } else {
+            setUsername("");
+          }
+        });
+      } else {
+        setUser(null);
       }
+      setIsLoading(false);
     });
   }, []);
 
