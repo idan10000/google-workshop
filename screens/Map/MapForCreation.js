@@ -210,8 +210,9 @@ export default function MapForCreation({
           </MapView>
 
           <View style={styles.bottomView}>
+            <View style={{marginRight:"1%"}}>
 
-            <Icon name="infocirlceo" size={18} color="#000" />
+              <Icon name="infocirlceo" size={18} color="#000" /></View>
             <View style={styles.bottomTextView}>
               <Text style={styles.bottomText}>
                 ניתן להזיז את הסמן באמצעות לחיצה ארוכה

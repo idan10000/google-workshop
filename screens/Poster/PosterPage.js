@@ -985,7 +985,7 @@ const styles = StyleSheet.create({
     // alignSelf: "center",
     // alignItems: "center",
     // justifyContent:"center",
-    marginRight: "52%",
+    marginRight: "50%",
     // marginLeft:"45%"
   },
   chveron2: {

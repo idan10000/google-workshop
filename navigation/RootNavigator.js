@@ -60,8 +60,8 @@ export default function RootNavigator() {
         ) : !user ? (
           <AuthStack />
         ) : (
-          <InsertUsername username={username} setUsername={setUsername} />
-          //<HomeStack username={username} />
+          // <InsertUsername username={username} setUsername={setUsername} />
+          <HomeStack username={username} />
         )}
       </NavigationContainer>
     </NotificationsProvider>

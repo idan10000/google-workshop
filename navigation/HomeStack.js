@@ -136,7 +136,7 @@ export default function HomeStack({ username }) {
         if (!userSnap.exists()) {
           console.log("dont exist");
           await setDoc(doc(fireStoreDB, "Users", user.uid), {
-            name: "username",
+            name: username,
             phone: user.phoneNumber,
             reports: [],
             posters: [],

@@ -38,6 +38,7 @@ import {
 import { getApp } from "firebase/app";
 import { Touchable } from "react-native-web";
 import { stylesPoster } from "./CreatePoster/CreatePosterStyle";
+import Icon from "react-native-vector-icons/AntDesign";
 
 // this page is used when a new user wants to join the app via email
 
@@ -192,7 +193,7 @@ export default function SignUp({ navigation }) {
             />
           </TouchableOpacity>
           <View style={Nofar_styles.BigTitle}>
-            <Text style={Nofar_styles.BigTitle}>Welcome{"\n"}To Findog</Text>
+            <Text style={Nofar_styles.BigTitle}>ברוכים הבאים{"\n"}אל Findog</Text>
           </View>
         </View>
 
@@ -213,7 +214,7 @@ export default function SignUp({ navigation }) {
               fontSize: 20,
             }}
           >
-            Enter phone number
+            אנא הכניסו מספר טלפון
           </Text>
         </View>
         <View style={Nofar_styles.actionInput}>
@@ -227,6 +228,16 @@ export default function SignUp({ navigation }) {
             onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
           />
         </View>
+        <View style={styles.bottomView}>
+          <View style={{marginRight:"1.5%", paddingTop:"1.5%"}}>
+
+            <Icon name="infocirlceo" size={18} color="#000" /></View>
+          <View style={styles.bottomTextView}>
+            <Text style={styles.bottomText}>
+              אם מספר הטלפון שלכם אינו ישראלי אנא כתבו אותו בצורה מלאה עם הקידומת
+            </Text>
+          </View>
+        </View>
 
         <TouchableOpacity
           onPress={async () => {
@@ -235,13 +246,14 @@ export default function SignUp({ navigation }) {
             // passed directly to `verifyPhoneNumber`.
             try {
               const phoneProvider = new PhoneAuthProvider(getAuth());
+
               const verificationId = await phoneProvider.verifyPhoneNumber(
                 "+972" + phoneNumber,
                 recaptchaVerifier.current
               );
               setVerificationId(verificationId);
               showMessage({
-                text: "Verification code has been sent to your phone.",
+                text: "קוד אימות נשלח למספר הטלפון שהזנת",
               });
               setVisibleVerification(true);
             } catch (err) {
@@ -262,7 +274,7 @@ export default function SignUp({ navigation }) {
             }}
           >
             <Text style={Nofar_styles.TinyButtonTitle}>
-              Send Verification Code
+              שלח קוד אימות
             </Text>
           </View>
         </TouchableOpacity>
@@ -282,7 +294,7 @@ export default function SignUp({ navigation }) {
                   fontSize: 20,
                 }}
               >
-                Enter verification code
+                הכנס קוד אימות
               </Text>
             </View>
             <View style={Nofar_styles.actionInput}>
@@ -347,7 +359,7 @@ export default function SignUp({ navigation }) {
                   }}
                 >
                   <Text style={Nofar_styles.TinyButtonTitle}>
-                    Confirm Verification Code
+                    אשר קוד אימות
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -528,5 +540,18 @@ const styles = StyleSheet.create({
     position: "absolute",
     flexDirection: "row",
     alignItems: "center",
+  },
+  bottomTextView: {
+    flexDirection: "row",
+
+  },  bottomText: {
+    color: "#000",
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  bottomView: {
+    flexDirection: "row",
+    marginHorizontal: "7.5%",
+
   },
 });

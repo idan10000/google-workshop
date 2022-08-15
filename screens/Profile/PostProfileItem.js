@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
+    marginRight:"2.5%",
     resizeMode: "cover",
     flex: 1,
   },

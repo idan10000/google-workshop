@@ -3,7 +3,7 @@ import {Dimensions, StyleSheet} from "react-native";
 export const AR_styles = StyleSheet.create({
   confirmBTContainer: {
     alignSelf: "center",
-    paddingBottom: "5%",
+    paddingBottom: "2.5%",
   },
   content: {
     marginLeft: 10,
@@ -83,8 +83,8 @@ export const AR_styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 7,
     // elevation: 6,
-    width:Dimensions.get('window').width * 0.2,
-    height: Dimensions.get('window').height * 0.04,
+    width:Dimensions.get('window').width * 0.22,
+    height: Dimensions.get('window').height * 0.048,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",

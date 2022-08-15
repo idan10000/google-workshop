@@ -23,14 +23,6 @@ export default function ProfilePage({ navigation }) {
         navigation.navigate("MyPosters");
     };
 
-  // const userDetalies = {
-  //   name: "אמיר כהן",
-  //   userName: "queenOfEngland18",
-  //   country: "ישראל",
-  //   city: "אילת",
-  //   phone: "052-1111111",
-  //   email: "abc@gmail.com",
-  // };
   const pressHandler = () => {
     navigation.navigate("EditProfileScreen");
   };
@@ -60,7 +52,7 @@ export default function ProfilePage({ navigation }) {
             <Title style={Nofar_styles.BigTitle}>{Name}</Title>
           </View>
 
-          <View style={{ marginTop: 5, marginLeft: "15%", marginBottom: "5%" }}>
+          <View style={{ marginTop: 5, marginLeft: "15%", marginBottom: "15%" }}>
             <View style={{ flexDirection: "row", marginTop: "5%" }}>
                 <Icon name="email" color="#777777" size={30} />
                 <Text style={{ color: "#777777", marginLeft: "3%", fontSize:20}}>
@@ -120,22 +112,22 @@ export default function ProfilePage({ navigation }) {
               </TouchableOpacity>
           </View>
 
-        <View style={user_styles.confirmBTContainer}>
-          <TouchableOpacity
-              style={user_styles.profileButton}
-              onPress={pressHandler_supp}
-          >
-              <View
-                  justifyContent="center"
-                  alignItems="center"
-                  flexDirection="row"
-                  marginRight="4%"
-              >
-                  <Icon name="pen" size={24} color="#FFFFFF" />
-              </View>
-            <Text style={user_styles.BigButtonText}>תמיכה טכנית</Text>
-          </TouchableOpacity>
-        </View>
+        {/*<View style={user_styles.confirmBTContainer}>*/}
+        {/*  <TouchableOpacity*/}
+        {/*      style={user_styles.profileButton}*/}
+        {/*      onPress={pressHandler_supp}*/}
+        {/*  >*/}
+        {/*      <View*/}
+        {/*          justifyContent="center"*/}
+        {/*          alignItems="center"*/}
+        {/*          flexDirection="row"*/}
+        {/*          marginRight="4%"*/}
+        {/*      >*/}
+        {/*          <Icon name="pen" size={24} color="#FFFFFF" />*/}
+        {/*      </View>*/}
+        {/*    <Text style={user_styles.BigButtonText}>תמיכה טכנית</Text>*/}
+        {/*  </TouchableOpacity>*/}
+        {/*</View>*/}
 
         <View style={user_styles.confirmBTContainer}>
           <TouchableOpacity
@@ -156,14 +148,6 @@ export default function ProfilePage({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        {/*<View style={user_styles.confirmBTContainer}>*/}
-        {/*  <TouchableOpacity*/}
-        {/*    style={user_styles.profileButton}*/}
-        {/*    onPress={pressHandler_supp}*/}
-        {/*  >*/}
-        {/*    <Text style={user_styles.BigButtonText}>תמיכה טכנית</Text>*/}
-        {/*  </TouchableOpacity>*/}
-        {/*</View>*/}
       </SafeAreaView>
       </ImageBackground>
   );
