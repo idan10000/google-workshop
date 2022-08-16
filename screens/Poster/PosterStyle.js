@@ -4,6 +4,7 @@ export const AR_styles = StyleSheet.create({
   confirmBTContainer: {
     alignSelf: "center",
     paddingBottom: "2.5%",
+    marginBottom:"2.5%"
   },
   content: {
     marginLeft: 10,

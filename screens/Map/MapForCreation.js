@@ -169,10 +169,7 @@ export default function MapForCreation({
       </View>
       {showMap ? (
         <View style={{marginTop:"5%"}}>
-          <View style={styles.bottomView}>
-            <EntypoIcon name="location-pin" size={24} color="#999999" />
-              <Text style={styles.addressText}>{address}</Text>
-          </View>
+
           <MapView
             style={styles.map}
             onRegionChangeComplete={(region) => {
@@ -208,6 +205,10 @@ export default function MapForCreation({
               </Callout>
             </Marker>
           </MapView>
+          <View style={styles.addressView}>
+            <EntypoIcon name="location-pin" size={21} color="#808080" />
+            <Text style={styles.addressText}>{address}</Text>
+          </View>
 
           <View style={styles.bottomView}>
             <View style={{marginRight:"1%"}}>
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width / 1.12,
     justifyContent: "center",
     alignSelf: "center",
-    height: Dimensions.get("window").height / 1.7,
+    height: Dimensions.get("window").height / 1.6,
   },
   bottomTextView: {
     flexDirection: "row",
@@ -254,9 +255,9 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   addressText: {
-    color: "#999999",
-    fontSize: 20,
-    fontWeight: "600",
+    color: "#808080",
+    fontSize: 17.5,
+    fontWeight: "500",
   },
   bottomView: {
     flexDirection: "row",
@@ -278,5 +279,17 @@ const styles = StyleSheet.create({
     marginLeft:
       (Dimensions.get("window").width - Dimensions.get("window").width / 1.12) /
       2,
-  },
+  }, addressView: {
+    justifyContent:"center",
+    alignSelf:"center",
+    flexDirection: "row",
+    marginLeft: "1%",
+    marginRight: "12%",
+  borderRadius:20,
+    marginVertical: "1.5%",
+    alignItems:"center",
+    position:"absolute",
+    backgroundColor:"#FFF"
+  }
+
 });
