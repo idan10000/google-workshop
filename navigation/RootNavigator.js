@@ -26,6 +26,9 @@ export default function RootNavigator() {
   const [username, setUsername] = useState("");
 
   useEffect(() => {
+    console.log("username");
+    console.log(username);
+    console.log("username");
     // onAuthStateChanged returns an unsubscriber
     // unsubscribe auth listener on unmount
     return getAuth().onAuthStateChanged(async (authenticatedUser) => {
@@ -42,7 +45,9 @@ export default function RootNavigator() {
           setIsLoading(false);
         });
       } else {
+        setUsername("");
         setUser(null);
+        setIsLoading(false);
       }
     });
   }, []);
