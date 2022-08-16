@@ -211,7 +211,6 @@ export default function Screen3Poster({ route, navigation }) {
   const nextScreen = async () => {
     if (
       phoneRegExp.test(phoneText) === true &&
-      phoneText.length === 10 &&
       nameText.length !== 0
     ) {
       setIsLoading(true);
