@@ -62,220 +62,10 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
   console.log(typeOfPage);
   if (typeOfPage === "ReportForBrowse") {
     return (
-        <View style={Nofar_styles.container}>
-          <ScrollView style={AR_styles.content}>
-            <View>
-                <View style={{ alignSelf: "center" }}>
-                  <Portal>
-                    <Modal
-                      contentContainerStyle={styles.modal}
-                      visible={fullPicture}
-                      onDismiss={hideFullPicture}
-                    >
-                      <Image
-                        style={styles.fullImage}
-                        source={{ uri: route.params.data.image }}
-                      />
-                    </Modal>
-                  </Portal>
-
-                  <TouchableOpacity onPress={showSlider}>
-                    <Image
-                      style={Nofar_styles.mainImage}
-                      source={{ uri: route.params.data.image }}
-                    />
-                  </TouchableOpacity>
-
-                  <View style={styles.textOnComponent}>
-                    <View style={styles.centerVerticalDot}>
-                      <Text style={styles.dogsName}>
-                        {route.params.data.date}
-                      </Text>
-                    </View>
-                    <View style={styles.centerVertical}>
-                      <Text style={styles.dotName}>·</Text>
-                    </View>
-                    <View style={styles.centerVerticalDot}>
-                      <Text style={styles.dogsName2}>
-                        {route.params.data.time}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-
-              {route.params.data.address.length < 15 && (
-                <View marginVertical="4%">
-                  <View style={AR_styles.lastSeen}>
-                    {/*<Text style={styles.whenText}>נצפה ב:</Text>*/}
-                    <Icon name="location-pin" size={22} color="#000" />
-                    <TouchableOpacity>
-                      <Text
-                        fontSize="16"
-                        lineHeight="20"
-                        fontWeight="500"
-                        textAlign="center"
-                      >
-                        {route.params.data.address}
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              )}
-              {route.params.data.address.length >= 15 && (
-                <View marginVertical="4%" flexDirection="column">
-                  <View style={AR_styles.lastSeen}>
-                    {/*<Text style={styles.whenText}>נצפה ב:</Text>*/}
-                    <Icon name="location-pin" size={22} color="#000" />
-                    <TouchableOpacity>
-                      <Text
-                        fontSize="16"
-                        lineHeight="20"
-                        fontWeight="500"
-                        textAlign="center"
-                      >
-                        {route.params.data.address}
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              )}
-              {!expanded && (
-                <View style={{ ...Nofar_styles.Viewchips }}>
-                  <View style={styles.containerChips}>
-                    {route.params.data.tagList.map(
-                      (item, index) =>
-                        index < 3 && (
-                          <Chip
-                            key={index}
-                            selected={false}
-                            style={Nofar_styles.chips}
-                          >
-                            {item}
-                          </Chip>
-                        )
-                    )}
-
-                    {route.params.data.tagList.length === 0 && (
-                      <View
-                        justifyContent="center"
-                        alignSelf="center"
-                        alignItems="center"
-                        marginHorizontal="5%"
-                      >
-                        <Text style={styles.newText}>אין תגיות</Text>
-                      </View>
-                    )}
-                  </View>
-                  <View style={styles.chveron2}>
-                    {route.params.data.tagList.length > 4 && (
-                      <TouchableOpacity>
-                        <Icon
-                          name="chevron-down"
-                          size={32}
-                          color="#000"
-                          onPress={() => {
-                            setExpanded(!expanded);
-                          }}
-                        ></Icon>
-                      </TouchableOpacity>
-                    )}
-                  </View>
-                </View>
-              )}
-
-              {expanded && (
-                <View style={{ ...styles.chipsColumn, marginLeft: "1%" }}>
-                  <View style={{ ...styles.chips }}>
-                    {route.params.data.tagList.map((item, index) => (
-                      <Chip
-                        key={index}
-                        selected={false}
-                        style={Nofar_styles.chips}
-                      >
-                        {item}
-                      </Chip>
-                    ))}
-                    {route.params.data.tagList.length === 0 && (
-                      <View
-                        justifyContent="center"
-                        alignSelf="center"
-                        alignItems="center"
-                        marginHorizontal="5%"
-                      >
-                        <Text style={styles.newText}>אין תגיות</Text>
-                      </View>
-                    )}
-                  </View>
-
-                  <View style={styles.chveron1}>
-                    {route.params.data.tagList.length !== 0 && (
-                      <TouchableOpacity>
-                        <Icon
-                          name="chevron-up"
-                          size={32}
-                          color="#000"
-                          onPress={() => {
-                            setExpanded(!expanded);
-                          }}
-                        ></Icon>
-                      </TouchableOpacity>
-                    )}
-                  </View>
-                </View>
-              )}
-
-              {/*<View marginTop="3%" ><Text style = {styles.descriptionText}>תיאור</Text></View>*/}
-
-              <View style={AR_styles.myCard}>
-                <View style={AR_styles.cardHeader}>
-                  {route.params.data.description.length === 0 && (
-                    <Text style={styles.noDescription}>אין תיאור</Text>
-                  )}
-                  <Text>{route.params.data.description}</Text>
-                </View>
-              </View>
-
-              <View style={AR_styles.ownerData}>
-                <Text style={styles.whenText}>
-                  המדווח: {route.params.data.name}
-                </Text>
-                {route.params.data.contact && (
-                  <View style={AR_styles.verticalLine} />
-                )}
-                {route.params.data.contact && (
-                  <TouchableOpacity
-                    onPress={makeCall}
-                    style={AR_styles.contact}
-                  >
-                    <Text style={AR_styles.contactTitle}>צור קשר</Text>
-                  </TouchableOpacity>
-                )}
-              </View>
-              {/*<View style={styles.dogOwner}>*/}
-              {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
-              {/*</View>*/}
-              <View style={AR_styles.confirmBTContainer}>
-                <TouchableOpacity
-                  style={Nofar_styles.BigButton}
-                  onPress={() => {
-                    openMap(route.params.data.location);
-                  }}
-                >
-                  <Text style={Nofar_styles.BigButtonText}>
-                    פתיחת מיקום במפה
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </ScrollView>
-        </View>
-    );
-  } else if (typeOfPage === "PosterForBrowse") {
-    return (
-
-        <View style={Nofar_styles.container}>
-          <ScrollView style={Nofar_styles.container}>
-            <View style={Nofar_styles.container}>
+      <View style={Nofar_styles.container}>
+        <ScrollView style={AR_styles.content}>
+          <View>
+            <View style={{ alignSelf: "center" }}>
               <Portal>
                 <Modal
                   contentContainerStyle={styles.modal}
@@ -288,231 +78,28 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
                   />
                 </Modal>
               </Portal>
-              <View>
-                <View>
-                  <View style={{ alignSelf: "center" }}>
-                    <TouchableOpacity onPress={showSlider}>
-                      <Image
-                        style={Nofar_styles.mainImage}
-                        source={{ uri: route.params.data.image }}
-                      />
-                    </TouchableOpacity>
-                    <View style={styles.textOnComponent}>
-                      <View style={styles.centerVerticalForPoster}>
-                        <Text style={styles.dogsName}>
-                          {route.params.data.dogName}
-                        </Text>
-                      </View>
-                      <View style={styles.centerVerticalForPoster}>
-                        <Text style={styles.dotName}>·</Text>
-                      </View>
-                      <View style={styles.centerVerticalDotForPoster}>
-                        <Text style={styles.dogsName2}>
-                          {route.params.data.date}
-                        </Text>
-                      </View>
-                      <View style={styles.centerVerticalForPoster}>
-                        <Text style={styles.dotName}>·</Text>
-                      </View>
-                      <View style={styles.centerVerticalDotForPoster}>
-                        <Text style={styles.dogsName2}>
-                          {route.params.data.time}
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
+
+              <TouchableOpacity onPress={showSlider}>
+                <Image
+                  style={Nofar_styles.mainImage}
+                  source={{ uri: route.params.data.image }}
+                />
+              </TouchableOpacity>
+
+              <View style={styles.textOnComponent}>
+                <View style={styles.centerVerticalDot}>
+                  <Text style={styles.dogsName}>{route.params.data.date}</Text>
                 </View>
-                <View marginVertical="4%">
-                  <View style={AR_styles.lastSeen}>
-                    {/*<Text style={styles.whenText}>נצפה ב:</Text>*/}
-                    <Icon name="location-pin" size={22} color="#000" />
-                    <TouchableOpacity>
-                      <Text
-                        fontSize="16"
-                        lineHeight="20"
-                        fontWeight="500"
-                        textAlign="center"
-                      >
-                        {route.params.data.address}
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-
-                  {/*} <Text style = {styles.whenText}>בתאריך: {route.params.data.date}</Text>*/}
+                <View style={styles.centerVertical}>
+                  <Text style={styles.dotName}>·</Text>
                 </View>
-                {!expanded && (
-                  <View style={{ ...Nofar_styles.Viewchips }}>
-                    <View style={styles.containerChips}>
-                      {route.params.data.tagList.map(
-                        (item, index) =>
-                          index < 3 && (
-                            <Chip
-                              key={index}
-                              selected={false}
-                              style={Nofar_styles.chips}
-                            >
-                              {item}
-                            </Chip>
-                          )
-                      )}
-
-                      {route.params.data.tagList.length === 0 && (
-                        <View
-                          justifyContent="center"
-                          alignSelf="center"
-                          alignItems="center"
-                          marginHorizontal="5%"
-                        >
-                          <Text style={styles.newText}>אין תגיות</Text>
-                        </View>
-                      )}
-                    </View>
-                    <View style={styles.chveron2}>
-                      {route.params.data.tagList.length > 4 && (
-                        <TouchableOpacity>
-                          <Icon
-                            name="chevron-down"
-                            size={32}
-                            color="#000"
-                            onPress={() => {
-                              setExpanded(!expanded);
-                            }}
-                          ></Icon>
-                        </TouchableOpacity>
-                      )}
-                    </View>
-                  </View>
-                )}
-
-                {expanded && (
-                  <View style={{ ...styles.chipsColumn, marginLeft: "2%" }}>
-                    <View style={{ ...styles.chips, marginLeft: "2%" }}>
-                      {route.params.data.tagList.map((item, index) => (
-                        <Chip
-                          key={index}
-                          selected={false}
-                          style={Nofar_styles.chips}
-                        >
-                          {item}
-                        </Chip>
-                      ))}
-                      {route.params.data.tagList.length === 0 && (
-                        <View
-                          justifyContent="center"
-                          alignSelf="center"
-                          alignItems="center"
-                          marginHorizontal="5%"
-                        >
-                          <Text style={styles.newText}>אין תגיות</Text>
-                        </View>
-                      )}
-                    </View>
-
-                    <View style={styles.chveron1}>
-                      {route.params.data.tagList.length !== 0 && (
-                        <TouchableOpacity>
-                          <Icon
-                            name="chevron-up"
-                            size={32}
-                            color="#000"
-                            onPress={() => {
-                              setExpanded(!expanded);
-                            }}
-                          ></Icon>
-                        </TouchableOpacity>
-                      )}
-                    </View>
-                  </View>
-                )}
-
-                {/*<View marginTop="3%" ><Text style = {styles.descriptionText}>תיאור</Text></View>*/}
-
-                <View style={AR_styles.myCard}>
-                  <View style={AR_styles.cardHeader}>
-                    {route.params.data.description.length === 0 && (
-                      <Text style={styles.noDescription}>אין תיאור</Text>
-                    )}
-                    <Text>{route.params.data.description}</Text>
-                  </View>
-                </View>
-
-                <View style={AR_styles.ownerData}>
-                  <Text style={styles.whenText}>
-                    הבעלים: {route.params.data.name}
-                  </Text>
-                  <View style={AR_styles.verticalLine}></View>
-                  <TouchableOpacity
-                    onPress={makeCall}
-                    style={AR_styles.contact}
-                  >
-                    <Text style={AR_styles.contactTitle}>צור קשר</Text>
-                  </TouchableOpacity>
-                </View>
-                {/*<View style={styles.dogOwner}>*/}
-                {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
-                {/*</View>*/}
-                <View style={AR_styles.confirmBTContainer}>
-                  <TouchableOpacity
-                    style={Nofar_styles.BigButton}
-                    onPress={() => {
-                      openMap(route.params.data.location);
-                    }}
-                  >
-                    <Text style={Nofar_styles.BigButtonText}>
-                      פתיחת מיקום במפה
-                    </Text>
-                  </TouchableOpacity>
+                <View style={styles.centerVerticalDot}>
+                  <Text style={styles.dogsName2}>{route.params.data.time}</Text>
                 </View>
               </View>
             </View>
-          </ScrollView>
-        </View>
 
-    );
-  } else if (typeOfPage === "report") {
-    return (
-
-        <View style={Nofar_styles.container}>
-          <ScrollView style={AR_styles.content}>
-            <View>
-              <View>
-                <View style={{ alignSelf: "center" }}>
-                  <Portal>
-                    <Modal
-                      contentContainerStyle={styles.modal}
-                      visible={fullPicture}
-                      onDismiss={hideFullPicture}
-                    >
-                      <Image
-                        style={styles.fullImage}
-                        source={{ uri: route.params.data.image }}
-                      />
-                    </Modal>
-                  </Portal>
-                  <TouchableOpacity onPress={showSlider}>
-                    <Image
-                      style={Nofar_styles.mainImage}
-                      source={{ uri: route.params.data.image }}
-                    />
-                  </TouchableOpacity>
-
-                  <View style={styles.textOnComponent}>
-                    <View style={styles.centerVerticalDot}>
-                      <Text style={styles.dogsName}>
-                        {route.params.data.date}
-                      </Text>
-                    </View>
-                    <View style={styles.centerVertical}>
-                      <Text style={styles.dotName}>·</Text>
-                    </View>
-                    <View style={styles.centerVerticalDot}>
-                      <Text style={styles.dogsName2}>
-                        {route.params.data.time}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
+            {route.params.data.address.length < 15 && (
               <View marginVertical="4%">
                 <View style={AR_styles.lastSeen}>
                   {/*<Text style={styles.whenText}>נצפה ב:</Text>*/}
@@ -529,173 +116,177 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
                   </TouchableOpacity>
                 </View>
               </View>
-              {!expanded && (
-                <View style={{ ...Nofar_styles.Viewchips }}>
-                  <View style={styles.containerChips}>
-                    {route.params.data.tagList.map(
-                      (item, index) =>
-                        index < 3 && (
-                          <Chip
-                            key={index}
-                            selected={false}
-                            style={Nofar_styles.chips}
-                          >
-                            {item}
-                          </Chip>
-                        )
-                    )}
-
-                    {route.params.data.tagList.length === 0 && (
-                      <View
-                        justifyContent="center"
-                        alignSelf="center"
-                        alignItems="center"
-                        marginHorizontal="5%"
-                      >
-                        <Text style={styles.newText}>אין תגיות</Text>
-                      </View>
-                    )}
-                  </View>
-                  <View style={styles.chveron2}>
-                    {route.params.data.tagList.length > 4 && (
-                      <TouchableOpacity>
-                        <Icon
-                          name="chevron-down"
-                          size={32}
-                          color="#000"
-                          onPress={() => {
-                            setExpanded(!expanded);
-                          }}
-                        ></Icon>
-                      </TouchableOpacity>
-                    )}
-                  </View>
-                </View>
-              )}
-
-              {expanded && (
-                <View style={{ ...styles.chipsColumn, marginLeft: "2%" }}>
-                  <View style={{ ...styles.chips, marginLeft: "2%" }}>
-                    {route.params.data.tagList.map((item, index) => (
-                      <Chip
-                        key={index}
-                        selected={false}
-                        style={Nofar_styles.chips}
-                      >
-                        {item}
-                      </Chip>
-                    ))}
-                    {route.params.data.tagList.length === 0 && (
-                      <View
-                        justifyContent="center"
-                        alignSelf="center"
-                        alignItems="center"
-                        marginHorizontal="5%"
-                      >
-                        <Text style={styles.newText}>אין תגיות</Text>
-                      </View>
-                    )}
-                  </View>
-
-                  <View style={styles.chveron1}>
-                    {route.params.data.tagList.length !== 0 && (
-                      <TouchableOpacity>
-                        <Icon
-                          name="chevron-up"
-                          size={32}
-                          color="#000"
-                          onPress={() => {
-                            setExpanded(!expanded);
-                          }}
-                        ></Icon>
-                      </TouchableOpacity>
-                    )}
-                  </View>
-                </View>
-              )}
-
-              {/*<View marginTop="3%" ><Text style = {styles.descriptionText}>תיאור</Text></View>*/}
-
-              <View style={AR_styles.myCard}>
-                <View style={AR_styles.cardHeader}>
-                  {route.params.data.description.length === 0 && (
-                    <Text style={styles.noDescription}>אין תיאור</Text>
-                  )}
-                  <Text>{route.params.data.description}</Text>
-                </View>
-              </View>
-
-              <View style={AR_styles.ownerData}>
-                <Text style={styles.whenText}>
-                  המדווח: {route.params.data.name}
-                </Text>
-                {route.params.data.contact && (
-                  <View style={AR_styles.verticalLine}></View>
-                )}
-                {route.params.data.contact && (
-                  <TouchableOpacity
-                    onPress={makeCall}
-                    style={AR_styles.contact}
-                  >
-                    <Text style={AR_styles.contactTitle}>צור קשר</Text>
+            )}
+            {route.params.data.address.length >= 15 && (
+              <View marginVertical="4%" flexDirection="column">
+                <View style={AR_styles.lastSeen}>
+                  {/*<Text style={styles.whenText}>נצפה ב:</Text>*/}
+                  <Icon name="location-pin" size={22} color="#000" />
+                  <TouchableOpacity>
+                    <Text
+                      fontSize="16"
+                      lineHeight="20"
+                      fontWeight="500"
+                      textAlign="center"
+                    >
+                      {route.params.data.address}
+                    </Text>
                   </TouchableOpacity>
+                </View>
+              </View>
+            )}
+            {!expanded && (
+              <View style={{ ...Nofar_styles.Viewchips }}>
+                <View style={styles.containerChips}>
+                  {route.params.data.tagList.map(
+                    (item, index) =>
+                      index < 3 && (
+                        <Chip
+                          key={index}
+                          selected={false}
+                          style={Nofar_styles.chips}
+                        >
+                          {item}
+                        </Chip>
+                      )
+                  )}
+
+                  {route.params.data.tagList.length === 0 && (
+                    <View
+                      justifyContent="center"
+                      alignSelf="center"
+                      alignItems="center"
+                      marginHorizontal="5%"
+                    >
+                      <Text style={styles.newText}>אין תגיות</Text>
+                    </View>
+                  )}
+                </View>
+                <View style={styles.chveron2}>
+                  {route.params.data.tagList.length > 4 && (
+                    <TouchableOpacity>
+                      <Icon
+                        name="chevron-down"
+                        size={32}
+                        color="#000"
+                        onPress={() => {
+                          setExpanded(!expanded);
+                        }}
+                      ></Icon>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              </View>
+            )}
+
+            {expanded && (
+              <View style={{ ...styles.chipsColumn, marginLeft: "1%" }}>
+                <View style={{ ...styles.chips }}>
+                  {route.params.data.tagList.map((item, index) => (
+                    <Chip
+                      key={index}
+                      selected={false}
+                      style={Nofar_styles.chips}
+                    >
+                      {item}
+                    </Chip>
+                  ))}
+                  {route.params.data.tagList.length === 0 && (
+                    <View
+                      justifyContent="center"
+                      alignSelf="center"
+                      alignItems="center"
+                      marginHorizontal="5%"
+                    >
+                      <Text style={styles.newText}>אין תגיות</Text>
+                    </View>
+                  )}
+                </View>
+
+                <View style={styles.chveron1}>
+                  {route.params.data.tagList.length !== 0 && (
+                    <TouchableOpacity>
+                      <Icon
+                        name="chevron-up"
+                        size={32}
+                        color="#000"
+                        onPress={() => {
+                          setExpanded(!expanded);
+                        }}
+                      ></Icon>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              </View>
+            )}
+
+            {/*<View marginTop="3%" ><Text style = {styles.descriptionText}>תיאור</Text></View>*/}
+
+            <View style={AR_styles.myCard}>
+              <View style={AR_styles.cardHeader}>
+                {route.params.data.description.length === 0 && (
+                  <Text style={styles.noDescription}>אין פרטים</Text>
                 )}
-              </View>
-              {/*<View style={styles.dogOwner}>*/}
-              {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
-              {/*</View>*/}
-              <View style={AR_styles.confirmBTContainer}>
-                <TouchableOpacity
-                  style={Nofar_styles.BigButton}
-                  onPress={() => {
-                    openMap(route.params.data.location);
-                  }}
-                >
-                  <Text style={Nofar_styles.BigButtonText}>
-                    פתיחת מיקום במפה
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={AR_styles.confirmBTContainer}>
-                <TouchableOpacity
-                  style={Nofar_styles.BigButton}
-                  onPress={editButtonPressHandler2}
-                >
-                  <Text style={Nofar_styles.BigButtonText}>עדכון דיווח</Text>
-                </TouchableOpacity>
+                <Text>{route.params.data.description}</Text>
               </View>
             </View>
-          </ScrollView>
-        </View>
 
+            <View style={AR_styles.ownerData}>
+              <Text style={styles.whenText}>
+                המדווח: {route.params.data.name}
+              </Text>
+              {route.params.data.contact && (
+                <View style={AR_styles.verticalLine} />
+              )}
+              {route.params.data.contact && (
+                <TouchableOpacity onPress={makeCall} style={AR_styles.contact}>
+                  <Text style={AR_styles.contactTitle}>צור קשר</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+            {/*<View style={styles.dogOwner}>*/}
+            {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
+            {/*</View>*/}
+            <View style={AR_styles.confirmBTContainer}>
+              <TouchableOpacity
+                style={Nofar_styles.BigButton}
+                onPress={() => {
+                  openMap(route.params.data.location);
+                }}
+              >
+                <Text style={Nofar_styles.BigButtonText}>פתיחת מיקום במפה</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
     );
-  } else {
+  } else if (typeOfPage === "PosterForBrowse") {
     return (
-
-        <View style={Nofar_styles.container}>
-          <ScrollView style={AR_styles.content}>
+      <View style={Nofar_styles.container}>
+        <ScrollView style={Nofar_styles.container}>
+          <View style={Nofar_styles.container}>
+            <Portal>
+              <Modal
+                contentContainerStyle={styles.modal}
+                visible={fullPicture}
+                onDismiss={hideFullPicture}
+              >
+                <Image
+                  style={styles.fullImage}
+                  source={{ uri: route.params.data.image }}
+                />
+              </Modal>
+            </Portal>
             <View>
               <View>
                 <View style={{ alignSelf: "center" }}>
-                  <Portal>
-                    <Modal
-                      contentContainerStyle={styles.modal}
-                      visible={fullPicture}
-                      onDismiss={hideFullPicture}
-                    >
-                      <Image
-                        style={styles.fullImage}
-                        source={{ uri: route.params.data.image }}
-                      />
-                    </Modal>
-                  </Portal>
                   <TouchableOpacity onPress={showSlider}>
                     <Image
                       style={Nofar_styles.mainImage}
                       source={{ uri: route.params.data.image }}
                     />
                   </TouchableOpacity>
-
                   <View style={styles.textOnComponent}>
                     <View style={styles.centerVerticalForPoster}>
                       <Text style={styles.dogsName}>
@@ -829,7 +420,7 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
               <View style={AR_styles.myCard}>
                 <View style={AR_styles.cardHeader}>
                   {route.params.data.description.length === 0 && (
-                    <Text style={styles.noDescription}>אין תיאור</Text>
+                    <Text style={styles.noDescription}>אין פרטים</Text>
                   )}
                   <Text>{route.params.data.description}</Text>
                 </View>
@@ -839,7 +430,7 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
                 <Text style={styles.whenText}>
                   הבעלים: {route.params.data.name}
                 </Text>
-                <View style={AR_styles.verticalLine} />
+                <View style={AR_styles.verticalLine}></View>
                 <TouchableOpacity onPress={makeCall} style={AR_styles.contact}>
                   <Text style={AR_styles.contactTitle}>צור קשר</Text>
                 </TouchableOpacity>
@@ -859,18 +450,402 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
                   </Text>
                 </TouchableOpacity>
               </View>
-              <View style={AR_styles.confirmBTContainer}>
-                <TouchableOpacity
-                  style={Nofar_styles.BigButton}
-                  onPress={editButtonPressHandler}
-                >
-                  <Text style={Nofar_styles.BigButtonText}>עדכון מודעה</Text>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
+    );
+  } else if (typeOfPage === "report") {
+    return (
+      <View style={Nofar_styles.container}>
+        <ScrollView style={AR_styles.content}>
+          <View>
+            <View>
+              <View style={{ alignSelf: "center" }}>
+                <Portal>
+                  <Modal
+                    contentContainerStyle={styles.modal}
+                    visible={fullPicture}
+                    onDismiss={hideFullPicture}
+                  >
+                    <Image
+                      style={styles.fullImage}
+                      source={{ uri: route.params.data.image }}
+                    />
+                  </Modal>
+                </Portal>
+                <TouchableOpacity onPress={showSlider}>
+                  <Image
+                    style={Nofar_styles.mainImage}
+                    source={{ uri: route.params.data.image }}
+                  />
+                </TouchableOpacity>
+
+                <View style={styles.textOnComponent}>
+                  <View style={styles.centerVerticalDot}>
+                    <Text style={styles.dogsName}>
+                      {route.params.data.date}
+                    </Text>
+                  </View>
+                  <View style={styles.centerVertical}>
+                    <Text style={styles.dotName}>·</Text>
+                  </View>
+                  <View style={styles.centerVerticalDot}>
+                    <Text style={styles.dogsName2}>
+                      {route.params.data.time}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View marginVertical="4%">
+              <View style={AR_styles.lastSeen}>
+                {/*<Text style={styles.whenText}>נצפה ב:</Text>*/}
+                <Icon name="location-pin" size={22} color="#000" />
+                <TouchableOpacity>
+                  <Text
+                    fontSize="16"
+                    lineHeight="20"
+                    fontWeight="500"
+                    textAlign="center"
+                  >
+                    {route.params.data.address}
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
-          </ScrollView>
-        </View>
+            {!expanded && (
+              <View style={{ ...Nofar_styles.Viewchips }}>
+                <View style={styles.containerChips}>
+                  {route.params.data.tagList.map(
+                    (item, index) =>
+                      index < 3 && (
+                        <Chip
+                          key={index}
+                          selected={false}
+                          style={Nofar_styles.chips}
+                        >
+                          {item}
+                        </Chip>
+                      )
+                  )}
 
+                  {route.params.data.tagList.length === 0 && (
+                    <View
+                      justifyContent="center"
+                      alignSelf="center"
+                      alignItems="center"
+                      marginHorizontal="5%"
+                    >
+                      <Text style={styles.newText}>אין תגיות</Text>
+                    </View>
+                  )}
+                </View>
+                <View style={styles.chveron2}>
+                  {route.params.data.tagList.length > 4 && (
+                    <TouchableOpacity>
+                      <Icon
+                        name="chevron-down"
+                        size={32}
+                        color="#000"
+                        onPress={() => {
+                          setExpanded(!expanded);
+                        }}
+                      ></Icon>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              </View>
+            )}
+
+            {expanded && (
+              <View style={{ ...styles.chipsColumn, marginLeft: "2%" }}>
+                <View style={{ ...styles.chips, marginLeft: "2%" }}>
+                  {route.params.data.tagList.map((item, index) => (
+                    <Chip
+                      key={index}
+                      selected={false}
+                      style={Nofar_styles.chips}
+                    >
+                      {item}
+                    </Chip>
+                  ))}
+                  {route.params.data.tagList.length === 0 && (
+                    <View
+                      justifyContent="center"
+                      alignSelf="center"
+                      alignItems="center"
+                      marginHorizontal="5%"
+                    >
+                      <Text style={styles.newText}>אין תגיות</Text>
+                    </View>
+                  )}
+                </View>
+
+                <View style={styles.chveron1}>
+                  {route.params.data.tagList.length !== 0 && (
+                    <TouchableOpacity>
+                      <Icon
+                        name="chevron-up"
+                        size={32}
+                        color="#000"
+                        onPress={() => {
+                          setExpanded(!expanded);
+                        }}
+                      ></Icon>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              </View>
+            )}
+
+            {/*<View marginTop="3%" ><Text style = {styles.descriptionText}>תיאור</Text></View>*/}
+
+            <View style={AR_styles.myCard}>
+              <View style={AR_styles.cardHeader}>
+                {route.params.data.description.length === 0 && (
+                  <Text style={styles.noDescription}>אין פרטים</Text>
+                )}
+                <Text>{route.params.data.description}</Text>
+              </View>
+            </View>
+
+            <View style={AR_styles.ownerData}>
+              <Text style={styles.whenText}>
+                המדווח: {route.params.data.name}
+              </Text>
+              {route.params.data.contact && (
+                <View style={AR_styles.verticalLine}></View>
+              )}
+              {route.params.data.contact && (
+                <TouchableOpacity onPress={makeCall} style={AR_styles.contact}>
+                  <Text style={AR_styles.contactTitle}>צור קשר</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+            {/*<View style={styles.dogOwner}>*/}
+            {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
+            {/*</View>*/}
+            <View style={AR_styles.confirmBTContainer}>
+              <TouchableOpacity
+                style={Nofar_styles.BigButton}
+                onPress={() => {
+                  openMap(route.params.data.location);
+                }}
+              >
+                <Text style={Nofar_styles.BigButtonText}>פתיחת מיקום במפה</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={AR_styles.confirmBTContainer}>
+              <TouchableOpacity
+                style={Nofar_styles.BigButton}
+                onPress={editButtonPressHandler2}
+              >
+                <Text style={Nofar_styles.BigButtonText}>עדכון דיווח</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
+    );
+  } else {
+    return (
+      <View style={Nofar_styles.container}>
+        <ScrollView style={AR_styles.content}>
+          <View>
+            <View>
+              <View style={{ alignSelf: "center" }}>
+                <Portal>
+                  <Modal
+                    contentContainerStyle={styles.modal}
+                    visible={fullPicture}
+                    onDismiss={hideFullPicture}
+                  >
+                    <Image
+                      style={styles.fullImage}
+                      source={{ uri: route.params.data.image }}
+                    />
+                  </Modal>
+                </Portal>
+                <TouchableOpacity onPress={showSlider}>
+                  <Image
+                    style={Nofar_styles.mainImage}
+                    source={{ uri: route.params.data.image }}
+                  />
+                </TouchableOpacity>
+
+                <View style={styles.textOnComponent}>
+                  <View style={styles.centerVerticalForPoster}>
+                    <Text style={styles.dogsName}>
+                      {route.params.data.dogName}
+                    </Text>
+                  </View>
+                  <View style={styles.centerVerticalForPoster}>
+                    <Text style={styles.dotName}>·</Text>
+                  </View>
+                  <View style={styles.centerVerticalDotForPoster}>
+                    <Text style={styles.dogsName2}>
+                      {route.params.data.date}
+                    </Text>
+                  </View>
+                  <View style={styles.centerVerticalForPoster}>
+                    <Text style={styles.dotName}>·</Text>
+                  </View>
+                  <View style={styles.centerVerticalDotForPoster}>
+                    <Text style={styles.dogsName2}>
+                      {route.params.data.time}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View marginVertical="4%">
+              <View style={AR_styles.lastSeen}>
+                {/*<Text style={styles.whenText}>נצפה ב:</Text>*/}
+                <Icon name="location-pin" size={22} color="#000" />
+                <TouchableOpacity>
+                  <Text
+                    fontSize="16"
+                    lineHeight="20"
+                    fontWeight="500"
+                    textAlign="center"
+                  >
+                    {route.params.data.address}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              {/*} <Text style = {styles.whenText}>בתאריך: {route.params.data.date}</Text>*/}
+            </View>
+            {!expanded && (
+              <View style={{ ...Nofar_styles.Viewchips }}>
+                <View style={styles.containerChips}>
+                  {route.params.data.tagList.map(
+                    (item, index) =>
+                      index < 3 && (
+                        <Chip
+                          key={index}
+                          selected={false}
+                          style={Nofar_styles.chips}
+                        >
+                          {item}
+                        </Chip>
+                      )
+                  )}
+
+                  {route.params.data.tagList.length === 0 && (
+                    <View
+                      justifyContent="center"
+                      alignSelf="center"
+                      alignItems="center"
+                      marginHorizontal="5%"
+                    >
+                      <Text style={styles.newText}>אין תגיות</Text>
+                    </View>
+                  )}
+                </View>
+                <View style={styles.chveron2}>
+                  {route.params.data.tagList.length > 4 && (
+                    <TouchableOpacity>
+                      <Icon
+                        name="chevron-down"
+                        size={32}
+                        color="#000"
+                        onPress={() => {
+                          setExpanded(!expanded);
+                        }}
+                      ></Icon>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              </View>
+            )}
+
+            {expanded && (
+              <View style={{ ...styles.chipsColumn, marginLeft: "2%" }}>
+                <View style={{ ...styles.chips, marginLeft: "2%" }}>
+                  {route.params.data.tagList.map((item, index) => (
+                    <Chip
+                      key={index}
+                      selected={false}
+                      style={Nofar_styles.chips}
+                    >
+                      {item}
+                    </Chip>
+                  ))}
+                  {route.params.data.tagList.length === 0 && (
+                    <View
+                      justifyContent="center"
+                      alignSelf="center"
+                      alignItems="center"
+                      marginHorizontal="5%"
+                    >
+                      <Text style={styles.newText}>אין תגיות</Text>
+                    </View>
+                  )}
+                </View>
+
+                <View style={styles.chveron1}>
+                  {route.params.data.tagList.length !== 0 && (
+                    <TouchableOpacity>
+                      <Icon
+                        name="chevron-up"
+                        size={32}
+                        color="#000"
+                        onPress={() => {
+                          setExpanded(!expanded);
+                        }}
+                      ></Icon>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              </View>
+            )}
+
+            {/*<View marginTop="3%" ><Text style = {styles.descriptionText}>תיאור</Text></View>*/}
+
+            <View style={AR_styles.myCard}>
+              <View style={AR_styles.cardHeader}>
+                {route.params.data.description.length === 0 && (
+                  <Text style={styles.noDescription}>אין פרטים</Text>
+                )}
+                <Text>{route.params.data.description}</Text>
+              </View>
+            </View>
+
+            <View style={AR_styles.ownerData}>
+              <Text style={styles.whenText}>
+                הבעלים: {route.params.data.name}
+              </Text>
+              <View style={AR_styles.verticalLine} />
+              <TouchableOpacity onPress={makeCall} style={AR_styles.contact}>
+                <Text style={AR_styles.contactTitle}>צור קשר</Text>
+              </TouchableOpacity>
+            </View>
+            {/*<View style={styles.dogOwner}>*/}
+            {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
+            {/*</View>*/}
+            <View style={AR_styles.confirmBTContainer}>
+              <TouchableOpacity
+                style={Nofar_styles.BigButton}
+                onPress={() => {
+                  openMap(route.params.data.location);
+                }}
+              >
+                <Text style={Nofar_styles.BigButtonText}>פתיחת מיקום במפה</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={AR_styles.confirmBTContainer}>
+              <TouchableOpacity
+                style={Nofar_styles.BigButton}
+                onPress={editButtonPressHandler}
+              >
+                <Text style={Nofar_styles.BigButtonText}>עדכון מודעה</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
     );
   }
 }

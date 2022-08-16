@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { landingPageStyle } from "../styles/LandingPageStyle";
-
+import * as Linking from "expo-linking";
 import { Avatar, Button } from "react-native-paper";
 import { Nofar_styles } from "../styles/NofarStyle";
 import React from "react";
@@ -93,6 +93,31 @@ export default function PageLaunch({ navigation }) {
         <Text style={landingPageStyle.bottomText}>
           האפליקציה שלנו מספקת פתרון מהפכני{"\n"}שמציע לבעלי כלבים דרך פשוטה
           ואפקטיבית{"\n"}למצוא את הכלב האהוב שלהם
+        </Text>
+      </View>
+      <View style={landingPageStyle.sellingText}>
+        <Text style={landingPageStyle.privacyPolicyText}>
+          עצם התקנת האפליקציה והשימוש בה מהווה הצהרה כי קראת והבנת את{" "}
+          <Text
+            style={landingPageStyle.linksText}
+            onPress={() => {
+              Linking.openURL(
+                "https://github.com/idan10000/google-workshop/blob/master/terms_of_use.md"
+              );
+            }}
+          >
+            תנאי השימוש
+          </Text>{" "}
+          ואת{" "}
+          <Text
+            style={landingPageStyle.linksText}
+            onPress={() => {
+              Linking.openURL("https://roeymarinov.github.io/");
+            }}
+          >
+            מדיניות הפרטיות
+          </Text>{" "}
+          והסכמת להם
         </Text>
       </View>
     </ImageBackground>

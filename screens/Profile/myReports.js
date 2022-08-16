@@ -13,7 +13,7 @@ import { Title, Text } from "react-native-paper";
 import { AuthenticatedUserContext } from "../../navigation/AuthenticatedUserProvider";
 import { getPhoneNumber } from "../../shared_components/Firebase.js";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
-import PostPofileItem from "./PostProfileItem";
+import PostProfileItem from "./PostProfileItem";
 
 export default function MyReports({
   navigation,
@@ -206,7 +206,7 @@ export default function MyReports({
         {/*</View>*/}
 
         <View style={styles.listContainer}>
-          <Title style={styles.foundDog}>הדיווחים שלי</Title>
+          {/*<Title style={styles.foundDog}>הדיווחים שלי</Title>*/}
           <FlatList
             data={data}
             ItemSeparatorComponent={FlatListItemSeparator}
@@ -221,7 +221,7 @@ export default function MyReports({
             renderItem={({ item }) => {
               return (
                 <View style={{ paddingVertical: 5 }}>
-                  <PostPofileItem
+                  <PostProfileItem
                     image={item.data.image}
                     date={item.data.date}
                     name={item.data.dogName}

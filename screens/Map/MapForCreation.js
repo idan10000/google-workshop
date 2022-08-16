@@ -168,8 +168,7 @@ export default function MapForCreation({
         />
       </View>
       {showMap ? (
-        <View style={{marginTop:"5%"}}>
-
+        <View style={{ marginTop: "5%" }}>
           <MapView
             style={styles.map}
             onRegionChangeComplete={(region) => {
@@ -211,9 +210,9 @@ export default function MapForCreation({
           </View>
 
           <View style={styles.bottomView}>
-            <View style={{marginRight:"1%"}}>
-
-              <Icon name="infocirlceo" size={18} color="#000" /></View>
+            <View style={{ marginRight: "1%" }}>
+              <Icon name="infocirlceo" size={18} color="#000" />
+            </View>
             <View style={styles.bottomTextView}>
               <Text style={styles.bottomText}>
                 ניתן להזיז את הסמן באמצעות לחיצה ארוכה
@@ -240,14 +239,13 @@ const styles = StyleSheet.create({
   },
   map: {
     marginBottom: "2.5%",
-    width: Dimensions.get("window").width / 1.12,
+    width: Dimensions.get("window").width / 1.22,
     justifyContent: "center",
     alignSelf: "center",
-    height: Dimensions.get("window").height / 1.6,
+    height: Dimensions.get("window").height / 1.7,
   },
   bottomTextView: {
     flexDirection: "row",
-
   },
   bottomText: {
     color: "#000",
@@ -263,8 +261,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginHorizontal: "5%",
     marginVertical: "1.5%",
-    alignItems:"center",
-
+    alignItems: "center",
   },
   proceedButton: {
     paddingVertical: "3%",
@@ -279,17 +276,17 @@ const styles = StyleSheet.create({
     marginLeft:
       (Dimensions.get("window").width - Dimensions.get("window").width / 1.12) /
       2,
-  }, addressView: {
-    justifyContent:"center",
-    alignSelf:"center",
+  },
+  addressView: {
+    justifyContent: "center",
+    alignSelf: "center",
     flexDirection: "row",
     marginLeft: "1%",
     marginRight: "12%",
-  borderRadius:20,
+    borderRadius: 20,
     marginVertical: "1.5%",
-    alignItems:"center",
-    position:"absolute",
-    backgroundColor:"#FFF"
-  }
-
+    alignItems: "center",
+    position: "absolute",
+    backgroundColor: "#FFF",
+  },
 });

@@ -203,7 +203,7 @@ export default function MyPosters({
         {/*</View>*/}
 
         <View style={styles.listContainer}>
-          <Title style={styles.foundDog}>המודעות שלי</Title>
+          {/*<Title style={styles.foundDog}>המודעות שלי</Title>*/}
           <FlatList
             data={data}
             ItemSeparatorComponent={FlatListItemSeparator}

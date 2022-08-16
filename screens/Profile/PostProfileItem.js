@@ -92,8 +92,10 @@ const PostProfileItem = ({
           {destination !== "Report" && (
             <Caption style={styles.date}>{name}</Caption>
           )}
-          <Caption style={styles.distance}>כתובת: {address}</Caption>
-          <Caption style={styles.distance}>תיאור: {description}</Caption>
+          <Caption style={styles.distance}>מיקום: {address}</Caption>
+          <Caption style={styles.distance}>
+            פרטים: {description.length !== 0 ? description : "-"}
+          </Caption>
         </View>
       </View>
     </TouchableOpacity>
@@ -105,7 +107,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-    marginRight:"2.5%",
+    marginRight: "2.5%",
     resizeMode: "cover",
     flex: 1,
   },

@@ -193,7 +193,9 @@ export default function SignUp({ navigation }) {
             />
           </TouchableOpacity>
           <View style={Nofar_styles.BigTitle}>
-            <Text style={Nofar_styles.BigTitle}>ברוכים הבאים{"\n"}אל Findog</Text>
+            <Text style={Nofar_styles.BigTitle}>
+              ברוכים הבאים{"\n"}אל Findog
+            </Text>
           </View>
         </View>
 
@@ -225,16 +227,19 @@ export default function SignUp({ navigation }) {
             autoCompleteType="tel"
             keyboardType="phone-pad"
             textContentType="telephoneNumber"
+            activeUnderlineColor="#000000"
+            activeOutlineColor="#000000"
             onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
           />
         </View>
         <View style={styles.bottomView}>
-          <View style={{marginRight:"1.5%", paddingTop:"1.5%"}}>
-
-            <Icon name="infocirlceo" size={18} color="#000" /></View>
+          <View style={{ marginRight: "1.5%", paddingTop: "1.5%" }}>
+            <Icon name="infocirlceo" size={18} color="#000" />
+          </View>
           <View style={styles.bottomTextView}>
             <Text style={styles.bottomText}>
-              אם מספר הטלפון שלכם אינו ישראלי אנא כתבו אותו בצורה מלאה עם הקידומת
+              אם מספר הטלפון שלכם אינו ישראלי אנא כתבו אותו בצורה מלאה עם
+              הקידומת
             </Text>
           </View>
         </View>
@@ -246,11 +251,11 @@ export default function SignUp({ navigation }) {
             // passed directly to `verifyPhoneNumber`.
             try {
               const phoneProvider = new PhoneAuthProvider(getAuth());
-              if(! (phoneNumber[0]==='+')){
-                setPhoneNumber("+972" + phoneNumber)
+              if (!(phoneNumber[0] === "+")) {
+                setPhoneNumber("+972" + phoneNumber);
               }
               const verificationId = await phoneProvider.verifyPhoneNumber(
-                 phoneNumber,
+                phoneNumber,
                 recaptchaVerifier.current
               );
               setVerificationId(verificationId);
@@ -275,9 +280,7 @@ export default function SignUp({ navigation }) {
               marginTop: "5%",
             }}
           >
-            <Text style={Nofar_styles.TinyButtonTitle}>
-              שלח קוד אימות
-            </Text>
+            <Text style={Nofar_styles.TinyButtonTitle}>שלח קוד אימות</Text>
           </View>
         </TouchableOpacity>
 
@@ -306,6 +309,8 @@ export default function SignUp({ navigation }) {
                 placeholder="הכניסו 6 ספרות"
                 keyboardType="phone-pad"
                 onChangeText={setVerificationCode}
+                activeUnderlineColor="#000000"
+                activeOutlineColor="#000000"
               />
             </View>
             {verificationId && (
@@ -546,17 +551,15 @@ const styles = StyleSheet.create({
   },
   bottomTextView: {
     flexDirection: "row",
-
-  },  bottomText: {
+  },
+  bottomText: {
     color: "#000",
     fontSize: 14,
     fontWeight: "600",
-    marginRight:"4%"
-
+    marginRight: "4%",
   },
   bottomView: {
     flexDirection: "row",
     marginHorizontal: "7.5%",
-
   },
 });

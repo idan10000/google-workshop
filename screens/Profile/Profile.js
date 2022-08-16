@@ -105,7 +105,7 @@ export default function ProfilePage({ navigation }) {
             >
               <Icon name="card-text" size={24} color="#FFFFFF" />
             </View>
-            <Text style={user_styles.BigButtonText}>הצגת דיווחים</Text>
+            <Text style={user_styles.BigButtonText}>הדיווחים שלי</Text>
           </TouchableOpacity>
         </View>
         <View style={user_styles.confirmBTContainer}>
@@ -121,7 +121,7 @@ export default function ProfilePage({ navigation }) {
             >
               <Icon name="post" size={24} color="#FFFFFF" />
             </View>
-            <Text style={user_styles.BigButtonText}>הצגת מודעות</Text>
+            <Text style={user_styles.BigButtonText}>המודעות שלי</Text>
           </TouchableOpacity>
         </View>
 
