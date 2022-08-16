@@ -45,7 +45,6 @@ export default function RootNavigator() {
           setIsLoading(false);
         });
       } else {
-        setUsername("");
         setUser(null);
         setIsLoading(false);
       }
