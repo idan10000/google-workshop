@@ -25,11 +25,12 @@ export const signUpStyle = StyleSheet.create({
     alignItems: 'center',
     marginTop:'10%',
     justifyContent: 'center',
-    height:92,
-    width:113,
+    height:90,
+    width:90,
     resizeMode: 'contain',
-    marginRight:20
-},
+    marginRight:"5%",
+
+  },
   welcomeText:{
     marginVertical:"2%",
     fontSize: 20,

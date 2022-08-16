@@ -188,7 +188,7 @@ export default function SignUp({ navigation }) {
         <View style={signUpStyle.logoHeaderContainer}>
           <TouchableOpacity>
             <Image
-              source={require("../assets/Find_my_dog_logo.png")}
+              source={require("../assets/findog_logo_1024_cropped.png")}
               style={signUpStyle.appLogo}
             />
           </TouchableOpacity>
@@ -551,6 +551,8 @@ const styles = StyleSheet.create({
     color: "#000",
     fontSize: 14,
     fontWeight: "600",
+    marginRight:"4%"
+
   },
   bottomView: {
     flexDirection: "row",

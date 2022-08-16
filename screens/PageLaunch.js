@@ -54,7 +54,7 @@ export default function PageLaunch({ navigation }) {
       <View style={landingPageStyle.slogenContainer}>
         <Image
           style={landingPageStyle.appLogo}
-          source={require("../assets/findog_logo_1024.png")}
+          source={require("../assets/findog_logo_1024_cropped.png")}
         />
       </View>
 

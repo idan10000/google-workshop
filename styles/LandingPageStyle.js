@@ -23,8 +23,10 @@ export const landingPageStyle = StyleSheet.create({
     appLogo: {
         alignItems: 'center',
         justifyContent: 'center',
-        height:170,
-        width:170,
+        alignSelf:"center",
+        marginRight:"8%",
+        height:135,
+        width:135,
         resizeMode: 'stretch',
         marginBottom:'5%'
 
