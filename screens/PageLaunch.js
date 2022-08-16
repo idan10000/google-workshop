@@ -83,12 +83,12 @@ export default function PageLaunch({ navigation }) {
       {/*    }}><Avatar.Image size={55} source={require('../assets/google.png')}*/}
       {/*                     style={landingPageStyle.avatar}/></TouchableOpacity>*/}
       {/*</View>*/}
-      <View style={landingPageStyle.containerForRegisterClick}>
-        <Text style={Nofar_styles.text}> כבר רשומים? </Text>
-        <TouchableOpacity onPress={nextScreen}>
-          <Text style={landingPageStyle.clickHere}>לחצו כאן!</Text>
-        </TouchableOpacity>
-      </View>
+      {/*<View style={landingPageStyle.containerForRegisterClick}>*/}
+      {/*  <Text style={Nofar_styles.text}> כבר רשומים? </Text>*/}
+      {/*  <TouchableOpacity onPress={nextScreen}>*/}
+      {/*    <Text style={landingPageStyle.clickHere}>לחצו כאן!</Text>*/}
+      {/*  </TouchableOpacity>*/}
+      {/*</View>*/}
       <View style={landingPageStyle.sellingText}>
         <Text style={landingPageStyle.bottomText}>
           האפליקציה שלנו מספקת פתרון מהפכני{"\n"}שמציע לבעלי כלבים דרך פשוטה

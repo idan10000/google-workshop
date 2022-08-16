@@ -45,7 +45,7 @@ export default function Screen3Report({ route, navigation }) {
   let report = route.params.report;
 
   const phoneRegExp =
-    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
   const [correctPhone, setCorrectPhone] = React.useState(true);
 
   const db = fireStoreDB;
@@ -179,7 +179,6 @@ export default function Screen3Report({ route, navigation }) {
   const nextScreen = async () => {
     if (
       (phoneRegExp.test(phoneText) === true &&
-        phoneText.length === 10 &&
         checked) ||
       !checked
     ) {
@@ -305,9 +304,9 @@ export default function Screen3Report({ route, navigation }) {
       setCorrectPhone(false);
     }
   };
+  console.log(phoneRegExp.test(phoneText))
   if (
     phoneRegExp.test(phoneText) === true &&
-    phoneText.length === 10 &&
     correctPhone === false
   ) {
     setCorrectPhone(true);

@@ -10,7 +10,7 @@ export const Nofar_styles = StyleSheet.create({
   text: { fontSize: 20 },
   BigTitle: {
     color: "#1B1209",
-    fontSize: 30,
+    fontSize: 27,
     // textAlign: "center",
     fontWeight: "700",
   },

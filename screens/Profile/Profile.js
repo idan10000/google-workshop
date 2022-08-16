@@ -43,7 +43,7 @@ export default function ProfilePage({ navigation }) {
       >
       <SafeAreaView >
         <View style={user_styles.ProfileCard}>
-          <View style={{ flexDirection: "row", marginTop: "5%", marginLeft: "10%" }}>
+          <View style={{ flexDirection: "row", marginTop: "10%", marginLeft: "10%" }}>
             {/* <Avatar
             style={{ width: "100px", height: "100px" }}
             avatarStyle="Circle"
@@ -61,11 +61,11 @@ export default function ProfilePage({ navigation }) {
             {/*</View>*/}
 
             <View style={{ flexDirection: "row", marginTop: "5%" }}>
-              <Icon name="phone" color="#777777" size={30} />
+              <Icon name="phone" color="#777777" size={27} />
               <TextInput
                   style={{
                     color: "#000000",
-                    marginLeft: 20,
+                    marginLeft: "4%",
                     fontSize: 17,
                     textDecorationLine: "underline",
                   }}

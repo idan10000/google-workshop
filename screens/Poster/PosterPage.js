@@ -62,11 +62,9 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
   console.log(typeOfPage);
   if (typeOfPage === "ReportForBrowse") {
     return (
-      <Provider>
         <View style={Nofar_styles.container}>
           <ScrollView style={AR_styles.content}>
             <View>
-              <View>
                 <View style={{ alignSelf: "center" }}>
                   <Portal>
                     <Modal
@@ -104,7 +102,7 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
                     </View>
                   </View>
                 </View>
-              </View>
+
               {route.params.data.address.length < 15 && (
                 <View marginVertical="4%">
                   <View style={AR_styles.lastSeen}>
@@ -271,11 +269,10 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
             </View>
           </ScrollView>
         </View>
-      </Provider>
     );
   } else if (typeOfPage === "PosterForBrowse") {
     return (
-      <Provider>
+
         <View style={Nofar_styles.container}>
           <ScrollView style={Nofar_styles.container}>
             <View style={Nofar_styles.container}>
@@ -470,11 +467,11 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
             </View>
           </ScrollView>
         </View>
-      </Provider>
+
     );
   } else if (typeOfPage === "report") {
     return (
-      <Provider>
+
         <View style={Nofar_styles.container}>
           <ScrollView style={AR_styles.content}>
             <View>
@@ -670,11 +667,11 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
             </View>
           </ScrollView>
         </View>
-      </Provider>
+
     );
   } else {
     return (
-      <Provider>
+
         <View style={Nofar_styles.container}>
           <ScrollView style={AR_styles.content}>
             <View>
@@ -873,7 +870,7 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
             </View>
           </ScrollView>
         </View>
-      </Provider>
+
     );
   }
 }
@@ -985,7 +982,7 @@ const styles = StyleSheet.create({
     // alignSelf: "center",
     // alignItems: "center",
     // justifyContent:"center",
-    marginRight: "50%",
+    marginRight: "48%",
     // marginLeft:"45%"
   },
   chveron2: {
@@ -998,11 +995,11 @@ const styles = StyleSheet.create({
   fullImage: {
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height / 1.6,
-    marginBottom: "40%",
+    marginBottom: "20%",
     alignSelf: "center",
   },
   modal: {
     alignSelf: "center",
-    height: "10%",
+    height: "5%",
   },
 });

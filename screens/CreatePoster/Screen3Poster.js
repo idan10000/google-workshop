@@ -54,7 +54,7 @@ export default function Screen3Poster({ route, navigation }) {
   let prevPoster = route.params.poster;
 
   const phoneRegExp =
-    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
   const [correctPhone, setCorrectPhone] = React.useState(true);
   const [correctDogName, setCorrectDogName] = React.useState(true);
 
@@ -345,7 +345,7 @@ export default function Screen3Poster({ route, navigation }) {
           });
       }
     } else {
-      if (!(phoneRegExp.test(phoneText) === true && phoneText.length === 10)) {
+      if (!(phoneRegExp.test(phoneText) === true )) {
         setCorrectPhone(false);
       }
       if (nameText.length === 0) {
@@ -356,7 +356,6 @@ export default function Screen3Poster({ route, navigation }) {
   // before letting the user submit his poster we need to validate that the phone is real number and that the dogs' name is valid
   if (
     phoneRegExp.test(phoneText) === true &&
-    phoneText.length === 10 &&
     correctPhone === false
   ) {
     setCorrectPhone(true);
@@ -665,7 +664,7 @@ const styles = StyleSheet.create({
   dogNameContainer: {
     marginHorizontal: "7.5%",
     flexDirection: "row",
-    marginTop: "5%",
+    marginTop: "1%",
   },
   descriptionTextContainer: {
     marginHorizontal: "7.5%",
@@ -673,6 +672,6 @@ const styles = StyleSheet.create({
   },
 
   nameOfDog: {
-    marginBottom: "5%",
+    marginBottom: "1%",
   },
 });

@@ -58,7 +58,7 @@ export const landingPageStyle = StyleSheet.create({
     },
     sellingText:{
         textAlign: 'center',
-        marginBottom:"10%",
+        marginVertical:"10%",
         justifyContent: 'center',
         alignItems: 'center',
     }, bottomText: {
@@ -84,8 +84,7 @@ export const landingPageStyle = StyleSheet.create({
 
         },
     emailRegist: {
-        marginVertical:10,
-        marginTop:"8%",
+        marginTop:"10%",
         alignItems: 'center',
         justifyContent: 'center',
         color:"#1B1209",

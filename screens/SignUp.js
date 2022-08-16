@@ -246,9 +246,11 @@ export default function SignUp({ navigation }) {
             // passed directly to `verifyPhoneNumber`.
             try {
               const phoneProvider = new PhoneAuthProvider(getAuth());
-
+              if(! (phoneNumber[0]==='+')){
+                setPhoneNumber("+972" + phoneNumber)
+              }
               const verificationId = await phoneProvider.verifyPhoneNumber(
-                "+972" + phoneNumber,
+                 phoneNumber,
                 recaptchaVerifier.current
               );
               setVerificationId(verificationId);
@@ -257,7 +259,7 @@ export default function SignUp({ navigation }) {
               });
               setVisibleVerification(true);
             } catch (err) {
-              showMessage({ text: `Error: ${err.message}`, color: "red" });
+              showMessage({ text: `מספר טלפון לא חוקי`, color: "red" });
             }
           }}
         >
@@ -301,7 +303,8 @@ export default function SignUp({ navigation }) {
               <TextInput
                 style={{ marginVertical: 10, fontSize: 17 }}
                 editable={!!verificationId}
-                placeholder="123456"
+                placeholder="הכניסו 6 ספרות"
+                keyboardType="phone-pad"
                 onChangeText={setVerificationCode}
               />
             </View>
@@ -339,7 +342,7 @@ export default function SignUp({ navigation }) {
                     showMessage({ text: "Phone authentication successful 👍" });
                   } catch (err) {
                     showMessage({
-                      text: `Error: ${err.message}`,
+                      text: `הקוד שהוכנס שגוי`,
                       color: "red",
                     });
                   }
