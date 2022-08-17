@@ -239,10 +239,14 @@ const styles = StyleSheet.create({
   },
   map: {
     marginBottom: "2.5%",
-    width: Dimensions.get("window").width / 1.22,
+    // width: Dimensions.get("window").width / 1.12,
+    width: "90%",
+    height: "75%",
     justifyContent: "center",
     alignSelf: "center",
-    height: Dimensions.get("window").height / 1.7,
+    //height: Dimensions.get("window").height / 1.6,
+    marginTop: "2.5%",
+    marginHorizontal: "2.5%",
   },
   bottomTextView: {
     flexDirection: "row",
