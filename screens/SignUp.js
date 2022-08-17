@@ -8,6 +8,7 @@ import {
   ImageBackground,
   StyleSheet,
   Dimensions,
+  ActivityIndicator,
 } from "react-native";
 import { Button, TextInput, Modal, Portal } from "react-native-paper";
 import { Formik } from "formik";
@@ -196,9 +197,11 @@ export default function SignUp({
   const firebaseConfig = app ? app.options : undefined;
   const [message, showMessage] = React.useState();
   const attemptInvisibleVerification = false;
-
-  const modalConfirmPressHandler = () => {};
+  const [isModalLoading, setIsModalLoading] = React.useState(false);
   const [visibleVerification, setVisibleVerification] = React.useState(false);
+  const modalConfirmPressHandler = () => {
+    setVisibleVerification(false);
+  };
 
   return (
     <ImageBackground
@@ -271,6 +274,8 @@ export default function SignUp({
             // FirebaseAuthApplicationVerifier interface and can be
             // passed directly to `verifyPhoneNumber`.
             try {
+              setIsModalLoading(true);
+              setVisibleVerification(true);
               const phoneProvider = new PhoneAuthProvider(getAuth());
               let phone = phoneNumber;
               if (phone[0] !== "+") {
@@ -289,7 +294,7 @@ export default function SignUp({
               // showMessage({
               //   text: "קוד אימות נשלח למספר הטלפון שהזנת",
               // });
-              setVisibleVerification(true);
+              setIsModalLoading(false);
             } catch (err) {
               showMessage({ text: `מספר טלפון לא חוקי`, color: "red" });
             }
@@ -318,104 +323,112 @@ export default function SignUp({
             onDismiss={modalConfirmPressHandler}
             contentContainerStyle={stylesPoster.modal}
           >
-            <View style={Nofar_styles.actionInput}>
-              <Text
-                style={{
-                  color: "#000",
-                  // fontWeight: "bold",
-                  fontSize: 17,
-                }}
-              >
-                הכניסו את קוד האימות, שנשלח למספר הטלפון שהזנתם
-              </Text>
-            </View>
-            <View style={Nofar_styles.actionInput}>
-              <TextInput
-                style={{ marginVertical: 10, fontSize: 17 }}
-                editable={!!verificationId}
-                placeholder="הכניסו 6 ספרות"
-                keyboardType="phone-pad"
-                onChangeText={setVerificationCode}
-                activeUnderlineColor="#000000"
-                activeOutlineColor="#000000"
-              />
-            </View>
-            {verificationId && (
-              <TouchableOpacity
-                onPress={async () => {
-                  try {
-                    // const db = getFirestore();
-                    // const phoneNumberRef = collection(db,"Users");
-                    // console.log("\n\n\n\n\n\n")
-                    //
-                    // console.log("BI THERE")
-                    //
-                    // const q = query(phoneNumberRef, where("identifier", "==", phoneNumber));
-                    // const querySnapshot = await getDocs(q);
-                    // querySnapshot.forEach((doc) => {
-                    //     // doc.data() is never undefined for query doc snapshots
-                    //     console.log("\n\n\n\n\n\n")
-                    //     console.log("1")
-                    //
-                    //     console.log("\n\n\n\n\n\n")
-                    //
-                    // });
-
-                    const credential = PhoneAuthProvider.credential(
-                      verificationId,
-                      verificationCode
-                    );
-                    const userCredential = await signInWithCredential(
-                      getAuth(),
-                      credential
-                    );
-                    setVisibleVerification(false);
-                    //showMessage({ text: "Phone authentication successful 👍" });
-                  } catch (err) {
-                    showMessage({
-                      text: `הקוד שהוכנס שגוי`,
-                      color: "red",
-                    });
-                  }
-                }}
-              >
-                <View
-                  style={{
-                    backgroundColor: "#DCA277",
-                    width: Dimensions.get("window").width * 0.6,
-                    height: Dimensions.get("window").height * 0.065,
-                    alignSelf: "center",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderRadius: 20,
-                    marginTop: "1%",
-                    marginBottom: "5%",
-                  }}
-                >
-                  <Text style={Nofar_styles.TinyButtonTitle}>אישור </Text>
+            {isModalLoading ? (
+              <View style={Nofar_styles.actionInput}>
+                <ActivityIndicator size="large" color="#DCA277" />
+              </View>
+            ) : (
+              <View>
+                <View style={Nofar_styles.actionInput}>
+                  <Text
+                    style={{
+                      color: "#000",
+                      // fontWeight: "bold",
+                      fontSize: 17,
+                    }}
+                  >
+                    אנא הכניסו את קוד האימות, שנשלח למספר הטלפון שהזנתם
+                  </Text>
                 </View>
-              </TouchableOpacity>
+                <View style={Nofar_styles.actionInput}>
+                  <TextInput
+                    style={{ marginVertical: 10, fontSize: 17 }}
+                    editable={!!verificationId}
+                    placeholder="הכניסו 6 ספרות"
+                    keyboardType="phone-pad"
+                    onChangeText={setVerificationCode}
+                    activeUnderlineColor="#000000"
+                    activeOutlineColor="#000000"
+                  />
+                </View>
+                {verificationId && (
+                  <TouchableOpacity
+                    onPress={async () => {
+                      try {
+                        // const db = getFirestore();
+                        // const phoneNumberRef = collection(db,"Users");
+                        // console.log("\n\n\n\n\n\n")
+                        //
+                        // console.log("BI THERE")
+                        //
+                        // const q = query(phoneNumberRef, where("identifier", "==", phoneNumber));
+                        // const querySnapshot = await getDocs(q);
+                        // querySnapshot.forEach((doc) => {
+                        //     // doc.data() is never undefined for query doc snapshots
+                        //     console.log("\n\n\n\n\n\n")
+                        //     console.log("1")
+                        //
+                        //     console.log("\n\n\n\n\n\n")
+                        //
+                        // });
+
+                        const credential = PhoneAuthProvider.credential(
+                          verificationId,
+                          verificationCode
+                        );
+                        const userCredential = await signInWithCredential(
+                          getAuth(),
+                          credential
+                        );
+                        setVisibleVerification(false);
+                        //showMessage({ text: "Phone authentication successful 👍" });
+                      } catch (err) {
+                        showMessage({
+                          text: `הקוד שהוכנס שגוי`,
+                          color: "red",
+                        });
+                      }
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: "#DCA277",
+                        width: Dimensions.get("window").width * 0.6,
+                        height: Dimensions.get("window").height * 0.065,
+                        alignSelf: "center",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderRadius: 20,
+                        marginTop: "1%",
+                        marginBottom: "5%",
+                      }}
+                    >
+                      <Text style={Nofar_styles.TinyButtonTitle}>אישור </Text>
+                    </View>
+                  </TouchableOpacity>
+                )}
+                {message ? (
+                  <TouchableOpacity
+                    style={[
+                      { backgroundColor: 0xffffffee, justifyContent: "center" },
+                    ]}
+                    onPress={() => showMessage(undefined)}
+                  >
+                    <Text
+                      style={{
+                        color: message.color || "#DCA277",
+                        fontSize: 17,
+                        textAlign: "center",
+                        margin: 20,
+                      }}
+                    >
+                      {message.text}
+                    </Text>
+                  </TouchableOpacity>
+                ) : undefined}
+                {attemptInvisibleVerification && <FirebaseRecaptchaBanner />}
+              </View>
             )}
-            {message ? (
-              <TouchableOpacity
-                style={[
-                  { backgroundColor: 0xffffffee, justifyContent: "center" },
-                ]}
-                onPress={() => showMessage(undefined)}
-              >
-                <Text
-                  style={{
-                    color: message.color || "#DCA277",
-                    fontSize: 17,
-                    textAlign: "center",
-                    margin: 20,
-                  }}
-                >
-                  {message.text}
-                </Text>
-              </TouchableOpacity>
-            ) : undefined}
-            {attemptInvisibleVerification && <FirebaseRecaptchaBanner />}
           </Modal>
         </Portal>
 
