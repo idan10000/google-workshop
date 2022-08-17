@@ -51,7 +51,8 @@ export default function InsertUsername({ username, setUsername }) {
             style={{ marginVertical: 10, fontSize: 17 }}
             placeholder="הכנס שם"
             autoFocus
-            autoCompleteType="tel"
+            activeUnderlineColor="#000000"
+            activeOutlineColor="#000000"
             onChangeText={(username) => setUserNameLocal(username)}
           />
         </View>
@@ -65,30 +66,26 @@ export default function InsertUsername({ username, setUsername }) {
             </Text>
           </View>
         </View>
-          <TouchableOpacity
-            onPress={() => {
-              console.log("username:");
-              console.log(userName);
-              setUsername(userName);
+        <TouchableOpacity
+          onPress={() => {
+            setUsername(userName);
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: "#DCA277",
+              width: Dimensions.get("window").width * 0.6,
+              height: Dimensions.get("window").height * 0.055,
+              alignSelf: "center",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: 20,
+              marginTop: "5%",
             }}
           >
-            <View
-              style={{
-                backgroundColor: "#DCA277",
-                width: Dimensions.get("window").width * 0.6,
-                height: Dimensions.get("window").height * 0.055,
-                alignSelf: "center",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: 20,
-                marginTop: "5%",
-              }}
-            >
-              <Text style={Nofar_styles.TinyButtonTitle}>סיימתי!</Text>
-            </View>
-          </TouchableOpacity>
-
-
+            <Text style={Nofar_styles.TinyButtonTitle}>סיימתי!</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </ImageBackground>
   );
@@ -139,18 +136,17 @@ const styles = StyleSheet.create({
     marginHorizontal: "7.5%",
   },
   appLogo: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     height: Dimensions.get("window").width / 2,
     width: Dimensions.get("window").width / 2,
-    resizeMode: 'stretch',
-
+    resizeMode: "stretch",
   },
   logoHeaderContainer: {
-    marginTop:"20%",
-    marginBottom:"10%",
+    marginTop: "20%",
+    marginBottom: "10%",
     flexDirection: "row",
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

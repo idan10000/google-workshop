@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import {
   Image,
@@ -30,6 +30,7 @@ import {
   where,
   getFirestore,
   getDocs,
+  getDoc,
 } from "firebase/firestore";
 import {
   FirebaseRecaptchaVerifierModal,
@@ -39,6 +40,7 @@ import { getApp } from "firebase/app";
 import { Touchable } from "react-native-web";
 import { stylesPoster } from "./CreatePoster/CreatePosterStyle";
 import Icon from "react-native-vector-icons/AntDesign";
+import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
 
 // this page is used when a new user wants to join the app via email
 
@@ -66,7 +68,12 @@ export const useTogglePasswordVisibility = () => {
   };
 };
 
-export default function SignUp({ navigation }) {
+export default function SignUp({
+  navigation,
+  username,
+  setUsername,
+  setIsLoading,
+}) {
   const reviewSchema = yup.object({
     Name: yup.string().required("שם הוא שדה חובה"),
     Email: yup
@@ -84,16 +91,16 @@ export default function SignUp({ navigation }) {
   const { passwordVisibility, rightIcon, handlePasswordVisibility } =
     useTogglePasswordVisibility();
   const hasErrors = (det, val, touched) => {
-    if (det == "email") {
+    if (det === "email") {
       return touched && !val.includes("@");
     }
-    if (det == "name") {
+    if (det === "name") {
       return touched && val.localeCompare(" ");
     }
-    if (det == "phone") {
+    if (det === "phone") {
       return touched && !val.match(phoneRegExp);
     }
-    if (det == "password") {
+    if (det === "password") {
       return touched && val.length < 6;
     }
   };
@@ -120,19 +127,36 @@ export default function SignUp({ navigation }) {
 
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
+  const { user, setUser } = useContext(AuthenticatedUserContext);
 
   // Handle user state changes
-  async function onAuthStateChanged(newUser) {
-    await setDoc(doc(fireStoreDB, "Users", newUser.uid), {
-      name: name,
-      email: email,
-      phone: phone,
-      reports: [],
-      posters: [],
-    }).catch((error) => {
-      console.log(error);
-    });
-    await updateProfile(newUser, { displayName: name });
+  async function onAuthStateChanged(authenticatedUser) {
+    // await setDoc(doc(fireStoreDB, "Users", newUser.uid), {
+    //   name: name,
+    //   email: email,
+    //   phone: phone,
+    //   reports: [],
+    //   posters: [],
+    // }).catch((error) => {
+    //   console.log(error);
+    // });
+    // await updateProfile(newUser, { displayName: name });
+    if (authenticatedUser) {
+      setUser(authenticatedUser);
+      const userRef = doc(fireStoreDB, "Users", authenticatedUser.uid);
+
+      getDoc(userRef).then(async (userSnap) => {
+        if (userSnap.exists()) {
+          setUsername(userSnap.data().name);
+        } else {
+          setUsername("");
+        }
+        setIsLoading(false);
+      });
+    } else {
+      setUser(null);
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -155,7 +179,11 @@ export default function SignUp({ navigation }) {
         // console.error(error);
       });
   }
-
+  useEffect(() => {
+    if (user && username === "") {
+      navigation.navigate("InsertUsername");
+    }
+  });
   const formRef = useRef();
   const [validEmail, setValidEmail] = useState(true);
 
@@ -258,9 +286,9 @@ export default function SignUp({ navigation }) {
                   console.log(err);
                 });
               setVerificationId(verificationId);
-              showMessage({
-                text: "קוד אימות נשלח למספר הטלפון שהזנת",
-              });
+              // showMessage({
+              //   text: "קוד אימות נשלח למספר הטלפון שהזנת",
+              // });
               setVisibleVerification(true);
             } catch (err) {
               showMessage({ text: `מספר טלפון לא חוקי`, color: "red" });
@@ -294,11 +322,11 @@ export default function SignUp({ navigation }) {
               <Text
                 style={{
                   color: "#000",
-                  fontWeight: "bold",
-                  fontSize: 20,
+                  // fontWeight: "bold",
+                  fontSize: 17,
                 }}
               >
-                הכנס קוד אימות
+                הכניסו את קוד האימות, שנשלח למספר הטלפון שהזנתם
               </Text>
             </View>
             <View style={Nofar_styles.actionInput}>
@@ -341,7 +369,8 @@ export default function SignUp({ navigation }) {
                       getAuth(),
                       credential
                     );
-                    showMessage({ text: "Phone authentication successful 👍" });
+                    setVisibleVerification(false);
+                    //showMessage({ text: "Phone authentication successful 👍" });
                   } catch (err) {
                     showMessage({
                       text: `הקוד שהוכנס שגוי`,
@@ -363,9 +392,7 @@ export default function SignUp({ navigation }) {
                     marginBottom: "5%",
                   }}
                 >
-                  <Text style={Nofar_styles.TinyButtonTitle}>
-                    אשר קוד אימות
-                  </Text>
+                  <Text style={Nofar_styles.TinyButtonTitle}>אישור </Text>
                 </View>
               </TouchableOpacity>
             )}
@@ -378,7 +405,7 @@ export default function SignUp({ navigation }) {
               >
                 <Text
                   style={{
-                    color: message.color || "blue",
+                    color: message.color || "#DCA277",
                     fontSize: 17,
                     textAlign: "center",
                     margin: 20,

@@ -26,9 +26,6 @@ export default function RootNavigator() {
   const [username, setUsername] = useState("");
 
   useEffect(() => {
-    console.log("username");
-    console.log(username);
-    console.log("username");
     // onAuthStateChanged returns an unsubscriber
     // unsubscribe auth listener on unmount
     return getAuth().onAuthStateChanged(async (authenticatedUser) => {
@@ -71,11 +68,12 @@ export default function RootNavigator() {
       <NavigationContainer>
         {user !== null && username !== "" ? (
           <HomeStack username={username} />
-        ) : !user ? (
-          <AuthStack />
         ) : (
-          <InsertUsername username={username} setUsername={setUsername} />
-          //<HomeStack username={username} />
+          <AuthStack
+            username={username}
+            setUsername={setUsername}
+            setIsLoading={setIsLoading}
+          />
         )}
       </NavigationContainer>
     </NotificationsProvider>
