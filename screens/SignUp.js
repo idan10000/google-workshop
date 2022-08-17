@@ -123,8 +123,6 @@ export default function SignUp({ navigation }) {
 
   // Handle user state changes
   async function onAuthStateChanged(newUser) {
-    console.log("on auth changed");
-    console.log(newUser);
     await setDoc(doc(fireStoreDB, "Users", newUser.uid), {
       name: name,
       email: email,
@@ -132,8 +130,6 @@ export default function SignUp({ navigation }) {
       reports: [],
       posters: [],
     }).catch((error) => {
-      console.log("we are here");
-
       console.log(error);
     });
     await updateProfile(newUser, { displayName: name });
@@ -144,7 +140,6 @@ export default function SignUp({ navigation }) {
   }, []);
 
   async function handleSubmitPress(props) {
-    console.log("handle submit press");
     await createUserWithEmailAndPassword(fireAuth, props.Email, props.Password)
       .then((result) => {})
       .catch((error) => {
@@ -166,7 +161,7 @@ export default function SignUp({ navigation }) {
 
   // ------------------------------------------ reCaptcha ------------------------------------------
   const recaptchaVerifier = React.useRef(null);
-  const [phoneNumber, setPhoneNumber] = React.useState();
+  const [phoneNumber, setPhoneNumber] = React.useState("");
   const [verificationId, setVerificationId] = React.useState();
   const [verificationCode, setVerificationCode] = React.useState();
   const app = getApp();
@@ -174,9 +169,7 @@ export default function SignUp({ navigation }) {
   const [message, showMessage] = React.useState();
   const attemptInvisibleVerification = false;
 
-  const modalConfirmPressHandler = () => {
-    console.log("modal confirm");
-  };
+  const modalConfirmPressHandler = () => {};
   const [visibleVerification, setVisibleVerification] = React.useState(false);
 
   return (
@@ -251,13 +244,19 @@ export default function SignUp({ navigation }) {
             // passed directly to `verifyPhoneNumber`.
             try {
               const phoneProvider = new PhoneAuthProvider(getAuth());
-              if (!(phoneNumber[0] === "+")) {
-                setPhoneNumber("+972" + phoneNumber);
+              let phone = phoneNumber;
+              if (phone[0] !== "+") {
+                if (phone[0] === "0") {
+                  phone = "+972" + phone.substring(1);
+                } else {
+                  phone = "+972" + phone;
+                }
               }
-              const verificationId = await phoneProvider.verifyPhoneNumber(
-                phoneNumber,
-                recaptchaVerifier.current
-              );
+              const verificationId = await phoneProvider
+                .verifyPhoneNumber(phone, recaptchaVerifier.current)
+                .catch((err) => {
+                  console.log(err);
+                });
               setVerificationId(verificationId);
               showMessage({
                 text: "קוד אימות נשלח למספר הטלפון שהזנת",
@@ -342,8 +341,6 @@ export default function SignUp({ navigation }) {
                       getAuth(),
                       credential
                     );
-                    console.log("USER CREDENTIAL:");
-                    console.log(userCredential);
                     showMessage({ text: "Phone authentication successful 👍" });
                   } catch (err) {
                     showMessage({
