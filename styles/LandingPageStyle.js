@@ -50,7 +50,7 @@ export const landingPageStyle = StyleSheet.create({
   },
   sellingText: {
     textAlign: "center",
-    marginVertical: "10%",
+    marginVertical: "5%",
     marginHorizontal: "10%",
     justifyContent: "center",
     alignItems: "center",
