@@ -12,11 +12,16 @@ import { signUpStyle } from "../styles/SignUpStyle";
 import { TextInput } from "react-native-paper";
 import Icon from "react-native-vector-icons/AntDesign";
 import { getAuth, PhoneAuthProvider } from "firebase/auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function InsertUsername({ username, setUsername }) {
+export default function InsertUsername({ navigation, username, setUsername }) {
   const [userName, setUserNameLocal] = useState();
 
+  useEffect(() => {
+    navigation.addListener("beforeRemove", (e) => {
+      e.preventDefault();
+    });
+  });
   return (
     <ImageBackground
       style={{ flex: 1 }}

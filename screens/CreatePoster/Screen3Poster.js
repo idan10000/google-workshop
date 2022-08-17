@@ -54,7 +54,7 @@ export default function Screen3Poster({ route, navigation }) {
   let prevPoster = route.params.poster;
 
   const phoneRegExp =
-      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
+    /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
   const [correctPhone, setCorrectPhone] = React.useState(true);
   const [correctDogName, setCorrectDogName] = React.useState(true);
 
@@ -114,7 +114,6 @@ export default function Screen3Poster({ route, navigation }) {
     currentStepLabelColor: "#DCA277",
   };
   const { user } = useContext(AuthenticatedUserContext);
-  console.log(route.params);
 
   // init tags with previous values if reached this page from an edit Report
   //
@@ -209,10 +208,7 @@ export default function Screen3Poster({ route, navigation }) {
   // here we need to handle all the data we have got in this 3 levels of upload
   // we add the time, date and more details that need to be shown on the report screen
   const nextScreen = async () => {
-    if (
-      phoneRegExp.test(phoneText) === true &&
-      nameText.length !== 0
-    ) {
+    if (phoneRegExp.test(phoneText) === true && nameText.length !== 0) {
       setIsLoading(true);
       //first confirming the tags
       // setSelectedTags((prevSelected) => {
@@ -226,7 +222,6 @@ export default function Screen3Poster({ route, navigation }) {
       const dd = String(date.getDate()).padStart(2, "0");
       const mm = String(date.getMonth() + 1).padStart(2, "0"); //January is 0!
       const yyyy = date.getFullYear();
-      console.log(selectedTags);
       const plainTags = selectedTags.map(function (tag) {
         return tag.tag;
       });
@@ -323,7 +318,6 @@ export default function Screen3Poster({ route, navigation }) {
         const image = await uploadImageAsync(selectedImage, "Posters");
         dbPoster.image = image.link;
         dbPoster.imagePath = image.path;
-        console.log(dbPoster);
         const docRef = await addDoc(
           collection(db, "Posters").withConverter(posterConverter),
           dbPoster
@@ -344,7 +338,10 @@ export default function Screen3Poster({ route, navigation }) {
           });
       }
     } else {
-      if (!(phoneRegExp.test(phoneText) === true )) {
+      if (
+        !(phoneRegExp.test(phoneText) === true) ||
+        (phoneText[0] !== "0" && phoneText[0] !== "+")
+      ) {
         setCorrectPhone(false);
       }
       if (nameText.length === 0) {
@@ -353,10 +350,7 @@ export default function Screen3Poster({ route, navigation }) {
     }
   };
   // before letting the user submit his poster we need to validate that the phone is real number and that the dogs' name is valid
-  if (
-    phoneRegExp.test(phoneText) === true &&
-    correctPhone === false
-  ) {
+  if (phoneRegExp.test(phoneText) === true && correctPhone === false) {
     setCorrectPhone(true);
   }
   if (nameText.length !== 0 && correctDogName === false) {
@@ -534,7 +528,7 @@ export default function Screen3Poster({ route, navigation }) {
             <View style={styles.phoneContainer}>
               <TextInput
                 dense={false}
-                keyboardType="numeric"
+                keyboardType="phone-pad"
                 value={phoneText}
                 onChangeText={setPhone}
                 mode={"outlined"}
@@ -545,7 +539,7 @@ export default function Screen3Poster({ route, navigation }) {
             {!correctPhone && (
               <View style={styles.dogNameContainer}>
                 <Text style={Nofar_styles.TinyButtonTitleRed}>
-                  אנא הכנס מספר טלפון תקין
+                  אנא הכניסו מספר טלפון חוקי
                 </Text>
               </View>
             )}

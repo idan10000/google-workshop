@@ -45,7 +45,7 @@ export default function Screen3Report({ route, navigation }) {
   let report = route.params.report;
 
   const phoneRegExp =
-      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
+    /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
   const [correctPhone, setCorrectPhone] = React.useState(true);
 
   const db = fireStoreDB;
@@ -95,7 +95,6 @@ export default function Screen3Report({ route, navigation }) {
     currentStepLabelColor: "#DCA277",
   };
   const { user } = useContext(AuthenticatedUserContext);
-  console.log(route.params);
   const initDescription = route.params.edit ? report.description : "";
 
   const [initializedPhone, setInitializedPhone] = React.useState(false);
@@ -114,8 +113,6 @@ export default function Screen3Report({ route, navigation }) {
 
   const [descriptionText, setDescription] = React.useState(initDescription);
   const [phoneText, setPhone] = React.useState(initPhone);
-  console.log(22222222);
-  console.log(route.params.edit);
 
   const initChecked = route.params.edit ? report.contact : true;
 
@@ -177,11 +174,7 @@ export default function Screen3Report({ route, navigation }) {
   Geocoder.init("AIzaSyAGKKpmqjHELTwvwAx0w0Ed8W2LtQ2lwZg", { language: "iw" });
 
   const nextScreen = async () => {
-    if (
-      (phoneRegExp.test(phoneText) === true &&
-        checked) ||
-      !checked
-    ) {
+    if ((phoneRegExp.test(phoneText) === true && checked) || !checked) {
       setIsLoading(true);
       let date = new Date();
       const dd = String(date.getDate()).padStart(2, "0");
@@ -196,7 +189,6 @@ export default function Screen3Report({ route, navigation }) {
       let today = route.params.edit ? report.date : dd + "/" + mm + "/" + yyyy;
       let time = route.params.edit ? report.time : getCurrentTime();
       let timeStamp = route.params.edit ? report.timeStamp : serverTimestamp();
-      console.log(timeStamp);
       const name = user.displayName;
       let templocation = route.params.location;
       const hash = geofire.geohashForLocation([
@@ -280,7 +272,6 @@ export default function Screen3Report({ route, navigation }) {
           collection(db, "Reports").withConverter(reportConverter),
           dbReport
         );
-        console.log("uploaded Report");
         await updateDoc(doc(db, "Users", user.uid), {
           reports: arrayUnion(docRef.id),
         })
@@ -303,12 +294,11 @@ export default function Screen3Report({ route, navigation }) {
     } else {
       setCorrectPhone(false);
     }
+    if (phoneText[0] !== "0" && phoneText[0] !== "+") {
+      setCorrectPhone(false);
+    }
   };
-  console.log(phoneRegExp.test(phoneText))
-  if (
-    phoneRegExp.test(phoneText) === true &&
-    correctPhone === false
-  ) {
+  if (phoneRegExp.test(phoneText) === true && correctPhone === false) {
     setCorrectPhone(true);
   }
   if (isLoading) {
@@ -471,7 +461,7 @@ export default function Screen3Report({ route, navigation }) {
                   <View style={styles.phoneContainer}>
                     <TextInput
                       dense={false}
-                      keyboardType="numeric"
+                      keyboardType="phone-pad"
                       placeholder={"טלפון"}
                       value={phoneText}
                       onChangeText={setPhone}
@@ -484,7 +474,7 @@ export default function Screen3Report({ route, navigation }) {
                 {checked && !correctPhone && (
                   <View marginLeft="7.5%">
                     <Text style={Nofar_styles.TinyButtonTitleRed2}>
-                      אנא הכנס מספר טלפון חוקי
+                      אנא הכניסו מספר טלפון חוקי
                     </Text>
                   </View>
                 )}
@@ -648,7 +638,7 @@ export default function Screen3Report({ route, navigation }) {
                 {checked && !correctPhone && (
                   <View marginLeft="7.5%">
                     <Text style={Nofar_styles.TinyButtonTitleRed2}>
-                      אנא הכנס מספר טלפון חוקי
+                      אנא הכניסו מספר טלפון חוקי
                     </Text>
                   </View>
                 )}
