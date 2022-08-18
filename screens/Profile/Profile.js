@@ -55,7 +55,7 @@ export default function ProfilePage({ navigation }) {
           <View
             style={{
               flexDirection: "row",
-              marginTop: "10%",
+              marginTop: "7.5%",
               marginLeft: "10%",
             }}
           >
@@ -68,7 +68,7 @@ export default function ProfilePage({ navigation }) {
           </View>
 
           <View
-            style={{ marginTop: 5, marginLeft: "15%", marginBottom: "15%" }}
+            style={{ marginTop: 5, marginLeft: "15%", marginBottom: "7.5%" }}
           >
             {/*<View style={{ flexDirection: "row", marginTop: "5%" }}>*/}
             {/*    <Icon name="email" color="#777777" size={30} />*/}

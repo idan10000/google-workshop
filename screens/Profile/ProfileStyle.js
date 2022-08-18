@@ -1,4 +1,4 @@
-import {Dimensions, StyleSheet} from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 export const user_styles = StyleSheet.create({
   confirmBTContainer: {
     alignSelf: "center",
@@ -6,29 +6,29 @@ export const user_styles = StyleSheet.create({
   },
 
   ProfileCard: {
-    marginTop: "10%",
+    marginTop: "15%",
     marginRight: "7.5%",
     marginLeft: "7.5%",
-    marginBottom: "15%",
+    marginBottom: "20%",
     borderRadius: 15,
     shadowColor: "#F5F5DC",
     shadowOffset: {
       width: 20,
       height: 10,
     },
-    shadowOpacity: 0.5,
+    shadowOpacity: 7,
     shadowRadius: 7.49,
     elevation: 12,
     marginVertical: 5,
     backgroundColor: "white",
     marginHorizontal: 5,
   },
-  profileButton:{
-    width: Dimensions.get('window').width * 0.85,
-    height: Dimensions.get('window').height * 0.08,
+  profileButton: {
+    width: Dimensions.get("window").width * 0.85,
+    height: Dimensions.get("window").height * 0.08,
     // marginTop: 5,
     // marginBottom: 0,
-    marginBottom:"2%",
+    marginBottom: "2%",
 
     flexDirection: "row",
     justifyContent: "center",
@@ -42,7 +42,6 @@ export const user_styles = StyleSheet.create({
     },
     shadowOpacity: 0.9,
     shadowRadius: 7.49,
-
   },
   BigButtonText: {
     color: "#FFFFFF",

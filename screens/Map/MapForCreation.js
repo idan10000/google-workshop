@@ -30,7 +30,12 @@ export default function MapForCreation({
   const [errorMsg, setErrorMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState("");
-  const [region, setRegion] = useState(null);
+  const [region, setRegion] = useState({
+    latitude: preLocation.latitude,
+    longitude: preLocation.longitude,
+    latitudeDelta: 0.0025,
+    longitudeDelta: 0.0029,
+  });
   const [showMap, setShowMap] = useState(true);
   Geocoder.init("AIzaSyAGKKpmqjHELTwvwAx0w0Ed8W2LtQ2lwZg", { language: "iw" });
 
@@ -121,10 +126,15 @@ export default function MapForCreation({
     <View style={{ flex: 1 }}>
       <View
         style={{
+          position: "absolute",
+          top: 20,
+          zIndex: 100,
+          width: "88%",
+          right: 3,
           flex: 1,
           marginLeft: "5%",
           marginRight: "5%",
-          marginTop: "2.5%",
+          marginTop: "5%",
         }}
       >
         <GooglePlacesAutocomplete
@@ -156,7 +166,6 @@ export default function MapForCreation({
             });
             setPin(newLocation);
             setLocation(newLocation);
-            console.log(data, details);
             let json = await Geocoder.from(
               newLocation.latitude,
               newLocation.longitude
@@ -181,9 +190,7 @@ export default function MapForCreation({
               coordinate={pin}
               pinColor="red"
               draggable={true}
-              onDragStart={(e) => {
-                console.log("Drag start", e.nativeEvent.coordinates);
-              }}
+              onDragStart={(e) => {}}
               onDragEnd={async (e) => {
                 const newLocation = {
                   latitude: e.nativeEvent.coordinate.latitude,
@@ -238,10 +245,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   map: {
+    zIndex: -10,
     marginBottom: "2.5%",
     // width: Dimensions.get("window").width / 1.12,
     width: "90%",
-    height: "75%",
+    height: "76%",
     justifyContent: "center",
     alignSelf: "center",
     //height: Dimensions.get("window").height / 1.6,
@@ -291,6 +299,7 @@ const styles = StyleSheet.create({
     marginVertical: "1.5%",
     alignItems: "center",
     position: "absolute",
+    top: 400,
     backgroundColor: "#FFF",
   },
 });

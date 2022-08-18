@@ -39,7 +39,12 @@ export default function Map({ navigation }) {
   const [errorMsg, setErrorMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
-
+  const [region, setRegion] = useState({
+    latitude: 51.5079145,
+    longitude: -0.0899163,
+    latitudeDelta: 0.0222,
+    longitudeDelta: 0.0121,
+  });
   const calc_distance = (lat1, lat2) => {
     var p = 0.017453292519943295; // Math.PI / 180
     var c = Math.cos;
@@ -91,7 +96,7 @@ export default function Map({ navigation }) {
     Alert.alert(
       "",
       "הסמן האדום מייצג את מיקומך\nהסמנים הכחולים מייצגים מיקומים שבהם דווחו כלבים שנמצאו משוטטים. לחצו על הסמן לפרטים נוספים!",
-      [{ text: "הבנתי!", onPress: () => console.log("OK Pressed") }]
+      [{ text: "הבנתי!", onPress: () => {} }]
     );
 
   const getAllReports = async () => {
@@ -140,20 +145,12 @@ export default function Map({ navigation }) {
     console.log(text);
   } else if (location) {
     text = JSON.stringify(location);
-    console.log(text);
   }
 
   //user location
   const [pin, setPin] = React.useState({
     latitude: 0,
     longitude: 0,
-  });
-
-  const [region, setRegion] = useState({
-    latitude: 51.5079145,
-    longitude: -0.0899163,
-    latitudeDelta: 0.0222,
-    longitudeDelta: 0.0121,
   });
 
   const [image, setImage] = useState(null);
