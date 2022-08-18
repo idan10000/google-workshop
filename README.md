@@ -23,14 +23,19 @@ We also built an AI model using Vertex AI on the Google Cloud platform. The mode
 ### Main APIs
 
 * Vertex AI - matching photos of missing dogs and dogs that were found.
-* Expo Notifications - sending notifications to dog owners that lost their dog when someone finds a dog and it matches with the lost dog.
+* Expo Notifications - sending notifications to dog owners that lost their dog when someone finds a dog, and it matches with the lost dog.
 * Google Maps - selecting last seen location of missing and found dogs. Visualising and opening locations of missing ads and reports of found dogs.  
 
 ## Installation
 
-You can install Findog using [Google Play](https://play.google.com/store/games) (TODO:add link!)
+You can install Findog using [Google Play](https://play.google.com/store/apps/details?id=com.findog.findog) (TODO:add link!)
 
 ## Usage Instructions
+
+* To upload a missing dog ad, press "create a missing dog ad" in the home page, and fill all the needed information in the flow that opens up.
+* To upload a report of a found dog, press "open camera" or "upload a photo from gallery", choose (or take) a photo of the dog you found, and fill the rest of the information in the flow that opens up.
+
+when a user uploads a photo of a dog, it is compared to all other photos, and if a match is found, the person who uploaded the missing dog ad will get a notification with the report of where the dog was found.
 
 ## Pilot
 
