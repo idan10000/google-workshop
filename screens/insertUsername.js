@@ -55,7 +55,6 @@ export default function InsertUsername({ navigation, username, setUsername }) {
           <TextInput
             style={{ marginVertical: 10, fontSize: 17 }}
             placeholder="הכנס שם"
-            autoFocus
             activeUnderlineColor="#000000"
             activeOutlineColor="#000000"
             onChangeText={(username) => setUserNameLocal(username)}
@@ -148,7 +147,7 @@ const styles = StyleSheet.create({
     resizeMode: "stretch",
   },
   logoHeaderContainer: {
-    marginTop: "20%",
+    marginTop: "10%",
     marginBottom: "10%",
     flexDirection: "row",
     alignItems: "center",

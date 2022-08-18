@@ -127,18 +127,16 @@ export default function MapForCreation({
       <View
         style={{
           position: "absolute",
-          top: 20,
+          top: "4%",
           zIndex: 100,
-          width: "88%",
-          right: 3,
+          width: "84%",
           flex: 1,
-          marginLeft: "5%",
-          marginRight: "5%",
-          marginTop: "5%",
+          left: "8%",
+          marginTop: "2%",
         }}
       >
         <GooglePlacesAutocomplete
-          placeholder={"חפשו או סמנו במפה את המיקום האחרון של הכלב"}
+          placeholder={"חפשו/סמנו במפה את המיקום האחרון של הכלב"}
           query={{
             key: "AIzaSyBOMIn1twPjZskW-EnIjfNaUcSVoiLRpqQ",
             language: "iw",
@@ -177,7 +175,7 @@ export default function MapForCreation({
         />
       </View>
       {showMap ? (
-        <View style={{ marginTop: "5%" }}>
+        <View style={{ marginTop: "2.5%" }}>
           <MapView
             style={styles.map}
             onRegionChangeComplete={(region) => {
@@ -295,11 +293,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginLeft: "1%",
     marginRight: "12%",
-    borderRadius: 20,
+    borderRadius: 10,
     marginVertical: "1.5%",
     alignItems: "center",
     position: "absolute",
-    top: 400,
+    top: "68%",
     backgroundColor: "#FFF",
+    borderColor: "#808080",
+    borderWidth: 0.5,
   },
 });
