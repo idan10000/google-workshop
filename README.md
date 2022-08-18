@@ -28,7 +28,7 @@ We also built an AI model using Vertex AI on the Google Cloud platform. The mode
 
 ## Installation
 
-You can install Findog using [Google Play](https://play.google.com/store/apps/details?id=com.findog.findog) (TODO:add link!)
+You can install Findog using [Google Play](https://play.google.com/store/apps/details?id=com.findog.findog)
 
 ## Usage Instructions
 
