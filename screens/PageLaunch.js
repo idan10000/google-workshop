@@ -91,8 +91,8 @@ export default function PageLaunch({ navigation }) {
       {/*</View>*/}
       <View style={landingPageStyle.sellingText}>
         <Text style={landingPageStyle.bottomText}>
-          האפליקציה שלנו מספקת פתרון מהפכני{"\n"}שמציע לבעלי כלבים דרך פשוטה
-          ואפקטיבית{"\n"}למצוא את הכלב האהוב שלהם
+          האפליקציה שלנו מספקת פתרון מהפכני שמציע לבעלי כלבים דרך פשוטה
+          ואפקטיבית למצוא את הכלב האהוב שלהם
         </Text>
       </View>
       <View style={landingPageStyle.sellingText}>

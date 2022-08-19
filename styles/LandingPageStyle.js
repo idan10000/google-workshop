@@ -8,7 +8,7 @@ export const landingPageStyle = StyleSheet.create({
     fontSize: 70,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "7%",
+    marginTop: "4%",
   },
   slogenContainer: {
     flexDirection: "column",
