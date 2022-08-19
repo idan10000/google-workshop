@@ -1,4 +1,5 @@
 import { Dimensions, StyleSheet } from "react-native";
+
 export const user_styles = StyleSheet.create({
   confirmBTContainer: {
     alignSelf: "center",

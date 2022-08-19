@@ -34,7 +34,10 @@ export default function Header({
       "למחוק את כל ההתראות?",
       "לא יהיה ניתן לשחזר אותן לאחר מכן!",
       [
-        { text: "ביטול", onPress: () => {} },
+        {
+          text: "ביטול",
+          onPress: () => {},
+        },
         {
           text: "אישור",
           onPress: async () => {

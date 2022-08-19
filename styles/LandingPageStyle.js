@@ -2,7 +2,6 @@ import { StyleSheet, Text, View } from "react-native";
 
 export const landingPageStyle = StyleSheet.create({
   totalWrapper: {
-    paddingTop: 50,
     flex: 1,
   },
   appNameHeader: {
@@ -15,14 +14,15 @@ export const landingPageStyle = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+    height: "20%",
   },
   appLogo: {
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
     marginRight: "8%",
-    height: 135,
-    width: 135,
+    height: "85%",
+    width: "37%",
     resizeMode: "stretch",
     marginBottom: "5%",
   },
@@ -30,11 +30,6 @@ export const landingPageStyle = StyleSheet.create({
   AvatarContainer: {
     justifyContent: "center",
     flexDirection: "row",
-  },
-
-  avatar: {
-    marginRight: 10,
-    marginLeft: 10,
   },
 
   text: {
@@ -66,11 +61,6 @@ export const landingPageStyle = StyleSheet.create({
   },
   linksText: {
     textDecorationLine: "underline",
-  },
-  howToSign: {
-    marginTop: 30,
-    flexDirection: "column",
-    justifyContent: "center",
   },
   clickHere: {
     fontSize: 20,

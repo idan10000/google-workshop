@@ -172,6 +172,9 @@ export default function MapForCreation({
             setAddress(address.substring(0, address.length - 7));
           }}
           fetchDetails={true}
+          styles={{
+            textInput: { borderColor: "#808080", borderWidth: 0.5 },
+          }}
         />
       </View>
       {showMap ? (

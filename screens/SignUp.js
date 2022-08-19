@@ -180,6 +180,7 @@ export default function SignUp({
         // console.error(error);
       });
   }
+
   useEffect(() => {
     if (user && username === "") {
       navigation.navigate("InsertUsername");

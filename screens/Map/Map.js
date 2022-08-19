@@ -45,6 +45,9 @@ export default function Map({ navigation }) {
     latitudeDelta: 0.0222,
     longitudeDelta: 0.0121,
   });
+  //user location
+
+  const [pin, setPin] = React.useState(null);
   const calc_distance = (lat1, lat2) => {
     var p = 0.017453292519943295; // Math.PI / 180
     var c = Math.cos;
@@ -147,12 +150,6 @@ export default function Map({ navigation }) {
     text = JSON.stringify(location);
   }
 
-  //user location
-  const [pin, setPin] = React.useState({
-    latitude: 0,
-    longitude: 0,
-  });
-
   const [image, setImage] = useState(null);
   const [imageData, setImageData] = useState(null);
   const [visibleTag, setVisibleTag] = useState(false);
@@ -183,8 +180,8 @@ export default function Map({ navigation }) {
         onRegionChangeComplete={(region) => {
           setRegion(region);
           getCloseDocuments();
-          console.log(region);
         }}
+        minDelta={2}
       >
         {data.map((marker) => (
           <Marker

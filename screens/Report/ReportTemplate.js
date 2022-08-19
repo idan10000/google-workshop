@@ -3,6 +3,7 @@ import { Text, View, Image } from "react-native";
 import { Chip } from "react-native-paper";
 import { Nofar_styles } from "../../styles/NofarStyle";
 import { AR_styles } from "./ReportStyle";
+
 export default function ReportTemplate({ data }) {
   const report_data = {
     desc: "נמצא בפארק העירוני בסביבות השעה ארבע ביום ראשון .",
@@ -11,25 +12,25 @@ export default function ReportTemplate({ data }) {
     tags: [],
     date: "04/04/2022",
   };
-    console.log(data)
+  console.log(data);
   return (
-
-
     <View style={Nofar_styles.container}>
-
-      <View style={{alignSelf: "center" }}>
-        <Image style={AR_styles.mainImage} source={{uri: data.image}} />
+      <View style={{ alignSelf: "center" }}>
+        <Image style={AR_styles.mainImage} source={{ uri: data.image }} />
       </View>
 
-        <View style={{ ...Nofar_styles.Viewchips, marginVertical: "3%", marginLeft:"1.2%"}}>
-        {
-          data.tagList.map((item, index) => (
-              <Chip key={index}
-                    selected={false}
-                    style={Nofar_styles.chips}
-                    >{item}</Chip>
-          ))
-        }
+      <View
+        style={{
+          ...Nofar_styles.Viewchips,
+          marginVertical: "3%",
+          marginLeft: "1.2%",
+        }}
+      >
+        {data.tagList.map((item, index) => (
+          <Chip key={index} selected={false} style={Nofar_styles.chips}>
+            {item}
+          </Chip>
+        ))}
       </View>
 
       <View style={Nofar_styles.card}>

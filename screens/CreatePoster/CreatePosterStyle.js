@@ -5,10 +5,10 @@ export const stylesPoster = StyleSheet.create({
     flexDirection: "row",
     overflow: "hidden",
     flexWrap: "wrap",
-    paddingHorizontal:"5%",
+    paddingHorizontal: "5%",
   },
   modal: {
-    backgroundColor:"#F4F2E3",
+    backgroundColor: "#F4F2E3",
     padding: 20,
   },
   addImageContainer: {
@@ -44,19 +44,17 @@ export const stylesPoster = StyleSheet.create({
     position: "absolute",
     right: 16,
     bottom: 16,
-    backgroundColor:"#816A55",
-
+    backgroundColor: "#816A55",
   },
   descriptionContainer: {},
   addTagsBTContainer: {
-    paddingTop:"2%",
-    flexDirection:"row",
-    marginHorizontal:"2%",
-    justifyContent:"space-around"
+    paddingTop: "2%",
+    flexDirection: "row",
+    marginHorizontal: "2%",
+    justifyContent: "space-around",
   },
-  confirmBTContainer:{
-    alignSelf:"center",
-    paddingBottom:"6%"
-  }
-
+  confirmBTContainer: {
+    alignSelf: "center",
+    paddingBottom: "6%",
+  },
 });

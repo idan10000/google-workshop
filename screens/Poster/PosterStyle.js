@@ -1,10 +1,10 @@
-import {Dimensions, StyleSheet} from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 
 export const AR_styles = StyleSheet.create({
   confirmBTContainer: {
     alignSelf: "center",
     paddingBottom: "2.5%",
-    marginBottom:"2.5%"
+    marginBottom: "2.5%",
   },
   content: {
     marginLeft: 10,
@@ -43,7 +43,6 @@ export const AR_styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   cardHeader: {
-
     flexDirection: "row",
     justifyContent: "space-between",
     paddingTop: 12.5,
@@ -51,29 +50,28 @@ export const AR_styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderBottomLeftRadius: 1,
     borderBottomRightRadius: 1,
-    marginBottom:"4%",
+    marginBottom: "4%",
   },
   lastSeen: {
-    flexDirection:"row",
-    alignItems:"center",
+    flexDirection: "row",
+    alignItems: "center",
     // marginHorizontal: "5%",
-    justifyContent:"center",
-
+    justifyContent: "center",
   },
   ownerData: {
-    flexDirection:"row",
-    alignItems:"center",
+    flexDirection: "row",
+    alignItems: "center",
     // marginHorizontal: "5%",
-    justifyContent:"center",
-    height:"6%",
-    marginBottom:"4%",
+    justifyContent: "center",
+    height: "6%",
+    marginBottom: "4%",
   },
-  verticalLine:{
+  verticalLine: {
     height: 16,
     width: 1,
-    backgroundColor: '#000',
-    color:"#000",
-    marginHorizontal: "4%"
+    backgroundColor: "#000",
+    color: "#000",
+    marginHorizontal: "4%",
   },
   contact: {
     shadowColor: "#000",
@@ -84,8 +82,8 @@ export const AR_styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 7,
     // elevation: 6,
-    width:Dimensions.get('window').width * 0.22,
-    height: Dimensions.get('window').height * 0.048,
+    width: Dimensions.get("window").width * 0.22,
+    height: Dimensions.get("window").height * 0.048,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -100,23 +98,21 @@ export const AR_styles = StyleSheet.create({
   },
   myCard: {
     width: Dimensions.get("window").width / 1.2,
-    justifyContent:"center",
-    alignSelf:"center",
+    justifyContent: "center",
+    alignSelf: "center",
     borderRadius: 15,
-      marginTop:"2%",
-  //     shadowColor: "#00000021",
-  //     shadowOffset: {
-  //       width: 20,
-  //       height: 10,
-  // },
+    marginTop: "2%",
+    //     shadowColor: "#00000021",
+    //     shadowOffset: {
+    //       width: 20,
+    //       height: 10,
+    // },
 
     // shadowOpacity: 0.5,
     // shadowRadius: 7.49,
     // elevation: 12,
     marginVertical: 5,
     backgroundColor: "#F9F8F0",
-    marginBottom:"5%",
-
-  }
-
+    marginBottom: "5%",
+  },
 });

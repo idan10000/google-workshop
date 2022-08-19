@@ -248,7 +248,7 @@ const sendMatchNotification = (postersToSend, reports) => {
                 }
                 messages.push(message);
             }
-            if (Object.prototype.hasOwnProperty.call(notificationsAllUsers,uid)) {
+            if (Object.prototype.hasOwnProperty.call(notificationsAllUsers, uid)) {
                 notificationsAllUsers[uid] = notificationsAllUsers[uid].concat(messages)
             } else {
                 notificationsAllUsers[uid] = messages;

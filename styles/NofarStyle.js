@@ -3,7 +3,7 @@ import { Dimensions, StyleSheet } from "react-native";
 export const Nofar_styles = StyleSheet.create({
   // background:
   container: {
-    backgroundColor:"#F4F2E3",
+    backgroundColor: "#F4F2E3",
     flex: 1,
     paddingTop: "1%",
   },
@@ -31,11 +31,11 @@ export const Nofar_styles = StyleSheet.create({
   },
 
   BigButton: {
-    width: Dimensions.get('window').width * 0.85,
-    height: Dimensions.get('window').height * 0.08,
+    width: Dimensions.get("window").width * 0.85,
+    height: Dimensions.get("window").height * 0.08,
     // marginTop: 5,
     // marginBottom: 0,
-    marginBottom:"2%",
+    marginBottom: "2%",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -48,7 +48,6 @@ export const Nofar_styles = StyleSheet.create({
     },
     shadowOpacity: 0.9,
     shadowRadius: 7.49,
-
   },
   BigButtonText: {
     color: "#FFFFFF",
@@ -65,22 +64,21 @@ export const Nofar_styles = StyleSheet.create({
     // shadowRadius: 100,
     elevation: 8,
     width: Dimensions.get("window").width / 1.2,
-    alignSelf:"center",
-    backgroundColor :"#DCA277",
-    marginBottom:"4%",
-    borderColor:"#000",
+    alignSelf: "center",
+    backgroundColor: "#DCA277",
+    marginBottom: "4%",
+    borderColor: "#000",
     flexDirection: "row",
     overflow: "hidden",
     flexWrap: "wrap",
 
-    borderRadius:15,
-
+    borderRadius: 15,
   },
   chips: {
     // tp be changed to left or
     marginLeft: "1%",
     marginVertical: "1%",
-    paddingHorizontal:"1%",
+    paddingHorizontal: "1%",
     height: 35,
     justifyContent: "center",
     borderRadius: 25,
@@ -98,7 +96,7 @@ export const Nofar_styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     resizeMode: "cover",
-    borderRadius:2,
+    borderRadius: 2,
   },
 
   //   the white card I have
@@ -147,7 +145,7 @@ export const Nofar_styles = StyleSheet.create({
     fontWeight: "700",
   },
   TinyButton: {
-    paddingVertical:"3%",
+    paddingVertical: "3%",
     paddingRight: "5%",
     paddingLeft: "5%",
     justifyContent: "center",
