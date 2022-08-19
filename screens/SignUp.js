@@ -26,11 +26,7 @@ import {
 import {
   setDoc,
   doc,
-  collection,
-  query,
-  where,
-  getFirestore,
-  getDocs,
+
   getDoc,
 } from "firebase/firestore";
 import {
@@ -38,7 +34,6 @@ import {
   FirebaseRecaptchaBanner,
 } from "expo-firebase-recaptcha";
 import { getApp } from "firebase/app";
-import { Touchable } from "react-native-web";
 import { stylesPoster } from "./CreatePoster/CreatePosterStyle";
 import Icon from "react-native-vector-icons/AntDesign";
 import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
@@ -118,13 +113,7 @@ export default function SignUp({
   const [phone, setPhone] = React.useState("");
   const onChangePhone = (phone) => setPhone(phone);
 
-  // const [state, setState] = useState({
-  //     name: "",
-  //     phone: "",
-  //     email: "",
-  //     city: "",
-  //     country: "",
-  // });
+
 
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
@@ -132,16 +121,7 @@ export default function SignUp({
 
   // Handle user state changes
   async function onAuthStateChanged(authenticatedUser) {
-    // await setDoc(doc(fireStoreDB, "Users", newUser.uid), {
-    //   name: name,
-    //   email: email,
-    //   phone: phone,
-    //   reports: [],
-    //   posters: [],
-    // }).catch((error) => {
-    //   console.log(error);
-    // });
-    // await updateProfile(newUser, { displayName: name });
+
     if (authenticatedUser) {
       setUser(authenticatedUser);
       const userRef = doc(fireStoreDB, "Users", authenticatedUser.uid);
@@ -177,7 +157,6 @@ export default function SignUp({
           console.log("That email address is invalid!");
         }
 
-        // console.error(error);
       });
   }
 
@@ -226,9 +205,6 @@ export default function SignUp({
           </View>
         </View>
 
-        {/*<View style={signUpStyle.welcomeText}>*/}
-        {/*    <Text style={signUpStyle.welcomeText}>קודם כל... בוא נכיר אותך...</Text>*/}
-        {/*</View>*/}
 
         <FirebaseRecaptchaVerifierModal
           ref={recaptchaVerifier}
@@ -315,9 +291,7 @@ export default function SignUp({
                     console.log(err);
                   });
                 setVerificationId(verificationId);
-                // showMessage({
-                //   text: "קוד אימות נשלח למספר הטלפון שהזנת",
-                // });
+
                 setIsModalLoading(false);
               } catch (err) {
                 showMessage({ text: `מספר טלפון לא חוקי`, color: "red" });
@@ -358,7 +332,6 @@ export default function SignUp({
                   <Text
                     style={{
                       color: "#000",
-                      // fontWeight: "bold",
                       fontSize: 17,
                     }}
                   >
@@ -396,22 +369,6 @@ export default function SignUp({
                   <TouchableOpacity
                     onPress={async () => {
                       try {
-                        // const db = getFirestore();
-                        // const phoneNumberRef = collection(db,"Users");
-                        // console.log("\n\n\n\n\n\n")
-                        //
-                        // console.log("BI THERE")
-                        //
-                        // const q = query(phoneNumberRef, where("identifier", "==", phoneNumber));
-                        // const querySnapshot = await getDocs(q);
-                        // querySnapshot.forEach((doc) => {
-                        //     // doc.data() is never undefined for query doc snapshots
-                        //     console.log("\n\n\n\n\n\n")
-                        //     console.log("1")
-                        //
-                        //     console.log("\n\n\n\n\n\n")
-                        //
-                        // });
 
                         const credential = PhoneAuthProvider.credential(
                           verificationId,
@@ -422,7 +379,7 @@ export default function SignUp({
                           credential
                         );
                         setVisibleVerification(false);
-                        //showMessage({ text: "Phone authentication successful 👍" });
+
                       } catch (err) {
                         showMessage({
                           text: `הקוד שהוכנס שגוי`,
@@ -455,124 +412,7 @@ export default function SignUp({
           </Modal>
         </Portal>
 
-        {/*<Formik*/}
-        {/*    initialValues={{Name: '', Email: '', Password: '', PhoneNumber: ''}}*/}
-        {/*    innerRef={formRef}*/}
-        {/*    validationSchema={reviewSchema}*/}
-        {/*    onSubmit={values =>*/}
-        {/*        handleSubmitPress(values)}>*/}
-        {/*// onSubmit={(values) => {*/}
-        {/*//         console.log(values);*/}
-        {/*//     }}*/}
-        {/*//     >*/}
 
-        {/*    {props => (*/}
-
-        {/*        <View>*/}
-        {/*            <View style={Nofar_styles.actionInput}>*/}
-        {/*                <TextInput*/}
-        {/*                    placeholder="שם"*/}
-        {/*                    // error={hasErrors('name', props.values.Name,props.touched.Name)}*/}
-        {/*                    // value={state.fname}*/}
-        {/*                    // onChangeText={onChangeName}*/}
-        {/*                    onChangeText={(text) => {*/}
-        {/*                        console.log(text)*/}
-        {/*                        props.handleChange('Name')(text)*/}
-        {/*                        onChangeName(text)*/}
-
-        {/*                    }}*/}
-        {/*                    value={props.values.Name}*/}
-        {/*                    onBlur={props.handleBlur('Name')}*/}
-
-        {/*                    activeUnderlineColor="#000000"*/}
-        {/*                    activeOutlineColor="#000000"*/}
-        {/*                    left={<TextInput.Icon name="face"/>}*/}
-        {/*                />*/}
-        {/*                <Text style={signUpStyle.errorText}>{props.touched.Name && props.errors.Name}</Text>*/}
-
-        {/*            </View>*/}
-
-        {/*            <View style={Nofar_styles.actionInput}>*/}
-        {/*                <TextInput*/}
-        {/*                    placeholder="אימייל"*/}
-        {/*                    // value={state.email}*/}
-        {/*                    //*/}
-        {/*                    // onChangeText={onChangeEmail}*/}
-        {/*                    onChangeText={(email) => {*/}
-        {/*                        props.handleChange('Email')(email)*/}
-        {/*                        onChangeEmail(email)*/}
-        {/*                        setValidEmail(true)*/}
-        {/*                    }*/}
-        {/*                    }*/}
-        {/*                    value={props.values.Email}*/}
-        {/*                    onBlur={props.handleBlur('Email')}*/}
-        {/*                    error={hasErrors('email', props.values.Email, props.touched.Email)}*/}
-
-        {/*                    activeUnderlineColor="#000000"*/}
-        {/*                    activeOutlineColor="#000000"*/}
-        {/*                    left={<TextInput.Icon name="email"/>}*/}
-        {/*                />*/}
-        {/*                {validEmail &&*/}
-
-        {/*                    <Text style={signUpStyle.errorText}>{props.touched.Email && props.errors.Email}</Text>}*/}
-        {/*                {!validEmail &&*/}
-        {/*                    <Text style={signUpStyle.errorText}>אימייל זה נמצא כבר בשימוש</Text>}*/}
-        {/*            </View>*/}
-
-        {/*            <View style={Nofar_styles.actionInput}>*/}
-        {/*                <TextInput*/}
-        {/*                    placeholder="סיסמה"*/}
-        {/*                    // value={state.password}*/}
-        {/*                    // onChangeText={onChangePassword}*/}
-        {/*                    onChangeText={props.handleChange('Password')}*/}
-        {/*                    value={props.values.Password}*/}
-        {/*                    secureTextEntry={passwordVisibility}*/}
-        {/*                    error={hasErrors('password', props.values.Password, props.touched.Password)}*/}
-        {/*                    onBlur={props.handleBlur('Password')}*/}
-
-        {/*                    activeUnderlineColor="#000000"*/}
-        {/*                    activeOutlineColor="#000000"*/}
-        {/*                    right={<TextInput.Icon onPress={handlePasswordVisibility} name={rightIcon}/>}*/}
-        {/*                    left={<TextInput.Icon name="lock"/>}*/}
-
-        {/*                />*/}
-        {/*                <Text*/}
-        {/*                    style={signUpStyle.errorText}>{props.touched.Password && props.errors.Password}</Text>*/}
-        {/*            </View>*/}
-
-        {/*            <View style={Nofar_styles.actionInput}>*/}
-        {/*                <TextInput*/}
-        {/*                    placeholder="טלפון (*רשות)"*/}
-        {/*                    // value={state.phone}*/}
-        {/*                    // onChangeText={onChangePhone}*/}
-        {/*                    onChangeText={(phone) => {*/}
-        {/*                        props.handleChange('PhoneNumber')(phone)*/}
-        {/*                        onChangePhone(phone)*/}
-        {/*                        console.log(phone)*/}
-        {/*                    }}*/}
-        {/*                    value={props.values.PhoneNumber}*/}
-        {/*                    onBlur={props.handleBlur('PhoneNumber')}*/}
-        {/*                    keyboardType='numeric'*/}
-        {/*                    activeUnderlineColor="#000000"*/}
-        {/*                    activeOutlineColor="#000000"*/}
-        {/*                    left={<TextInput.Icon name="phone"/>}*/}
-        {/*                />*/}
-        {/*                <Text*/}
-        {/*                    style={signUpStyle.errorText}>{props.touched.PhoneNumber && props.errors.PhoneNumber}</Text>*/}
-        {/*            </View>*/}
-
-        {/*            <View style={signUpStyle.submitButton}>*/}
-        {/*                /!*<TouchableOpacity style={Nofar_styles.BigButton} onPress={() => {}}>*!/*/}
-        {/*                /!*    <Text style={Nofar_styles.BigButtonText}>עדכן פרטים</Text>*!/*/}
-        {/*                /!*</TouchableOpacity>*!/*/}
-        {/*                <TouchableOpacity style={Nofar_styles.SmallButton}*/}
-        {/*                                  onPress={props.handleSubmit}>*/}
-        {/*                    <Text style={Nofar_styles.SmallButtonTitle}>תרשמו אותי!</Text>*/}
-        {/*                </TouchableOpacity>*/}
-        {/*            </View>*/}
-        {/*        </View>*/}
-        {/*    )}*/}
-        {/*</Formik>*/}
       </View>
     </ImageBackground>
   );

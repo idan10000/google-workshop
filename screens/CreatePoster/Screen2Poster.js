@@ -5,11 +5,7 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
-import { Button } from "react-native-paper";
-import * as ImagePicker from "expo-image-picker";
-import { getAuth, signOut } from "firebase/auth";
-import { Text, TouchableOpacity, Image } from "react-native";
-import Icon from "react-native-vector-icons/AntDesign";
+
 import React, { useState } from "react";
 import { Nofar_styles } from "../../styles/NofarStyle";
 import StepIndicator from "react-native-step-indicator";
@@ -71,7 +67,6 @@ export default function Screen2Poster({ route, navigation }) {
           stepCount={3}
         />
       </View>
-      {/*<View style = {styles.imagePicked}><Text style = {styles.errorImage}>סמנו את המיקום האחרון בו ראיתם את הכלב</Text></View>*/}
 
       <MapForCreation
         preLocation={initLocation}

@@ -185,13 +185,6 @@ const BrowsePage = ({ navigation, route }) => {
     });
   };
 
-  //
-  // const radiogroup_options = [
-  //     {id: 0, label: 'Button1' },
-  //     {id: 1, label: 'Button2' },
-  //
-  // ];
-  // const [selectedOption, setSelectedOption] = useState(1)
 
   const [selectedDate, setSelectedDate] = useState(true);
   const [selectedDis, setSelectedDis] = useState(false);

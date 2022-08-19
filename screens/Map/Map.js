@@ -27,8 +27,7 @@ import {
 import { geohashQueryBounds } from "geofire-common";
 import { fireStoreDB } from "../../shared_components/Firebase";
 import { Provider, Portal, Modal } from "react-native-paper";
-import { Nofar_styles } from "../../styles/NofarStyle";
-import { stylesPoster } from "../CreatePoster/CreatePosterStyle";
+
 import Icon from "react-native-vector-icons/Entypo";
 import AntIcon from "react-native-vector-icons/AntDesign";
 

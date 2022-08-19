@@ -20,26 +20,9 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
-import Report, { reportConverter } from "../../data_classes/Report";
 import { stylesPoster } from "../CreatePoster/CreatePosterStyle";
 import { Nofar_styles } from "../../styles/NofarStyle";
-import {
-  addDoc,
-  arrayUnion,
-  collection,
-  doc,
-  getFirestore,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
-import { useContext } from "react";
-import { AuthenticatedUserContext } from "../../navigation/AuthenticatedUserProvider";
-import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
-import {
-  fireStoreDB,
-  uploadImageAsync,
-} from "../../shared_components/Firebase";
-import Icon from "react-native-vector-icons/Entypo";
+
 import StepIndicator from "react-native-step-indicator";
 import * as ImagePicker from "expo-image-picker";
 

@@ -42,9 +42,7 @@ export default function MyPosters({
     );
   };
 
-  const pressHandler_supp = () => {
-    navigation.navigate("SupportScreen");
-  };
+
 
   const getPosters = () => {
     const db = getFirestore();
@@ -123,87 +121,9 @@ export default function MyPosters({
       source={require("./new_background.png")}
     >
       <SafeAreaView style={{ flex: 1 }}>
-        {/*<View>*/}
-        {/*    <View style={{ flexDirection: "row", marginLeft: "10%" }}>*/}
-        {/*        <View style={{ marginTop: 30, marginRight: 10 }}>*/}
-        {/*            <Title style={Nofar_styles.BigTitle}>{Name} </Title>*/}
-        {/*        </View>*/}
-        {/*    </View>*/}
 
-        {/*    <View*/}
-        {/*        style={{ flexDirection: "row", marginLeft: "10%", marginTop: "2%" }}*/}
-        {/*    >*/}
-        {/*        <Icon name="email" color="#000000" size={30} />*/}
-        {/*        <Text style={{ color: "#000000", marginLeft: 20, fontSize: 17 }}>*/}
-        {/*            {Email}*/}
-        {/*        </Text>*/}
-        {/*    </View>*/}
-
-        {/*    <View*/}
-        {/*        style={{*/}
-        {/*            flexDirection: "row",*/}
-        {/*            marginLeft: "10%",*/}
-        {/*        }}*/}
-        {/*    >*/}
-        {/*        <Icon name="phone" color="#000000" size={30} />*/}
-        {/*        <TextInput*/}
-        {/*            style={{*/}
-        {/*                color: "#000000",*/}
-        {/*                marginLeft: 20,*/}
-        {/*                fontSize: 17,*/}
-        {/*                textDecorationLine: "underline",*/}
-        {/*            }}*/}
-        {/*            onChangeText={(newText) => {*/}
-        {/*                setPhone(newText);*/}
-        {/*                updatePhoneNumber(user, newText);*/}
-        {/*            }}*/}
-        {/*            defaultValue={Phone}*/}
-        {/*        />*/}
-        {/*    </View>*/}
-        {/*</View>*/}
-
-        {/*<View*/}
-        {/*    style={{*/}
-        {/*        flexDirection: "row",*/}
-        {/*        paddingHorizontal: 10,*/}
-        {/*        marginTop: "1%",*/}
-        {/*    }}*/}
-        {/*>*/}
-        {/*    <TouchableOpacity*/}
-        {/*        style={styles.MidButton}*/}
-        {/*        onPress={pressHandler_supp}*/}
-        {/*    >*/}
-        {/*        <View*/}
-        {/*            justifyContent="center"*/}
-        {/*            alignItems="center"*/}
-        {/*            flexDirection="row"*/}
-        {/*            marginRight="4%"*/}
-        {/*        >*/}
-        {/*            <Icon name="pen" size={24} color="#FFFFFF" />*/}
-        {/*        </View>*/}
-        {/*        <Text style={styles.MidButtonTitle}>תמיכה טכנית</Text>*/}
-        {/*    </TouchableOpacity>*/}
-        {/*    <TouchableOpacity*/}
-        {/*        style={styles.MidButton}*/}
-        {/*        onPress={async () => {*/}
-        {/*            signOut(getAuth()).then(() => {});*/}
-        {/*            await turnOffNotifications(user);*/}
-        {/*        }}*/}
-        {/*    >*/}
-        {/*        <View*/}
-        {/*            justifyContent="center"*/}
-        {/*            alignItems="center"*/}
-        {/*            flexDirection="row"*/}
-        {/*            marginRight="4%"*/}
-        {/*        >*/}
-        {/*            <Icon name="cancel" size={24} color="#FFFFFF" />*/}
-        {/*        </View>*/}
-        {/*        <Text style={styles.MidButtonTitle}>התנתקות</Text>*/}
-        {/*    </TouchableOpacity>*/}
-        {/*</View>*/}
 
         <View style={styles.listContainer}>
-          {/*<Title style={styles.foundDog}>המודעות שלי</Title>*/}
           <FlatList
             data={data}
             ItemSeparatorComponent={FlatListItemSeparator}

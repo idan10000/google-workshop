@@ -32,8 +32,7 @@ export default function NotificationsPage({
     notifications,
     setNotifications,
   ] = useContext(NotificationsContext);
-  //const NotificationsConsumer = useContext(NotificationsContext).Consumer
-  //console.log(NotificationsConsumer)
+
   useEffect(() => {
     const effect = async () => {
       await loadNotifications();
@@ -69,7 +68,6 @@ export default function NotificationsPage({
               }
               setNotifications(notificationsArray);
             }
-            // setNotifications(userSnap.data().notifications);
           } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");

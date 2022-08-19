@@ -59,23 +59,14 @@ export default function ProfilePage({ navigation }) {
               marginLeft: "10%",
             }}
           >
-            {/* <Avatar
-            style={{ width: "100px", height: "100px" }}
-            avatarStyle="Circle"
-            {...generateRandomAvatarOptions()}
-          /> */}
+
             <Title style={Nofar_styles.BigTitle}>{Name}</Title>
           </View>
 
           <View
             style={{ marginTop: 5, marginLeft: "15%", marginBottom: "7.5%" }}
           >
-            {/*<View style={{ flexDirection: "row", marginTop: "5%" }}>*/}
-            {/*    <Icon name="email" color="#777777" size={30} />*/}
-            {/*    <Text style={{ color: "#777777", marginLeft: "3%", fontSize:20}}>*/}
-            {/*        {Email}*/}
-            {/*    </Text>*/}
-            {/*</View>*/}
+
 
             <View style={{ flexDirection: "row", marginTop: "5%" }}>
               <Icon name="phone" color="#777777" size={27} />
@@ -125,22 +116,6 @@ export default function ProfilePage({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        {/*<View style={user_styles.confirmBTContainer}>*/}
-        {/*  <TouchableOpacity*/}
-        {/*      style={user_styles.profileButton}*/}
-        {/*      onPress={pressHandler_supp}*/}
-        {/*  >*/}
-        {/*      <View*/}
-        {/*          justifyContent="center"*/}
-        {/*          alignItems="center"*/}
-        {/*          flexDirection="row"*/}
-        {/*          marginRight="4%"*/}
-        {/*      >*/}
-        {/*          <Icon name="pen" size={24} color="#FFFFFF" />*/}
-        {/*      </View>*/}
-        {/*    <Text style={user_styles.BigButtonText}>תמיכה טכנית</Text>*/}
-        {/*  </TouchableOpacity>*/}
-        {/*</View>*/}
 
         <View style={user_styles.confirmBTContainer}>
           <TouchableOpacity

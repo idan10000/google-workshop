@@ -3,10 +3,7 @@ import { Appbar, Divider, Provider, Menu, Text } from "react-native-paper";
 import { Alert, StyleSheet } from "react-native";
 import { View } from "react-native";
 import { useRoute } from "@react-navigation/native";
-import {
-  clearAllNotifications,
-  clearAllNotificationsFirebase,
-} from "./NotificationsUtils";
+
 import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
 import { NotificationsContext } from "../navigation/NotificationsProvider";
 import { doc, updateDoc } from "firebase/firestore";
@@ -22,7 +19,6 @@ export default function Header({
 }) {
   const { user } = useContext(AuthenticatedUserContext);
 
-  //const _handleMore = () => console.log('Shown more');
   const route = useRoute();
 
   const [visible, setVisible] = React.useState(false);
@@ -63,7 +59,6 @@ export default function Header({
   };
 
   const clearAndRefresh = async () => {
-    //console.log(refreshNotifications)
     await clearAllNotifications(user);
     closeMenu();
   };

@@ -371,9 +371,6 @@ export default function PosterPostingComponent({ route, navigation }) {
                 />
               </View>
 
-              {/* <HelperText type="error" visible={hasErrors("name")}>
-              <Text style={edit_styles.error}>טעות בתיאור הטקסט</Text>
-            </HelperText> */}
               <View
                 style={{ ...Nofar_styles.actionInput, paddingBottom: "5%" }}
               >
@@ -389,9 +386,7 @@ export default function PosterPostingComponent({ route, navigation }) {
                   style={{ backgroundColor: "#F9F8F0" }}
                 />
               </View>
-              {/* <HelperText type="error" visible={hasErrors("name")}>
-              <Text style={edit_styles.error}>טעות בתיאור הטקסט</Text>
-            </HelperText> */}
+
             </View>
 
             <View style={stylesPoster.confirmBTContainer}>

@@ -5,15 +5,10 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
-import { Button } from "react-native-paper";
-import * as ImagePicker from "expo-image-picker";
-import { getAuth, signOut } from "firebase/auth";
-import { Text, TouchableOpacity, Image } from "react-native";
-import Icon from "react-native-vector-icons/AntDesign";
+
 import React, { useState } from "react";
 import { Nofar_styles } from "../../styles/NofarStyle";
 import StepIndicator from "react-native-step-indicator";
-import Map from "../Map/Map";
 import MapForCreation from "../Map/MapForCreation";
 
 // this is the second screen when you report. here you can control the location where the dog got lost
@@ -39,7 +34,6 @@ export default function Screen2Report({ route, navigation }) {
     stepIndicatorLabelCurrentColor: "#DCA277",
     stepIndicatorLabelFinishedColor: "#ffffff",
     stepIndicatorLabelUnFinishedColor: "#aaaaaa",
-    // labelColor: '#000',
     labelSize: 13,
     currentStepLabelColor: "#DCA277",
   };
@@ -50,7 +44,6 @@ export default function Screen2Report({ route, navigation }) {
   const [location, setLocation] = useState(null);
 
   const nextScreen = () => {
-    // navigation.pop()
     if (location !== null) {
       navigation.navigate("ReportCreation3", {
         report: report,
@@ -71,7 +64,6 @@ export default function Screen2Report({ route, navigation }) {
           stepCount={3}
         />
       </View>
-      {/*<View style = {styles.imagePicked}><Text style = {styles.errorImage}>סמנו את המיקום בו מצאתם את הכלב</Text></View>*/}
 
       <MapForCreation
         preLocation={initLocation}

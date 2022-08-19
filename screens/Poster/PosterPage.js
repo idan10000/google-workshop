@@ -14,7 +14,6 @@ import * as Linking from "expo-linking";
 import { AR_styles } from "./PosterStyle";
 import { Chip, Modal, Provider, Portal } from "react-native-paper";
 import Icon from "react-native-vector-icons/Entypo";
-import { stylesPoster } from "../CreatePoster/CreatePosterStyle";
 
 export default function PosterPage({ navigation, route, typeOfPage }) {
   const makeCall = () => {
@@ -55,10 +54,7 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
   };
   const hideFullPicture = () => setFullPicture(false);
 
-  // let dotText = ""
-  // if(!report){
-  //     dotText = "·";
-  // }
+
   console.log(typeOfPage);
   if (typeOfPage === "ReportForBrowse") {
     return (
@@ -220,7 +216,6 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
               </View>
             )}
 
-            {/*<View marginTop="3%" ><Text style = {styles.descriptionText}>תיאור</Text></View>*/}
 
             <View style={AR_styles.myCard}>
               <View style={AR_styles.cardHeader}>
@@ -244,9 +239,7 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
                 </TouchableOpacity>
               )}
             </View>
-            {/*<View style={styles.dogOwner}>*/}
-            {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
-            {/*</View>*/}
+
             <View style={AR_styles.confirmBTContainer}>
               <TouchableOpacity
                 style={Nofar_styles.BigButton}
@@ -314,7 +307,6 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
               </View>
               <View marginVertical="4%">
                 <View style={AR_styles.lastSeen}>
-                  {/*<Text style={styles.whenText}>נצפה ב:</Text>*/}
                   <Icon name="location-pin" size={22} color="#000" />
                   <TouchableOpacity>
                     <Text
@@ -328,7 +320,6 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
                   </TouchableOpacity>
                 </View>
 
-                {/*} <Text style = {styles.whenText}>בתאריך: {route.params.data.date}</Text>*/}
               </View>
               {!expanded && (
                 <View style={{ ...Nofar_styles.Viewchips }}>
@@ -415,7 +406,6 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
                 </View>
               )}
 
-              {/*<View marginTop="3%" ><Text style = {styles.descriptionText}>תיאור</Text></View>*/}
 
               <View style={AR_styles.myCard}>
                 <View style={AR_styles.cardHeader}>
@@ -435,9 +425,7 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
                   <Text style={AR_styles.contactTitle}>צור קשר</Text>
                 </TouchableOpacity>
               </View>
-              {/*<View style={styles.dogOwner}>*/}
-              {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
-              {/*</View>*/}
+
               <View style={AR_styles.confirmBTContainer}>
                 <TouchableOpacity
                   style={Nofar_styles.BigButton}
@@ -599,7 +587,6 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
               </View>
             )}
 
-            {/*<View marginTop="3%" ><Text style = {styles.descriptionText}>תיאור</Text></View>*/}
 
             <View style={AR_styles.myCard}>
               <View style={AR_styles.cardHeader}>
@@ -623,9 +610,7 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
                 </TouchableOpacity>
               )}
             </View>
-            {/*<View style={styles.dogOwner}>*/}
-            {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
-            {/*</View>*/}
+
             <View style={AR_styles.confirmBTContainer}>
               <TouchableOpacity
                 style={Nofar_styles.BigButton}
@@ -715,7 +700,6 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
                 </TouchableOpacity>
               </View>
 
-              {/*} <Text style = {styles.whenText}>בתאריך: {route.params.data.date}</Text>*/}
             </View>
             {!expanded && (
               <View style={{ ...Nofar_styles.Viewchips }}>
@@ -802,7 +786,6 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
               </View>
             )}
 
-            {/*<View marginTop="3%" ><Text style = {styles.descriptionText}>תיאור</Text></View>*/}
 
             <View style={AR_styles.myCard}>
               <View style={AR_styles.cardHeader}>
@@ -822,9 +805,7 @@ export default function PosterPage({ navigation, route, typeOfPage }) {
                 <Text style={AR_styles.contactTitle}>צור קשר</Text>
               </TouchableOpacity>
             </View>
-            {/*<View style={styles.dogOwner}>*/}
-            {/*    <Text style={styles.descriptionText} >בעל הכלב:</Text>*/}
-            {/*</View>*/}
+
             <View style={AR_styles.confirmBTContainer}>
               <TouchableOpacity
                 style={Nofar_styles.BigButton}

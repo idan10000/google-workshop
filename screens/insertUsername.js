@@ -8,10 +8,8 @@ import {
   View,
 } from "react-native";
 import { Nofar_styles } from "../styles/NofarStyle";
-import { signUpStyle } from "../styles/SignUpStyle";
 import { TextInput } from "react-native-paper";
 import Icon from "react-native-vector-icons/AntDesign";
-import { getAuth, PhoneAuthProvider } from "firebase/auth";
 import { useEffect, useState } from "react";
 
 export default function InsertUsername({ navigation, username, setUsername }) {
@@ -35,9 +33,7 @@ export default function InsertUsername({ navigation, username, setUsername }) {
               style={styles.appLogo}
             />
           </TouchableOpacity>
-          {/*<View style={Nofar_styles.BigTitle}>*/}
-          {/*  <Text style={Nofar_styles.BigTitle}>ברוכים הבאים{"\n"}אל Findog</Text>*/}
-          {/*</View>*/}
+
         </View>
         <View style={Nofar_styles.actionInput}>
           <Text

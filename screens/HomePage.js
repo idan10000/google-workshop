@@ -5,9 +5,7 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
-import { Button } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
-import { getAuth, signOut } from "firebase/auth";
 import { Text, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import * as React from "react";
@@ -67,7 +65,6 @@ export default function HomePage({ navigation }) {
   };
 
   return (
-    // <ScrollView style={styles.container}>
     <ImageBackground
       style={{ flex: 1 }}
       source={require("../assets/new_background.png")}
@@ -75,12 +72,9 @@ export default function HomePage({ navigation }) {
       <View style={styles.BigButtonView}>
         <Text style={styles.foundDog}>מצאתי כלב!</Text>
         <TouchableOpacity
-          // mode='contained'
-          // icon='camera'
           style={styles.BigButton}
           onPress={openCamera}
         >
-          {/*labelStyle={styles.BigButtonText}>*/}
           <View justifyContent="center" alignItems="center" marginRight="8%">
             <Icon name="camera" size={24} color="#FFFFFF" />
           </View>
@@ -122,13 +116,11 @@ export default function HomePage({ navigation }) {
         </TouchableOpacity>
       </View>
     </ImageBackground>
-    // </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: "#BBB988",
     backgroundColor: "white",
   },
 

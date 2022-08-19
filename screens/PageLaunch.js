@@ -7,7 +7,6 @@ import {
 } from "react-native";
 import { landingPageStyle } from "../styles/LandingPageStyle";
 import * as Linking from "expo-linking";
-import { Avatar, Button } from "react-native-paper";
 import { Nofar_styles } from "../styles/NofarStyle";
 import React from "react";
 import { fireAuth } from "../shared_components/Firebase";
@@ -71,24 +70,8 @@ export default function PageLaunch({ navigation }) {
         >
           <Text style={Nofar_styles.SmallButtonTitle}>כניסה באמצעות טלפון</Text>
         </TouchableOpacity>
-        {/*<Text style={landingPageStyle.text}> או באמצעות </Text>*/}
       </View>
-      {/*<View style={landingPageStyle.AvatarContainer}>*/}
 
-      {/*    <TouchableOpacity><Avatar.Image size={55} source={require('../assets/facebook.png')}*/}
-      {/*                                    style={landingPageStyle.avatar}/></TouchableOpacity>*/}
-
-      {/*    <TouchableOpacity onPress={() => {*/}
-      {/*        console.log("google")*/}
-      {/*    }}><Avatar.Image size={55} source={require('../assets/google.png')}*/}
-      {/*                     style={landingPageStyle.avatar}/></TouchableOpacity>*/}
-      {/*</View>*/}
-      {/*<View style={landingPageStyle.containerForRegisterClick}>*/}
-      {/*  <Text style={Nofar_styles.text}> כבר רשומים? </Text>*/}
-      {/*  <TouchableOpacity onPress={nextScreen}>*/}
-      {/*    <Text style={landingPageStyle.clickHere}>לחצו כאן!</Text>*/}
-      {/*  </TouchableOpacity>*/}
-      {/*</View>*/}
       <View style={landingPageStyle.sellingText}>
         <Text style={landingPageStyle.bottomText}>
           האפליקציה שלנו מספקת פתרון מהפכני שמציע לבעלי כלבים דרך פשוטה

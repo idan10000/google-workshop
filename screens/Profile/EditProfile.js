@@ -1,13 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, ImageBackground } from "react-native";
-import { edit_styles } from "../unused/EditProfileStyle";
 import { HelperText, TextInput, Button } from "react-native-paper";
 import { Nofar_styles } from "../../styles/NofarStyle";
 
-// import ImagePicker from "react-native-image-crop-picker";
-// import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-// import FontAwesome from "react-native-vector-icons/FontAwesome";
-// import Feather from "react-native-vector-icons/Feather";
 
 export default function EditProfile({ navigation }) {
   const [state, setState] = useState({
@@ -33,14 +28,12 @@ export default function EditProfile({ navigation }) {
     }
   };
   return (
-    // <ImageBackground flex= "1"
-    //                  source={require('../assets/new_background.png')}>
+
     <View style={Nofar_styles.container}>
       <View style={Nofar_styles.actionInput}>
         <TextInput
           placeholder="שם"
           value={state.fname}
-          // onChangeText={handleChange}
           activeUnderlineColor="#000000"
           activeOutlineColor="#000000"
           left={<TextInput.Icon name="face" />}
@@ -56,7 +49,6 @@ export default function EditProfile({ navigation }) {
         <TextInput
           placeholder="אימייל"
           value={state.email}
-          // onChangeText={handleChange("email")}
           activeUnderlineColor="#000000"
           activeOutlineColor="#000000"
           left={<TextInput.Icon name="email" />}
@@ -70,7 +62,6 @@ export default function EditProfile({ navigation }) {
         <TextInput
           placeholder="טלפון"
           value={state.phone}
-          // onChangeText={handleChange("phone")}
           activeUnderlineColor="#000000"
           activeOutlineColor="#000000"
           left={<TextInput.Icon name="phone" />}
@@ -84,7 +75,6 @@ export default function EditProfile({ navigation }) {
         <TextInput
           placeholder="עיר"
           value={state.city}
-          // onChangeText={handleChange("city")}
           activeUnderlineColor="#000000"
           activeOutlineColor="#000000"
           left={<TextInput.Icon name="map" />}

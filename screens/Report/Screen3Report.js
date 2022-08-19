@@ -90,7 +90,6 @@ export default function Screen3Report({ route, navigation }) {
     stepIndicatorLabelCurrentColor: "#DCA277",
     stepIndicatorLabelFinishedColor: "#ffffff",
     stepIndicatorLabelUnFinishedColor: "#aaaaaa",
-    // labelColor: '#000',
     labelSize: 13,
     currentStepLabelColor: "#DCA277",
   };
@@ -200,9 +199,7 @@ export default function Screen3Report({ route, navigation }) {
         longitude: templocation.longitude,
         geohash: hash,
       };
-      // const [addressResponse] = await reverseGeocodeAsync(templocation)
-      // const address = `${addressResponse.street} ${addressResponse.streetNumber}, ${addressResponse.city}`;
-      // console.log(address)
+
       let json = await Geocoder.from(
         templocation.latitude,
         templocation.longitude
@@ -338,7 +335,6 @@ export default function Screen3Report({ route, navigation }) {
                 <Text style={styles.textFound}>פרטים נוספים:</Text>
               </View>
               <Portal>
-                {/*Tags*/}
                 <Modal
                   visible={visibleTag}
                   onDismiss={modalConfirmPressHandler}
@@ -390,7 +386,6 @@ export default function Screen3Report({ route, navigation }) {
               </Portal>
               <View style={styles.addTagsBTContainer}>
                 <TouchableOpacity
-                  // comapct={false}
                   style={styles.button}
                   onPress={showTagModal}
                 >
@@ -399,18 +394,7 @@ export default function Screen3Report({ route, navigation }) {
                   </Text>
                 </TouchableOpacity>
               </View>
-              {/*<View style={styles.chips}>*/}
-              {/*    {modalTags.map((item, index) => (*/}
-              {/*        <Chip*/}
-              {/*            key={index}*/}
-              {/*            selected={modalTags[index].state}*/}
-              {/*            onPress={() => modalChipHandler(index)}*/}
-              {/*            style={styles.chip}*/}
-              {/*        >*/}
-              {/*            {item.tag}*/}
-              {/*        </Chip>*/}
-              {/*    ))}*/}
-              {/*</View>*/}
+
               <View style={{ ...stylesPoster.chips, marginLeft: "2%" }}>
                 {selectedTags
                   .sort(function (a, b) {
@@ -512,7 +496,6 @@ export default function Screen3Report({ route, navigation }) {
                 <Text style={styles.textFound}>פרטים נוספים:</Text>
               </View>
               <Portal>
-                {/*Tags*/}
                 <Modal
                   visible={visibleTag}
                   onDismiss={modalConfirmPressHandler}
@@ -559,7 +542,6 @@ export default function Screen3Report({ route, navigation }) {
               </Portal>
               <View style={styles.addTagsBTContainer}>
                 <TouchableOpacity
-                  // comapct={false}
                   style={styles.button}
                   onPress={showTagModal}
                 >
@@ -568,18 +550,7 @@ export default function Screen3Report({ route, navigation }) {
                   </Text>
                 </TouchableOpacity>
               </View>
-              {/*<View style={styles.chips}>*/}
-              {/*    {modalTags.map((item, index) => (*/}
-              {/*        <Chip*/}
-              {/*            key={index}*/}
-              {/*            selected={modalTags[index].state}*/}
-              {/*            onPress={() => modalChipHandler(index)}*/}
-              {/*            style={styles.chip}*/}
-              {/*        >*/}
-              {/*            {item.tag}*/}
-              {/*        </Chip>*/}
-              {/*    ))}*/}
-              {/*</View>*/}
+
               <View style={{ ...stylesPoster.chips, marginLeft: "2%" }}>
                 {selectedTags.map((item, index) => (
                   <Chip

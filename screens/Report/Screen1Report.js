@@ -32,14 +32,11 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { useContext } from "react";
-import { AuthenticatedUserContext } from "../../navigation/AuthenticatedUserProvider";
 import deepDiffer from "react-native/Libraries/Utilities/differ/deepDiffer";
 import {
   fireStoreDB,
   uploadImageAsync,
 } from "../../shared_components/Firebase";
-import Icon from "react-native-vector-icons/Entypo";
 import StepIndicator from "react-native-step-indicator";
 import * as ImagePicker from "expo-image-picker";
 
@@ -197,29 +194,7 @@ export default function Screen1Report({ route, navigation }) {
         });
     }
   };
-  // const customStyles = {
-  //     stepIndicatorSize: 25,
-  //     currentStepIndicatorSize:30,
-  //     separatorStrokeWidth: 2,
-  //     currentStepStrokeWidth: 3,
-  //     stepStrokeCurrentColor: '#fe7013',
-  //     stepStrokeWidth: 3,
-  //     stepStrokeFinishedColor: '#fe7013',
-  //     stepStrokeUnFinishedColor: '#aaaaaa',
-  //     separatorFinishedColor: '#fe7013',
-  //     separatorUnFinishedColor: '#aaaaaa',
-  //     stepIndicatorFinishedColor: '#fe7013',
-  //     stepIndicatorUnFinishedColor: '#ffffff',
-  //     stepIndicatorCurrentColor: '#ffffff',
-  //     stepIndicatorLabelFontSize: 13,
-  //     currentStepIndicatorLabelFontSize: 13,
-  //     stepIndicatorLabelCurrentColor: '#fe7013',
-  //     stepIndicatorLabelFinishedColor: '#ffffff',
-  //     stepIndicatorLabelUnFinishedColor: '#aaaaaa',
-  //     labelColor: '#999999',
-  //     labelSize: 13,
-  //     currentStepLabelColor: '#fe7013'
-  // }
+
   const customStyles = {
     stepIndicatorSize: 25,
     currentStepIndicatorSize: 30,

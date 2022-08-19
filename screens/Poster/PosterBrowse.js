@@ -28,16 +28,7 @@ export default function PosterBrowse({ route }) {
       <View style={Nofar_styles.container}>
         <ScrollView style={AR_styles.content}>
           <PosterPage route={route} typeOfPage={"PosterForBrowse"} />
-          {/*<View style={AR_styles.confirmBTContainer}>*/}
-          {/*  <Button*/}
-          {/*    mode={"contained"}*/}
-          {/*    style={Nofar_styles.BigButton}*/}
-          {/*    onPress={makeCall}*/}
-          {/*    activeOpacity={0.7}*/}
-          {/*  >*/}
-          {/*    <Text style={Nofar_styles.BigButtonText}>צור קשר עם הבעלים</Text>*/}
-          {/*  </Button>*/}
-          {/*</View>*/}
+
         </ScrollView>
       </View>
     </ImageBackground>
