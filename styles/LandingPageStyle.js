@@ -5,10 +5,10 @@ export const landingPageStyle = StyleSheet.create({
     flex: 1,
   },
   appNameHeader: {
-    fontSize: 70,
+    fontSize: 65,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "4%",
+    marginTop: "2%",
   },
   slogenContainer: {
     flexDirection: "column",
@@ -76,7 +76,7 @@ export const landingPageStyle = StyleSheet.create({
     textAlign: "center",
   },
   emailRegist: {
-    marginTop: "10%",
+    marginTop: "5%",
     alignItems: "center",
     justifyContent: "center",
     color: "#1B1209",
