@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 
 export const landingPageStyle = StyleSheet.create({
   totalWrapper: {
@@ -21,8 +21,8 @@ export const landingPageStyle = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "center",
     marginRight: "8%",
-    height: "85%",
-    width: "37%",
+    height: Dimensions.get("window").width * 0.37,
+    width: Dimensions.get("window").width * 0.37,
     resizeMode: "stretch",
     marginBottom: "5%",
   },
